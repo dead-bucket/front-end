@@ -1,0 +1,29 @@
+#dashboard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#dashboard_friend_container {
+  max-width: 75%;
+  max-height: 75%;
+
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.dashboard_friend {
+  margin: 25px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 25px;
+}
+
+.dashboard_friend:hover {
+  cursor: pointer;
+}
