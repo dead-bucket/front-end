@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "./dashboard.css";
+
 // components
 import Spinner from "../common/Spinner";
-import NavBar from "../common/NavBar";
+
 import AddButton from "../common/AddButton";
 import Tooltip from "@material-ui/core/Tooltip";
 class Dashboard extends Component {
@@ -43,7 +44,6 @@ class Dashboard extends Component {
     }
     return (
       <div>
-        <NavBar />
         <div className="container">
           <div id="dashboard">
             <h3>Write a thought to...</h3>

@@ -75,8 +75,13 @@ class MenuAppBar extends Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" color="inherit" className={classes.grow}>
-              Thoughline
+            <Typography
+              component="h1"
+              variant="title"
+              color="inherit"
+              className={classes.grow}
+            >
+              Thoughtline
             </Typography>
             {auth && (
               <div>

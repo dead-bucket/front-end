@@ -9,6 +9,8 @@ import store from "./store";
 // import setAuthToken from "./utils/setAuthToken";
 // import { setCurrentUser, logoutUser } from "./_actions/authActions";
 // import { clearCurrentProfile } from "./_actions/profileActions";
+// import logo from './logo.svg';
+// import './App.css';
 
 // Components
 import NavBar from "./components/common/NavBar";
@@ -16,18 +18,24 @@ import Landing from "./components/landing/Landing";
 import Dashboard from "./components/dashboard/Dashboard";
 import FriendView from "./components/friendView/FriendView";
 import Timeline from "./components/timeline/Timeline";
-// import logo from './logo.svg';
-// import './App.css';
+
+// for removing material-ui typography warning
+window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
 class App extends Component {
   render() {
     return (
       <Router>
-        <div className="App">
-          <Route exact path="/" component={Landing} />
-          <Route exact path="/dashboard" component={Dashboard} />
-          <Route exact path="/friendview" component={FriendView} />
-          <Route exact path="/timeline" component={Timeline} />
+        <div>
+          <NavBar />
+          <div className="App">
+            <Switch>
+              <Route exact path="/" component={Landing} />
+              <Route exact path="/dashboard" component={Dashboard} />
+              <Route exact path="/friendview" component={FriendView} />
+              <Route exact path="/timeline" component={Timeline} />
+            </Switch>
+          </div>
         </div>
       </Router>
     );
