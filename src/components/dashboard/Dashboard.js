@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import axios from "axios";
-import "./dashboard.css";
+import { Link } from "react-router-dom";
+import Tooltip from "@material-ui/core/Tooltip";
 
+import "./dashboard.css";
 // components
 import Spinner from "../common/Spinner";
-
 import AddButton from "../common/AddButton";
-import Tooltip from "@material-ui/core/Tooltip";
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -47,9 +48,15 @@ class Dashboard extends Component {
         <div className="container">
           <div id="dashboard">
             <h3>Write a thought to...</h3>
-            <div id="dashboard_friend_container">{dashboardContent}</div>
+
+            {/* <div id="dashboard_friend_container"> */}
+            <Link id="dashboard_friend_container" to="/friendview">
+              {dashboardContent}
+            </Link>
+            {/* </div> */}
           </div>
         </div>
+        {/* TODO get tooltip to work */}
         <Tooltip title="Add a new friend" placement="top">
           <AddButton />
         </Tooltip>

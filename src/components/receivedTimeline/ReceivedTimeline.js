@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Icon from "@material-ui/core/Icon";
 import axios from "axios";
 import SendRounded from "@material-ui/icons/SendRounded";
-import Icon from "@material-ui/core/Icon";
 
-import "./timeline.css";
+// import "./timeline.css";
 // component
 import Spinner from "../common/Spinner";
 
@@ -36,7 +36,7 @@ const messages = [
   }
 ];
 
-class Timeline extends Component {
+class ReceivedTimeline extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -72,7 +72,7 @@ class Timeline extends Component {
 
       friendImage = (
         <div id="timeline_friend_container">
-          <p>Your thoughtline for </p>
+          <p>Thoughts you've received from:</p>
           <h1 id="timeline_friendname">{friends[0].name.first}</h1>
           <div className="timeline_friend z-depth-3">
             <img id="timeline_portrait" src={friends[0].picture.large} />
@@ -88,26 +88,26 @@ class Timeline extends Component {
             <div>{loading ? null : friendImage}</div>
             <div id="friendview_navigation">
               <span>
-                <Link to="/received" className="friendview_nav_link">
-                  <Icon>arrow_back_ios</Icon>Received
+                <Link to="/friendview" className="friendview_nav_link">
+                  <Icon>arrow_back_ios</Icon>FriendView
                 </Link>
               </span>
               <span className="friendview_seperator"> | </span>
               <span>
-                <Link to="/friendview" className="friendview_nav_link">
-                  FriendView<Icon>arrow_forward_ios</Icon>
+                <Link to="/thoughtline" className="friendview_nav_link">
+                  Thoughtline<Icon>arrow_forward_ios</Icon>
                 </Link>
               </span>
             </div>
             {timelineContent}
           </div>
         </div>
-        <div className="send_button z-depth-5">
+        {/* <div className="send_button z-depth-5">
           <SendRounded id="send_icon" />
-        </div>
+        </div> */}
       </div>
     );
   }
 }
 
-export default Timeline;
+export default ReceivedTimeline;

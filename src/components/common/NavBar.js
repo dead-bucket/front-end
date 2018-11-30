@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -12,7 +13,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-
+import Icon from "@material-ui/core/Icon";
 const styles = {
   root: {
     flexGrow: 1
@@ -83,6 +84,9 @@ class MenuAppBar extends Component {
             >
               Thoughtline
             </Typography>
+            <span>
+              <Link to="/dashboard">Dashboard</Link>
+            </span>
             {auth && (
               <div>
                 <IconButton

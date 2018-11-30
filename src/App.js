@@ -18,6 +18,7 @@ import Landing from "./components/landing/Landing";
 import Dashboard from "./components/dashboard/Dashboard";
 import FriendView from "./components/friendView/FriendView";
 import Timeline from "./components/timeline/Timeline";
+import ReceivedTimeline from "./components/receivedTimeline/ReceivedTimeline";
 
 // for removing material-ui typography warning
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
@@ -33,7 +34,8 @@ class App extends Component {
               <Route exact path="/" component={Landing} />
               <Route exact path="/dashboard" component={Dashboard} />
               <Route exact path="/friendview" component={FriendView} />
-              <Route exact path="/timeline" component={Timeline} />
+              <Route exact path="/thoughtline" component={Timeline} />
+              <Route exact path="/received" component={ReceivedTimeline} />
             </Switch>
           </div>
         </div>

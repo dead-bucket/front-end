@@ -41,9 +41,7 @@ class FriendView extends Component {
     this.state = {
       friends: [],
       loading: true,
-      title: "",
-      body: "",
-      mood: "love"
+      mood: "happy"
     };
   }
 
@@ -62,11 +60,11 @@ class FriendView extends Component {
   render() {
     const { loading, friends } = this.state;
     const { classes } = this.props;
-    let dashboardContent;
+    let friendViewContent;
     if (loading) {
-      dashboardContent = <Spinner />;
+      friendViewContent = <Spinner />;
     } else {
-      dashboardContent = friends.map(friend => (
+      friendViewContent = friends.map(friend => (
         <div className="friendview_friend z-depth-3" key={friend.cell}>
           <img
             alt=""
@@ -85,17 +83,17 @@ class FriendView extends Component {
           <h1 id="friendview_name">
             {this.state.loading ? null : this.state.friends[0].name.first}
           </h1>
-          {dashboardContent}
+          {friendViewContent}
           {this.state.mood}
           <div id="friendview_navigation">
             <span>
-              <Link to="/timeline" className="friendview_nav_link">
+              <Link to="/thoughtline" className="friendview_nav_link">
                 <Icon>arrow_back_ios</Icon>Thoughtline
               </Link>
             </span>
             <span className="friendview_seperator"> | </span>
             <span>
-              <Link to="/recieved" className="friendview_nav_link">
+              <Link to="/received" className="friendview_nav_link">
                 Received <Icon>arrow_forward_ios</Icon>
               </Link>
             </span>
