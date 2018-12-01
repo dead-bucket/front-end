@@ -75,7 +75,11 @@ class Timeline extends Component {
           <p>Your thoughtline for </p>
           <h1 id="timeline_friendname">{friends[0].name.first}</h1>
           <div className="timeline_friend z-depth-3">
-            <img id="timeline_portrait" src={friends[0].picture.large} />
+            <img
+              alt="profile"
+              id="timeline_portrait"
+              src={friends[0].picture.large}
+            />
           </div>
         </div>
       );

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Icon from "@material-ui/core/Icon";
 import axios from "axios";
-import SendRounded from "@material-ui/icons/SendRounded";
 
 // import "./timeline.css";
 // component
@@ -75,7 +74,11 @@ class ReceivedTimeline extends Component {
           <p>Thoughts you've received from:</p>
           <h1 id="timeline_friendname">{friends[0].name.first}</h1>
           <div className="timeline_friend z-depth-3">
-            <img id="timeline_portrait" src={friends[0].picture.large} />
+            <img
+              alt="profile"
+              id="timeline_portrait"
+              src={friends[0].picture.large}
+            />
           </div>
         </div>
       );

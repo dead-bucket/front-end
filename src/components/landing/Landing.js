@@ -1,12 +1,13 @@
 import React, { Component } from "react";
+import LoginSignup from "./LoginSignup";
+import "./landing.css";
 
 class Landing extends Component {
   render() {
     return (
-      <div>
-        <h1>This is landing</h1>
-        <p>signup/login component will go here</p>
-        <p>if you're logged in, the app will redirect to /dashboard</p>
+      <div className="container" id="landing">
+        <h1>Welcome to Thoughtline</h1>
+        <LoginSignup />
       </div>
     );
   }

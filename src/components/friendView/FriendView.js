@@ -104,7 +104,7 @@ class FriendView extends Component {
               <div id="friendview_form_row1">
                 <TextField
                   id="outlined-name"
-                  label="Title"
+                  label="Thought Title"
                   name="title"
                   value={this.state.title}
                   onChange={this.handleChange("title")}
@@ -140,15 +140,14 @@ class FriendView extends Component {
               </div>
               <div id="friendview_form_row2">
                 <TextField
-                  id="outlined-multiline-thought"
-                  label="Thought"
+                  id="outlined-multiline-static"
+                  label="Multiline"
                   multiline
-                  rowsMax="30"
-                  className={classes.textField}
-                  value={this.state.body}
-                  onChange={this.handleChange("body")}
+                  rows="4"
+                  defaultValue="Thought Body"
+                  // className={classes.textField}
+                  onChange={this.handleChange("mood")}
                   margin="normal"
-                  helperText="hello"
                   variant="outlined"
                 />
               </div>
