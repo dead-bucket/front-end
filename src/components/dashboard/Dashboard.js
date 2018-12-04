@@ -7,6 +7,7 @@ import "./dashboard.css";
 // components
 import Spinner from "../common/Spinner";
 import AddButton from "../common/AddButton";
+import AddFriendModal from "./AddFriendModal";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -57,9 +58,10 @@ class Dashboard extends Component {
           </div>
         </div>
         {/* TODO get tooltip to work */}
-        <Tooltip title="Add a new friend" placement="top">
+        {/* <Tooltip title="Add a new friend" placement="top">
           <AddButton />
-        </Tooltip>
+        </Tooltip> */}
+        <AddFriendModal />
       </div>
     );
   }
