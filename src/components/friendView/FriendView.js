@@ -10,6 +10,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 // component
 import Spinner from "../common/Spinner";
 
+// CSS
 import "./friendView.css";
 
 const moods = [
