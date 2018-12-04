@@ -1,0 +1,10 @@
+#AddFriendModal_submit_btn {
+  background-color: green;
+  color: white;
+  font-size: 22px;
+}
+
+#add_friend_modal {
+  border-radius: 15px;
+  outline: none;
+}
