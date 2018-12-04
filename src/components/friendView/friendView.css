@@ -1,0 +1,51 @@
+#friendview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.friendview_friend {
+  margin: 25px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 25px;
+}
+
+#friendview_friend_img {
+  width: 250px;
+}
+
+#friendview_name {
+  margin: 0px;
+}
+
+.friendview_nav_link {
+  font-size: 30px;
+}
+
+.friendview_seperator {
+  font-size: 30px;
+  display: inline-block;
+  margin-left: 30px;
+  margin-right: 30px;
+  color: #039de6;
+}
+
+#friendview_form_group {
+  display: flex;
+  flex-direction: column;
+  min-width: 75%;
+  border: 1px solid black;
+}
+
+#friendview_form_row1 {
+  display: flex;
+  justify-content: space-around;
+}
+
+#friendview_form_row2 {
+  display: flex;
+  justify-content: center;
+}
