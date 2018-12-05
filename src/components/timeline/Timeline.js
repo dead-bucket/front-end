@@ -33,6 +33,15 @@ const messages = [
     emoji: "\u{1F604}",
     value: "happy",
     date: "08/01/18"
+  },
+  {
+    id: 4,
+    title: "Bob Ross Ipsum",
+    body:
+      "Anytime you learn something your time and energy are not wasted. We tell people sometimes: we're like drug dealers, come into town and get everybody absolutely addicted to painting. It doesn't take much to get you addicted. You're meant to have fun in life. Fluff that up. Every single thing in the world has its own personality - and it is up to you to make friends with the little rascals. God gave you this gift of imagination. Use it.",
+    emoji: "\u{1F604}",
+    value: "happy",
+    date: "08/01/18"
   }
 ];
 
@@ -103,7 +112,7 @@ class Timeline extends Component {
                 </Link>
               </span>
             </div>
-            {timelineContent}
+            <div id="timeline_timeline_container">{timelineContent}</div>
           </div>
         </div>
         <div className="send_button z-depth-5">

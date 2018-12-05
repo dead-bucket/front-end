@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Tooltip from "@material-ui/core/Tooltip";
+// import Tooltip from "@material-ui/core/Tooltip";
 
 import "./dashboard.css";
 // components
 import Spinner from "../common/Spinner";
-import AddButton from "../common/AddButton";
+// import AddButton from "../common/AddButton";
 import AddFriendModal from "./AddFriendModal";
 
 class Dashboard extends Component {

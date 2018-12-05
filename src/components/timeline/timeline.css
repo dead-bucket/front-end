@@ -28,9 +28,15 @@
 }
 
 /* MESSAGE */
+#timeline_timeline_container {
+  min-width: 75%;
+  height: 400px;
+  overflow-y: scroll;
+}
+
 .timeline_message_container {
-  width: 50%;
-  border-radius: 8%;
+  /* min-width: 75%; */
+  border-radius: 15px;
   padding: 20px;
   margin: 20px;
 }

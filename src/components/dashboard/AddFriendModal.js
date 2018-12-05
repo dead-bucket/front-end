@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -8,7 +8,7 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 
 // Custom Components
-import AddButton from "../common/AddButton";
+// import AddButton from "../common/AddButton";
 
 // CSS
 import "./AddFriendModal.css";
@@ -34,7 +34,10 @@ const styles = theme => ({
   }
 });
 
-class AddFriendModal extends React.Component {
+// TODO - Figure out selecting messages to send
+//  - customize scroll
+
+class AddFriendModal extends Component {
   state = {
     open: false,
     addFriendName: "",

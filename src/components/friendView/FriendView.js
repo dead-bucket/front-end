@@ -45,7 +45,7 @@ class FriendView extends Component {
       loading: true,
       mood: "happy",
       title: "",
-      thought: ""
+      message: ""
     };
   }
 
@@ -67,7 +67,7 @@ class FriendView extends Component {
     const newThought = {
       mood: this.state.mood,
       title: this.state.title,
-      thought: this.state.thought
+      message: this.state.message
     };
     console.log(newThought);
   };
@@ -163,10 +163,10 @@ class FriendView extends Component {
                   fullWidth
                   multiline
                   rows="8"
-                  value={this.state.thought}
+                  value={this.state.message}
                   placeholder="What do you want to [friendname]"
                   className={classes.textField}
-                  onChange={this.handleChange("thought")}
+                  onChange={this.handleChange("message")}
                   margin="normal"
                   variant="outlined"
                 />
