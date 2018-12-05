@@ -47,7 +47,12 @@ class AddFriendModal extends React.Component {
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({
+      open: false,
+      addFriendName: "",
+      addFriendEmail: "",
+      addFriendImageUrl: ""
+    });
   };
 
   handleInputChange = name => event => {
