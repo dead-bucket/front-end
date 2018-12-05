@@ -6,6 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
+import Button from "@material-ui/core/Button";
 
 // component
 import Spinner from "../common/Spinner";
@@ -42,7 +43,9 @@ class FriendView extends Component {
     this.state = {
       friends: [],
       loading: true,
-      mood: "happy"
+      mood: "happy",
+      title: "",
+      message: ""
     };
   }
 
@@ -58,6 +61,17 @@ class FriendView extends Component {
       [name]: event.target.value
     });
   };
+
+  addThought = () => {
+    // TODO - validate inputs
+    const newThought = {
+      mood: this.state.mood,
+      title: this.state.title,
+      message: this.state.message
+    };
+    console.log(newThought);
+  };
+
   render() {
     const { loading, friends } = this.state;
     const { classes } = this.props;
@@ -85,7 +99,7 @@ class FriendView extends Component {
             {this.state.loading ? null : this.state.friends[0].name.first}
           </h1>
           {friendViewContent}
-          {this.state.mood}
+
           <div id="friendview_navigation">
             <span>
               <Link to="/thoughtline" className="friendview_nav_link">
@@ -100,13 +114,14 @@ class FriendView extends Component {
             </span>
           </div>
 
-          <div id="friendview_form_group">
+          <div id="friendview_form_group" className="z-depth-3">
             <form noValidate autoComplete="off">
               <div id="friendview_form_row1">
                 <TextField
                   id="outlined-name"
                   label="Thought Title"
                   name="title"
+                  fullWidth
                   value={this.state.title}
                   onChange={this.handleChange("title")}
                   margin="normal"
@@ -115,6 +130,7 @@ class FriendView extends Component {
                 <TextField
                   id="outlined-select-mood"
                   select
+                  fullWidth
                   label="Mood"
                   value={this.state.mood}
                   onChange={this.handleChange("mood")}
@@ -142,16 +158,28 @@ class FriendView extends Component {
               <div id="friendview_form_row2">
                 <TextField
                   id="outlined-multiline-static"
-                  label="Multiline"
+                  // TODO - jsx the friends name in the label?
+                  label="Your thought about [friendname]"
+                  fullWidth
                   multiline
-                  rows="4"
-                  defaultValue="Thought Body"
-                  // className={classes.textField}
-                  onChange={this.handleChange("mood")}
+                  rows="8"
+                  value={this.state.message}
+                  placeholder="What do you want to [friendname]"
+                  className={classes.textField}
+                  onChange={this.handleChange("message")}
                   margin="normal"
                   variant="outlined"
                 />
               </div>
+              <Button
+                id="AddFriendModal_submit_btn"
+                fullWidth
+                variant="contained"
+                className={classes.button}
+                onClick={this.addThought}
+              >
+                Add Thought
+              </Button>
             </form>
           </div>
         </div>
@@ -159,6 +187,7 @@ class FriendView extends Component {
     );
   }
 }
+
 FriendView.propTypes = {
   classes: PropTypes.object.isRequired
 };

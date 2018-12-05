@@ -102,7 +102,7 @@ class ReceivedTimeline extends Component {
                 </Link>
               </span>
             </div>
-            {timelineContent}
+            <div id="timeline_timeline_container">{timelineContent}</div>
           </div>
         </div>
         {/* <div className="send_button z-depth-5">
