@@ -17,6 +17,7 @@ import NavBar from "./components/common/NavBar";
 import Landing from "./components/landing/Landing";
 import Dashboard from "./components/dashboard/Dashboard";
 import FriendView from "./components/friendView/FriendView";
+import FriendView2 from "./components/friendView/FriendView2";
 import Timeline from "./components/timeline/Timeline";
 import ReceivedTimeline from "./components/receivedTimeline/ReceivedTimeline";
 
@@ -34,6 +35,7 @@ class App extends Component {
               <Route exact path="/" component={Landing} />
               <Route exact path="/dashboard" component={Dashboard} />
               <Route exact path="/friendview" component={FriendView} />
+              <Route exact path="/friendview2" component={FriendView2} />
               <Route exact path="/thoughtline" component={Timeline} />
               <Route exact path="/received" component={ReceivedTimeline} />
             </Switch>

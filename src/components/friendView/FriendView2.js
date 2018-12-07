@@ -12,7 +12,7 @@ import Button from "@material-ui/core/Button";
 import Spinner from "../common/Spinner";
 
 // CSS
-import "./friendView.css";
+import "./friendView2.css";
 
 // Roger Feedback:
 //  - Slimdown thought input - no title
@@ -21,8 +21,6 @@ import "./friendView.css";
 // fix + button styling
 
 // Hook up STORE - Login/Signup / creating friends
-
-//   Add a thought
 
 const moods = [
   { emoji: "\u{1F60D}", value: "love" },
@@ -46,6 +44,57 @@ const styles = theme => ({
     width: 200
   }
 });
+
+// Timeline messages
+const messages = [
+  {
+    id: 1,
+    title: "HELLO WORLD",
+    body: "This is my first thought to you.",
+    emoji: "\u{1F60D}",
+    value: "love",
+    date: "02/08/18",
+    sent: true
+  },
+  {
+    id: 5,
+    title: "You received this",
+    body: "This is my first thought to you.",
+    emoji: "\u{1F60D}",
+    value: "love",
+    date: "02/08/18",
+    sent: false
+  },
+  {
+    id: 2,
+    title: "The day you _____",
+    body: "I thought of you today and it made me sad.",
+    emoji: "\u{1F61F}",
+    value: "sad",
+    date: "06/20/18",
+    sent: true
+  },
+  {
+    id: 3,
+    title: "Bob Ross Ipsum",
+    body:
+      "Anytime you learn something your time and energy are not wasted. We tell people sometimes: we're like drug dealers, come into town and get everybody absolutely addicted to painting. It doesn't take much to get you addicted. You're meant to have fun in life. Fluff that up. Every single thing in the world has its own personality - and it is up to you to make friends with the little rascals. God gave you this gift of imagination. Use it.",
+    emoji: "\u{1F604}",
+    value: "happy",
+    date: "08/01/18",
+    sent: true
+  },
+  {
+    id: 4,
+    title: "Bob Ross Ipsum",
+    body:
+      "Anytime you learn something your time and energy are not wasted. We tell people sometimes: we're like drug dealers, come into town and get everybody absolutely addicted to painting. It doesn't take much to get you addicted. You're meant to have fun in life. Fluff that up. Every single thing in the world has its own personality - and it is up to you to make friends with the little rascals. God gave you this gift of imagination. Use it.",
+    emoji: "\u{1F604}",
+    value: "happy",
+    date: "08/01/18",
+    sent: false
+  }
+];
 
 class FriendView extends Component {
   constructor(props) {
@@ -102,6 +151,34 @@ class FriendView extends Component {
       ));
     }
 
+    let timelineContent = messages.map(message => {
+      if (message.sent === true) {
+        return (
+          <div className="timeline_message_sent z-depth-3" key={message.id}>
+            <p className="timeline_message_text">
+              <em className="timeline_message_title">{message.title}</em>
+              <span>{message.date}</span>
+              <span className="right-align emoji">{message.emoji}</span>
+            </p>
+            <p className="timeline_message_body">{message.body}</p>
+          </div>
+        );
+      } else {
+        return (
+          <div className="timeline_message_recieved_div" key={message.id}>
+            <div className="timeline_message_recieved z-depth-3">
+              <p className="timeline_message_text">
+                <em className="timeline_message_title">{message.title}</em>
+                <span>{message.date}</span>
+                <span className="right-align emoji">{message.emoji}</span>
+              </p>
+              <p className="timeline_message_body">{message.body}</p>
+            </div>
+          </div>
+        );
+      }
+    });
+
     return (
       <div className="container">
         <div id="friendview">
@@ -110,22 +187,9 @@ class FriendView extends Component {
             {this.state.loading ? null : this.state.friends[0].name.first}
           </h1>
           {friendViewContent}
-          <Link to="/friendView2">
-            <button>+ friendView2 +</button>
+          <Link to="/friendView">
+            <button>+ friendView +</button>
           </Link>
-          <div id="friendview_navigation">
-            <span>
-              <Link to="/thoughtline" className="friendview_nav_link">
-                <Icon>arrow_back_ios</Icon>Thoughtline
-              </Link>
-            </span>
-            <span className="friendview_seperator"> | </span>
-            <span>
-              <Link to="/received" className="friendview_nav_link">
-                Received <Icon>arrow_forward_ios</Icon>
-              </Link>
-            </span>
-          </div>
 
           <div id="friendview_form_group" className="z-depth-3">
             <form noValidate autoComplete="off">
@@ -194,6 +258,10 @@ class FriendView extends Component {
                 Add Thought
               </Button>
             </form>
+          </div>
+          <h3>Your Thoughtline</h3>
+          <div id="timeline_timeline_container2" className="z-depth-3">
+            {timelineContent}
           </div>
         </div>
       </div>

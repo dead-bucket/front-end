@@ -3,11 +3,15 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 // import Tooltip from "@material-ui/core/Tooltip";
 
+// Custom Styles
 import "./dashboard.css";
-// components
+// Custom Components
 import Spinner from "../common/Spinner";
 // import AddButton from "../common/AddButton";
 import AddFriendModal from "./AddFriendModal";
+
+// TODO
+//  -Adding a new user: when they click the icon and create a friend, display the friend created in the modal?  If the user exists, show them the badge friend item based on the DB info and let them know the user exists.
 
 class Dashboard extends Component {
   constructor(props) {
