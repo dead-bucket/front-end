@@ -113,6 +113,9 @@ class FriendView extends Component {
           <Link to="/friendView2">
             <button>+ friendView2 +</button>
           </Link>
+          <Link to="/friendView3">
+            <button>+ friendView3 +</button>
+          </Link>
           <div id="friendview_navigation">
             <span>
               <Link to="/thoughtline" className="friendview_nav_link">

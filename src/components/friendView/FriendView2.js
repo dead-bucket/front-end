@@ -190,7 +190,9 @@ class FriendView extends Component {
           <Link to="/friendView">
             <button>+ friendView +</button>
           </Link>
-
+          <Link to="/friendView3">
+            <button>+ friendView3 +</button>
+          </Link>
           <div id="friendview_form_group" className="z-depth-3">
             <form noValidate autoComplete="off">
               <div id="friendview_form_row1">
