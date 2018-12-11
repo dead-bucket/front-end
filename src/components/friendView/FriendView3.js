@@ -7,12 +7,15 @@ import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import Typography from "@material-ui/core/Typography";
 
 // component
 import Spinner from "../common/Spinner";
 
 // CSS
-import "./friendView2.css";
+import "./friendView3.css";
 
 // Roger Feedback:
 //  - Slimdown thought input - no title
@@ -22,28 +25,13 @@ import "./friendView2.css";
 
 // Hook up STORE - Login/Signup / creating friends
 
+//   Add a thought
+
 const moods = [
   { emoji: "\u{1F60D}", value: "love" },
   { emoji: "\u{1F604}", value: "happy" },
   { emoji: "\u{1F61F}", value: "sad" }
 ];
-
-const styles = theme => ({
-  container: {
-    display: "flex",
-    flexWrap: "wrap"
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
-  },
-  dense: {
-    marginTop: 16
-  },
-  menu: {
-    width: 200
-  }
-});
 
 // Timeline messages
 const messages = [
@@ -96,6 +84,35 @@ const messages = [
   }
 ];
 
+const styles = theme => ({
+  container: {
+    display: "flex",
+    flexWrap: "wrap"
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit
+  },
+  dense: {
+    marginTop: 16
+  },
+  menu: {
+    width: 200
+  }
+});
+
+function TabContainer(props) {
+  return (
+    <Typography
+      component="div"
+      id="friendView_tab_container"
+      style={{ padding: 9 * 3 }}
+    >
+      {props.children}
+    </Typography>
+  );
+}
+
 class FriendView extends Component {
   constructor(props) {
     super(props);
@@ -104,7 +121,8 @@ class FriendView extends Component {
       loading: true,
       mood: "happy",
       title: "",
-      message: ""
+      message: "",
+      value: 1
     };
   }
 
@@ -121,6 +139,10 @@ class FriendView extends Component {
     });
   };
 
+  handleTabChange = (event, value) => {
+    this.setState({ value });
+  };
+
   addThought = () => {
     // TODO - validate inputs
     const newThought = {
@@ -134,6 +156,7 @@ class FriendView extends Component {
 
   render() {
     const { loading, friends } = this.state;
+    const { value } = this.state;
     const { classes } = this.props;
     let friendViewContent;
     if (loading) {
@@ -150,8 +173,74 @@ class FriendView extends Component {
         </div>
       ));
     }
+    const friendViewFormGroup = (
+      <div id="friendview_form_group" className="z-depth-3">
+        <form noValidate autoComplete="off">
+          <div id="friendview_form_row1">
+            <TextField
+              id="outlined-name"
+              label="Thought Title"
+              name="title"
+              fullWidth
+              value={this.state.title}
+              onChange={this.handleChange("title")}
+              margin="normal"
+              variant="outlined"
+            />
+            <TextField
+              id="outlined-select-mood"
+              select
+              fullWidth
+              label="Mood"
+              value={this.state.mood}
+              onChange={this.handleChange("mood")}
+              helperText="How are you feeling?"
+              margin="normal"
+              variant="outlined"
+              SelectProps={{
+                MenuProps: {
+                  className: classes.menu
+                }
+              }}
+            >
+              {moods.map(mood => (
+                <MenuItem className="emoji" key={mood.value} value={mood.value}>
+                  {mood.emoji}
+                  {mood.value}
+                </MenuItem>
+              ))}
+            </TextField>
+          </div>
+          <div id="friendview_form_row2">
+            <TextField
+              id="outlined-multiline-static"
+              // TODO - jsx the friends name in the label?
+              label="Your thought about [friendname]"
+              fullWidth
+              multiline
+              rows="8"
+              value={this.state.message}
+              placeholder="What do you want to [friendname]"
+              className={classes.textField}
+              onChange={this.handleChange("message")}
+              margin="normal"
+              variant="outlined"
+            />
+          </div>
+          <Button
+            id="AddFriendModal_submit_btn"
+            fullWidth
+            variant="contained"
+            className={classes.button}
+            onClick={this.addThought}
+          >
+            Add Thought
+          </Button>
+        </form>
+      </div>
+    );
 
-    let timelineContent = messages.map(message => {
+    const timeline = messages.map(message => {
       if (message.sent === true) {
         return (
           <div className="timeline_message_sent z-depth-3" key={message.id}>
@@ -163,7 +252,10 @@ class FriendView extends Component {
             <p className="timeline_message_body">{message.body}</p>
           </div>
         );
-      } else {
+      }
+    });
+    const received = messages.map(message => {
+      if (message.sent === false) {
         return (
           <div className="timeline_message_recieved_div" key={message.id}>
             <div className="timeline_message_recieved z-depth-3">
@@ -178,7 +270,6 @@ class FriendView extends Component {
         );
       }
     });
-
     return (
       <div className="container">
         <div id="friendview">
@@ -187,84 +278,22 @@ class FriendView extends Component {
             {this.state.loading ? null : this.state.friends[0].name.first}
           </h1>
           {friendViewContent}
-          <Link to="/friendView">
-            <button>+ friendView +</button>
+          <Link to="/friendView1">
+            <button>+ friendView1 +</button>
           </Link>
-          <Link to="/friendView3">
-            <button>+ friendView3 +</button>
+          <Link to="/friendView2">
+            <button>+ friendView2 +</button>
           </Link>
-          <div id="friendview_form_group" className="z-depth-3">
-            <form noValidate autoComplete="off">
-              <div id="friendview_form_row1">
-                <TextField
-                  id="outlined-name"
-                  label="Thought Title"
-                  name="title"
-                  fullWidth
-                  value={this.state.title}
-                  onChange={this.handleChange("title")}
-                  margin="normal"
-                  variant="outlined"
-                />
-                <TextField
-                  id="outlined-select-mood"
-                  select
-                  fullWidth
-                  label="Mood"
-                  value={this.state.mood}
-                  onChange={this.handleChange("mood")}
-                  helperText="How are you feeling?"
-                  margin="normal"
-                  variant="outlined"
-                  SelectProps={{
-                    MenuProps: {
-                      className: classes.menu
-                    }
-                  }}
-                >
-                  {moods.map(mood => (
-                    <MenuItem
-                      className="emoji"
-                      key={mood.value}
-                      value={mood.value}
-                    >
-                      {mood.emoji}
-                      {mood.value}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </div>
-              <div id="friendview_form_row2">
-                <TextField
-                  id="outlined-multiline-static"
-                  // TODO - jsx the friends name in the label?
-                  label="Your thought about [friendname]"
-                  fullWidth
-                  multiline
-                  rows="8"
-                  value={this.state.message}
-                  placeholder="What do you want to [friendname]"
-                  className={classes.textField}
-                  onChange={this.handleChange("message")}
-                  margin="normal"
-                  variant="outlined"
-                />
-              </div>
-              <Button
-                id="AddFriendModal_submit_btn"
-                fullWidth
-                variant="contained"
-                className={classes.button}
-                onClick={this.addThought}
-              >
-                Add Thought
-              </Button>
-            </form>
-          </div>
-          <h3>Your Thoughtline</h3>
-          <div id="timeline_timeline_container2" className="z-depth-3">
-            {timelineContent}
-          </div>
+        </div>
+        <div className="z-depth-2" id="friendView_tabs">
+          <Tabs value={value} fullWidth onChange={this.handleTabChange}>
+            <Tab label="Thoughtline" />
+            <Tab label="Write a Thought" />
+            <Tab label="Received" />
+          </Tabs>
+          {value === 0 && <TabContainer>{timeline}</TabContainer>}
+          {value === 1 && <TabContainer>{friendViewFormGroup}</TabContainer>}
+          {value === 2 && <TabContainer>{received}</TabContainer>}
         </div>
       </div>
     );

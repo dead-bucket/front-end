@@ -105,13 +105,16 @@ class FriendView extends Component {
     return (
       <div className="container">
         <div id="friendview">
-          <h5>Your thinking about...</h5>
+          <h5>You're thinking about...</h5>
           <h1 id="friendview_name">
             {this.state.loading ? null : this.state.friends[0].name.first}
           </h1>
           {friendViewContent}
           <Link to="/friendView2">
             <button>+ friendView2 +</button>
+          </Link>
+          <Link to="/friendView3">
+            <button>+ friendView3 +</button>
           </Link>
           <div id="friendview_navigation">
             <span>

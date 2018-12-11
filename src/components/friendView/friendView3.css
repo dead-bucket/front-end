@@ -1,0 +1,72 @@
+#friendview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.friendview_friend {
+  margin: 25px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 25px;
+}
+
+#friendview_friend_img {
+  width: 250px;
+}
+
+#friendview_name {
+  margin: 0px;
+}
+
+#friendview_form_group {
+  display: flex;
+  flex-direction: column;
+  min-width: 75%;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+#friendview_form_row1 {
+  display: flex;
+  justify-content: space-around;
+}
+
+#friendview_form_row2 {
+  display: flex;
+  justify-content: center;
+}
+
+#timeline_timeline_container2 {
+  margin-top: 50px;
+  max-width: 75%;
+
+  border-radius: 15px;
+}
+
+#friendView_tab_container {
+  padding: 10px;
+}
+
+.timeline_message_sent,
+.timeline_message_recieved {
+  width: 90%;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 20px;
+}
+
+.timeline_message_sent {
+  background-color: lightgreen;
+}
+
+.timeline_message_recieved_div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.timeline_message_recieved {
+  background-color: lightblue;
+}
