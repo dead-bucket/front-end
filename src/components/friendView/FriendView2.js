@@ -187,10 +187,10 @@ class FriendView extends Component {
             {this.state.loading ? null : this.state.friends[0].name.first}
           </h1>
           {friendViewContent}
-          <Link to="/friendView">
+          <Link to="/friendview">
             <button>+ friendView +</button>
           </Link>
-          <Link to="/friendView3">
+          <Link to="/friendview3">
             <button>+ friendView3 +</button>
           </Link>
           <div id="friendview_form_group" className="z-depth-3">
