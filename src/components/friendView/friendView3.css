@@ -21,33 +21,36 @@
   margin: 0px;
 }
 
-#friendview_form_group {
-  display: flex;
-  flex-direction: column;
-  min-width: 75%;
-  border-radius: 15px;
-  padding: 20px;
-}
-
-#friendview_form_row1 {
-  display: flex;
-  justify-content: space-around;
-}
-
-#friendview_form_row2 {
+#friendview_container {
   display: flex;
   justify-content: center;
 }
 
-#timeline_timeline_container2 {
-  margin-top: 50px;
-  max-width: 75%;
+#friendview_form_group {
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+  padding: 20px;
+}
 
+#friendview_form_row2 {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+}
+
+#friendView_tabs {
+  margin-bottom: 50px;
+  width: 75%;
   border-radius: 15px;
 }
 
-#friendView_tab_container {
-  padding: 10px;
+/* TIMELINES */
+
+#timeline_timeline_container2 {
+  margin-top: 50px;
+  max-width: 75%;
+  border-radius: 15px;
 }
 
 .timeline_message_sent,
