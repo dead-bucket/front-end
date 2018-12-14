@@ -2,41 +2,63 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
-import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
+
 const styles = {
   composeDiv: {
     display: "flex",
     flexDirection: "column",
-    width: "100%"
+    justifyContent: "start",
+    alignItems: "center",
+    width: "100%",
+    height: "100%"
   },
   thoughtInput: {
-    lineSpacing: 2
+    width: "80%",
+    marginBottom: 40
   },
   //style for font size
   resize: {
-    fontSize: 20
+    fontSize: 15
   },
   colorBlock: {
-    height: 50,
-    width: 50
+    height: 30,
+    width: 30,
+    border: "1px solid #d3d3d3"
+  },
+  colorBlockActive: {
+    height: 30,
+    width: 30,
+    border: "1px solid #d3d3d3"
+  },
+  colorContainer: {
+    display: "flex",
+    justifyContent: "space-around",
+    width: "80%",
+    marginBottom: 40
   }
 };
+
+const colors = [
+  { id: "blue", hex: "#0abab5" },
+  { id: "green", hex: "#98fb98" },
+  { id: "white", hex: "#fff" },
+  { id: "pink", hex: "#ffc0cb" },
+  { id: "red", hex: "#ff0000" }
+];
 
 class ComposeForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       thought: "",
-      thoughtColor: ""
+      thoughtColor: "#0abab5"
     };
-    // this.selectColorBox = this.selectColorBox.bind(this);
   }
 
-  handleChange = name => event => {
-    console.log(event.target.value);
-    this.setState({
-      [name]: event.target.value
-    });
+  handleInputChange = e => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
   };
 
   selectColorBox = color => {
@@ -49,13 +71,12 @@ class ComposeForm extends Component {
     return (
       <div className={classes.composeDiv}>
         <TextField
-          // id="friendview_thought_input"
-          // // TODO - jsx the friends name in the label?
           label="Enter a thought..."
           multiline
-          fullWidth
-          rows="20"
+          rows="10"
+          style={{ backgroundColor: thoughtColor }}
           value={this.state.thought}
+          name="thought"
           placeholder="What do you want to say to [friendname]?"
           className={classes.thoughtInput}
           InputProps={{
@@ -63,25 +84,30 @@ class ComposeForm extends Component {
               input: classes.resize
             }
           }}
-          onChange={this.handleChange("thought")}
+          onChange={this.handleInputChange}
           margin="normal"
           variant="outlined"
         />
-        {this.state.thought}
+
         <div className={classes.colorContainer}>
-          Hello
-          <div
-            className={
-              thoughtColor === "blue" ? "colorBlock blue" : "colorBlock"
-            }
-            name="thoughtColor"
-            value="blue"
-            onClick={() => this.selectColorBox("blue")}
-          >
-            {null}
-            {thoughtColor}
-          </div>
+          {colors.map(color => (
+            <div
+              key={color.id}
+              style={{ backgroundColor: color.hex }}
+              className={classes.colorBlock}
+              onClick={() => this.selectColorBox(color.hex)}
+            />
+          ))}
         </div>
+
+        <Button
+          variant="contained"
+          size="large"
+          color="primary"
+          className={classes.margin}
+        >
+          Add To Thoughtline
+        </Button>
       </div>
     );
   }

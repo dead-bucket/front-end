@@ -10,19 +10,25 @@ import MoveToInbox from "@material-ui/icons/MoveToInbox";
 
 // Custom Components
 import ComposeForm from "./ComposeForm";
+import Thoughtline from "./Thoughtline";
+import Inbox from "./Inbox";
+import FriendCard from "./FriendCard";
+import Spinner from "../common/Spinner";
+
 const styles = {
-  friendViewDiv: {
-    border: "1px solid black"
-  },
+  // friendViewDiv: {
+  //   border: "1px solid black"
+  // },
   friendContainer: {
-    height: 200
-  },
-  actionContainer: {
-    height: 450,
-    margin: 10,
+    height: 250,
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
+    textAlign: "center",
+    paddingTop: 20
+  },
+  actionContainer: {
+    height: 400,
+    margin: 10
   },
   stickToBottom: {
     width: "100%",
@@ -34,6 +40,48 @@ const styles = {
   }
 };
 
+const messages = [
+  {
+    id: 1,
+    body: "This is my first thought to you.",
+    hex: "#0abab5",
+    date: "02/08/18",
+    sent: true
+  },
+  {
+    id: 5,
+    body: "This is my first thought to you.",
+    hex: "#ffc0cb",
+    date: "02/08/18",
+    sent: false
+  },
+  {
+    id: 2,
+
+    body: "I thought of you today and it made me sad.",
+    hex: "#98fb98",
+    date: "06/20/18",
+    sent: true
+  },
+  {
+    id: 3,
+
+    body:
+      "Anytime you learn something your time and energy are not wasted. We tell people sometimes: we're like drug dealers, come into town and get everybody absolutely addicted to painting. It doesn't take much to get you addicted. You're meant to have fun in life. Fluff that up. Every single thing in the world has its own personality - and it is up to you to make friends with the little rascals. God gave you this gift of imagination. Use it.",
+    hex: "#ff0000",
+    date: "08/01/18",
+    sent: true
+  },
+  {
+    id: 4,
+    body:
+      "Anytime you learn something your time and energy are not wasted. We tell people sometimes: we're like drug dealers, come into town and get everybody absolutely addicted to painting. It doesn't take much to get you addicted. You're meant to have fun in life. Fluff that up. Every single thing in the world has its own personality - and it is up to you to make friends with the little rascals. God gave you this gift of imagination. Use it.",
+    hex: "#98fb98",
+    date: "08/01/18",
+    sent: false
+  }
+];
+
 class FriendView4 extends Component {
   state = {
     friend: [],
@@ -44,7 +92,7 @@ class FriendView4 extends Component {
   componentDidMount() {
     axios.get("https://randomuser.me/api/?results=1").then(data => {
       console.log(data.data.results);
-      this.setState({ friends: data.data.results, loading: false });
+      this.setState({ friend: data.data.results, loading: false });
     });
   }
 
@@ -54,28 +102,36 @@ class FriendView4 extends Component {
 
   render() {
     const { classes } = this.props;
-    const { value } = this.state;
-    let actionConent;
+    const { value, friend, loading } = this.state;
+
+    let actionContent;
     switch (value) {
       case 0:
-        actionConent = <h2>This is Thoughtline</h2>;
+        actionContent = <Thoughtline messages={messages} />;
         break;
       case 1:
-        actionConent = <ComposeForm />;
+        actionContent = <ComposeForm />;
         break;
       case 2:
-        actionConent = <h2>This is Inbox</h2>;
+        actionContent = <Inbox messages={messages} />;
         break;
       default:
         return null;
     }
+
+    let friendViewContent;
+    if (loading) {
+      friendViewContent = <Spinner />;
+    } else {
+      console.log("friend done loading", friend);
+      friendViewContent = <FriendCard friend={friend} />;
+    }
+
     return (
       <div>
         <div className={classes.friendViewDiv}>
-          <div className={classes.friendContainer}>
-            This is the friend container
-          </div>
-          <div className={classes.actionContainer}>{actionConent}</div>
+          <div className={classes.friendContainer}>{friendViewContent}</div>
+          <div className={classes.actionContainer}>{actionContent}</div>
         </div>
         <BottomNavigation
           value={value}
@@ -83,7 +139,7 @@ class FriendView4 extends Component {
           showLabels
           className={classes.stickToBottom}
         >
-          <BottomNavigationAction label="Thoughts" icon={<List />} />
+          <BottomNavigationAction label="Thoughtline" icon={<List />} />
           <BottomNavigationAction label="Compose" icon={<AddCircleOutline />} />
           <BottomNavigationAction label="Inbox" icon={<MoveToInbox />} />
         </BottomNavigation>
