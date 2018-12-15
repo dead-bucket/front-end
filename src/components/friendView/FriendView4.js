@@ -16,9 +16,6 @@ import FriendCard from "./FriendCard";
 import Spinner from "../common/Spinner";
 
 const styles = {
-  // friendViewDiv: {
-  //   border: "1px solid black"
-  // },
   friendContainer: {
     height: 250,
     display: "flex",
@@ -28,6 +25,9 @@ const styles = {
   },
   actionContainer: {
     height: 400,
+    display: "flex",
+    justifyContent: "center",
+    textAlign: "center",
     margin: 10
   },
   stickToBottom: {

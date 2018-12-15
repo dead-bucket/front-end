@@ -6,6 +6,12 @@ const styles = {
   inboxContainer: {
     height: "90%",
     overflowY: "scroll"
+  },
+  inboxLineMessage: {
+    textAlign: "left",
+    borderRadius: 15,
+    padding: 20,
+    margin: 20
   }
 };
 class Inbox extends Component {
@@ -15,14 +21,12 @@ class Inbox extends Component {
       if (!message.sent) {
         return (
           <div
-            className="timeline_message_sent z-depth-3"
+            className={classes.inboxLineMessage}
             style={{ backgroundColor: message.hex }}
             key={message.id}
           >
-            <p className="timeline_message_text">
-              <span>{message.date}</span>
-            </p>
-            <p className="timeline_message_body">{message.body}</p>
+            <p style={{ fontSize: 16 }}>{message.date}</p>
+            <p style={{ fontSize: 20 }}>{message.body}</p>
           </div>
         );
       }
