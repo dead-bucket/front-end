@@ -52,7 +52,7 @@ class ComposeForm extends Component {
     super(props);
     this.state = {
       thought: "",
-      thoughtColor: "#0abab5"
+      thoughtColor: "#fff"
     };
   }
 
