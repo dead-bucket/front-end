@@ -2,11 +2,15 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+
+import { registerUser, loginUser } from "../../_actions/authActions";
 
 import "./loginSignup.css";
 
@@ -55,7 +59,48 @@ class LoginSignup extends Component {
     });
   };
 
-  mockLogin = () => this.props.history.push("/dashboard");
+  // this.props.history.push("/dashboard");
+  loginUser = () => {
+    const { email, password1 } = this.state;
+    const loginData = {
+      email,
+      password1
+    };
+
+    this.props.loginUser(loginData);
+  };
+
+  registerUser = () => {
+    //         {value === 0 && <TabContainer>{login}</TabContainer>}
+    // {value === 1 && <TabContainer>{signUp}</TabContainer>}
+    const { name, email, password1 } = this.state;
+    const registerData = {
+      username: name,
+      email,
+      password: password1
+    };
+
+    this.props.registerUser(registerData, this.props.history);
+  };
+
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
+    if (nextProps.errors) {
+      // this.setState({ errors: nextProps.errors });
+      console.log(
+        "Errors in componentWillReceiveProps login/signin",
+        nextProps.errors
+      );
+    }
+  }
 
   render() {
     const { classes } = this.props;
@@ -96,7 +141,7 @@ class LoginSignup extends Component {
               variant="contained"
               color="primary"
               className={classes.button}
-              onClick={this.mockLogin}
+              onClick={this.loginUser}
             >
               Login
             </Button>
@@ -163,7 +208,7 @@ class LoginSignup extends Component {
               variant="contained"
               color="primary"
               className={classes.button}
-              onClick={this.mockLogin}
+              onClick={this.registerUser}
             >
               Signup!
             </Button>
@@ -186,7 +231,17 @@ class LoginSignup extends Component {
 }
 
 LoginSignup.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  registerUser: PropTypes.func.isRequired,
+  loginUser: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(withRouter(LoginSignup));
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { registerUser, loginUser }
+)(withStyles(styles)(withRouter(LoginSignup)));
