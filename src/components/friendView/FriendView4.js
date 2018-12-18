@@ -12,7 +12,7 @@ import MoveToInbox from "@material-ui/icons/MoveToInbox";
 import ComposeForm from "./ComposeForm";
 import Thoughtline from "./Thoughtline";
 import Inbox from "./Inbox";
-import FriendCard from "./FriendCard";
+import FriendCard from "../common/FriendCard";
 import Spinner from "../common/Spinner";
 
 const styles = {
@@ -124,7 +124,7 @@ class FriendView4 extends Component {
       friendViewContent = <Spinner />;
     } else {
       console.log("friend done loading", friend);
-      friendViewContent = <FriendCard friend={friend} />;
+      friendViewContent = <FriendCard friend={friend} view="friendview" />;
     }
 
     return (

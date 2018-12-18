@@ -1,17 +1,25 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-// import Tooltip from "@material-ui/core/Tooltip";
+import { withStyles } from "@material-ui/core";
 
-// Custom Styles
-import "./dashboard.css";
 // Custom Components
 import Spinner from "../common/Spinner";
-// import AddButton from "../common/AddButton";
+import FriendCard from "../common/FriendCard";
 import AddFriendModal from "./AddFriendModal";
 
 // TODO
 //  -Adding a new user: when they click the icon and create a friend, display the friend created in the modal?  If the user exists, show them the badge friend item based on the DB info and let them know the user exists.
+
+const styles = {
+  friendContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-evenly",
+    overflowY: "scroll",
+    height: 550
+  }
+};
 
 class Dashboard extends Component {
   constructor(props) {
@@ -31,35 +39,22 @@ class Dashboard extends Component {
 
   render() {
     const { loading, friends } = this.state;
+    const { classes } = this.props;
     let dashboardContent;
     if (loading) {
       dashboardContent = <Spinner />;
     } else {
       dashboardContent = friends.map(friend => (
-        <div className="dashboard_friend z-depth-3" key={friend.cell}>
-          <img
-            alt=""
-            className="responsive-img circle"
-            src={friend.picture.large}
-          />
-          <p className="center-align" id="dashboard_friend_name">
-            {friend.name.first} {friend.name.last}
-          </p>
-        </div>
+        <FriendCard key={friend.cell} friend={friend} view="dashboard" />
       ));
     }
     return (
       <div>
-        <div className="container">
-          <div id="dashboard">
-            <h3>Write a thought to...</h3>
-
-            {/* <div id="dashboard_friend_container"> */}
-            <Link id="dashboard_friend_container" to="/friendview">
-              {dashboardContent}
-            </Link>
-            {/* </div> */}
-          </div>
+        <div>
+          <h4 style={{ textAlign: "center" }}>Thinking about...</h4>
+          <Link to="/friendview">
+            <div className={classes.friendContainer}>{dashboardContent}</div>
+          </Link>
         </div>
         {/* TODO get tooltip to work */}
         {/* <Tooltip title="Add a new friend" placement="top">
@@ -71,4 +66,4 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+export default withStyles(styles)(Dashboard);

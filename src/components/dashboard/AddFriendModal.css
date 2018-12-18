@@ -1,7 +1,6 @@
 #AddFriendModal_submit_btn {
   background-color: green;
   color: white;
-  font-size: 22px;
 }
 
 #add_friend_modal {
@@ -10,8 +9,8 @@
 }
 
 .add_button {
-  width: 100px;
-  height: 100px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background-color: green;
   text-align: center;
@@ -19,8 +18,8 @@
   justify-content: center;
   align-items: center;
   position: absolute;
-  right: 5%;
-  top: 50%;
+  right: 2%;
+  top: 91%;
 }
 .add_button:hover {
   cursor: pointer;
@@ -32,8 +31,9 @@
 }
 
 .add_button_icon {
-  margin-top: 50px;
-  font-size: 70px;
+  margin-top: 2px;
+  margin-bottom: 5px;
+  font-size: 20px;
   font-weight: bold;
   color: white;
 }
