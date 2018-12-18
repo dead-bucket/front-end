@@ -4,7 +4,6 @@ import { withStyles } from "@material-ui/core";
 
 const styles = {
   timelineContainer: {
-    height: "90%",
     overflowY: "scroll"
   },
   thoughtLineMessage: {
