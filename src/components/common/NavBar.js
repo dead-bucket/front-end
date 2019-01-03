@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { logoutUser } from "../../_actions/authActions";
+
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -45,11 +48,16 @@ class MenuAppBar extends Component {
     this.setState({ anchorEl: null });
   };
 
+  logout = () => {
+    this.props.logoutUser();
+    this.props.history.push("/");
+  };
+
   render() {
     const { classes } = this.props;
     const { auth, anchorEl } = this.state;
     const open = Boolean(anchorEl);
-    //  TODO - need to redirect if not logged in
+
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -69,9 +77,7 @@ class MenuAppBar extends Component {
             >
               Thoughtline
             </Typography>
-            <span>
-              <Link to="/dashboard">Dashboard</Link>
-            </span>
+            <span onClick={this.logout}>Logout</span>
             {auth && (
               <div>
                 <IconButton
@@ -108,8 +114,16 @@ class MenuAppBar extends Component {
   } //end render
 }
 
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
 MenuAppBar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  logoutUser: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(MenuAppBar);
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(withStyles(styles)(withRouter(MenuAppBar)));

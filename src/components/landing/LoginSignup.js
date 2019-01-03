@@ -34,9 +34,6 @@ const styles = theme => ({
 });
 
 class LoginSignup extends Component {
-  state = {
-    value: 0
-  };
   constructor(props) {
     super(props);
     this.state = {
@@ -61,18 +58,17 @@ class LoginSignup extends Component {
 
   // this.props.history.push("/dashboard");
   loginUser = () => {
-    const { email, password1 } = this.state;
+    const { name, password1 } = this.state;
+
     const loginData = {
-      email,
-      password1
+      username: name,
+      password: password1
     };
 
     this.props.loginUser(loginData);
   };
 
   registerUser = () => {
-    //         {value === 0 && <TabContainer>{login}</TabContainer>}
-    // {value === 1 && <TabContainer>{signUp}</TabContainer>}
     const { name, email, password1 } = this.state;
     const registerData = {
       username: name,
@@ -113,12 +109,12 @@ class LoginSignup extends Component {
 
           <TextField
             id="outlined-email"
-            label="Email"
+            label="Username"
             required
             fullWidth
             // className={classes.textField}
-            value={this.state.email}
-            onChange={this.handleInputChange("email")}
+            value={this.state.name}
+            onChange={this.handleInputChange("name")}
             margin="normal"
             variant="outlined"
           />
@@ -238,7 +234,8 @@ LoginSignup.propTypes = {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
+  messages: state.messages
 });
 
 export default connect(

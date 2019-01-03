@@ -4,15 +4,16 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 // auth
-import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
-import { setCurrentUser, logoutUser } from "./_actions/authActions";
-import { clearCurrentProfile } from "./_actions/profileActions";
+// import jwt_decode from "jwt-decode";
+// import { setCurrentUser, logoutUser } from "./_actions/authActions";
+// import { clearCurrentProfile } from "./_actions/profileActions";
 
 // Components
-import PrivateRoute from "./components/common/PrivateRoute";
+
 import NavBar from "./components/common/NavBar";
-import Landing from "./components/landing/Landing";
+import Login from "./components/landing/Login";
+import Signup from "./components/landing/Signup";
 import Dashboard from "./components/dashboard/Dashboard";
 import FriendView4 from "./components/friendView/FriendView4";
 
@@ -23,53 +24,38 @@ window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 if (localStorage.jwtToken) {
   //set the auth token header auth
   setAuthToken(localStorage.jwtToken);
-  //decode token and get user info and expiration
-  const decoded = jwt_decode(localStorage.jwtToken);
-  //set user and isAuthenticated
-  store.dispatch(setCurrentUser(decoded));
+  // //decode token and get user info and expiration
+  // const decoded = jwt_decode(localStorage.jwtToken);
+  // //set user and isAuthenticated
+  // store.dispatch(setCurrentUser(decoded));
 
   // check for expired token
-  const currentTime = Date.now() / 1000;
-  if (decoded.exp < currentTime) {
-    //Logout user
-    store.dispatch(logoutUser());
-    // Clear current profile
-    store.dispatch(clearCurrentProfile());
-    //Redirect to login
-    window.location.href = "/";
-  }
+  // const currentTime = Date.now() / 1000;
+  // if (decoded.exp < currentTime) {
+  //   //Logout user
+  //   store.dispatch(logoutUser());
+  //   // Clear current profile
+  //   store.dispatch(clearCurrentProfile());
+  //   //Redirect to login
+  //   window.location.href = "/";
+  // }
 }
 
 class App extends Component {
   render() {
     return (
-<<<<<<< HEAD
       <Provider store={store}>
         <Router>
           <div>
             <NavBar />
             <div className="App">
               <Switch>
-                <Route exact path="/" component={Landing} />
-                <PrivateRoute exact path="/dashboard" component={Dashboard} />
-                <PrivateRoute
-                  exact
-                  path="/friendview"
-                  component={FriendView4}
-                />
+                <Route exact path="/" component={Login} />
+                <Route exact path="/signup" component={Signup} />
+                <Route exact path="/dashboard" component={Dashboard} />
+                <Route exact path="/friendview" component={FriendView4} />
               </Switch>
             </div>
-=======
-      <Router>
-        <div className="App">
-          <NavBar />
-          <div>
-            <Switch>
-              <Route exact path="/" component={Landing} />
-              <Route exact path="/dashboard" component={Dashboard} />
-              <Route exact path="/friendview" component={FriendView4} />
-            </Switch>
->>>>>>> master
           </div>
         </Router>
       </Provider>
