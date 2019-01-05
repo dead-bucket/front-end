@@ -5,10 +5,14 @@ const styles = {
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  width: 160
+  width: 150,
+  height: 150
 };
+
+const profImg =
+  "https://eadb.org/wp-content/uploads/2015/08/profile-placeholder-300x300.jpg";
+
 function FriendCard(props) {
-  console.log("FriendCard view props", props);
   const { view } = props;
   if (view === "friendview") {
     return (
@@ -16,7 +20,7 @@ function FriendCard(props) {
         <img
           alt="Profile"
           style={{ borderRadius: 40, width: 175 }}
-          src={props.friend[0].picture.large}
+          src={profImg}
         />
         <h4 style={{ marginTop: 0 }}>{props.friend[0].name.first}</h4>
       </div>
@@ -26,10 +30,10 @@ function FriendCard(props) {
       <div style={styles}>
         <img
           alt="Profile"
-          style={{ borderRadius: 20 }}
-          src={props.friend.picture.large}
+          style={{ borderRadius: 40, width: 100 }}
+          src={profImg}
         />
-        <p style={{ marginTop: 0 }}>{props.friend.name.first}</p>
+        <p style={{ marginTop: 0 }}>{props.friend.name}</p>
       </div>
     );
   }
