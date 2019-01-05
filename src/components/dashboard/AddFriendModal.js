@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
+
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Modal from "@material-ui/core/Modal";
@@ -66,13 +68,20 @@ class AddFriendModal extends Component {
 
   addNewFriend = () => {
     // TODO - validate inputs
+    console.log("modal props", this.props);
     const newFriend = {
-      addFriendName: this.state.addFriendName,
-      addFriendEmail: this.state.addFriendEmail,
-      addFriendImageUrl: this.state.addFriendImageUrl
+      name: this.state.addFriendName,
+      email: this.state.addFriendEmail
     };
-    console.log(newFriend);
+    axios
+      .post("http://localhost:3000/api/v1/target/", newFriend)
+      .then(data => {
+        console.log(data);
+      })
+      .catch(err => console.log(err));
+
     this.handleClose();
+    this.props.refreshTargets();
   };
 
   render() {

@@ -12,7 +12,7 @@ export const registerUser = (userData, history) => dispatch => {
       console.log("successful register", res);
       // const token = res.data;
       // localStorage.setItem("jwtToken", token);
-      history.push("/");
+      history.push("/dashboard");
     })
     .catch(err =>
       dispatch({

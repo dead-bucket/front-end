@@ -15,7 +15,7 @@ const styles = {
   friendContainer: {
     display: "flex",
     flexWrap: "wrap",
-    justifyContent: "space-evenly",
+    justifyContent: "space-around",
     overflowY: "scroll",
     height: 550
   }
@@ -29,12 +29,17 @@ class Dashboard extends Component {
       loading: true
     };
   }
+  getTargets = () => {
+    axios
+      .get("http://localhost:3000/api/v1/target/")
+      .then(data => {
+        this.setState({ friends: data.data, loading: false });
+      })
+      .catch(err => console.log(err));
+  };
 
   componentDidMount() {
-    axios.get("https://randomuser.me/api/?results=9").then(data => {
-      console.log(data.data.results);
-      this.setState({ friends: data.data.results, loading: false });
-    });
+    this.getTargets();
   }
 
   render() {
@@ -45,7 +50,7 @@ class Dashboard extends Component {
       dashboardContent = <Spinner />;
     } else {
       dashboardContent = friends.map(friend => (
-        <FriendCard key={friend.cell} friend={friend} view="dashboard" />
+        <FriendCard key={friend._id} friend={friend} view="dashboard" />
       ));
     }
     return (
@@ -60,7 +65,7 @@ class Dashboard extends Component {
         {/* <Tooltip title="Add a new friend" placement="top">
           <AddButton />
         </Tooltip> */}
-        <AddFriendModal />
+        <AddFriendModal refreshTargets={this.getTargets} />
       </div>
     );
   }
