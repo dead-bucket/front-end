@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core";
+import PropTypes from "prop-types";
 
 // Custom Components
 import Spinner from "../common/Spinner";
 import FriendCard from "../common/FriendCard";
 import AddFriendModal from "./AddFriendModal";
 
-// TODO
-//  -Adding a new user: when they click the icon and create a friend, display the friend created in the modal?  If the user exists, show them the badge friend item based on the DB info and let them know the user exists.
-
+//Redux
+import { connect } from "react-redux";
+import { setCurrentTarget } from "../../_actions/profileActions";
 const styles = {
   friendContainer: {
     display: "flex",
@@ -38,6 +38,11 @@ class Dashboard extends Component {
       .catch(err => console.log(err));
   };
 
+  setTarget = friend => {
+    this.props.setCurrentTarget(friend);
+    this.props.history.push("/friendview");
+  };
+
   componentDidMount() {
     this.getTargets();
   }
@@ -50,16 +55,19 @@ class Dashboard extends Component {
       dashboardContent = <Spinner />;
     } else {
       dashboardContent = friends.map(friend => (
-        <FriendCard key={friend._id} friend={friend} view="dashboard" />
+        <FriendCard
+          key={friend._id}
+          friend={friend}
+          handleSetTarget={this.setTarget}
+          view="dashboard"
+        />
       ));
     }
     return (
       <div>
         <div>
           <h4 style={{ textAlign: "center" }}>Thinking about...</h4>
-          <Link to="/friendview">
-            <div className={classes.friendContainer}>{dashboardContent}</div>
-          </Link>
+          <div className={classes.friendContainer}>{dashboardContent}</div>
         </div>
         {/* TODO get tooltip to work */}
         {/* <Tooltip title="Add a new friend" placement="top">
@@ -71,4 +79,15 @@ class Dashboard extends Component {
   }
 }
 
-export default withStyles(styles)(Dashboard);
+Dashboard.propTypes = {
+  target: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  target: state.target
+});
+
+export default connect(
+  mapStateToProps,
+  { setCurrentTarget }
+)(withStyles(styles)(Dashboard));

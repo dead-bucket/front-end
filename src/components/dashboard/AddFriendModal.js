@@ -68,7 +68,6 @@ class AddFriendModal extends Component {
 
   addNewFriend = () => {
     // TODO - validate inputs
-    console.log("modal props", this.props);
     const newFriend = {
       name: this.state.addFriendName,
       email: this.state.addFriendEmail
@@ -76,7 +75,7 @@ class AddFriendModal extends Component {
     axios
       .post("http://localhost:3000/api/v1/target/", newFriend)
       .then(data => {
-        console.log(data);
+        console.log("Friend Created");
       })
       .catch(err => console.log(err));
 

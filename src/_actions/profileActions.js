@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import {
+  SET_CURRENT_TARGET,
   GET_PROFILE,
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
@@ -8,6 +9,14 @@ import {
   SET_CURRENT_USER,
   GET_PROFILES
 } from "./types";
+
+// set the current target so that FriendView can be displayed
+export const setCurrentTarget = friend => dispatch => {
+  dispatch({
+    type: SET_CURRENT_TARGET,
+    payload: friend
+  });
+};
 
 //  Get All Profiles
 export const getProfiles = () => dispatch => {

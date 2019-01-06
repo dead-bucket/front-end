@@ -9,20 +9,18 @@ const styles = {
   height: 150
 };
 
-const profImg =
-  "https://eadb.org/wp-content/uploads/2015/08/profile-placeholder-300x300.jpg";
-
 function FriendCard(props) {
-  const { view } = props;
+  const { view, friend } = props;
+
   if (view === "friendview") {
     return (
       <div style={styles}>
         <img
           alt="Profile"
-          style={{ borderRadius: 40, width: 175 }}
-          src={profImg}
+          style={{ borderRadius: 40, marginTop: 150 }}
+          src={friend.picture}
         />
-        <h4 style={{ marginTop: 0 }}>{props.friend[0].name.first}</h4>
+        <h4 style={{ marginTop: 0 }}>{friend.name}</h4>
       </div>
     );
   } else if (view === "dashboard") {
@@ -31,7 +29,8 @@ function FriendCard(props) {
         <img
           alt="Profile"
           style={{ borderRadius: 40, width: 100 }}
-          src={profImg}
+          src={friend.picture}
+          onClick={() => props.handleSetTarget(friend)}
         />
         <p style={{ marginTop: 0 }}>{props.friend.name}</p>
       </div>
