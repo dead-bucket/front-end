@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
 import { withRouter, Link } from "react-router-dom";
+//REDUX
 import { connect } from "react-redux";
-
+import { loginUser } from "../../_actions/authActions";
+// MaterialUI
+import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-
-import { loginUser } from "../../_actions/authActions";
 
 const styles = {
   loginSignupContainer: {

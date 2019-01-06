@@ -9,9 +9,8 @@ export const registerUser = (userData, history) => dispatch => {
   axios
     .post("/api/v1/signup", userData)
     .then(res => {
-      console.log("successful register", res);
-      // const token = res.data;
-      // localStorage.setItem("jwtToken", token);
+      const token = res.data;
+      localStorage.setItem("jwtToken", token);
       history.push("/dashboard");
     })
     .catch(err =>

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
+import isEmpty from "../../utils/isEmpty";
+// MaterialUI
 import { withStyles } from "@material-ui/core";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
@@ -14,6 +16,9 @@ import Thoughtline from "./Thoughtline";
 import Inbox from "./Inbox";
 import FriendCard from "../common/FriendCard";
 import Spinner from "../common/Spinner";
+
+//Redux
+import { connect } from "react-redux";
 
 const styles = {
   friendContainer: {
@@ -84,16 +89,13 @@ const messages = [
 
 class FriendView4 extends Component {
   state = {
-    friend: [],
-    loading: true,
     value: 1
   };
 
   componentDidMount() {
-    axios.get("https://randomuser.me/api/?results=1").then(data => {
-      console.log(data.data.results);
-      this.setState({ friend: data.data.results, loading: false });
-    });
+    if (isEmpty(this.props.target)) {
+      this.props.history.push("/dashboard");
+    }
   }
 
   handleBottomChange = (event, value) => {
@@ -102,7 +104,8 @@ class FriendView4 extends Component {
 
   render() {
     const { classes } = this.props;
-    const { value, friend, loading } = this.state;
+    const { target } = this.props.target;
+    const { value } = this.state;
 
     let actionContent;
     switch (value) {
@@ -120,11 +123,10 @@ class FriendView4 extends Component {
     }
 
     let friendViewContent;
-    if (loading) {
+    if (!target) {
       friendViewContent = <Spinner />;
     } else {
-      console.log("friend done loading", friend);
-      friendViewContent = <FriendCard friend={friend} view="friendview" />;
+      friendViewContent = <FriendCard friend={target} view="friendview" />;
     }
 
     return (
@@ -152,4 +154,11 @@ FriendView4.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(FriendView4);
+const mapStateToProps = state => ({
+  target: state.target
+});
+
+export default connect(
+  mapStateToProps,
+  {}
+)(withStyles(styles)(FriendView4));

@@ -15,7 +15,7 @@ import NavBar from "./components/common/NavBar";
 import Login from "./components/landing/Login";
 import Signup from "./components/landing/Signup";
 import Dashboard from "./components/dashboard/Dashboard";
-import FriendView4 from "./components/friendView/FriendView4";
+import FriendView from "./components/friendView/FriendView4";
 
 // for removing material-ui typography warning
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
@@ -53,7 +53,7 @@ class App extends Component {
                 <Route exact path="/" component={Login} />
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/dashboard" component={Dashboard} />
-                <Route exact path="/friendview" component={FriendView4} />
+                <Route exact path="/friendview" component={FriendView} />
               </Switch>
             </div>
           </div>

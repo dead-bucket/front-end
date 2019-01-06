@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutUser } from "../../_actions/authActions";
 
@@ -78,6 +78,8 @@ class MenuAppBar extends Component {
               Thoughtline
             </Typography>
             <span onClick={this.logout}>Logout</span>
+            <br />
+            <Link to="/dashboard">Dashboard</Link>
             {auth && (
               <div>
                 <IconButton
