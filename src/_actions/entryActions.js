@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { GET_USER_ENTRIES } from "../_actions/types";
 export const postEntry = entry => {
   axios
     .post("/api/v1/entry", entry)
@@ -16,4 +16,21 @@ export const postEntry = entry => {
     //     "__v": 0
     // }
     .catch(err => console.log(err));
+};
+
+export const getEntries = targetId => {
+  // need to correctly add-on targetID to request
+  return dispatch => {
+    return axios
+      .post("/api/v1/targetentry/", {
+        recipient: targetId
+      })
+      .then(data =>
+        dispatch({
+          type: GET_USER_ENTRIES,
+          payload: data.data.userEntries
+        })
+      )
+      .catch(err => console.log(err));
+  };
 };

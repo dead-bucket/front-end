@@ -23,7 +23,6 @@ export const loginUser = (userData, history) => {
         }
       })
       .then(res => {
-        console.log("loginUser res:", res);
         const token = res.data;
         localStorage.setItem("jwtToken", token);
         setAuthToken(token);

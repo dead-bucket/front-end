@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import PropTypes from "prop-types";
 import isEmpty from "../../utils/isEmpty";
 // MaterialUI
@@ -18,6 +19,7 @@ import Spinner from "../common/Spinner";
 
 //Redux
 import { connect } from "react-redux";
+import { getEntries } from "../../_actions/entryActions";
 
 const styles = {
   friendContainer: {
@@ -44,48 +46,6 @@ const styles = {
   }
 };
 
-const messages = [
-  {
-    id: 1,
-    body: "This is my first thought to you.",
-    hex: "#0abab5",
-    date: "02/08/18",
-    sent: true
-  },
-  {
-    id: 5,
-    body: "This is my first thought to you.",
-    hex: "#ffc0cb",
-    date: "02/08/18",
-    sent: false
-  },
-  {
-    id: 2,
-
-    body: "I thought of you today and it made me sad.",
-    hex: "#98fb98",
-    date: "06/20/18",
-    sent: true
-  },
-  {
-    id: 3,
-
-    body:
-      "Anytime you learn something your time and energy are not wasted. We tell people sometimes: we're like drug dealers, come into town and get everybody absolutely addicted to painting. It doesn't take much to get you addicted. You're meant to have fun in life. Fluff that up. Every single thing in the world has its own personality - and it is up to you to make friends with the little rascals. God gave you this gift of imagination. Use it.",
-    hex: "#ff0000",
-    date: "08/01/18",
-    sent: true
-  },
-  {
-    id: 4,
-    body:
-      "Anytime you learn something your time and energy are not wasted. We tell people sometimes: we're like drug dealers, come into town and get everybody absolutely addicted to painting. It doesn't take much to get you addicted. You're meant to have fun in life. Fluff that up. Every single thing in the world has its own personality - and it is up to you to make friends with the little rascals. God gave you this gift of imagination. Use it.",
-    hex: "#98fb98",
-    date: "08/01/18",
-    sent: false
-  }
-];
-
 class FriendView4 extends Component {
   state = {
     value: 1
@@ -94,6 +54,8 @@ class FriendView4 extends Component {
   componentDidMount() {
     if (isEmpty(this.props.profile)) {
       this.props.history.push("/dashboard");
+    } else {
+      this.props.getEntries(this.props.profile.target._id);
     }
   }
 
@@ -109,13 +71,13 @@ class FriendView4 extends Component {
     let actionContent;
     switch (value) {
       case 0:
-        actionContent = <Thoughtline messages={messages} />;
+        actionContent = <Thoughtline />;
         break;
       case 1:
         actionContent = <ComposeForm />;
         break;
       case 2:
-        actionContent = <Inbox messages={messages} />;
+        actionContent = <Inbox />;
         break;
       default:
         return null;
@@ -151,7 +113,8 @@ class FriendView4 extends Component {
 
 FriendView4.propTypes = {
   classes: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  getEntries: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -160,5 +123,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {}
+  { getEntries }
 )(withStyles(styles)(FriendView4));

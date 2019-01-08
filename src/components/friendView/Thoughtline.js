@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
 
 const styles = {
@@ -15,20 +16,19 @@ const styles = {
 };
 class Thoughtline extends Component {
   render() {
-    const { messages, classes } = this.props;
-    let messageContent = messages.map(message => {
-      if (message.sent) {
-        return (
-          <div
-            className={classes.thoughtLineMessage}
-            style={{ backgroundColor: message.hex }}
-            key={message.id}
-          >
-            <p style={{ fontSize: 16 }}>{message.date}</p>
-            <p style={{ fontSize: 20 }}>{message.body}</p>
-          </div>
-        );
-      }
+    const { classes } = this.props;
+    let messageContent = this.props.userEntries.map(entry => {
+      return (
+        <div
+          className={classes.thoughtLineMessage}
+          style={{ backgroundColor: entry.mood }}
+          key={entry.id}
+        >
+          {/* TODO: convert date format */}
+          <p style={{ fontSize: 16 }}>{entry.createdAt}</p>
+          <p style={{ fontSize: 20 }}>{entry.description}</p>
+        </div>
+      );
     });
 
     return <div className={classes.timelineContainer}>{messageContent}</div>;
@@ -36,7 +36,15 @@ class Thoughtline extends Component {
 }
 
 Thoughtline.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  userEntries: PropTypes.array.isRequired
 };
 
-export default withStyles(styles)(Thoughtline);
+const mapStateToProps = state => ({
+  userEntries: state.entries.userEntries
+});
+
+export default connect(
+  mapStateToProps,
+  {}
+)(withStyles(styles)(Thoughtline));
