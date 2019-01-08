@@ -16,20 +16,28 @@ const styles = {
 };
 class Thoughtline extends Component {
   render() {
-    const { classes } = this.props;
-    let messageContent = this.props.userEntries.map(entry => {
-      return (
-        <div
-          className={classes.thoughtLineMessage}
-          style={{ backgroundColor: entry.mood }}
-          key={entry.id}
-        >
-          {/* TODO: convert date format */}
-          <p style={{ fontSize: 16 }}>{entry.createdAt}</p>
-          <p style={{ fontSize: 20 }}>{entry.description}</p>
-        </div>
+    const { classes, userEntries } = this.props;
+
+    let messageContent;
+    if (userEntries.length === 0) {
+      messageContent = (
+        <h5>You haven't entered a thought for this friend yet...</h5>
       );
-    });
+    } else {
+      messageContent = userEntries.map(entry => {
+        return (
+          <div
+            className={classes.thoughtLineMessage}
+            style={{ backgroundColor: entry.mood }}
+            key={entry.id}
+          >
+            {/* TODO: convert date format */}
+            <p style={{ fontSize: 16 }}>{entry.createdAt}</p>
+            <p style={{ fontSize: 20 }}>{entry.description}</p>
+          </div>
+        );
+      });
+    }
 
     return <div className={classes.timelineContainer}>{messageContent}</div>;
   }
