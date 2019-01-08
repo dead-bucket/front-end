@@ -69,10 +69,6 @@ class ComposeForm extends Component {
   };
 
   submitThought = () => {
-    // body of request
-    // recipient: {type: mongoose.Schema.Types.ObjectId, required: true, ref: 'targetModel'},
-    // mood: {type: String, required: false},
-    // description: {type: String, required: false },
     const newEntry = {
       recipient: this.props.profile.target._id,
       mood: this.state.thoughtColor,
