@@ -1,8 +1,11 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+
+import { postEntry } from "../../_actions/entryActions";
 
 const styles = {
   composeDiv: {
@@ -65,6 +68,25 @@ class ComposeForm extends Component {
     this.setState({ thoughtColor: color });
   };
 
+  submitThought = () => {
+    // body of request
+    // recipient: {type: mongoose.Schema.Types.ObjectId, required: true, ref: 'targetModel'},
+    // mood: {type: String, required: false},
+    // description: {type: String, required: false },
+    const newEntry = {
+      recipient: this.props.profile.target._id,
+      mood: this.state.thoughtColor,
+      description: this.state.thought
+    };
+
+    postEntry(newEntry);
+    // TODO - have some sort of confirmation for user on successful post
+    this.setState({
+      thought: "",
+      thoughtColor: "#fff"
+    });
+  };
+
   render() {
     const { classes } = this.props;
     const { thoughtColor } = this.state;
@@ -105,6 +127,7 @@ class ComposeForm extends Component {
           size="large"
           color="primary"
           className={classes.margin}
+          onClick={this.submitThought}
         >
           Add To Thoughtline
         </Button>
@@ -114,7 +137,15 @@ class ComposeForm extends Component {
 }
 
 ComposeForm.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ComposeForm);
+const mapStateToProps = state => ({
+  profile: state.profile
+});
+
+export default connect(
+  mapStateToProps,
+  {}
+)(withStyles(styles)(ComposeForm));
