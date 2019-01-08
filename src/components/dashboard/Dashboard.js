@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { withStyles } from "@material-ui/core";
-import PropTypes from "prop-types";
 
 // Custom Components
 import Spinner from "../common/Spinner";
@@ -30,6 +29,7 @@ class Dashboard extends Component {
     };
   }
   getTargets = () => {
+    // TODO : move to profile actions
     axios
       .get("http://localhost:3000/api/v1/target/")
       .then(data => {
@@ -79,15 +79,7 @@ class Dashboard extends Component {
   }
 }
 
-Dashboard.propTypes = {
-  target: PropTypes.object.isRequired
-};
-
-const mapStateToProps = state => ({
-  target: state.target
-});
-
 export default connect(
-  mapStateToProps,
+  null,
   { setCurrentTarget }
 )(withStyles(styles)(Dashboard));

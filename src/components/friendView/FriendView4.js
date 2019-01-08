@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import PropTypes from "prop-types";
 import isEmpty from "../../utils/isEmpty";
 // MaterialUI
@@ -93,7 +92,7 @@ class FriendView4 extends Component {
   };
 
   componentDidMount() {
-    if (isEmpty(this.props.target)) {
+    if (isEmpty(this.props.profile)) {
       this.props.history.push("/dashboard");
     }
   }
@@ -104,7 +103,7 @@ class FriendView4 extends Component {
 
   render() {
     const { classes } = this.props;
-    const { target } = this.props.target;
+    const { target } = this.props.profile;
     const { value } = this.state;
 
     let actionContent;
@@ -151,11 +150,12 @@ class FriendView4 extends Component {
 }
 
 FriendView4.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  target: state.target
+  profile: state.profile
 });
 
 export default connect(

@@ -51,7 +51,7 @@ class Login extends Component {
       username,
       password
     };
-
+    console.log("loginData:", loginData);
     this.props.loginUser(loginData, this.props.history);
   };
 
