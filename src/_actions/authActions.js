@@ -8,6 +8,7 @@ export const registerUser = (userData, history) => dispatch => {
     .then(res => {
       const token = res.data;
       localStorage.setItem("jwtToken", token);
+      setAuthToken(token);
       history.push("/dashboard");
     })
     .catch(err => console.log("signup error: ", err));
