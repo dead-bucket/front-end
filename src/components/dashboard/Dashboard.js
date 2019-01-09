@@ -54,14 +54,20 @@ class Dashboard extends Component {
     if (loading) {
       dashboardContent = <Spinner />;
     } else {
-      dashboardContent = friends.map(friend => (
-        <FriendCard
-          key={friend._id}
-          friend={friend}
-          handleSetTarget={this.setTarget}
-          view="dashboard"
-        />
-      ));
+      if (friends.length === 0) {
+        dashboardContent = (
+          <h5>...adding a friend by clicking the green add button. :)</h5>
+        );
+      } else {
+        dashboardContent = friends.map(friend => (
+          <FriendCard
+            key={friend._id}
+            friend={friend}
+            handleSetTarget={this.setTarget}
+            view="dashboard"
+          />
+        ));
+      }
     }
     return (
       <div>
