@@ -9,6 +9,7 @@
     "jwt-decode": "^2.2.0",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
+    "react-avatar-edit": "^0.7.1",
     "react-dom": "^16.6.3",
     "react-redux": "^5.1.1",
     "react-router-dom": "^4.3.1",
