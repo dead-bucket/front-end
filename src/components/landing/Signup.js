@@ -8,6 +8,8 @@ import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 
+import ImgUpload from "../common/ImgUpload";
+
 import { registerUser } from "../../_actions/authActions";
 
 const styles = {
@@ -63,6 +65,7 @@ class Signup extends Component {
         <h1>Welcome to Thoughtline</h1>
         <Card className={classes.signupCard}>
           <p>Create a Thoughtline Account</p>
+          <ImgUpload />
           <form autoComplete="off">
             <p>* = required field</p>
             <TextField
