@@ -64,14 +64,14 @@ class FriendView4 extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, getEntries } = this.props;
     const { target } = this.props.profile;
     const { value } = this.state;
 
     let actionContent;
     switch (value) {
       case 0:
-        actionContent = <Thoughtline />;
+        actionContent = <Thoughtline onClick={getEntries(target._id)} />;
         break;
       case 1:
         actionContent = <ComposeForm />;

@@ -1,33 +1,32 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
+import { withStyles } from "@material-ui/core";
 import Avatar from "react-avatar-edit";
+
+const styles = {
+  uploadContainer: {
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center"
+  }
+};
 
 class ImgUpload extends Component {
   constructor(props) {
     super(props);
     const src = "https://img.icons8.com/android/100/000000/user.png";
-    // const src = SOURCE_PATH + "/einshtein.jpg";
     this.state = {
       preview: null,
-      defaultPreview: null,
       src
     };
     this.onCrop = this.onCrop.bind(this);
-    this.onCropDefault = this.onCropDefault.bind(this);
     this.onClose = this.onClose.bind(this);
-    this.onCloseDefault = this.onCloseDefault.bind(this);
-  }
-
-  onCropDefault(preview) {
-    this.setState({ defaultPreview: preview });
   }
 
   onCrop(preview) {
     this.setState({ preview });
-  }
-
-  onCloseDefault() {
-    this.setState({ defaultPreview: null });
+    // preview is a base64 string
+    // console.log(preview)
   }
 
   onClose() {
@@ -35,37 +34,39 @@ class ImgUpload extends Component {
   }
 
   render() {
+    const { classes } = this.props;
+
     return (
       <div className="container-fluid">
-        <div className="row" style={{ marginTop: "45px" }}>
+        <div className="row">
           <div className="col-8">
-            <h4>Default usage</h4>
-            {this.state.preview}
+            <p>Profile Image</p>
           </div>
         </div>
-        <div className="row">
-          <div className="col-5">
+        <div className={classes.uploadContainer}>
+          <div>
             <Avatar
-              width={390}
-              height={295}
-              onCrop={this.onCropDefault}
-              onClose={this.onCloseDefault}
+              width={150}
+              height={150}
+              onCrop={this.onCrop}
+              onClose={this.onClose}
               // src={this.state.src}
             />
           </div>
-          <div className="col-2">
-            <h5>Preview</h5>
+          <div>
+            <p>Preview</p>
             <img
               alt=""
-              style={{ width: "150px", height: "150px" }}
-              src={this.state.defaultPreview}
+              style={{ width: "100px", height: "100px" }}
+              src={this.state.preview}
             />
           </div>
-          <div className="col-3" />
         </div>
       </div>
     );
   }
 }
 
-export default ImgUpload;
+// TODO: Proptypes if necessary
+
+export default withStyles(styles)(ImgUpload);

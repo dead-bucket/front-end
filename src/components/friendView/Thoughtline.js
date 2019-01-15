@@ -29,7 +29,7 @@ class Thoughtline extends Component {
           <div
             className={classes.thoughtLineMessage}
             style={{ backgroundColor: entry.mood }}
-            key={entry.id}
+            key={entry._id}
           >
             {/* TODO: convert date format */}
             <p style={{ fontSize: 16 }}>{entry.createdAt}</p>
