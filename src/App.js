@@ -10,12 +10,13 @@ import setAuthToken from "./utils/setAuthToken";
 // import { clearCurrentProfile } from "./_actions/profileActions";
 
 // Components
-
 import NavBar from "./components/common/NavBar";
 import Login from "./components/landing/Login";
 import Signup from "./components/landing/Signup";
 import Dashboard from "./components/dashboard/Dashboard";
 import FriendView from "./components/friendView/FriendView4";
+
+import "./App.css";
 
 // for removing material-ui typography warning
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;

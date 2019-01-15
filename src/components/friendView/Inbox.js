@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
 
 const styles = {
@@ -22,7 +22,7 @@ class Inbox extends Component {
     let messageContent;
     if (messages.length === 0) {
       messageContent = (
-        <h5>You haven't received a thought for this friend yet...</h5>
+        <h5>You haven't received a thought from this friend yet...</h5>
       );
     } else {
       // messageContent = messages.map(entry => {
