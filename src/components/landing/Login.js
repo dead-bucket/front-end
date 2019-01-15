@@ -47,6 +47,10 @@ class Login extends Component {
   loginUser = () => {
     const { username, password } = this.state;
 
+    if (!username || !password) {
+      console.log("fill out form");
+      return;
+    }
     const loginData = {
       username,
       password
@@ -58,7 +62,11 @@ class Login extends Component {
     const { classes } = this.props;
 
     return (
-      <div className={classes.loginSignupContainer}>
+      <div
+        tabIndex={-1}
+        className={classes.loginSignupContainer}
+        onKeyDown={e => (e.key === "Enter" ? this.loginUser() : null)}
+      >
         <h1>Welcome to Thoughtline</h1>
         <Card className={classes.loginCard}>
           <p>Login to your Thoughtline</p>

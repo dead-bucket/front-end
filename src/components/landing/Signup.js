@@ -46,8 +46,12 @@ class Signup extends Component {
 
   registerUser = () => {
     // TODO - Authenticate passwords
+    // TODO - Pass props to get the image base data, and send it some
     const { username, email, password } = this.state;
-
+    if (!username && !email && !password) {
+      console.log("fill out form");
+      return;
+    }
     const signupData = {
       username,
       email,
@@ -61,9 +65,13 @@ class Signup extends Component {
     const { classes } = this.props;
 
     return (
-      <div className={classes.loginSignupContainer}>
+      <div
+        tabIndex={-1}
+        className={classes.loginSignupContainer}
+        onKeyDown={e => (e.key === "Enter" ? this.registerUser() : null)}
+      >
         <h1>Welcome to Thoughtline</h1>
-        <Card className={classes.signupCard}>
+        <Card className={classes.signupCard} onSubmit={this.onCommentSubmit}>
           <p>Create a Thoughtline Account</p>
           <ImgUpload />
           <form autoComplete="off">

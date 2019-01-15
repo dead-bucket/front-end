@@ -2,15 +2,13 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 
+import ImgUpload from "../common/ImgUpload";
+
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
-
 import TextField from "@material-ui/core/TextField";
-
-// Custom Components
-// import AddButton from "../common/AddButton";
 
 // CSS
 import "./AddFriendModal.css";
@@ -35,9 +33,6 @@ const styles = theme => ({
     padding: theme.spacing.unit * 4
   }
 });
-
-// TODO - Figure out selecting messages to send
-//  - customize scroll
 
 class AddFriendModal extends Component {
   state = {
@@ -72,6 +67,8 @@ class AddFriendModal extends Component {
       name: this.state.addFriendName,
       email: this.state.addFriendEmail
     };
+
+    // TODO - move to actions
     axios
       .post("http://localhost:3000/api/v1/target/", newFriend)
       .then(data => {
@@ -128,7 +125,7 @@ class AddFriendModal extends Component {
               margin="normal"
               variant="outlined"
             />
-            <TextField
+            {/* <TextField
               id="outlined-friend-email-input"
               label="Friend's image address"
               className={classes.textField}
@@ -139,7 +136,8 @@ class AddFriendModal extends Component {
               autoComplete="current-image"
               margin="normal"
               variant="outlined"
-            />
+            /> */}
+            <ImgUpload />
             <div>
               <Button
                 id="AddFriendModal_submit_btn"
