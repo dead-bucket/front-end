@@ -37,9 +37,9 @@ const styles = theme => ({
 class AddFriendModal extends Component {
   state = {
     open: false,
-    addFriendName: "",
-    addFriendEmail: "",
-    addFriendImageUrl: ""
+    name: "",
+    email: "",
+    image: ""
   };
 
   handleOpen = () => {
@@ -49,9 +49,9 @@ class AddFriendModal extends Component {
   handleClose = () => {
     this.setState({
       open: false,
-      addFriendName: "",
-      addFriendEmail: "",
-      addFriendImageUrl: ""
+      name: "",
+      email: "",
+      image: ""
     });
   };
 
@@ -61,16 +61,31 @@ class AddFriendModal extends Component {
     });
   };
 
-  addNewFriend = () => {
-    // TODO - validate inputs
-    const newFriend = {
-      name: this.state.addFriendName,
-      email: this.state.addFriendEmail
-    };
+  handleProfileImg = image => {
+    this.setState({ image });
+  };
 
+  addNewTarget = () => {
+    // TODO - validate inputs
+    const { name, email, image } = this.state;
+    let newTarget;
+    if (!image) {
+      newTarget = {
+        name,
+        email
+      };
+    } else {
+      newTarget = {
+        name,
+        email,
+        image
+      };
+    }
+
+    // console.log(newTarget);
     // TODO - move to actions
     axios
-      .post("http://localhost:3000/api/v1/target/", newFriend)
+      .post("http://localhost:3000/api/v1/target/", newTarget)
       .then(data => {
         console.log("Friend Created");
       })
@@ -101,14 +116,15 @@ class AddFriendModal extends Component {
             <Typography variant="h6" id="modal-title">
               Add a New Friend!
             </Typography>
+            {/* TODO - fix padding on input fields */}
             <TextField
               id="outlined-friend-name-input"
               label="Friend's Name"
               required
               fullWidth
               className={classes.textField}
-              value={this.state.addFriendName}
-              onChange={this.handleInputChange("addFriendName")}
+              value={this.state.name}
+              onChange={this.handleInputChange("name")}
               margin="normal"
               variant="outlined"
             />
@@ -119,32 +135,21 @@ class AddFriendModal extends Component {
               type="email"
               fullWidth
               required
-              value={this.state.addFriendEmail}
-              onChange={this.handleInputChange("addFriendEmail")}
+              value={this.state.email}
+              onChange={this.handleInputChange("email")}
               autoComplete="current-email"
               margin="normal"
               variant="outlined"
             />
-            {/* <TextField
-              id="outlined-friend-email-input"
-              label="Friend's image address"
-              className={classes.textField}
-              fullWidth
-              required
-              value={this.state.addFriendImageUrl}
-              onChange={this.handleInputChange("addFriendImageUrl")}
-              autoComplete="current-image"
-              margin="normal"
-              variant="outlined"
-            /> */}
-            <ImgUpload />
+
+            <ImgUpload updateImg={this.handleProfileImg} />
             <div>
               <Button
                 id="AddFriendModal_submit_btn"
                 fullWidth
                 variant="contained"
                 className={classes.button}
-                onClick={this.addNewFriend}
+                onClick={this.addNewTarget}
               >
                 Add Friend
               </Button>

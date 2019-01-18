@@ -14,10 +14,9 @@ const styles = {
 class ImgUpload extends Component {
   constructor(props) {
     super(props);
-    const src = "https://img.icons8.com/android/100/000000/user.png";
+
     this.state = {
-      preview: null,
-      src
+      preview: null
     };
     this.onCrop = this.onCrop.bind(this);
     this.onClose = this.onClose.bind(this);
@@ -25,8 +24,7 @@ class ImgUpload extends Component {
 
   onCrop(preview) {
     this.setState({ preview });
-    // preview is a base64 string
-    // console.log(preview)
+    this.props.updateImg(preview);
   }
 
   onClose() {

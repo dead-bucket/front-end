@@ -27,16 +27,17 @@ const styles = {
 };
 
 class Signup extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: "",
-      email: "",
-      imgLink: "",
-      password: "",
-      password2: ""
-    };
-  }
+  state = {
+    username: "",
+    email: "",
+    picture: "",
+    password: "",
+    password2: ""
+  };
+
+  handleProfileImg = picture => {
+    this.setState({ picture });
+  };
 
   handleInputChange = name => event => {
     this.setState({
@@ -47,16 +48,28 @@ class Signup extends Component {
   registerUser = () => {
     // TODO - Authenticate passwords
     // TODO - Pass props to get the image base data, and send it some
-    const { username, email, password } = this.state;
+    const { username, email, password, picture } = this.state;
     if (!username && !email && !password) {
       console.log("fill out form");
       return;
     }
-    const signupData = {
-      username,
-      email,
-      password
-    };
+    let signupData;
+    if (!picture) {
+      signupData = {
+        username,
+        email,
+        password
+      };
+    } else {
+      signupData = {
+        username,
+        email,
+        password,
+        picture
+      };
+    }
+
+    // console.log(signupData);
 
     this.props.registerUser(signupData, this.props.history);
   };
@@ -73,7 +86,7 @@ class Signup extends Component {
         <h1>Welcome to Thoughtline</h1>
         <Card className={classes.signupCard} onSubmit={this.onCommentSubmit}>
           <p>Create a Thoughtline Account</p>
-          <ImgUpload />
+          <ImgUpload updateImg={this.handleProfileImg} />
           <form autoComplete="off">
             <p>* = required field</p>
             <TextField
