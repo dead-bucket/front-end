@@ -25,21 +25,6 @@ window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 if (localStorage.jwtToken) {
   //set the auth token header auth
   setAuthToken(localStorage.jwtToken);
-  // //decode token and get user info and expiration
-  // const decoded = jwt_decode(localStorage.jwtToken);
-  // //set user and isAuthenticated
-  // store.dispatch(setCurrentUser(decoded));
-
-  // check for expired token
-  // const currentTime = Date.now() / 1000;
-  // if (decoded.exp < currentTime) {
-  //   //Logout user
-  //   store.dispatch(logoutUser());
-  //   // Clear current profile
-  //   store.dispatch(clearCurrentProfile());
-  //   //Redirect to login
-  //   window.location.href = "/";
-  // }
 }
 
 class App extends Component {
