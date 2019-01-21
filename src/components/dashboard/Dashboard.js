@@ -46,9 +46,6 @@ class Dashboard extends Component {
   componentDidMount() {
     this.getTargets();
   }
-  componentDidUpdate() {
-    this.getTargets();
-  }
 
   render() {
     const { loading, friends } = this.state;
