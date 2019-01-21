@@ -17,6 +17,7 @@ const styles = {
 class Thoughtline extends Component {
   render() {
     const { classes, userEntries } = this.props;
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', time: '12h' };
 
     let messageContent;
     if (userEntries.length === 0) {
@@ -25,14 +26,16 @@ class Thoughtline extends Component {
       );
     } else {
       messageContent = userEntries.map(entry => {
+        let d = new Date(entry.createdAt);
+
         return (
           <div
-            className={classes.thoughtLineMessage}
-            style={{ backgroundColor: entry.mood }}
-            key={entry._id}
+          className={classes.thoughtLineMessage}
+          style={{ backgroundColor: entry.mood }}
+          key={entry._id}
           >
-            {/* TODO: convert date format */}
-            <p style={{ fontSize: 16 }}>{entry.createdAt}</p>
+            {/* TODO: convert date format converted to readable time - roger */}
+            <p style={{ fontSize: 12 }}>{d.toLocaleDateString('en-US', options)}{'  '}{d.toLocaleTimeString()}</p>
             <p style={{ fontSize: 20 }}>{entry.description}</p>
           </div>
         );

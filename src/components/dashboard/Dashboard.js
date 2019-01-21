@@ -47,6 +47,7 @@ class Dashboard extends Component {
     this.getTargets();
   }
   componentDidUpdate() {
+    console.log('update ran');
     this.getTargets();
   }
 
