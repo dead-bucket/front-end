@@ -33,7 +33,6 @@ class Dashboard extends Component {
     axios
       .get("/api/v1/target/")
       .then(data => {
-        console.log(data);
         this.setState({ friends: data.data, loading: false });
       })
       .catch(err => console.log(err));
