@@ -9,11 +9,15 @@ export const registerUser = (userData, history) => {
     return axios
       .post("/api/v1/signup", userData)
       .then(res => {
-        console.log(res);
-        // const token = res.data;
-        // localStorage.setItem("jwtToken", token);
-        // setAuthToken(token);
-        // history.push("/dashboard");
+        const { token, user } = res.data;
+        localStorage.setItem("jwtToken", token);
+        setAuthToken(token);
+        dispatch({
+          type: SET_CURRENT_USER,
+          payload: user
+        });
+
+        history.push("/dashboard");
       })
       .catch(err => console.log("signup error: ", err));
   };

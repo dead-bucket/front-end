@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import axios from "axios";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import isEmpty from "../../utils/isEmpty";
 // MaterialUI
@@ -9,6 +9,8 @@ import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import List from "@material-ui/icons/List";
 import AddCircleOutline from "@material-ui/icons/AddCircleOutline";
 import MoveToInbox from "@material-ui/icons/MoveToInbox";
+import Home from "@material-ui/icons/Home";
+import IconButton from "@material-ui/core/IconButton";
 
 // Custom Components
 import ComposeForm from "./ComposeForm";
@@ -43,6 +45,20 @@ const styles = {
   },
   root: {
     width: "100%"
+  },
+  dashboardIconStyle: {
+    position: "absolute",
+    top: "10%",
+    left: "10%"
+  },
+  medium: {
+    width: 60,
+    height: 60,
+    padding: 12
+  },
+  mediumIcon: {
+    width: 40,
+    height: 40
   }
 };
 
@@ -92,6 +108,14 @@ class FriendView4 extends Component {
 
     return (
       <div>
+        <div className={classes.dashboardIconStyle}>
+          <Link to="/dashboard">
+            <IconButton style={styles.medium}>
+              <Home style={styles.mediumIcon} />
+            </IconButton>
+          </Link>
+        </div>
+
         <div className={classes.friendViewDiv}>
           <div className={classes.friendContainer}>{friendViewContent}</div>
           <div className={classes.actionContainer}>{actionContent}</div>
