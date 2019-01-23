@@ -87,7 +87,6 @@ class AddFriendModal extends Component {
     axios
       .post("http://localhost:3000/api/v1/target/", newTarget)
       .then(data => {
-        console.log("Friend Created");
         this.props.refreshTargets();
       })
       .catch(err => console.log(err));
