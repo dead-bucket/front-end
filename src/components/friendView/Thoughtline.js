@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
-
+import SendEntriesModal from "./SendEntriesModal";
 const styles = {
   timelineContainer: {
     overflowY: "scroll"
@@ -11,7 +11,8 @@ const styles = {
     textAlign: "left",
     borderRadius: 15,
     padding: 20,
-    margin: 20
+    margin: 20,
+    border: "1px solid black"
   }
 };
 class Thoughtline extends Component {
@@ -39,7 +40,12 @@ class Thoughtline extends Component {
       });
     }
 
-    return <div className={classes.timelineContainer}>{messageContent}</div>;
+    return (
+      <div className={classes.timelineContainer}>
+        <SendEntriesModal />
+        {messageContent}
+      </div>
+    );
   }
 }
 

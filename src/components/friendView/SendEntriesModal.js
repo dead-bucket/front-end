@@ -2,16 +2,16 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 
-import ImgUpload from "../common/ImgUpload";
-
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import IconButton from "@material-ui/core/IconButton";
+import Send from "@material-ui/icons/Send";
 
 // CSS
-import "./AddFriendModal.css";
+// import "./SendEntriesModal.css";
 
 function getModalStyle() {
   const top = 50;
@@ -31,15 +31,27 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4
+  },
+  medium: {
+    width: 60,
+    height: 60,
+    padding: 12
+  },
+  mediumIcon: {
+    width: 40,
+    height: 40
+  },
+  sendIconStyle: {
+    position: "absolute",
+    top: "10%",
+    right: "10%"
   }
 });
 
-class AddFriendModal extends Component {
+class SendEntriesModal extends Component {
   state = {
     open: false,
-    name: "",
-    email: "",
-    image: ""
+    name: ""
   };
 
   handleOpen = () => {
@@ -48,10 +60,7 @@ class AddFriendModal extends Component {
 
   handleClose = () => {
     this.setState({
-      open: false,
-      name: "",
-      email: "",
-      image: ""
+      open: false
     });
   };
 
@@ -61,58 +70,28 @@ class AddFriendModal extends Component {
     });
   };
 
-  handleProfileImg = image => {
-    this.setState({ image });
-  };
-
-  addNewTarget = () => {
-    // TODO - validate inputs
-    const { name, email, image } = this.state;
-    let newTarget;
-    if (!image) {
-      newTarget = {
-        name,
-        email
-      };
-    } else {
-      newTarget = {
-        name,
-        email,
-        image
-      };
-    }
-
-    // TODO - move to actions
-    axios
-      .post("http://localhost:3000/api/v1/target/", newTarget)
-      .then(data => {
-        this.props.refreshTargets();
-      })
-      .catch(err => console.log(err));
-
-    this.handleClose();
-  };
-
   render() {
     const { classes } = this.props;
     return (
       <div>
-        <div onClick={this.handleOpen} className="add_button z-depth-5">
-          <p className="add_button_icon">+</p>
+        <div onClick={this.handleOpen} className={classes.sendIconStyle}>
+          <IconButton className={classes.medium}>
+            <Send className={classes.mediumIcon} />
+          </IconButton>
         </div>
         <Modal
-          aria-labelledby="add-friend-modal"
-          aria-describedby="create a new friend by entering their name, email, image address"
+          aria-labelledby="send-thoughts-modal"
+          aria-describedby="send your thoughts to current friend"
           open={this.state.open}
           onClose={this.handleClose}
         >
           <div
             style={getModalStyle()}
             className={classes.paper}
-            id="add_friend_modal"
+            id="send_thoughts_modal"
           >
             <Typography variant="h6" id="modal-title">
-              Add a New Friend!
+              Send your thoughts to [friendName]
             </Typography>
             {/* TODO - fix padding on input fields */}
             <TextField
@@ -126,30 +105,10 @@ class AddFriendModal extends Component {
               margin="normal"
               variant="outlined"
             />
-            <TextField
-              id="outlined-friend-email-input"
-              label="Friend's email"
-              className={classes.textField}
-              type="email"
-              fullWidth
-              required
-              value={this.state.email}
-              onChange={this.handleInputChange("email")}
-              autoComplete="current-email"
-              margin="normal"
-              variant="outlined"
-            />
 
-            <ImgUpload updateImg={this.handleProfileImg} />
             <div>
-              <Button
-                id="AddFriendModal_submit_btn"
-                fullWidth
-                variant="contained"
-                className={classes.button}
-                onClick={this.addNewTarget}
-              >
-                Add Friend
+              <Button fullWidth variant="contained" className={classes.button}>
+                Send Thoughts
               </Button>
             </div>
           </div>
@@ -159,8 +118,8 @@ class AddFriendModal extends Component {
   }
 }
 
-AddFriendModal.propTypes = {
+SendEntriesModal.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(AddFriendModal);
+export default withStyles(styles)(SendEntriesModal);

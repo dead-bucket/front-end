@@ -12,7 +12,8 @@ const styles = {
     textAlign: "left",
     borderRadius: 15,
     padding: 20,
-    margin: 20
+    margin: 20,
+    border: "1px solid black"
   }
 };
 const messages = [];

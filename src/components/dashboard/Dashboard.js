@@ -10,6 +10,7 @@ import AddFriendModal from "./AddFriendModal";
 //Redux
 import { connect } from "react-redux";
 import { setCurrentTarget } from "../../_actions/profileActions";
+
 const styles = {
   friendContainer: {
     display: "flex",
