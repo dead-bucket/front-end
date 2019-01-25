@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
+import Moment from "react-moment";
 import SendEntriesModal from "./SendEntriesModal";
+
 const styles = {
   timelineContainer: {
     overflowY: "scroll"
@@ -33,7 +35,9 @@ class Thoughtline extends Component {
             key={entry._id}
           >
             {/* TODO: convert date format */}
-            <p style={{ fontSize: 16 }}>{entry.createdAt}</p>
+            <p style={{ fontSize: 16 }}>
+              <Moment format="LLL">{entry.createdAt}</Moment>
+            </p>
             <p style={{ fontSize: 20 }}>{entry.description}</p>
           </div>
         );
