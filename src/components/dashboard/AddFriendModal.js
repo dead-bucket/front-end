@@ -82,7 +82,6 @@ class AddFriendModal extends Component {
       };
     }
 
-    // console.log(newTarget);
     // TODO - move to actions
     axios
       .post("http://localhost:3000/api/v1/target/", newTarget)
