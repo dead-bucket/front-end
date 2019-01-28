@@ -36,7 +36,7 @@ class Thoughtline extends Component {
           >
             {/* TODO: convert date format */}
             <p style={{ fontSize: 16 }}>
-              <Moment format="LLL">{entry.createdAt}</Moment>
+              <Moment format="YYYY/MM/DD">{entry.createdAt}</Moment>
             </p>
             <p style={{ fontSize: 20 }}>{entry.description}</p>
           </div>
