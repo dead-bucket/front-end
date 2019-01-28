@@ -5,13 +5,15 @@ import { withStyles } from "@material-ui/core";
 
 const styles = {
   timelineContainer: {
-    overflowY: "scroll"
+    overflowY: "scroll",
+    width: "80%",
   },
   thoughtLineMessage: {
     textAlign: "left",
     borderRadius: 15,
     padding: 20,
     margin: 20
+    
   }
 };
 class Thoughtline extends Component {
