@@ -22,18 +22,17 @@ const styles = {
 };
 
 class Dashboard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      friends: [],
-      loading: true
-    };
-  }
+  state = {
+    friends: [],
+    loading: true
+  };
+
   getTargets = () => {
     // TODO : move to profile actions
     axios
       .get("/api/v1/target/")
       .then(data => {
+        console.log(data);
         this.setState({ friends: data.data, loading: false });
       })
       .catch(err => console.log(err));
@@ -57,7 +56,7 @@ class Dashboard extends Component {
     } else {
       if (friends.length === 0) {
         dashboardContent = (
-          <h5>...adding a friend by clicking the green add button. :)</h5>
+          <h5>...adding a friend with add button below. :)</h5>
         );
       } else {
         dashboardContent = friends.map(friend => (
@@ -76,10 +75,6 @@ class Dashboard extends Component {
           <h4 style={{ textAlign: "center" }}>Thinking about...</h4>
           <div className={classes.friendContainer}>{dashboardContent}</div>
         </div>
-        {/* TODO get tooltip to work */}
-        {/* <Tooltip title="Add a new friend" placement="top">
-          <AddButton />
-        </Tooltip> */}
         <AddFriendModal refreshTargets={this.getTargets} />
       </div>
     );

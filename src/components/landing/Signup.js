@@ -28,6 +28,8 @@ const styles = {
 
 class Signup extends Component {
   state = {
+    firstname: "",
+    lastname: "",
     username: "",
     email: "",
     picture: "",
@@ -47,25 +49,34 @@ class Signup extends Component {
 
   registerUser = () => {
     // TODO - Authenticate passwords
-    // TODO - Pass props to get the image base data, and send it some
-    const { username, email, password, picture } = this.state;
-    if (!username && !email && !password) {
+
+    const {
+      firstname,
+      lastname,
+      username,
+      email,
+      password,
+      picture
+    } = this.state;
+    if (!username || !email || !password) {
       console.log("fill out form");
       return;
     }
     let signupData;
-    if (!picture) {
+    if (firstname && lastname && username && email && password && picture) {
       signupData = {
+        firstname,
+        lastname,
         username,
         email,
-        password
+        password,
+        picture
       };
     } else {
       signupData = {
         username,
         email,
-        password,
-        picture
+        password
       };
     }
 
@@ -73,7 +84,7 @@ class Signup extends Component {
 
     this.props.registerUser(signupData, this.props.history);
   };
-
+  // TODO - get rid of ids on TextFields
   render() {
     const { classes } = this.props;
 
@@ -90,7 +101,27 @@ class Signup extends Component {
           <form autoComplete="off">
             <p>* = required field</p>
             <TextField
-              id="outlined-name"
+              id="outlined-firstname"
+              label="First name"
+              fullWidth
+              // className={classes.textField}
+              value={this.state.firstname}
+              onChange={this.handleInputChange("firstname")}
+              margin="normal"
+              variant="outlined"
+            />
+            <TextField
+              id="outlined-lastname"
+              label="Lastname"
+              fullWidth
+              // className={classes.textField}
+              value={this.state.lastname}
+              onChange={this.handleInputChange("lastname")}
+              margin="normal"
+              variant="outlined"
+            />
+            <TextField
+              id="outlined-username"
               label="Username"
               required
               fullWidth

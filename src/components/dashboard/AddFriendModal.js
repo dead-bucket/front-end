@@ -9,9 +9,8 @@ import Typography from "@material-ui/core/Typography";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-
-// CSS
-import "./AddFriendModal.css";
+import IconButton from "@material-ui/core/IconButton";
+import PersonAdd from "@material-ui/icons/PersonAdd";
 
 function getModalStyle() {
   const top = 50;
@@ -31,8 +30,28 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4
+  },
+  medium: {
+    width: 60,
+    height: 60,
+    padding: 12
+  },
+  mediumIcon: {
+    width: 40,
+    height: 40
+  },
+  addIconStyle: {
+    position: "absolute",
+    bottom: "5%",
+    right: "10%"
   }
 });
+
+// // VALIDATE email function
+// function validateEmail(email) {
+//   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+//   return re.test(String(email).toLowerCase());
+// }
 
 class AddFriendModal extends Component {
   state = {
@@ -56,8 +75,9 @@ class AddFriendModal extends Component {
   };
 
   handleInputChange = name => event => {
+    const { value } = event.target;
     this.setState({
-      [name]: event.target.value
+      [name]: value
     });
   };
 
@@ -84,7 +104,7 @@ class AddFriendModal extends Component {
 
     // TODO - move to actions
     axios
-      .post("http://localhost:3000/api/v1/target/", newTarget)
+      .post("/api/v1/target/", newTarget)
       .then(data => {
         this.props.refreshTargets();
       })
@@ -93,12 +113,21 @@ class AddFriendModal extends Component {
     this.handleClose();
   };
 
+  userSearch = term => {
+    axios
+      .get("/api/v1/usersearch/?email=" + term)
+      .then(data => console.log(data))
+      .catch(err => console.log(err));
+  };
+
   render() {
     const { classes } = this.props;
     return (
       <div>
-        <div onClick={this.handleOpen} className="add_button z-depth-5">
-          <p className="add_button_icon">+</p>
+        <div onClick={this.handleOpen} className={classes.addIconStyle}>
+          <IconButton className={classes.medium}>
+            <PersonAdd className={classes.mediumIcon} />
+          </IconButton>
         </div>
         <Modal
           aria-labelledby="add-friend-modal"

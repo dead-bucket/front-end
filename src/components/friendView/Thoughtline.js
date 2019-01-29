@@ -11,6 +11,7 @@ const styles = {
   },
   thoughtLineMessage: {
     textAlign: "left",
+    width: 300,
     borderRadius: 15,
     padding: 20,
     margin: 20,
@@ -34,7 +35,6 @@ class Thoughtline extends Component {
             style={{ backgroundColor: entry.mood }}
             key={entry._id}
           >
-            {/* TODO: convert date format */}
             <p style={{ fontSize: 16 }}>
               <Moment format="YYYY/MM/DD">{entry.createdAt}</Moment>
             </p>
@@ -46,7 +46,7 @@ class Thoughtline extends Component {
 
     return (
       <div className={classes.timelineContainer}>
-        <SendEntriesModal />
+        {userEntries.length > 0 ? <SendEntriesModal /> : null}
         {messageContent}
       </div>
     );
