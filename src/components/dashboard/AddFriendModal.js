@@ -58,7 +58,8 @@ class AddFriendModal extends Component {
     open: false,
     name: "",
     email: "",
-    image: ""
+    image: "",
+    isUser: false,
   };
 
   handleOpen = () => {
@@ -75,7 +76,33 @@ class AddFriendModal extends Component {
   };
 
   handleInputChange = name => event => {
+    function validateEmail(email) {
+      var re = /\S+@\S+\.\S+/;
+      return re.test(email);
+    }
     const { value } = event.target;
+    if (name === "email") {
+      console.log('hello im changing email');
+      this.setState({
+        isUser: false,
+      })
+      if (validateEmail(value)) {
+        axios
+          .get("http://localhost:4000/api/v1/usersearch/?email=" + value)
+            .then(data => {
+              // console.log('i\'m the data back from search', data.data[0].picture);
+              if(data.status === 200) {
+                this.setState({
+                  name: data.data[0].username,
+                  image: data.data[0].picture,
+                  isUser: true,
+                })
+
+              }
+            })
+            .catch(err => console.log(err));
+      }
+    }
     this.setState({
       [name]: value
     });
@@ -122,6 +149,12 @@ class AddFriendModal extends Component {
 
   render() {
     const { classes } = this.props;
+    let displayedImage;
+    if (!this.state.isUser) {
+      displayedImage = <ImgUpload updateImg={this.handleProfileImg} />;
+    } else {
+      displayedImage = <img src={this.state.image} />;
+    }
     return (
       <div>
         <div onClick={this.handleOpen} className={classes.addIconStyle}>
@@ -168,8 +201,10 @@ class AddFriendModal extends Component {
               margin="normal"
               variant="outlined"
             />
-
-            <ImgUpload updateImg={this.handleProfileImg} />
+            
+            {displayedImage}
+            
+            
             <div>
               <Button
                 id="AddFriendModal_submit_btn"
