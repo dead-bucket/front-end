@@ -9,9 +9,10 @@ const styles = {
   timelineContainer: {
     overflowY: "scroll"
   },
+  // TODO - Center Messages
   thoughtLineMessage: {
     textAlign: "left",
-    width: 300,
+    width: "80%",
     borderRadius: 15,
     padding: 20,
     margin: 20,

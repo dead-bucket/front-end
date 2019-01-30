@@ -58,7 +58,8 @@ class AddFriendModal extends Component {
     open: false,
     name: "",
     email: "",
-    image: ""
+    image: "",
+    userFound: null
   };
 
   handleOpen = () => {
@@ -113,15 +114,44 @@ class AddFriendModal extends Component {
     this.handleClose();
   };
 
-  userSearch = term => {
-    axios
-      .get("/api/v1/usersearch/?email=" + term)
-      .then(data => console.log(data))
-      .catch(err => console.log(err));
+  userSearch = () => {
+    const { email } = this.state;
+    if (email) {
+      axios
+        .get("/api/v1/usersearch/?email=" + this.state.email)
+
+        .then(data => console.log(data))
+        .catch(err => console.log(err));
+    }
   };
 
   render() {
     const { classes } = this.props;
+    const { userFound } = this.state;
+
+    let addFriendImage;
+    if (userFound === true) {
+      // add found name and found Image to state and display that info
+    } else if (userFound === false) {
+      addFriendImage = (
+        <div>
+          <p>Friend email not found. Please add a new image for your friend:</p>
+          <ImgUpload updateImg={this.handleProfileImg} />
+          <div>
+            <Button
+              id="AddFriendModal_submit_btn"
+              fullWidth
+              variant="contained"
+              className={classes.button}
+              onClick={this.addNewTarget}
+            >
+              Add Friend
+            </Button>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div>
         <div onClick={this.handleOpen} className={classes.addIconStyle}>
@@ -168,19 +198,9 @@ class AddFriendModal extends Component {
               margin="normal"
               variant="outlined"
             />
-
-            <ImgUpload updateImg={this.handleProfileImg} />
-            <div>
-              <Button
-                id="AddFriendModal_submit_btn"
-                fullWidth
-                variant="contained"
-                className={classes.button}
-                onClick={this.addNewTarget}
-              >
-                Add Friend
-              </Button>
-            </div>
+            {userFound === null ? (
+              <button onClick={this.userSearch}>Search Email</button>
+            ) : null}
           </div>
         </Modal>
       </div>
