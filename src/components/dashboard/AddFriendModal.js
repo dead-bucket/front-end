@@ -56,7 +56,7 @@ const styles = theme => ({
 class AddFriendModal extends Component {
   state = {
     open: false,
-    name: "",
+    username: "",
     email: "",
     image: "",
     isUser: false,
@@ -69,7 +69,7 @@ class AddFriendModal extends Component {
   handleClose = () => {
     this.setState({
       open: false,
-      name: "",
+      username: "",
       email: "",
       image: ""
     });
@@ -114,16 +114,16 @@ class AddFriendModal extends Component {
 
   addNewTarget = () => {
     // TODO - validate inputs
-    const { name, email, image } = this.state;
+    const { username, email, image } = this.state;
     let newTarget;
     if (!image) {
       newTarget = {
-        name,
+        username,
         email
       };
     } else {
       newTarget = {
-        name,
+        username,
         email,
         image
       };
@@ -183,8 +183,8 @@ class AddFriendModal extends Component {
               required
               fullWidth
               className={classes.textField}
-              value={this.state.name}
-              onChange={this.handleInputChange("name")}
+              value={this.state.username}
+              onChange={this.handleInputChange("username")}
               margin="normal"
               variant="outlined"
             />

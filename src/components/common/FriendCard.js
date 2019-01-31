@@ -28,7 +28,7 @@ function FriendCard(props) {
     return (
       <div style={friendViewStyles}>
         <img alt="Profile" style={friendViewImage} src={friend.picture} />
-        <h4 style={{ marginTop: 0 }}>{friend.name}</h4>
+        <h4 style={{ marginTop: 0 }}>{friend.username}</h4>
       </div>
     );
   } else if (view === "dashboard") {
@@ -40,7 +40,7 @@ function FriendCard(props) {
           src={friend.picture}
           onClick={() => props.handleSetTarget(friend)}
         />
-        <p style={{ marginTop: 0 }}>{props.friend.name}</p>
+        <p style={{ marginTop: 0 }}>{props.friend.username}</p>
       </div>
     );
   }
