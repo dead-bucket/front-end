@@ -30,7 +30,7 @@ class Dashboard extends Component {
   getTargets = () => {
     // TODO : move to profile actions
     axios
-      .get("/api/v1/target/")
+      .get("/api/v1/dashboard/")
       .then(data => {
         console.log(data);
         this.setState({ friends: data.data, loading: false });

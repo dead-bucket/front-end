@@ -96,6 +96,7 @@ class AddFriendModal extends Component {
                   name: data.data[0].username,
                   image: data.data[0].picture,
                   isUser: true,
+                  isUser_id: data.data[0]._id,
                 })
 
               }
@@ -114,7 +115,7 @@ class AddFriendModal extends Component {
 
   addNewTarget = () => {
     // TODO - validate inputs
-    const { username, email, image } = this.state;
+    const { username, email, image, isUser } = this.state;
     let newTarget;
     if (!image) {
       newTarget = {
@@ -128,14 +129,26 @@ class AddFriendModal extends Component {
         image
       };
     }
+    if(!isUser) {
+      axios
+        .post("/api/v1/target/", newTarget)
+        .then(data => {
+          this.props.refreshTargets();
+        })
+        .catch(err => console.log(err));
 
+    }
+    if(isUser) {
+      let friend = {friend:this.state.isUser_id};
+      axios
+        .put("/api/v1/addfriend", friend)
+        .then(data => {
+          this.props.refreshTargets();
+        })
+        .catch(err => console.log(err));
+
+    }
     // TODO - move to actions
-    axios
-      .post("/api/v1/target/", newTarget)
-      .then(data => {
-        this.props.refreshTargets();
-      })
-      .catch(err => console.log(err));
 
     this.handleClose();
   };
