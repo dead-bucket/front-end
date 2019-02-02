@@ -44,6 +44,16 @@ const styles = theme => ({
     position: "absolute",
     bottom: "5%",
     right: "10%"
+  },
+  userImageModal: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  modalNav: {
+    display: "flex",
+    justifyContent: "space-around"
   }
 });
 
@@ -56,11 +66,13 @@ function validateEmail(email) {
 class AddFriendModal extends Component {
   state = {
     open: false,
-    name: "",
+    username: "",
     email: "",
     image: "",
     modalStage: 0,
-    foundUser: false
+    isUser: false,
+    isUser_id: null,
+    errorMessage: null
   };
 
   handleOpen = () => {
@@ -84,17 +96,23 @@ class AddFriendModal extends Component {
         .get("/api/v1/usersearch/?email=" + value)
         .then(data => {
           console.log("USER SEARCH:", data);
-          // console.log('i\'m the data back from search', data.data[0].picture);
-          // if (data.status === 200) {
-          //   this.setState({
-          //     name: data.data[0].username,
-          //     image: data.data[0].picture,
-          //     isUser: true,
-          //     isUser_id: data.data[0]._id
-          //   });
-          // }
+
+          if (data.status === 200) {
+            this.setState({
+              username: data.data[0].firstname,
+              image: data.data[0].picture,
+              isUser: true,
+              isUser_id: data.data[0]._id,
+              errorMessage: null
+            });
+          }
         })
-        .catch(err => console.log(err));
+        .catch(err =>
+          this.setState({
+            errorMessage:
+              "User not found! Try again or click Next to add a private Friend."
+          })
+        );
     }
 
     this.setState({
@@ -114,17 +132,15 @@ class AddFriendModal extends Component {
 
   addNewTarget = () => {
     // TODO - validate inputs
-    const { username, email, image } = this.state;
+    const { username, image } = this.state;
     let newTarget;
     if (!image) {
       newTarget = {
-        username,
-        email
+        username
       };
     } else {
       newTarget = {
         username,
-        email,
         image
       };
     }
@@ -146,20 +162,21 @@ class AddFriendModal extends Component {
       .put("/api/v1/addfriend", friend)
       .then(data => {
         this.props.refreshTargets();
+        this.handleClose();
       })
       .catch(err => console.log(err));
   };
 
-  userSearch = term => {
-    axios
-      .get("/api/v1/usersearch/?email=" + term)
-      .then(data => console.log(data))
-      .catch(err => console.log(err));
-  };
+  // userSearch = term => {
+  //   axios
+  //     .get("/api/v1/usersearch/?email=" + term)
+  //     .then(data => console.log(data))
+  //     .catch(err => console.log(err));
+  // };
 
   render() {
     const { classes } = this.props;
-    const { modalStage, foundUser } = this.state;
+    const { modalStage, isUser, errorMessage, image, username } = this.state;
 
     let modalContent;
     if (modalStage === 0) {
@@ -190,9 +207,51 @@ class AddFriendModal extends Component {
             margin="normal"
             variant="outlined"
           />
-          {!foundUser ? (
-            <button onClick={this.incrementModalStage}>Next</button>
-          ) : null}
+          {errorMessage ? <p style={{ color: "red" }}>{errorMessage}</p> : null}
+          {!isUser ? (
+            <button onClick={this.incrementModalStage}>
+              Add Private Friend
+            </button>
+          ) : (
+            <div>
+              <div className={classes.userImageModal}>
+                <img src={image} alt="Found user" />
+                <p>
+                  <b>{username}</b>
+                </p>
+              </div>
+              <div className={classes.modalNav}>
+                <button
+                  onClick={() =>
+                    this.setState({
+                      name: "",
+                      image: "",
+                      email: "",
+                      isUser: false,
+                      isUser_id: ""
+                    })
+                  }
+                >
+                  Back
+                </button>
+                <button onClick={this.addNewUser}>Add This Friend</button>
+                <button
+                  onClick={() =>
+                    this.setState({
+                      name: "",
+                      image: "",
+                      email: "",
+                      isUser: false,
+                      isUser_id: "",
+                      modalStage: 1
+                    })
+                  }
+                >
+                  Create Private Friend
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       );
     } else if (modalStage === 1) {
@@ -204,8 +263,8 @@ class AddFriendModal extends Component {
             required
             fullWidth
             className={classes.textField}
-            value={this.state.name}
-            onChange={this.handleInputChange("name")}
+            value={this.state.username}
+            onChange={this.handleInputChange("username")}
             margin="normal"
             variant="outlined"
           />
@@ -246,7 +305,7 @@ class AddFriendModal extends Component {
             id="add_friend_modal"
           >
             <Typography variant="h6" id="modal-title">
-              Add a New Friend! {modalStage}
+              Add a New Friend!
             </Typography>
             {/* TODO - fix padding on input fields */}
             {modalContent}
