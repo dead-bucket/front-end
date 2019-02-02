@@ -228,7 +228,8 @@ class AddFriendModal extends Component {
                       image: "",
                       email: "",
                       isUser: false,
-                      isUser_id: ""
+                      isUser_id: "",
+                      errorMessage: null
                     })
                   }
                 >
@@ -243,7 +244,8 @@ class AddFriendModal extends Component {
                       email: "",
                       isUser: false,
                       isUser_id: "",
-                      modalStage: 1
+                      modalStage: 1,
+                      errorMessage: null
                     })
                   }
                 >
