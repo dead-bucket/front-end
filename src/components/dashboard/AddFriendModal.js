@@ -167,13 +167,6 @@ class AddFriendModal extends Component {
       .catch(err => console.log(err));
   };
 
-  // userSearch = term => {
-  //   axios
-  //     .get("/api/v1/usersearch/?email=" + term)
-  //     .then(data => console.log(data))
-  //     .catch(err => console.log(err));
-  // };
-
   render() {
     const { classes } = this.props;
     const { modalStage, isUser, errorMessage, image, username } = this.state;
@@ -188,11 +181,10 @@ class AddFriendModal extends Component {
           </p>
           <p>
             If they are an existing user, you'll can choose to add them using
-            there existing profile info.
+            their existing profile info.
           </p>
           <p>
-            Alternatively, you can click the Next button to add a private
-            Friend.
+            Alternatively, you can click <b>Add Private Friend</b>.
           </p>
           <TextField
             id="outlined-friend-email-input"
