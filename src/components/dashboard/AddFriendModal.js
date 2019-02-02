@@ -82,18 +82,17 @@ class AddFriendModal extends Component {
     }
     const { value } = event.target;
     if (name === "email") {
-      console.log('hello im changing email');
+      console.log('hello i\'m changing email');
       this.setState({
         isUser: false,
       })
       if (validateEmail(value)) {
         axios
-          .get("http://localhost:4000/api/v1/usersearch/?email=" + value)
+          .get("/api/v1/usersearch/?email=" + value)
             .then(data => {
-              // console.log('i\'m the data back from search', data.data[0].picture);
               if(data.status === 200) {
                 this.setState({
-                  name: data.data[0].username,
+                  username: `${data.data[0].firstname} ${data.data[0].lastname} `,
                   image: data.data[0].picture,
                   isUser: true,
                   isUser_id: data.data[0]._id,
@@ -101,7 +100,7 @@ class AddFriendModal extends Component {
 
               }
             })
-            .catch(err => console.log(err));
+            .catch(err => console.error(err));
       }
     }
     this.setState({
@@ -135,7 +134,7 @@ class AddFriendModal extends Component {
         .then(data => {
           this.props.refreshTargets();
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
 
     }
     if(isUser) {
@@ -145,7 +144,7 @@ class AddFriendModal extends Component {
         .then(data => {
           this.props.refreshTargets();
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
 
     }
     // TODO - move to actions
@@ -166,7 +165,7 @@ class AddFriendModal extends Component {
     if (!this.state.isUser) {
       displayedImage = <ImgUpload updateImg={this.handleProfileImg} />;
     } else {
-      displayedImage = <img src={this.state.image} />;
+      displayedImage = <img src={this.state.image} alt={''}/>;
     }
     return (
       <div>
@@ -191,17 +190,6 @@ class AddFriendModal extends Component {
             </Typography>
             {/* TODO - fix padding on input fields */}
             <TextField
-              id="outlined-friend-name-input"
-              label="Friend's Name"
-              required
-              fullWidth
-              className={classes.textField}
-              value={this.state.username}
-              onChange={this.handleInputChange("username")}
-              margin="normal"
-              variant="outlined"
-            />
-            <TextField
               id="outlined-friend-email-input"
               label="Friend's email"
               className={classes.textField}
@@ -215,6 +203,17 @@ class AddFriendModal extends Component {
               variant="outlined"
             />
             
+            <TextField
+              id="outlined-friend-name-input"
+              label="Friend's Name"
+              required
+              fullWidth
+              className={classes.textField}
+              value={this.state.username}
+              onChange={this.handleInputChange("username")}
+              margin="normal"
+              variant="outlined"
+            />
             {displayedImage}
             
             
