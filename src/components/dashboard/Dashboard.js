@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { withStyles } from "@material-ui/core";
-
+import PropTypes from "prop-types";
 // Custom Components
 import Spinner from "../common/Spinner";
 import FriendCard from "../common/FriendCard";
@@ -10,6 +10,7 @@ import AddFriendModal from "./AddFriendModal";
 //Redux
 import { connect } from "react-redux";
 import { setCurrentTarget } from "../../_actions/profileActions";
+import { loadUser } from "../../_actions/authActions";
 
 const styles = {
   friendContainer: {
@@ -44,6 +45,10 @@ class Dashboard extends Component {
 
   componentDidMount() {
     this.getTargets();
+
+    if (!this.props.currentUser) {
+      this.props.loadUser();
+    }
   }
 
   render() {
@@ -80,7 +85,15 @@ class Dashboard extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  currentUser: state.auth.currentUser
+});
+
+Dashboard.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
 export default connect(
-  null,
-  { setCurrentTarget }
+  mapStateToProps,
+  { setCurrentTarget, loadUser }
 )(withStyles(styles)(Dashboard));
