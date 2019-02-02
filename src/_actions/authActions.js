@@ -47,6 +47,21 @@ export const loginUser = (userData, history) => {
   };
 };
 
+export const loadUser = () => {
+  return dispatch => {
+    return axios
+      .get("/api/v1/loggedinuser/")
+      .then(res => {
+        console.log(res);
+        dispatch({
+          type: SET_CURRENT_USER,
+          payload: res.data
+        });
+      })
+      .catch(err => console.log(err));
+  };
+};
+
 //Log User Out
 export const logoutUser = () => dispatch => {
   //remove token from local storage

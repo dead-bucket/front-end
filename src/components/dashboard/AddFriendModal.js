@@ -44,21 +44,35 @@ const styles = theme => ({
     position: "absolute",
     bottom: "5%",
     right: "10%"
+  },
+  userImageModal: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  modalNav: {
+    display: "flex",
+    justifyContent: "space-around"
   }
 });
 
-// // VALIDATE email function
-// function validateEmail(email) {
-//   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-//   return re.test(String(email).toLowerCase());
-// }
+// VALIDATE email function
+function validateEmail(email) {
+  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
 
 class AddFriendModal extends Component {
   state = {
     open: false,
-    name: "",
+    username: "",
     email: "",
-    image: ""
+    image: "",
+    modalStage: 0,
+    isUser: false,
+    isUser_id: null,
+    errorMessage: null
   };
 
   handleOpen = () => {
@@ -68,7 +82,7 @@ class AddFriendModal extends Component {
   handleClose = () => {
     this.setState({
       open: false,
-      name: "",
+      username: "",
       email: "",
       image: ""
     });
@@ -76,10 +90,41 @@ class AddFriendModal extends Component {
 
   handleInputChange = name => event => {
     const { value } = event.target;
+
+    if (name === "email" && validateEmail(value)) {
+      axios
+        .get("/api/v1/usersearch/?email=" + value)
+        .then(data => {
+          console.log("USER SEARCH:", data);
+
+          if (data.status === 200) {
+            this.setState({
+              username: data.data[0].firstname,
+              image: data.data[0].picture,
+              isUser: true,
+              isUser_id: data.data[0]._id,
+              errorMessage: null
+            });
+          }
+        })
+        .catch(err =>
+          this.setState({
+            errorMessage:
+              "User not found! Try again or click Next to add a private Friend."
+          })
+        );
+    }
+
     this.setState({
       [name]: value
     });
   };
+
+  incrementModalStage = () =>
+    this.setState({ modalStage: this.state.modalStage + 1 });
+
+  decrementModalStage = () =>
+    this.setState({ modalStage: this.state.modalStage - 1 });
 
   handleProfileImg = image => {
     this.setState({ image });
@@ -87,17 +132,15 @@ class AddFriendModal extends Component {
 
   addNewTarget = () => {
     // TODO - validate inputs
-    const { name, email, image } = this.state;
+    const { username, image } = this.state;
     let newTarget;
     if (!image) {
       newTarget = {
-        name,
-        email
+        username
       };
     } else {
       newTarget = {
-        name,
-        email,
+        username,
         image
       };
     }
@@ -113,15 +156,130 @@ class AddFriendModal extends Component {
     this.handleClose();
   };
 
-  userSearch = term => {
+  addNewUser = () => {
+    let friend = { friend: this.state.isUser_id };
     axios
-      .get("/api/v1/usersearch/?email=" + term)
-      .then(data => console.log(data))
+      .put("/api/v1/addfriend", friend)
+      .then(data => {
+        this.props.refreshTargets();
+        this.handleClose();
+      })
       .catch(err => console.log(err));
   };
 
   render() {
     const { classes } = this.props;
+    const { modalStage, isUser, errorMessage, image, username } = this.state;
+
+    let modalContent;
+    if (modalStage === 0) {
+      modalContent = (
+        <div>
+          <p>
+            If you want the ability to send thoughts to a friend, enter their
+            email address in the field below.
+          </p>
+          <p>
+            If they are an existing user, you'll can choose to add them using
+            their existing profile info.
+          </p>
+          <p>
+            Alternatively, you can click <b>Add Private Friend</b>.
+          </p>
+          <TextField
+            id="outlined-friend-email-input"
+            label="Friend's email"
+            className={classes.textField}
+            type="email"
+            fullWidth
+            required
+            value={this.state.email}
+            onChange={this.handleInputChange("email")}
+            autoComplete="current-email"
+            margin="normal"
+            variant="outlined"
+          />
+          {errorMessage ? <p style={{ color: "red" }}>{errorMessage}</p> : null}
+          {!isUser ? (
+            <button onClick={this.incrementModalStage}>
+              Add Private Friend
+            </button>
+          ) : (
+            <div>
+              <div className={classes.userImageModal}>
+                <img src={image} alt="Found user" />
+                <p>
+                  <b>{username}</b>
+                </p>
+              </div>
+              <div className={classes.modalNav}>
+                <button
+                  onClick={() =>
+                    this.setState({
+                      name: "",
+                      image: "",
+                      email: "",
+                      isUser: false,
+                      isUser_id: "",
+                      errorMessage: null
+                    })
+                  }
+                >
+                  Back
+                </button>
+                <button onClick={this.addNewUser}>Add This Friend</button>
+                <button
+                  onClick={() =>
+                    this.setState({
+                      name: "",
+                      image: "",
+                      email: "",
+                      isUser: false,
+                      isUser_id: "",
+                      modalStage: 1,
+                      errorMessage: null
+                    })
+                  }
+                >
+                  Create Private Friend
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    } else if (modalStage === 1) {
+      modalContent = (
+        <div>
+          <TextField
+            id="outlined-friend-name-input"
+            label="Friend's Name"
+            required
+            fullWidth
+            className={classes.textField}
+            value={this.state.username}
+            onChange={this.handleInputChange("username")}
+            margin="normal"
+            variant="outlined"
+          />
+
+          <ImgUpload updateImg={this.handleProfileImg} />
+          <div>
+            <button onClick={this.decrementModalStage}>Back</button>
+            <Button
+              id="AddFriendModal_submit_btn"
+              fullWidth
+              variant="contained"
+              className={classes.button}
+              onClick={this.addNewTarget}
+            >
+              Add Friend
+            </Button>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div>
         <div onClick={this.handleOpen} className={classes.addIconStyle}>
@@ -144,43 +302,7 @@ class AddFriendModal extends Component {
               Add a New Friend!
             </Typography>
             {/* TODO - fix padding on input fields */}
-            <TextField
-              id="outlined-friend-name-input"
-              label="Friend's Name"
-              required
-              fullWidth
-              className={classes.textField}
-              value={this.state.name}
-              onChange={this.handleInputChange("name")}
-              margin="normal"
-              variant="outlined"
-            />
-            <TextField
-              id="outlined-friend-email-input"
-              label="Friend's email"
-              className={classes.textField}
-              type="email"
-              fullWidth
-              required
-              value={this.state.email}
-              onChange={this.handleInputChange("email")}
-              autoComplete="current-email"
-              margin="normal"
-              variant="outlined"
-            />
-
-            <ImgUpload updateImg={this.handleProfileImg} />
-            <div>
-              <Button
-                id="AddFriendModal_submit_btn"
-                fullWidth
-                variant="contained"
-                className={classes.button}
-                onClick={this.addNewTarget}
-              >
-                Add Friend
-              </Button>
-            </div>
+            {modalContent}
           </div>
         </Modal>
       </div>
