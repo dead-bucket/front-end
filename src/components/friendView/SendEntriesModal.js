@@ -63,7 +63,7 @@ class SendEntriesModal extends Component {
       open: false
     });
   };
-
+  // update sendEntries
   handleInputChange = name => event => {
     this.setState({
       [name]: event.target.value
