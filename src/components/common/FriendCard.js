@@ -49,7 +49,7 @@ function FriendCard(props) {
           onClick={() => props.handleSetTarget(friend)}
           
         />
-        <i class="material-icons red600" onClick={() => props.handleToggle(friend)}>
+        <i className="material-icons red600" onClick={() => props.handleToggle(friend)}>
         {friend.priority ? "favorite" : "favorite_border"}
           {/* favorite_border */}
         </i>

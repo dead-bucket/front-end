@@ -13,4 +13,9 @@ code {
     monospace;
 }
 
-.material-icons.red600 { color: red; }
+.material-icons.red600 { 
+  color: red; 
+  margin-top: -10%;
+  margin-right: -65%;
+
+}
