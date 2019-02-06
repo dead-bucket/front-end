@@ -19,7 +19,7 @@ export const registerUser = (userData, history) => {
 
         history.push("/dashboard");
       })
-      .catch(err => console.log("signup error: ", err));
+      .catch(err => console.error("signup error: ", err));
   };
 };
 
