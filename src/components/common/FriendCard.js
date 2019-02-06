@@ -1,5 +1,5 @@
 import React from "react";
-import Badge from '@material-ui/core/Badge';
+
 
 
 
@@ -44,7 +44,7 @@ function FriendCard(props) {
         
         <img
           alt="Profile"
-          style={{ borderRadius: 40, width: 100, }}
+          style={{ borderRadius: 40, width: 100 }}
           src={friend.picture}
           onClick={() => props.handleSetTarget(friend)}
           
@@ -53,7 +53,11 @@ function FriendCard(props) {
         {friend.priority ? "favorite" : "favorite_border"}
           {/* favorite_border */}
         </i>
-        <p style={{ marginTop: 0 }}>{props.friend.username}</p>
+        <p style={{ marginTop: 0 }}>{
+          props.friend.lastname ?
+          `${props.friend.firstname} ${props.friend.lastname}` :
+          props.friend.username
+          }</p>
       </div>
 
      
