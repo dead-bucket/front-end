@@ -61,7 +61,6 @@ class ComposeForm extends Component {
 
   handleInputChange = e => {
     const { name, value } = e.target;
-    const { friend } = this.props;
     this.setState({ [name]: value });
   };
 

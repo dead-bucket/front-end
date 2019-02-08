@@ -71,6 +71,7 @@ class FriendView4 extends Component {
     if (isEmpty(this.props.profile)) {
       this.props.history.push("/dashboard");
     } else {
+      console.log(this.props.profile);
       this.props.getEntries(this.props.profile.target._id);
     }
   }

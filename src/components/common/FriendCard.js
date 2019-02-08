@@ -24,7 +24,7 @@ const friendViewImage = {
 };
 
 function FriendCard(props) {
-  const { view, friend, classes } = props;
+  const { view, friend } = props;
 
   if (view === "friendview") {
     return (
