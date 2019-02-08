@@ -95,7 +95,7 @@ class SendEntriesModal extends Component {
               Send your thoughts to [friendName]
             </Typography>
             {/* TODO - fix padding on input fields */}
-            {target.email}
+
             <TextField
               id="outlined-friend-name-input"
               label="Friend's Name"
