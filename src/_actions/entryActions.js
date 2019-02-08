@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_USER_ENTRIES } from "../_actions/types";
+import { GET_USER_ENTRIES, GET_INBOX_ENTRIES } from "../_actions/types";
 export const postEntry = entry => {
   axios
     .post("/api/v1/entry", entry)
@@ -29,6 +29,25 @@ export const getEntries = targetId => {
         dispatch({
           type: GET_USER_ENTRIES,
           payload: data.data.userEntries
+        })
+      )
+      .catch(err => console.log(err));
+  };
+};
+
+export const getInboxEntries = targetId => {
+  // need to correctly add-on targetID to request
+  // axios
+  // .get("/api/v1/inbox/" + this.props.profile.target._id)
+  // .then(data => console.log("inbox data: ", data))
+  // .catch(err => console.log(err));
+  return dispatch => {
+    return axios
+      .get("/api/v1/inbox/" + targetId)
+      .then(data =>
+        dispatch({
+          type: GET_INBOX_ENTRIES,
+          payload: data.data
         })
       )
       .catch(err => console.log(err));

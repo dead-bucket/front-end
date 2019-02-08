@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-// import axios from "axios";
+import axios from "axios";
 
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -47,7 +47,7 @@ const styles = theme => ({
     right: "10%"
   }
 });
-
+// TODO: refactor/modularize modal content
 class SendEntriesModal extends Component {
   state = {
     open: false,
@@ -63,16 +63,38 @@ class SendEntriesModal extends Component {
       open: false
     });
   };
-  // update sendEntries
+
   handleInputChange = name => event => {
     this.setState({
       [name]: event.target.value
     });
   };
 
+  sendEntriesToUser = id => {
+    console.log(id);
+    axios
+      .put("/api/v1/deliverentries/", { recipient: id })
+      .then(data => console.log(data))
+      .catch(err => console.log(err));
+  };
+
   render() {
     const { classes } = this.props;
     const { target } = this.props.profile;
+    let modalContent;
+    if (target.firstname) {
+      modalContent = (
+        <div>
+          <p>Do you want to send your thoughts to {target.firstname}?</p>
+          <button onClick={() => this.sendEntriesToUser(target._id)}>
+            Yes! Send my thoughts.
+          </button>
+        </div>
+      );
+    } else {
+      modalContent = <p>This is the target modal</p>;
+    }
+
     return (
       <div>
         <div onClick={this.handleOpen} className={classes.sendIconStyle}>
@@ -91,28 +113,7 @@ class SendEntriesModal extends Component {
             className={classes.paper}
             id="send_thoughts_modal"
           >
-            <Typography variant="h6" id="modal-title">
-              Send your thoughts to [friendName]
-            </Typography>
-            {/* TODO - fix padding on input fields */}
-
-            <TextField
-              id="outlined-friend-name-input"
-              label="Friend's Name"
-              required
-              fullWidth
-              className={classes.textField}
-              value={this.state.name}
-              onChange={this.handleInputChange("name")}
-              margin="normal"
-              variant="outlined"
-            />
-
-            <div>
-              <Button fullWidth variant="contained" className={classes.button}>
-                Send Thoughts
-              </Button>
-            </div>
+            {modalContent}
           </div>
         </Modal>
       </div>
@@ -121,7 +122,8 @@ class SendEntriesModal extends Component {
 }
 
 SendEntriesModal.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
