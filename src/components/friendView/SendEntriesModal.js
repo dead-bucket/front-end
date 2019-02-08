@@ -10,8 +10,8 @@ import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import Send from "@material-ui/icons/Send";
 
-// CSS
-// import "./SendEntriesModal.css";
+// Redux
+import { connect } from "react-redux";
 
 function getModalStyle() {
   const top = 50;
@@ -72,6 +72,7 @@ class SendEntriesModal extends Component {
 
   render() {
     const { classes } = this.props;
+    const { target } = this.props.profile;
     return (
       <div>
         <div onClick={this.handleOpen} className={classes.sendIconStyle}>
@@ -94,6 +95,7 @@ class SendEntriesModal extends Component {
               Send your thoughts to [friendName]
             </Typography>
             {/* TODO - fix padding on input fields */}
+
             <TextField
               id="outlined-friend-name-input"
               label="Friend's Name"
@@ -122,4 +124,8 @@ SendEntriesModal.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(SendEntriesModal);
+const mapStateToProps = state => ({
+  profile: state.profile
+});
+
+export default connect(mapStateToProps)(withStyles(styles)(SendEntriesModal));

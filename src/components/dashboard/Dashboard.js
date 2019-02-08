@@ -29,7 +29,7 @@ class Dashboard extends Component {
   };
 
   getTargets = () => {
-    // TODO : move to profile actions
+    // TODO : move to profile actions - bring in friends through state, do a check in componentDidMount to see if this.props.friends exists, otherwise make the request
     axios
       .get("/api/v1/dashboard/")
       .then(data => {
