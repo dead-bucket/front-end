@@ -90,7 +90,7 @@ class FriendView4 extends Component {
         actionContent = <Thoughtline onClick={getEntries(target._id)} />;
         break;
       case 1:
-        actionContent = <ComposeForm />;
+        actionContent = <ComposeForm friend={target} />;
         break;
       case 2:
         actionContent = <Inbox />;

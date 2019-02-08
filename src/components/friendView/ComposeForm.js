@@ -61,6 +61,7 @@ class ComposeForm extends Component {
 
   handleInputChange = e => {
     const { name, value } = e.target;
+    const { friend } = this.props;
     this.setState({ [name]: value });
   };
 
@@ -84,8 +85,18 @@ class ComposeForm extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, friend } = this.props;
     const { thoughtColor } = this.state;
+    let textMessage;
+
+    if (!friend) {
+      textMessage = null;
+    } else {
+      friend.firstname
+        ? (textMessage = `What do you want to say to ${friend.firstname}?`)
+        : (textMessage = `What do you want to say to ${friend.username}?`);
+    }
+
     return (
       <div className={classes.composeDiv}>
         <TextField
@@ -95,7 +106,7 @@ class ComposeForm extends Component {
           style={{ backgroundColor: thoughtColor }}
           value={this.state.thought}
           name="thought"
-          placeholder="What do you want to say to [friendname]?"
+          placeholder={textMessage}
           className={classes.thoughtInput}
           InputProps={{
             classes: {
