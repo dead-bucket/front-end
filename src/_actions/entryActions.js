@@ -36,11 +36,6 @@ export const getEntries = targetId => {
 };
 
 export const getInboxEntries = targetId => {
-  // need to correctly add-on targetID to request
-  // axios
-  // .get("/api/v1/inbox/" + this.props.profile.target._id)
-  // .then(data => console.log("inbox data: ", data))
-  // .catch(err => console.log(err));
   return dispatch => {
     return axios
       .get("/api/v1/inbox/" + targetId)
