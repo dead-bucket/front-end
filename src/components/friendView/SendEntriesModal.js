@@ -169,7 +169,7 @@ class SendEntriesModal extends Component {
           ) : null}
           {isUser ? (
             <div>
-              <button onClick={this.sendEntriesToUser(isUser_id)}>
+              <button onClick={() => this.sendEntriesToUser(isUser_id)}>
                 Add {username} as a friend and send your thoughts!
               </button>
             </div>
