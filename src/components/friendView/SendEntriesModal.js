@@ -138,7 +138,7 @@ class SendEntriesModal extends Component {
     } else {
       modalContent = (
         <div>
-          <h5>No email associate with this friend.</h5>
+          <h5>No email associated with this friend.</h5>
           <p>
             In order to send messages to a friend, they also need to be
             Thoughtline users.

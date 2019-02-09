@@ -37,18 +37,19 @@ class Dashboard extends Component {
       })
       .catch(err => console.log(err));
   };
+
   togglePriority = friend => {
-    console.log('in toggle priority fn', friend);
+    console.log("in toggle priority fn", friend);
     axios
       .put("/api/v1/togglepriority/", {
-        priority: friend._id,
+        priority: friend._id
       })
       .then(data => {
         console.log(data);
         this.getTargets();
       })
-      .catch(err => console.log(err))
-  }
+      .catch(err => console.log(err));
+  };
 
   setTarget = friend => {
     this.props.setCurrentTarget(friend);
