@@ -41,7 +41,7 @@ class Thoughtline extends Component {
             key={entry._id}
           >
             <p style={{ fontSize: 16 }}>
-              <Moment format="YYYY/MM/DD">{entry.createdAt}</Moment>
+              <Moment format="LLL">{entry.createdAt}</Moment>
             </p>
             <p style={{ fontSize: 20 }}>{entry.description}</p>
           </div>

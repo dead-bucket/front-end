@@ -1,48 +1,55 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-// import { connect } from "react-redux";
+import Moment from "react-moment";
+import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
 
 const styles = {
   inboxContainer: {
-    height: "90%",
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
     overflowY: "scroll"
   },
   inboxLineMessage: {
     textAlign: "left",
+    width: "80%",
     borderRadius: 15,
     padding: 20,
     margin: 20,
     border: "1px solid black"
   }
 };
-const messages = [];
+
 class Inbox extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, inboxEntries } = this.props;
     let messageContent;
-    if (messages.length === 0) {
+    if (inboxEntries.length === 0) {
       messageContent = (
         <h5>You haven't received a thought from this friend yet...</h5>
       );
     } else {
-      // messageContent = messages.map(entry => {
-      //   return (
-      //     <div
-      //       className={classes.thoughtLineMessage}
-      //       style={{ backgroundColor: entry.mood }}
-      //       key={entry._id}
-      //     >
-      //       {/* TODO: convert date format */}
-      //       <p style={{ fontSize: 16 }}>{entry.createdAt}</p>
-      //       <p style={{ fontSize: 20 }}>{entry.description}</p>
-      //     </div>
-      //   );
-      // });
+      messageContent = inboxEntries.map(entry => {
+        return (
+          <div
+            className={classes.inboxLineMessage}
+            style={{ backgroundColor: entry.mood }}
+            key={entry._id}
+          >
+            {/* TODO: convert date format */}
+            <p style={{ fontSize: 16 }}>
+              <Moment format="LLL">{entry.createdAt}</Moment>
+            </p>
+            <p style={{ fontSize: 20 }}>{entry.description}</p>
+          </div>
+        );
+      });
     }
 
     return (
-      <div className={messages.length > 0 ? classes.inboxContainer : null}>
+      <div className={inboxEntries.length > 0 ? classes.inboxContainer : null}>
         {messageContent}
       </div>
     );
@@ -50,17 +57,17 @@ class Inbox extends Component {
 }
 
 Inbox.propTypes = {
-  classes: PropTypes.object.isRequired
-  // userEntries: PropTypes.array.isRequired
+  classes: PropTypes.object.isRequired,
+  inboxEntries: PropTypes.array.isRequired
 };
 
-// const mapStateToProps = state => ({
-//   userEntries: state.entries.userEntries
-// });
+const mapStateToProps = state => ({
+  inboxEntries: state.entries.inboxEntries
+});
 
-// export default connect(
-//   mapStateToProps,
-//   {}
-// )(withStyles(styles)(Inbox));
+export default connect(
+  mapStateToProps,
+  {}
+)(withStyles(styles)(Inbox));
 
-export default withStyles(styles)(Inbox);
+// export default withStyles(styles)(Inbox);

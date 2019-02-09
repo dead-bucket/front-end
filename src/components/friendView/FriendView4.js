@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import isEmpty from "../../utils/isEmpty";
+import axios from "axios";
 // MaterialUI
 import { withStyles } from "@material-ui/core";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
@@ -21,7 +22,7 @@ import Spinner from "../common/Spinner";
 
 //Redux
 import { connect } from "react-redux";
-import { getEntries } from "../../_actions/entryActions";
+import { getEntries, getInboxEntries } from "../../_actions/entryActions";
 
 const styles = {
   friendContainer: {
@@ -73,6 +74,7 @@ class FriendView4 extends Component {
     } else {
       console.log(this.props.profile);
       this.props.getEntries(this.props.profile.target._id);
+      this.props.getInboxEntries(this.props.profile.target._id);
     }
   }
 
@@ -139,7 +141,8 @@ class FriendView4 extends Component {
 FriendView4.propTypes = {
   classes: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
-  getEntries: PropTypes.func.isRequired
+  getEntries: PropTypes.func.isRequired,
+  getInboxEntries: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -148,5 +151,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getEntries }
+  { getEntries, getInboxEntries }
 )(withStyles(styles)(FriendView4));

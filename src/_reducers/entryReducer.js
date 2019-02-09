@@ -1,4 +1,4 @@
-import { GET_USER_ENTRIES } from "../_actions/types";
+import { GET_USER_ENTRIES, GET_INBOX_ENTRIES } from "../_actions/types";
 
 const initialState = {};
 
@@ -8,6 +8,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         userEntries: action.payload
+      };
+    case GET_INBOX_ENTRIES:
+      return {
+        ...state,
+        inboxEntries: action.payload
       };
     default:
       return state;
