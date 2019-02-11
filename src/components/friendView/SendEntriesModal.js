@@ -52,6 +52,11 @@ const styles = theme => ({
     right: -30,
     top: -30
   },
+  backButton: {
+    position: "absolute",
+    left: -30,
+    top: -30
+  },
   mediumIcon: {
     width: 40,
     height: 40
@@ -94,8 +99,8 @@ class SendEntriesModal extends Component {
     });
   };
 
-  decrementModal = () => {
-    this.setState({ modalStage: this.state.modalStage - 1 });
+  resetModal = () => {
+    this.setState({ modalStage: 0 });
   };
 
   handleInputChange = name => event => {
@@ -174,15 +179,7 @@ class SendEntriesModal extends Component {
   };
 
   render() {
-    const {
-      username,
-      isUser,
-      isUser_id,
-      image,
-      email,
-      modalStage,
-      modalMessage
-    } = this.state;
+    const { username, image, email, modalStage, modalMessage } = this.state;
     const { classes } = this.props;
     const { target } = this.props.profile;
     let modalContent;
@@ -300,12 +297,11 @@ class SendEntriesModal extends Component {
             id="send_thoughts_modal"
           >
             <div className={classes.backDiv}>
-              {modalStage ===
-                2(
-                  <IconButton className={classes.medium}>
-                    <BackArrow onClick={this.decrementModal} />
-                  </IconButton>
-                )}
+              {modalStage === 1 || modalStage === 3 ? (
+                <IconButton className={classes.backButton}>
+                  <BackArrow onClick={this.resetModal} />
+                </IconButton>
+              ) : null}
               <IconButton className={classes.closeButton}>
                 <Close onClick={this.handleClose} />
               </IconButton>

@@ -26,7 +26,7 @@ export const getEntries = targetId => {
         recipient: targetId
       })
       .then(data => {
-        console.log("getEntries res data:", data);
+        // console.log("getEntries res data:", data);
         dispatch({
           type: GET_USER_ENTRIES,
           payload: data.data.userEntries
@@ -41,7 +41,7 @@ export const getInboxEntries = targetId => {
     return axios
       .get("/api/v1/inbox/" + targetId)
       .then(data => {
-        console.log("getInboxEntries res data:", data);
+        // console.log("getInboxEntries res data:", data);
         dispatch({
           type: GET_INBOX_ENTRIES,
           payload: data.data
