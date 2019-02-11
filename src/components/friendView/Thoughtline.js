@@ -40,6 +40,12 @@ class Thoughtline extends Component {
             style={{ backgroundColor: entry.mood }}
             key={entry._id}
           >
+            <i
+              className="material-icons test"
+          
+            >
+              {entry.delivered ? "visibility" : "visibility_off"}
+            </i>
             <p style={{ fontSize: 16 }}>
               <Moment format="LLL">{entry.createdAt}</Moment>
             </p>

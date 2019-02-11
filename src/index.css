@@ -22,3 +22,6 @@ code {
 .material-icons.red600:hover {
   cursor: pointer;
 }
+.material-icons.test {
+  text-align: right;
+}
