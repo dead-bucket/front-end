@@ -306,7 +306,6 @@ class SendEntriesModal extends Component {
                 <Close onClick={this.handleClose} />
               </IconButton>
             </div>
-
             {modalContent}
           </div>
         </Modal>
