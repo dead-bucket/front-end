@@ -19,6 +19,11 @@ code {
   margin-right: -65%;
 
 }
+.material-icons.red600.md-36 {
+  font-size: 48px;
+    margin-top: -30%;
+    margin-right: -113%;
+}
 .material-icons.red600:hover {
   cursor: pointer;
 }

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import isEmpty from "../../utils/isEmpty";
+import axios from "axios";
 // MaterialUI
 import { withStyles } from "@material-ui/core";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
@@ -78,6 +79,7 @@ class FriendView4 extends Component {
   handleBottomChange = (event, value) => {
     this.setState({ value });
   };
+  
 
   render() {
     const { classes, getEntries } = this.props;
@@ -103,7 +105,7 @@ class FriendView4 extends Component {
     if (!target) {
       friendViewContent = <Spinner />;
     } else {
-      friendViewContent = <FriendCard friend={target} view="friendview" />;
+      friendViewContent = <FriendCard friend={target} view="friendview"  />;
     }
 
     return (

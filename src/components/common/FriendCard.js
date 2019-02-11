@@ -33,6 +33,10 @@ function FriendCard(props) {
       <div style={friendViewStyles}>
         
           <img alt="Profile" style={friendViewImage} src={friend.picture} />
+          <i className="material-icons red600 md-36" >
+        {friend.priority ? "favorite" : "favorite_border"}
+          {/* favorite_border */}
+        </i>
           <h4 style={{ marginTop: 0 }}>{friend.username}</h4>
         
       </div>

@@ -67,13 +67,14 @@ class NavBar extends Component {
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
+            <img src="/Users/rnd/dead-bucket/front-end/src/components/common/Thought-Bubble-PNG-File.png"  width={100}/>
             <Typography
               component="h1"
               variant="title"
               color="inherit"
               className={classes.grow}
             >
-              Thoughtline
+              Thought__________line
             </Typography>
 
             {!isEmpty(currentUser) ? (
