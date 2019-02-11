@@ -133,6 +133,21 @@ class SendEntriesModal extends Component {
       [name]: event.target.value
     });
   };
+  addFriendToUser = id => {
+    console.log('in add friend to user fn on modal', id);
+    const { isUser_id } = this.state;
+    if (isUser_id) {
+      axios
+        .put("/api/v1/addfriend/", { friend: isUser_id })
+        // TODO - Add a toast of some visual confirmation on success
+        .then(data => {
+          console.log("friend added", data);
+
+        })
+        .catch(err => console.log(err));
+    }
+
+  }
 
   convertTargetToUser = id => {
     console.log(id);
@@ -143,7 +158,10 @@ class SendEntriesModal extends Component {
         // TODO - Add a toast of some visual confirmation on success
         .then(data => {
           console.log("friend converted", data);
+
         })
+        .then(() => this.addFriendToUser(isUser_id))
+        .then(() => this.sendEntriesToUser(isUser_id))
         .catch(err => console.log(err));
     }
   };
@@ -151,7 +169,7 @@ class SendEntriesModal extends Component {
   sendEntriesToUser = id => {
     console.log(id);
     axios
-      .put("/api/v1/deliverentries/" + id)
+      .put("/api/v1/deliverentries/",{recipient: id})
       // TODO - Add a toast of some visual confirmation on success
       .then(data => {
         console.log("Friend Added and Entries sent!", data);
