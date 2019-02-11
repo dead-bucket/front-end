@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import axios from "axios";
 
 import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+// import Typography from "@material-ui/core/Typography";
+// import Button from "@material-ui/core/Button";
 import Modal from "@material-ui/core/Modal";
-import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import Send from "@material-ui/icons/Send";
@@ -34,13 +34,13 @@ const styles = theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4
   },
-  backDiv: {
-    position: "relative"
-  },
   medium: {
     width: 60,
     height: 60,
     padding: 12
+  },
+  buttonDiv: {
+    position: "relative"
   },
   backButton: {
     position: "absolute",
@@ -50,11 +50,6 @@ const styles = theme => ({
   closeButton: {
     position: "absolute",
     right: -30,
-    top: -30
-  },
-  backButton: {
-    position: "absolute",
-    left: -30,
     top: -30
   },
   mediumIcon: {
@@ -296,7 +291,7 @@ class SendEntriesModal extends Component {
             className={classes.paper}
             id="send_thoughts_modal"
           >
-            <div className={classes.backDiv}>
+            <div className={classes.buttonDiv}>
               {modalStage === 1 || modalStage === 3 ? (
                 <IconButton className={classes.backButton}>
                   <BackArrow onClick={this.resetModal} />

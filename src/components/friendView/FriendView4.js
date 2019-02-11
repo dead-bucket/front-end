@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import isEmpty from "../../utils/isEmpty";
-import axios from "axios";
+// import axios from "axios";
 // MaterialUI
 import { withStyles } from "@material-ui/core";
 import BottomNavigation from "@material-ui/core/BottomNavigation";

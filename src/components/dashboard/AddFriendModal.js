@@ -11,6 +11,7 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import PersonAdd from "@material-ui/icons/PersonAdd";
+import Close from "@material-ui/icons/Close";
 
 function getModalStyle() {
   const top = 50;
@@ -39,6 +40,19 @@ const styles = theme => ({
   mediumIcon: {
     width: 40,
     height: 40
+  },
+  buttonDiv: {
+    position: "relative"
+  },
+  closeButton: {
+    position: "absolute",
+    right: -30,
+    top: -30
+  },
+  backButton: {
+    position: "absolute",
+    left: -30,
+    top: -30
   },
   addIconStyle: {
     position: "absolute",
@@ -85,7 +99,11 @@ class AddFriendModal extends Component {
       open: false,
       username: "",
       email: "",
-      image: ""
+      image: "",
+      name: "",
+      isUser: false,
+      isUser_id: "",
+      errorMessage: null
     });
   };
 
@@ -111,7 +129,7 @@ class AddFriendModal extends Component {
         .catch(err =>
           this.setState({
             errorMessage:
-              "User not found! Try again or click Next to add a private Friend."
+              "User not found! Try a different email or click the button below to create a private Friend."
           })
         );
     }
@@ -306,11 +324,16 @@ class AddFriendModal extends Component {
             className={classes.paper}
             id="add_friend_modal"
           >
-            <Typography variant="h6" id="modal-title">
-              Add a New Friend!
-            </Typography>
-            {/* TODO - fix padding on input fields */}
-            {modalContent}
+            <div className={classes.buttonDiv}>
+              <IconButton className={classes.closeButton}>
+                <Close onClick={this.handleClose} />
+              </IconButton>
+              <Typography variant="h6" id="modal-title">
+                Add a New Friend!
+              </Typography>
+              {/* TODO - fix padding on input fields */}
+              {modalContent}
+            </div>
           </div>
         </Modal>
       </div>
