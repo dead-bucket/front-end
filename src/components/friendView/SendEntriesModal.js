@@ -9,6 +9,8 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import Send from "@material-ui/icons/Send";
+import BackArrow from "@material-ui/icons/ArrowBack";
+import Close from "@material-ui/icons/Close";
 
 // Redux
 import { connect } from "react-redux";
@@ -32,10 +34,28 @@ const styles = theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4
   },
+  backDiv: {
+    position: "relative"
+  },
   medium: {
     width: 60,
     height: 60,
     padding: 12
+  },
+  backButton: {
+    position: "absolute",
+    left: -30,
+    top: -30
+  },
+  closeButton: {
+    position: "absolute",
+    right: -30,
+    top: -30
+  },
+  backButton: {
+    position: "absolute",
+    left: -30,
+    top: -30
   },
   mediumIcon: {
     width: 40,
@@ -57,6 +77,8 @@ function validateEmail(email) {
 class SendEntriesModal extends Component {
   state = {
     open: false,
+    modalStage: 0,
+    modalMessage: "",
     email: "",
     isUser: false,
     isUser_id: null,
@@ -71,9 +93,14 @@ class SendEntriesModal extends Component {
   handleClose = () => {
     this.setState({
       open: false,
-      email: null,
-      errorMessage: null
+      email: "",
+      modalStage: 0,
+      modalMessage: ""
     });
+  };
+
+  resetModal = () => {
+    this.setState({ modalStage: 0 });
   };
 
   handleInputChange = name => event => {
@@ -90,15 +117,15 @@ class SendEntriesModal extends Component {
               image: data.data[0].picture,
               isUser: true,
               isUser_id: data.data[0]._id,
-              errorMessage: null
+              modalStage: 1
             });
           }
         })
 
         .catch(err =>
+          // TODO : if the user can't be found, ask if they want to send an invite to the email address
           this.setState({
-            errorMessage:
-              "Unfortunately, that email isn't associated with a thoughline account"
+            modalStage: 3
           })
         );
     }
@@ -107,10 +134,24 @@ class SendEntriesModal extends Component {
     });
   };
 
+  convertTargetToUser = id => {
+    console.log(id);
+    const { isUser_id } = this.state;
+    if (isUser_id) {
+      axios
+        .put("/api/v1/changetargettouser/?id=" + id, { newUser: isUser_id })
+        // TODO - Add a toast of some visual confirmation on success
+        .then(data => {
+          console.log("friend converted", data);
+        })
+        .catch(err => console.log(err));
+    }
+  };
+
   sendEntriesToUser = id => {
     console.log(id);
     axios
-      .put("/api/v1/deliverentries/", { recipient: id })
+      .put("/api/v1/deliverentries/" + id)
       // TODO - Add a toast of some visual confirmation on success
       .then(data => {
         console.log("Friend Added and Entries sent!", data);
@@ -119,8 +160,26 @@ class SendEntriesModal extends Component {
       .catch(err => console.log(err));
   };
 
+  sendInvite = email => {
+    axios
+      .post("/api/v1/sendinvite/", { email })
+      .then(data =>
+        this.setState({
+          modalMessage: "Invite Sent!",
+          modalStage: 4
+        })
+      )
+      .catch(err =>
+        this.setState({
+          modalMessage: "An error occurred.  Please try again later.",
+          modalStage: 4
+        })
+      );
+    console.log(email);
+  };
+
   render() {
-    const { errorMessage, username, isUser, isUser_id, image } = this.state;
+    const { username, image, email, modalStage, modalMessage } = this.state;
     const { classes } = this.props;
     const { target } = this.props.profile;
     let modalContent;
@@ -129,54 +188,94 @@ class SendEntriesModal extends Component {
         <div>
           <p>Do you want to send your thoughts to {target.firstname}?</p>
           {/* TODO - change to an X in the corner of the modal */}
-          <button onClick={this.handleClose}>Close</button>
           <button onClick={() => this.sendEntriesToUser(target._id)}>
             Yes! Send my thoughts.
           </button>
         </div>
       );
     } else {
-      modalContent = (
-        <div>
-          <h5>No email associate with this friend.</h5>
-          <p>
-            In order to send messages to a friend, they also need to be
-            Thoughtline users.
-          </p>
-          <p>
-            Search for your friend on Thoughtline by entering their email
-            address below:
-          </p>
-          <TextField
-            id="outlined-friend-email-input"
-            label="Friend's email"
-            className={classes.textField}
-            type="email"
-            fullWidth
-            required
-            value={this.state.email}
-            onChange={this.handleInputChange("email")}
-            autoComplete="current-email"
-            margin="normal"
-            variant="outlined"
-          />
-          {errorMessage ? <p>{errorMessage}</p> : null}
-          {isUser ? (
+      switch (modalStage) {
+        // search for a user email
+        case 0:
+          modalContent = (
             <div>
-              <p>We found {username}!</p>
-              <img src={image} alt="Found friend" />
+              <h5>No email associated with this friend.</h5>
+              <p>
+                In order to send messages to a friend, they also need to be
+                Thoughtline users.
+              </p>
+              <p>
+                Search for your friend on Thoughtline by entering their email
+                address below:
+              </p>
+              <TextField
+                id="outlined-friend-email-input"
+                label="Friend's email"
+                className={classes.textField}
+                type="email"
+                fullWidth
+                required
+                value={this.state.email}
+                onChange={this.handleInputChange("email")}
+                autoComplete="current-email"
+                margin="normal"
+                variant="outlined"
+              />
             </div>
-          ) : null}
-          {isUser ? (
+          );
+          break;
+        // user email is found.  Confirm user wants to convert target to user
+        case 1:
+          modalContent = (
             <div>
-              <button onClick={() => this.sendEntriesToUser(isUser_id)}>
-                Add {username} as a friend and send your thoughts!
+              <div>
+                <p>We found {username}!</p>
+                <img src={image} alt="Found friend" />
+                <div>
+                  <button onClick={() => this.convertTargetToUser(target._id)}>
+                    Add {username} as a friend and send your thoughts!
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
+          break;
+        case 2:
+          modalContent = (
+            <div>
+              <h1>converted and messages sent</h1>
+            </div>
+          );
+          break;
+        case 3:
+          modalContent = (
+            <div>
+              <h5>We couldn't find that email.</h5>
+              <p>Would you like to send a Thoughtline invite to this email?</p>
+              <p>
+                <strong>{email}</strong>
+              </p>
+              <p>
+                You'll receive a notification when they join. Once they've
+                joined, you can try sending your thoughts again.
+              </p>
+              <button onClick={() => this.sendInvite(email)}>
+                Send Invite!
               </button>
             </div>
-          ) : null}
-          <button onClick={this.handleClose}>Back</button>
-        </div>
-      );
+          );
+          break;
+        case 4:
+          modalContent = (
+            <div>
+              <h2>{modalMessage}</h2>
+              <button onClick={this.handleClose}>OK</button>
+            </div>
+          );
+          break;
+        default:
+          break;
+      }
     }
 
     return (
@@ -197,6 +296,17 @@ class SendEntriesModal extends Component {
             className={classes.paper}
             id="send_thoughts_modal"
           >
+            <div className={classes.backDiv}>
+              {modalStage === 1 || modalStage === 3 ? (
+                <IconButton className={classes.backButton}>
+                  <BackArrow onClick={this.resetModal} />
+                </IconButton>
+              ) : null}
+              <IconButton className={classes.closeButton}>
+                <Close onClick={this.handleClose} />
+              </IconButton>
+            </div>
+
             {modalContent}
           </div>
         </Modal>

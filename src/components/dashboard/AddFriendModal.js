@@ -184,9 +184,7 @@ class AddFriendModal extends Component {
             If they are an existing user, you'll can choose to add them using
             their existing profile info.
           </p>
-          <p>
-            Alternatively, you can click <b>Add Private Friend</b>.
-          </p>
+
           <TextField
             id="outlined-friend-email-input"
             label="Friend's email"
@@ -202,9 +200,15 @@ class AddFriendModal extends Component {
           />
           {errorMessage ? <p style={{ color: "red" }}>{errorMessage}</p> : null}
           {!isUser ? (
-            <button onClick={this.incrementModalStage}>
-              Add Private Friend
-            </button>
+            <div>
+              <p>
+                Alternatively, you can click <b>Create Private Friend</b>.
+              </p>
+
+              <button onClick={this.incrementModalStage}>
+                Create Private Friend
+              </button>
+            </div>
           ) : (
             <div>
               <div className={classes.userImageModal}>
@@ -229,22 +233,25 @@ class AddFriendModal extends Component {
                   Back
                 </button>
                 <button onClick={this.addNewUser}>Add This Friend</button>
-                <button
-                  onClick={() =>
-                    this.setState({
-                      name: "",
-                      image: "",
-                      email: "",
-                      isUser: false,
-                      isUser_id: "",
-                      modalStage: 1,
-                      errorMessage: null
-                    })
-                  }
-                >
-                  Create Private Friend
-                </button>
               </div>
+              <p>
+                Alternatively, you can click <b>Create Private Friend</b>.
+              </p>
+              <button
+                onClick={() =>
+                  this.setState({
+                    name: "",
+                    image: "",
+                    email: "",
+                    isUser: false,
+                    isUser_id: "",
+                    modalStage: 1,
+                    errorMessage: null
+                  })
+                }
+              >
+                Create Private Friend
+              </button>
             </div>
           )}
         </div>

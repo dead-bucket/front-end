@@ -25,12 +25,13 @@ export const getEntries = targetId => {
       .post("/api/v1/targetentry/", {
         recipient: targetId
       })
-      .then(data =>
+      .then(data => {
+        // console.log("getEntries res data:", data);
         dispatch({
           type: GET_USER_ENTRIES,
           payload: data.data.userEntries
-        })
-      )
+        });
+      })
       .catch(err => console.log(err));
   };
 };
@@ -39,12 +40,13 @@ export const getInboxEntries = targetId => {
   return dispatch => {
     return axios
       .get("/api/v1/inbox/" + targetId)
-      .then(data =>
+      .then(data => {
+        // console.log("getInboxEntries res data:", data);
         dispatch({
           type: GET_INBOX_ENTRIES,
           payload: data.data
-        })
-      )
+        });
+      })
       .catch(err => console.log(err));
   };
 };
