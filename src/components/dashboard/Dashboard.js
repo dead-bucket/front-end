@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useReducer } from "react";
 import axios from "axios";
 import { withStyles } from "@material-ui/core";
 import PropTypes from "prop-types";
@@ -79,6 +79,7 @@ class Dashboard extends Component {
         dashboardContent = friends.map(friend => (
           <FriendCard
             key={friend._id}
+            
             friend={friend}
             handleSetTarget={this.setTarget}
             handleToggle={this.togglePriority}

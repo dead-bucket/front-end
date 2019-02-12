@@ -162,6 +162,7 @@ class SendEntriesModal extends Component {
         })
         .then(() => this.addFriendToUser(isUser_id))
         .then(() => this.sendEntriesToUser(isUser_id))
+        .then(res => console.log(res))
         .catch(err => console.log(err));
     }
   };
