@@ -14,6 +14,7 @@ import Close from "@material-ui/icons/Close";
 
 // Redux
 import { connect } from "react-redux";
+import { setCurrentTarget } from "../../_actions/profileActions";
 
 function getModalStyle() {
   const top = 50;
@@ -78,7 +79,8 @@ class SendEntriesModal extends Component {
     isUser: false,
     isUser_id: null,
     username: null,
-    image: null
+    image: null,
+    convertedUser: false
   };
 
   handleOpen = () => {
@@ -129,7 +131,7 @@ class SendEntriesModal extends Component {
     });
   };
   addFriendToUser = id => {
-    console.log('in add friend to user fn on modal', id);
+    console.log("in add friend to user fn on modal", id);
     const { isUser_id } = this.state;
     if (isUser_id) {
       axios
@@ -137,12 +139,10 @@ class SendEntriesModal extends Component {
         // TODO - Add a toast of some visual confirmation on success
         .then(data => {
           console.log("friend added", data);
-
         })
         .catch(err => console.log(err));
     }
-
-  }
+  };
 
   convertTargetToUser = id => {
     console.log(id);
@@ -152,8 +152,8 @@ class SendEntriesModal extends Component {
         .put("/api/v1/changetargettouser/?id=" + id, { newUser: isUser_id })
         // TODO - Add a toast of some visual confirmation on success
         .then(data => {
-          console.log("friend converted", data);
-
+          this.setState({ convertedUser: true });
+          this.props.setCurrentTarget(data.data);
         })
         .then(() => this.addFriendToUser(isUser_id))
         .then(() => this.sendEntriesToUser(isUser_id))
@@ -164,11 +164,14 @@ class SendEntriesModal extends Component {
   sendEntriesToUser = id => {
     console.log(id);
     axios
-      .put("/api/v1/deliverentries/",{recipient: id})
-      // TODO - Add a toast of some visual confirmation on success
+      .put("/api/v1/deliverentries/", { recipient: id })
+
       .then(data => {
         console.log("Friend Added and Entries sent!", data);
-        this.handleClose();
+        this.setState({
+          modalMessage: "Friend added & thoughts sent!",
+          modalStage: 4
+        });
       })
       .catch(err => console.log(err));
   };
@@ -192,11 +195,18 @@ class SendEntriesModal extends Component {
   };
 
   render() {
-    const { username, image, email, modalStage, modalMessage } = this.state;
+    const {
+      username,
+      image,
+      email,
+      modalStage,
+      modalMessage,
+      convertedUser
+    } = this.state;
     const { classes } = this.props;
     const { target } = this.props.profile;
     let modalContent;
-    if (target.firstname) {
+    if (target.firstname && !convertedUser) {
       modalContent = (
         <div>
           <p>Do you want to send your thoughts to {target.firstname}?</p>
@@ -329,11 +339,15 @@ class SendEntriesModal extends Component {
 
 SendEntriesModal.propTypes = {
   classes: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  setCurrentTarget: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   profile: state.profile
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(SendEntriesModal));
+export default connect(
+  mapStateToProps,
+  { setCurrentTarget }
+)(withStyles(styles)(SendEntriesModal));

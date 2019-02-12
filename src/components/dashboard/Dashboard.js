@@ -52,6 +52,7 @@ class Dashboard extends Component {
   };
 
   setTarget = friend => {
+    console.log(friend);
     this.props.setCurrentTarget(friend);
     this.props.history.push("/friendview");
   };
