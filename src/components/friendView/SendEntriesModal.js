@@ -11,6 +11,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Send from "@material-ui/icons/Send";
 import BackArrow from "@material-ui/icons/ArrowBack";
 import Close from "@material-ui/icons/Close";
+import ArrowRight from "@material-ui/icons/ArrowRightAlt";
 
 // Redux
 import { connect } from "react-redux";
@@ -61,6 +62,20 @@ const styles = theme => ({
     position: "absolute",
     top: "10%",
     right: "10%"
+  },
+  compareFound: {
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center"
+  },
+  compareDiv: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  compareName: {
+    marginTop: 0,
+    fontWeight: "bold"
   }
 });
 
@@ -78,7 +93,8 @@ class SendEntriesModal extends Component {
     email: "",
     isUser: false,
     isUser_id: null,
-    username: null,
+    foundFirstname: null,
+    foundLastname: null,
     image: null,
     convertedUser: false
   };
@@ -92,7 +108,8 @@ class SendEntriesModal extends Component {
       open: false,
       email: "",
       modalStage: 0,
-      modalMessage: ""
+      modalMessage: "",
+      convertedUser: false
     });
   };
 
@@ -110,9 +127,9 @@ class SendEntriesModal extends Component {
 
           if (data.status === 200) {
             this.setState({
-              username: data.data[0].firstname,
+              foundFirstname: data.data[0].firstname,
+              foundLastname: data.data[0].lastname,
               image: data.data[0].picture,
-              isUser: true,
               isUser_id: data.data[0]._id,
               modalStage: 1
             });
@@ -196,7 +213,8 @@ class SendEntriesModal extends Component {
 
   render() {
     const {
-      username,
+      foundFirstname,
+      foundLastname,
       image,
       email,
       modalStage,
@@ -210,7 +228,7 @@ class SendEntriesModal extends Component {
       modalContent = (
         <div>
           <p>Do you want to send your thoughts to {target.firstname}?</p>
-          {/* TODO - change to an X in the corner of the modal */}
+
           <button onClick={() => this.sendEntriesToUser(target._id)}>
             Yes! Send my thoughts.
           </button>
@@ -251,14 +269,31 @@ class SendEntriesModal extends Component {
         case 1:
           modalContent = (
             <div>
-              <div>
-                <p>We found {username}!</p>
-                <img src={image} alt="Found friend" />
-                <div>
-                  <button onClick={() => this.convertTargetToUser(target._id)}>
-                    Add {username} as a friend and send your thoughts!
-                  </button>
+              <h5>We found {foundFirstname}!</h5>
+
+              <div className={classes.compareFound}>
+                <div className={classes.compareDiv}>
+                  <img src={target.picture} alt="Current friend" />
+                  <p className={classes.compareName}>{target.username}</p>
                 </div>
+                <ArrowRight style={{ fontSize: 60 }} />
+                <div className={classes.compareDiv}>
+                  <img src={image} alt="Found friend" />
+                  <p className={classes.compareName}>
+                    {foundFirstname} {foundLastname}
+                  </p>
+                </div>
+              </div>
+              <p>Is this the friend you're looking for?</p>
+              <p>
+                By clicking below <strong>{target.username}</strong>'s details
+                will be replaced with <strong>{foundFirstname}</strong>
+                's and your thoughts will be sent to them.
+              </p>
+              <div>
+                <button onClick={() => this.convertTargetToUser(target._id)}>
+                  Add {foundFirstname} as a friend and send your thoughts!
+                </button>
               </div>
             </div>
           );
