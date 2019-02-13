@@ -58,11 +58,11 @@ class Dashboard extends Component {
   };
 
   componentDidMount() {
+    this.props.loadUser();
     this.getTargets();
-
-    if (!this.props.currentUser) {
-      this.props.loadUser();
-    }
+    // if (!this.props.currentUser) {
+    //   this.props.loadUser();
+    // }
   }
 
   render() {
@@ -84,6 +84,7 @@ class Dashboard extends Component {
             handleSetTarget={this.setTarget}
             handleToggle={this.togglePriority}
             view="dashboard"
+            loggedInUser={this.props.currentUser}
           />
         ));
       }
