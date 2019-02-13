@@ -46,6 +46,11 @@ function FriendCard(props) {
   if (view === "friendview") {
     return (
       <div style={friendViewStyles}>
+        <img  style={{visibility: loggedInUser.newmessages.includes(friend._id) ? "visible" : "hidden", ...iconStyleTopRight}}
+            src={notificationPic}
+            alt={'this is a cool pic'}
+              
+        />
         <img alt="Profile" style={friendViewImage} src={friend.picture} />
         <h4 style={{ marginTop: 0 }}>
           {props.friend.lastname

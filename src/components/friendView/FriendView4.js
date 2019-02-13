@@ -24,6 +24,7 @@ import Spinner from "../common/Spinner";
 import { connect } from "react-redux";
 import { getEntries, getInboxEntries } from "../../_actions/entryActions";
 
+
 const styles = {
   friendContainer: {
     height: 250,
@@ -106,7 +107,7 @@ class FriendView4 extends Component {
     if (!target) {
       friendViewContent = <Spinner />;
     } else {
-      friendViewContent = <FriendCard friend={target} view="friendview" />;
+      friendViewContent = <FriendCard friend={target} loggedInUser={this.props.currentUser} view="friendview" />;
     }
 
     return (
@@ -146,7 +147,8 @@ FriendView4.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile
+  profile: state.profile,
+  currentUser: state.auth.currentUser
 });
 
 export default connect(
