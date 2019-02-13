@@ -7,7 +7,8 @@ const dashboardStyles = {
   justifyContent: "center",
   alignItems: "center",
   width: 150,
-  height: 150
+  height: 150,
+  position: "relative",
 };
 
 const friendViewStyles = {
@@ -15,13 +16,28 @@ const friendViewStyles = {
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
-  alignItems: "center"
+  alignItems: "center",
+  position: "relative",
 };
 
 const friendViewImage = {
   width: 150,
   borderRadius: 40
 };
+const iconStyleTopRight = {
+  width: "36px",
+  position: "absolute",
+  left: "70%",
+  top: "0%",
+  
+}
+const iconStyleBottomRight = {
+  position: "absolute",
+  left: "80%",
+  bottom: "27%",
+  
+}
+const notificationPic = require("./notification.png");
 
 function FriendCard(props) {
   const { view, friend, loggedInUser } = props;
@@ -41,13 +57,11 @@ function FriendCard(props) {
   } else if (view === "dashboard") {
     return (
       <div style={dashboardStyles}>
-        <i
-            className="material-icons red700"
+        <img  style={{visibility: loggedInUser.newmessages.includes(friend._id) ? "visible" : "hidden", ...iconStyleTopRight}}
+          src={notificationPic}
+          alt={'this is a cool pic'}
             
-        >
-            {loggedInUser.newmessages.includes(friend._id) ? "notifications" : "notifications_off"}
-            
-        </i>
+        />
         <img
           alt="Profile"
           style={{ borderRadius: 40, width: 100 }}
@@ -55,6 +69,7 @@ function FriendCard(props) {
           onClick={() => props.handleSetTarget(friend)}
         />
         <i
+          style={iconStyleBottomRight}
           className="material-icons red600"
           onClick={() => props.handleToggle(friend)}
         >
