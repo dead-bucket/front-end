@@ -24,7 +24,8 @@ const friendViewImage = {
 };
 
 function FriendCard(props) {
-  const { view, friend } = props;
+  const { view, friend, loggedInUser } = props;
+  // console.log('logged in user in friend card', loggedInUser);
 
   if (view === "friendview") {
     return (
@@ -40,6 +41,13 @@ function FriendCard(props) {
   } else if (view === "dashboard") {
     return (
       <div style={dashboardStyles}>
+        <i
+            className="material-icons red700"
+            
+        >
+            {loggedInUser.newmessages.includes(friend._id) ? "notifications" : "notifications_off"}
+            
+        </i>
         <img
           alt="Profile"
           style={{ borderRadius: 40, width: 100 }}
