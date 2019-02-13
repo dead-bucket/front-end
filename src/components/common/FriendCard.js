@@ -25,9 +25,9 @@ const friendViewImage = {
   borderRadius: 40
 };
 const iconStyleTopRight = {
-  width: "24px",
+  width: "36px",
   position: "absolute",
-  left: "80%",
+  left: "70%",
   top: "0%",
   
 }
