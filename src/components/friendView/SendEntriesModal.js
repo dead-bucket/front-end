@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+import Spinner from "../common/Spinner";
 
 import { withStyles } from "@material-ui/core/styles";
 // import Typography from "@material-ui/core/Typography";
@@ -80,6 +81,10 @@ const styles = theme => ({
   },
   checkCircle: {
     color: "green"
+  },
+  statusMessage: {
+    display: "flex",
+    alignItems: "center"
   }
 });
 
@@ -93,7 +98,7 @@ class SendEntriesModal extends Component {
   state = {
     open: false,
     modalStage: 0,
-    modalMessage: "",
+
     email: "",
     isUser: false,
     isUser_id: null,
@@ -115,7 +120,6 @@ class SendEntriesModal extends Component {
       open: false,
       email: "",
       modalStage: 0,
-      modalMessage: "",
       convertedUser: false,
       hasFriendConverted: false,
       haveEntriesSent: false,
@@ -137,11 +141,11 @@ class SendEntriesModal extends Component {
 
           if (data.status === 200) {
             this.setState({
+              modalStage: 1,
               foundFirstname: data.data[0].firstname,
               foundLastname: data.data[0].lastname,
               image: data.data[0].picture,
-              isUser_id: data.data[0]._id,
-              modalStage: 1
+              isUser_id: data.data[0]._id
             });
           }
         })
@@ -157,19 +161,6 @@ class SendEntriesModal extends Component {
       [name]: event.target.value
     });
   };
-  addFriendToUser = id => {
-    console.log("in add friend to user fn on modal", id);
-    const { isUser_id } = this.state;
-    if (isUser_id) {
-      axios
-        .put("/api/v1/addfriend/", { friend: isUser_id })
-        // TODO - Add a toast of some visual confirmation on success
-        .then(data => {
-          console.log("friend added", data);
-        })
-        .catch(err => console.log(err));
-    }
-  };
 
   convertTargetToUser = id => {
     const { isUser_id } = this.state;
@@ -178,7 +169,7 @@ class SendEntriesModal extends Component {
         .put("/api/v1/changetargettouser/?id=" + id, { newUser: isUser_id })
         // TODO - Add a toast of some visual confirmation on success
         .then(data => {
-          this.setState({ convertedUser: true });
+          this.setState({ convertedUser: true, modalStage: 3 });
           this.props.setCurrentTarget(data.data);
         })
         .then(() => this.addFriendToUser(isUser_id))
@@ -187,16 +178,30 @@ class SendEntriesModal extends Component {
     }
   };
 
+  addFriendToUser = id => {
+    console.log("in add friend to user fn on modal", id);
+    const { isUser_id } = this.state;
+    if (isUser_id) {
+      axios
+        .put("/api/v1/addfriend/", { friend: isUser_id })
+        // TODO - Add a toast of some visual confirmation on success
+        .then(data => {
+          this.setState({ hasFriendConverted: true });
+        })
+        .catch(err => console.log(err));
+    }
+  };
+
   sendEntriesToUser = id => {
-    console.log(id);
     axios
       .put("/api/v1/deliverentries/", { recipient: id })
 
       .then(data => {
         console.log("Friend Added and Entries sent!", data);
         this.setState({
-          modalMessage: "Friend added & thoughts sent!",
-          modalStage: 3
+          convertedUser: true,
+          modalStage: 3,
+          haveEntriesSent: true
         });
       })
       .catch(err => console.log(err));
@@ -207,8 +212,8 @@ class SendEntriesModal extends Component {
       .post("/api/v1/sendinvite/", { email })
       .then(data =>
         this.setState({
-          modalMessage: "Invite Sent!",
-          modalStage: 3
+          modalStage: 3,
+          haveInvitesSent: true
         })
       )
       .catch(err => console.log(err));
@@ -221,7 +226,6 @@ class SendEntriesModal extends Component {
       image,
       email,
       modalStage,
-      modalMessage,
       convertedUser,
       hasFriendConverted,
       haveEntriesSent,
@@ -229,6 +233,7 @@ class SendEntriesModal extends Component {
     } = this.state;
     const { classes } = this.props;
     const { target } = this.props.profile;
+
     let modalContent;
     if (target.firstname && !convertedUser) {
       modalContent = (
@@ -324,18 +329,31 @@ class SendEntriesModal extends Component {
           );
           break;
         case 3:
-          // hasFriendConverted: false,
-          // haveEntriesSent: false,
-          // haveInvitesSent: false
           modalContent = (
             <div>
-              <h2>Status:</h2>
-              {haveEntriesSent ? (
-                <p>
-                  <CheckCircle className={classes.CheckCircle} /> Thoughts sent!
-                </p>
+              <h5>Status:</h5>
+              {hasFriendConverted ? (
+                <div className={classes.statusMessage}>
+                  <CheckCircle className={classes.checkCircle} />{" "}
+                  <p style={{ marginLeft: 10 }}>Friend Added!</p>
+                </div>
               ) : null}
-              <button onClick={this.handleClose}>OK</button>
+              {haveEntriesSent ? (
+                <div className={classes.statusMessage}>
+                  <CheckCircle className={classes.checkCircle} />{" "}
+                  <p style={{ marginLeft: 10 }}>Thoughts Sent!</p>
+                </div>
+              ) : null}
+              {haveInvitesSent ? (
+                <div className={classes.statusMessage}>
+                  <CheckCircle className={classes.checkCircle} />{" "}
+                  <p style={{ marginLeft: 10 }}>Invite Sent!</p>
+                </div>
+              ) : null}
+
+              {haveInvitesSent || haveEntriesSent ? (
+                <button onClick={this.handleClose}>OK</button>
+              ) : null}
             </div>
           );
           break;
