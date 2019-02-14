@@ -15,10 +15,10 @@ code {
 
 .material-icons.red600 { 
   color: red; 
-  margin-top: -10%;
-  margin-right: -65%;
+  
 
 }
+
 .material-icons.red600:hover {
   cursor: pointer;
 }
