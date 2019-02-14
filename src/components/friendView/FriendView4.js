@@ -23,6 +23,8 @@ import Spinner from "../common/Spinner";
 //Redux
 import { connect } from "react-redux";
 import { getEntries, getInboxEntries } from "../../_actions/entryActions";
+import { loadUser } from "../../_actions/authActions";
+import axios from "axios";
 
 
 const styles = {
@@ -82,6 +84,21 @@ class FriendView4 extends Component {
   handleBottomChange = (event, value) => {
     this.setState({ value });
   };
+  clearNotification() {
+    console.log('propos.profile._id', this.props.profile.target._id);
+    axios
+      .put("/api/v1/inboxclearnotification/", {
+        sender: this.props.profile.target._id
+      })
+      .then(data => {
+        console.log('data back from clearnotification',data.status);
+        if(data.status === 204) {
+          this.props.loadUser();
+        }
+        
+      })
+      .catch(err => console.log(err));
+  }
 
   render() {
     const { classes, getEntries } = this.props;
@@ -97,7 +114,7 @@ class FriendView4 extends Component {
         actionContent = <ComposeForm friend={target} />;
         break;
       case 2:
-        actionContent = <Inbox />;
+        actionContent = <Inbox onCLick={this.clearNotification()}/>;
         break;
       default:
         return null;
@@ -153,5 +170,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getEntries, getInboxEntries }
+  { getEntries, getInboxEntries, loadUser }
 )(withStyles(styles)(FriendView4));
