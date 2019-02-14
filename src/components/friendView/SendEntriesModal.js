@@ -12,6 +12,7 @@ import Send from "@material-ui/icons/Send";
 import BackArrow from "@material-ui/icons/ArrowBack";
 import Close from "@material-ui/icons/Close";
 import ArrowRight from "@material-ui/icons/ArrowRightAlt";
+import CheckCircle from "@material-ui/icons/CheckCircleOutlined";
 
 // Redux
 import { connect } from "react-redux";
@@ -76,6 +77,9 @@ const styles = theme => ({
   compareName: {
     marginTop: 0,
     fontWeight: "bold"
+  },
+  checkCircle: {
+    color: "green"
   }
 });
 
@@ -96,7 +100,10 @@ class SendEntriesModal extends Component {
     foundFirstname: null,
     foundLastname: null,
     image: null,
-    convertedUser: false
+    convertedUser: false,
+    hasFriendConverted: false,
+    haveEntriesSent: false,
+    haveInvitesSent: false
   };
 
   handleOpen = () => {
@@ -109,7 +116,10 @@ class SendEntriesModal extends Component {
       email: "",
       modalStage: 0,
       modalMessage: "",
-      convertedUser: false
+      convertedUser: false,
+      hasFriendConverted: false,
+      haveEntriesSent: false,
+      haveInvitesSent: false
     });
   };
 
@@ -139,7 +149,7 @@ class SendEntriesModal extends Component {
         .catch(err =>
           // TODO : if the user can't be found, ask if they want to send an invite to the email address
           this.setState({
-            modalStage: 3
+            modalStage: 2
           })
         );
     }
@@ -162,7 +172,6 @@ class SendEntriesModal extends Component {
   };
 
   convertTargetToUser = id => {
-    console.log(id);
     const { isUser_id } = this.state;
     if (isUser_id) {
       axios
@@ -187,7 +196,7 @@ class SendEntriesModal extends Component {
         console.log("Friend Added and Entries sent!", data);
         this.setState({
           modalMessage: "Friend added & thoughts sent!",
-          modalStage: 4
+          modalStage: 3
         });
       })
       .catch(err => console.log(err));
@@ -199,16 +208,10 @@ class SendEntriesModal extends Component {
       .then(data =>
         this.setState({
           modalMessage: "Invite Sent!",
-          modalStage: 4
+          modalStage: 3
         })
       )
-      .catch(err =>
-        this.setState({
-          modalMessage: "An error occurred.  Please try again later.",
-          modalStage: 4
-        })
-      );
-    console.log(email);
+      .catch(err => console.log(err));
   };
 
   render() {
@@ -219,7 +222,10 @@ class SendEntriesModal extends Component {
       email,
       modalStage,
       modalMessage,
-      convertedUser
+      convertedUser,
+      hasFriendConverted,
+      haveEntriesSent,
+      haveInvitesSent
     } = this.state;
     const { classes } = this.props;
     const { target } = this.props.profile;
@@ -298,14 +304,8 @@ class SendEntriesModal extends Component {
             </div>
           );
           break;
+
         case 2:
-          modalContent = (
-            <div>
-              <h1>converted and messages sent</h1>
-            </div>
-          );
-          break;
-        case 3:
           modalContent = (
             <div>
               <h5>We couldn't find that email.</h5>
@@ -323,10 +323,18 @@ class SendEntriesModal extends Component {
             </div>
           );
           break;
-        case 4:
+        case 3:
+          // hasFriendConverted: false,
+          // haveEntriesSent: false,
+          // haveInvitesSent: false
           modalContent = (
             <div>
-              <h2>{modalMessage}</h2>
+              <h2>Status:</h2>
+              {haveEntriesSent ? (
+                <p>
+                  <CheckCircle className={classes.CheckCircle} /> Thoughts sent!
+                </p>
+              ) : null}
               <button onClick={this.handleClose}>OK</button>
             </div>
           );
@@ -355,7 +363,7 @@ class SendEntriesModal extends Component {
             id="send_thoughts_modal"
           >
             <div className={classes.buttonDiv}>
-              {modalStage === 1 || modalStage === 3 ? (
+              {modalStage === 1 || modalStage === 2 ? (
                 <IconButton className={classes.backButton}>
                   <BackArrow onClick={this.resetModal} />
                 </IconButton>
