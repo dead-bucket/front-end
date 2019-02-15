@@ -25,13 +25,11 @@ const styles = {
 };
 class Thoughtline extends Component {
   render() {
-    const { classes, userEntries } = this.props;
+    const { classes, userEntries, name } = this.props;
 
     let messageContent;
     if (userEntries.length === 0) {
-      messageContent = (
-        <h5>You haven't entered a thought for this friend yet...</h5>
-      );
+      messageContent = <h5>You haven't composed a thought for {name} yet.</h5>;
     } else {
       messageContent = userEntries.map(entry => {
         return (

@@ -51,13 +51,10 @@ const colors = [
 ];
 
 class ComposeForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      thought: "",
-      thoughtColor: "#fff"
-    };
-  }
+  state = {
+    thought: "",
+    thoughtColor: "#fff"
+  };
 
   handleInputChange = e => {
     const { name, value } = e.target;
@@ -85,7 +82,7 @@ class ComposeForm extends Component {
 
   render() {
     const { classes, friend } = this.props;
-    const { thoughtColor } = this.state;
+    const { thoughtColor, thought } = this.state;
     let textMessage;
 
     if (!friend) {
@@ -134,6 +131,7 @@ class ComposeForm extends Component {
           color="primary"
           className={classes.margin}
           onClick={this.submitThought}
+          disabled={!thought}
         >
           Add To Thoughtline
         </Button>

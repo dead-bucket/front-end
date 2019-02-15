@@ -4,7 +4,7 @@ import axios from "axios";
 
 import { withStyles } from "@material-ui/core/styles";
 // import Typography from "@material-ui/core/Typography";
-// import Button from "@material-ui/core/Button";
+import Button from "@material-ui/core/Button";
 import Modal from "@material-ui/core/Modal";
 import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
@@ -13,6 +13,8 @@ import BackArrow from "@material-ui/icons/ArrowBack";
 import Close from "@material-ui/icons/Close";
 import ArrowRight from "@material-ui/icons/ArrowRightAlt";
 import CheckCircle from "@material-ui/icons/CheckCircleOutlined";
+import Search from "@material-ui/icons/Search";
+import Fab from "@material-ui/core/Fab";
 
 // Redux
 import { connect } from "react-redux";
@@ -41,6 +43,11 @@ const styles = theme => ({
     width: 60,
     height: 60,
     padding: 12
+  },
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
   },
   buttonDiv: {
     position: "relative"
@@ -84,6 +91,13 @@ const styles = theme => ({
   statusMessage: {
     display: "flex",
     alignItems: "center"
+  },
+  searchButton: {
+    marginLeft: 10,
+    width: 55
+  },
+  modalHeading: {
+    textAlign: "center"
   }
 });
 
@@ -97,9 +111,7 @@ class SendEntriesModal extends Component {
   state = {
     open: false,
     modalStage: 0,
-
     email: "",
-    isUser: false,
     isUser_id: null,
     foundFirstname: null,
     foundLastname: null,
@@ -132,33 +144,35 @@ class SendEntriesModal extends Component {
 
   handleInputChange = name => event => {
     const { value } = event.target;
-    if (name === "email" && validateEmail(value)) {
-      axios
-        .get("/api/v1/usersearch/?email=" + value)
-        .then(data => {
-          console.log("USER SEARCH:", data);
 
-          if (data.status === 200) {
-            this.setState({
-              modalStage: 1,
-              foundFirstname: data.data[0].firstname,
-              foundLastname: data.data[0].lastname,
-              image: data.data[0].picture,
-              isUser_id: data.data[0]._id
-            });
-          }
-        })
-
-        .catch(err =>
-          // TODO : if the user can't be found, ask if they want to send an invite to the email address
-          this.setState({
-            modalStage: 2
-          })
-        );
-    }
     this.setState({
       [name]: event.target.value
     });
+  };
+
+  searchEmail = email => {
+    axios
+      .get("/api/v1/usersearch/?email=" + email)
+      .then(data => {
+        console.log("USER SEARCH:", data);
+
+        if (data.status === 200) {
+          this.setState({
+            modalStage: 1,
+            foundFirstname: data.data[0].firstname,
+            foundLastname: data.data[0].lastname,
+            image: data.data[0].picture,
+            isUser_id: data.data[0]._id
+          });
+        }
+      })
+
+      .catch(err =>
+        // TODO : if the user can't be found, ask if they want to send an invite to the email address
+        this.setState({
+          modalStage: 2
+        })
+      );
   };
 
   convertTargetToUser = id => {
@@ -236,12 +250,18 @@ class SendEntriesModal extends Component {
     let modalContent;
     if (target.firstname && !convertedUser) {
       modalContent = (
-        <div>
-          <p>Do you want to send your thoughts to {target.firstname}?</p>
-
-          <button onClick={() => this.sendEntriesToUser(target._id)}>
+        <div className={classes.container}>
+          <h5 className={classes.modalHeading}>
+            Do you want to send your thoughts to {target.firstname}?
+          </h5>
+          <br />
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={() => this.sendEntriesToUser(target._id)}
+          >
             Yes! Send my thoughts.
-          </button>
+          </Button>
         </div>
       );
     } else {
@@ -250,7 +270,9 @@ class SendEntriesModal extends Component {
         case 0:
           modalContent = (
             <div>
-              <h5>No email associated with this friend.</h5>
+              <h5 className={classes.modalHeading}>
+                No email associated with this friend.
+              </h5>
               <p>
                 In order to send messages to a friend, they also need to be
                 Thoughtline users.
@@ -259,19 +281,32 @@ class SendEntriesModal extends Component {
                 Search for your friend on Thoughtline by entering their email
                 address below:
               </p>
-              <TextField
-                id="outlined-friend-email-input"
-                label="Friend's email"
-                className={classes.textField}
-                type="email"
-                fullWidth
-                required
-                value={this.state.email}
-                onChange={this.handleInputChange("email")}
-                autoComplete="current-email"
-                margin="normal"
-                variant="outlined"
-              />
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <TextField
+                  id="outlined-friend-email-input"
+                  label="Friend's email"
+                  className={classes.textField}
+                  type="email"
+                  fullWidth
+                  required
+                  value={this.state.email}
+                  onChange={this.handleInputChange("email")}
+                  autoComplete="current-email"
+                  margin="normal"
+                  variant="outlined"
+                />
+
+                <Fab
+                  size="medium"
+                  color="primary"
+                  aria-label="Search"
+                  disabled={!validateEmail(email)}
+                  onClick={() => this.searchEmail(email)}
+                  className={classes.searchButton}
+                >
+                  <Search />
+                </Fab>
+              </div>
             </div>
           );
           break;
@@ -279,7 +314,9 @@ class SendEntriesModal extends Component {
         case 1:
           modalContent = (
             <div>
-              <h5>We found {foundFirstname}!</h5>
+              <h5 className={classes.modalHeading}>
+                We found {foundFirstname}!
+              </h5>
 
               <div className={classes.compareFound}>
                 <div className={classes.compareDiv}>
@@ -301,9 +338,13 @@ class SendEntriesModal extends Component {
                 's and your thoughts will be sent to them.
               </p>
               <div>
-                <button onClick={() => this.convertTargetToUser(target._id)}>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={() => this.convertTargetToUser(target._id)}
+                >
                   Add {foundFirstname} as a friend and send your thoughts!
-                </button>
+                </Button>
               </div>
             </div>
           );
@@ -312,7 +353,9 @@ class SendEntriesModal extends Component {
         case 2:
           modalContent = (
             <div>
-              <h5>We couldn't find that email.</h5>
+              <h5 className={classes.modalHeading}>
+                We couldn't find that email.
+              </h5>
               <p>Would you like to send a Thoughtline invite to this email?</p>
               <p>
                 <strong>{email}</strong>
@@ -321,37 +364,51 @@ class SendEntriesModal extends Component {
                 You'll receive a notification when they join. Once they've
                 joined, you can try sending your thoughts again.
               </p>
-              <button onClick={() => this.sendInvite(email)}>
-                Send Invite!
-              </button>
+              <div className={classes.container}>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={() => this.sendInvite(email)}
+                >
+                  Send Invite!
+                </Button>
+              </div>
             </div>
           );
           break;
         case 3:
           modalContent = (
-            <div>
+            <div className={classes.container}>
               <h5>Status:</h5>
-              {hasFriendConverted ? (
-                <div className={classes.statusMessage}>
-                  <CheckCircle className={classes.checkCircle} />{" "}
-                  <p style={{ marginLeft: 10 }}>Friend Added!</p>
-                </div>
-              ) : null}
-              {haveEntriesSent ? (
-                <div className={classes.statusMessage}>
-                  <CheckCircle className={classes.checkCircle} />{" "}
-                  <p style={{ marginLeft: 10 }}>Thoughts Sent!</p>
-                </div>
-              ) : null}
-              {haveInvitesSent ? (
-                <div className={classes.statusMessage}>
-                  <CheckCircle className={classes.checkCircle} />{" "}
-                  <p style={{ marginLeft: 10 }}>Invite Sent!</p>
-                </div>
-              ) : null}
-
+              <div>
+                {hasFriendConverted ? (
+                  <div className={classes.statusMessage}>
+                    <CheckCircle className={classes.checkCircle} />{" "}
+                    <p style={{ marginLeft: 10 }}>Friend Added!</p>
+                  </div>
+                ) : null}
+                {haveEntriesSent ? (
+                  <div className={classes.statusMessage}>
+                    <CheckCircle className={classes.checkCircle} />{" "}
+                    <p style={{ marginLeft: 10 }}>Thoughts Sent!</p>
+                  </div>
+                ) : null}
+                {haveInvitesSent ? (
+                  <div className={classes.statusMessage}>
+                    <CheckCircle className={classes.checkCircle} />{" "}
+                    <p style={{ marginLeft: 10 }}>Invite Sent!</p>
+                  </div>
+                ) : null}
+              </div>
+              <br />
               {haveInvitesSent || haveEntriesSent ? (
-                <button onClick={this.handleClose}>OK</button>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={this.handleClose}
+                >
+                  OK
+                </Button>
               ) : null}
             </div>
           );

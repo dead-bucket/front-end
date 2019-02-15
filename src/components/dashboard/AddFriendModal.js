@@ -15,6 +15,7 @@ import BackArrow from "@material-ui/icons/ArrowBack";
 import CheckCircle from "@material-ui/icons/CheckCircleOutlined";
 import Search from "@material-ui/icons/Search";
 import Fab from "@material-ui/core/Fab";
+
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -46,7 +47,6 @@ const styles = theme => ({
   buttonDiv: {
     position: "relative"
   },
-
   closeButton: {
     position: "absolute",
     right: -30,
@@ -62,16 +62,6 @@ const styles = theme => ({
     bottom: "5%",
     right: "10%"
   },
-  userImageModal: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  modalNav: {
-    display: "flex",
-    justifyContent: "space-around"
-  },
   container: {
     display: "flex",
     flexDirection: "column",
@@ -83,6 +73,9 @@ const styles = theme => ({
   searchButton: {
     marginLeft: 10,
     width: 55
+  },
+  modalHeading: {
+    textAlign: "center"
   }
 });
 
@@ -100,7 +93,6 @@ class AddFriendModal extends Component {
     email: "",
     image: "",
     modalStage: 0,
-
     isUser_id: null,
     errorMessage: null
   };
@@ -139,9 +131,9 @@ class AddFriendModal extends Component {
     this.setState({ modalStage: 0 });
   };
 
-  searchEmail = value => {
+  searchEmail = email => {
     axios
-      .get("/api/v1/usersearch/?email=" + value)
+      .get("/api/v1/usersearch/?email=" + email)
       .then(data => {
         console.log("USER SEARCH:", data);
 
@@ -157,7 +149,6 @@ class AddFriendModal extends Component {
         }
       })
       .catch(err => {
-        const { email } = this.state;
         this.setState({
           errorMessage: `No users associated with ${email}. Please create a Private Friend.`,
           modalStage: 2
@@ -219,7 +210,7 @@ class AddFriendModal extends Component {
         // Search for a new Friend
         modalContent = (
           <div>
-            <h4>Add a New Friend</h4>
+            <h4 className={classes.modalHeading}>Add a New Friend</h4>
             <p>
               If you want the ability to send thoughts to a friend, enter their
               email address in the field below.
@@ -277,7 +268,7 @@ class AddFriendModal extends Component {
         modalContent = (
           <div>
             <div className={classes.container}>
-              <h4>User Found!</h4>
+              <h4 className={classes.modalHeading}>User Found!</h4>
               <img src={image} style={{ width: 90 }} alt="Found User" />
               <strong>
                 <p className={classes.profileText}>
@@ -315,7 +306,7 @@ class AddFriendModal extends Component {
         // If NO associated email is found, prompt to make a new Private Friend
         modalContent = (
           <div>
-            <h4>Create a Private Friend</h4>
+            <h4 className={classes.modalHeading}>Create a Private Friend</h4>
             {errorMessage ? (
               <p style={{ color: "red" }}>{errorMessage}</p>
             ) : null}

@@ -26,7 +26,6 @@ import { getEntries, getInboxEntries } from "../../_actions/entryActions";
 import { loadUser } from "../../_actions/authActions";
 import axios from "axios";
 
-
 const styles = {
   friendContainer: {
     height: 250,
@@ -85,17 +84,16 @@ class FriendView4 extends Component {
     this.setState({ value });
   };
   clearNotification() {
-    console.log('propos.profile._id', this.props.profile.target._id);
+    console.log("propos.profile._id", this.props.profile.target._id);
     axios
       .put("/api/v1/inboxclearnotification/", {
         sender: this.props.profile.target._id
       })
       .then(data => {
-        console.log('data back from clearnotification',data.status);
-        if(data.status === 204) {
+        console.log("data back from clearnotification", data.status);
+        if (data.status === 204) {
           this.props.loadUser();
         }
-        
       })
       .catch(err => console.log(err));
   }
@@ -108,13 +106,23 @@ class FriendView4 extends Component {
     let actionContent;
     switch (value) {
       case 0:
-        actionContent = <Thoughtline onClick={getEntries(target._id)} />;
+        actionContent = (
+          <Thoughtline
+            name={target.firstname || target.username}
+            onClick={getEntries(target._id)}
+          />
+        );
         break;
       case 1:
         actionContent = <ComposeForm friend={target} />;
         break;
       case 2:
-        actionContent = <Inbox onCLick={this.clearNotification()}/>;
+        actionContent = (
+          <Inbox
+            name={target.firstname || target.username}
+            onCLick={this.clearNotification()}
+          />
+        );
         break;
       default:
         return null;
@@ -124,7 +132,13 @@ class FriendView4 extends Component {
     if (!target) {
       friendViewContent = <Spinner />;
     } else {
-      friendViewContent = <FriendCard friend={target} loggedInUser={this.props.currentUser} view="friendview" />;
+      friendViewContent = (
+        <FriendCard
+          friend={target}
+          loggedInUser={this.props.currentUser}
+          view="friendview"
+        />
+      );
     }
 
     return (
