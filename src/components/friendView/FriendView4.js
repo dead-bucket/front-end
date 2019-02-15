@@ -84,18 +84,20 @@ class FriendView4 extends Component {
     this.setState({ value });
   };
   clearNotification() {
-    console.log("propos.profile._id", this.props.profile.target._id);
-    axios
-      .put("/api/v1/inboxclearnotification/", {
-        sender: this.props.profile.target._id
-      })
-      .then(data => {
-        console.log("data back from clearnotification", data.status);
-        if (data.status === 204) {
-          this.props.loadUser();
-        }
-      })
-      .catch(err => console.log(err));
+    // console.log('propos.profile._id', this.props.profile.target._id);
+    setTimeout(() => {
+      axios
+        .put("/api/v1/inboxclearnotification/", {
+          sender: this.props.profile.target._id
+        })
+        .then(data => {
+          // console.log('data back from clearnotification',data.status);
+          if (data.status === 204) {
+            this.props.loadUser();
+          }
+        })
+        .catch(err => console.log(err));
+    }, 4000);
   }
 
   render() {
