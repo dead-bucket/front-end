@@ -24,11 +24,11 @@ const styles = {
 
 class Inbox extends Component {
   render() {
-    const { classes, inboxEntries } = this.props;
+    const { classes, inboxEntries, name } = this.props;
     let messageContent;
     if (inboxEntries.length === 0) {
       messageContent = (
-        <h5>You haven't received a thought from this friend yet...</h5>
+        <h5>You haven't received a thought from {name} yet...</h5>
       );
     } else {
       messageContent = inboxEntries.map(entry => {

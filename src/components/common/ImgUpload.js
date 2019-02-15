@@ -38,7 +38,7 @@ class ImgUpload extends Component {
       <div className="container-fluid">
         <div className="row">
           <div className="col-8">
-            <p>Profile Image</p>
+            <p>Profile Image (Optional):</p>
           </div>
         </div>
         <div className={classes.uploadContainer}>

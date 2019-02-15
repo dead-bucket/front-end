@@ -5,7 +5,6 @@ import axios from "axios";
 import ImgUpload from "../common/ImgUpload";
 
 import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -14,6 +13,8 @@ import PersonAdd from "@material-ui/icons/PersonAdd";
 import Close from "@material-ui/icons/Close";
 import BackArrow from "@material-ui/icons/ArrowBack";
 import CheckCircle from "@material-ui/icons/CheckCircleOutlined";
+import Search from "@material-ui/icons/Search";
+import Fab from "@material-ui/core/Fab";
 
 function getModalStyle() {
   const top = 50;
@@ -46,7 +47,6 @@ const styles = theme => ({
   buttonDiv: {
     position: "relative"
   },
-
   closeButton: {
     position: "absolute",
     right: -30,
@@ -62,16 +62,6 @@ const styles = theme => ({
     bottom: "5%",
     right: "10%"
   },
-  userImageModal: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  modalNav: {
-    display: "flex",
-    justifyContent: "space-around"
-  },
   container: {
     display: "flex",
     flexDirection: "column",
@@ -79,6 +69,13 @@ const styles = theme => ({
   },
   profileText: {
     margin: 0
+  },
+  searchButton: {
+    marginLeft: 10,
+    width: 55
+  },
+  modalHeading: {
+    textAlign: "center"
   }
 });
 
@@ -96,7 +93,6 @@ class AddFriendModal extends Component {
     email: "",
     image: "",
     modalStage: 0,
-
     isUser_id: null,
     errorMessage: null
   };
@@ -122,33 +118,6 @@ class AddFriendModal extends Component {
 
   handleInputChange = name => event => {
     const { value } = event.target;
-
-    if (name === "email" && validateEmail(value)) {
-      axios
-        .get("/api/v1/usersearch/?email=" + value)
-        .then(data => {
-          console.log("USER SEARCH:", data);
-
-          if (data.status === 200) {
-            this.setState({
-              username: data.data[0].username,
-              firstname: data.data[0].firstname,
-              lastname: data.data[0].lastname,
-              image: data.data[0].picture,
-              isUser_id: data.data[0]._id,
-              modalStage: 1
-            });
-          }
-        })
-        .catch(err => {
-          const { email } = this.state;
-          this.setState({
-            errorMessage: `No users associated with ${email}. Please create a Private Friend.`,
-            modalStage: 2
-          });
-        });
-    }
-
     this.setState({
       [name]: value
     });
@@ -160,6 +129,31 @@ class AddFriendModal extends Component {
 
   resetModal = () => {
     this.setState({ modalStage: 0 });
+  };
+
+  searchEmail = email => {
+    axios
+      .get("/api/v1/usersearch/?email=" + email)
+      .then(data => {
+        console.log("USER SEARCH:", data);
+
+        if (data.status === 200) {
+          this.setState({
+            username: data.data[0].username,
+            firstname: data.data[0].firstname,
+            lastname: data.data[0].lastname,
+            image: data.data[0].picture,
+            isUser_id: data.data[0]._id,
+            modalStage: 1
+          });
+        }
+      })
+      .catch(err => {
+        this.setState({
+          errorMessage: `No users associated with ${email}. Please create a Private Friend.`,
+          modalStage: 2
+        });
+      });
   };
 
   addNewTarget = () => {
@@ -205,6 +199,7 @@ class AddFriendModal extends Component {
       errorMessage,
       image,
       username,
+      email,
       firstname,
       lastname
     } = this.state;
@@ -215,7 +210,7 @@ class AddFriendModal extends Component {
         // Search for a new Friend
         modalContent = (
           <div>
-            <h4>Add a New Friend!</h4>
+            <h4 className={classes.modalHeading}>Add a New Friend</h4>
             <p>
               If you want the ability to send thoughts to a friend, enter their
               email address in the field below.
@@ -224,29 +219,46 @@ class AddFriendModal extends Component {
               If they are an existing user, you can choose to add them using
               their existing profile info.
             </p>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <TextField
+                id="outlined-friend-email-input"
+                label="Friend's email"
+                className={classes.textField}
+                type="email"
+                fullWidth
+                required
+                value={this.state.email}
+                onChange={this.handleInputChange("email")}
+                autoComplete="current-email"
+                margin="normal"
+                variant="outlined"
+              />
 
-            <TextField
-              id="outlined-friend-email-input"
-              label="Friend's email"
-              className={classes.textField}
-              type="email"
-              fullWidth
-              required
-              value={this.state.email}
-              onChange={this.handleInputChange("email")}
-              autoComplete="current-email"
-              margin="normal"
-              variant="outlined"
-            />
+              <Fab
+                size="medium"
+                color="primary"
+                aria-label="Search"
+                disabled={!validateEmail(email)}
+                onClick={() => this.searchEmail(email)}
+                className={classes.searchButton}
+              >
+                <Search />
+              </Fab>
+            </div>
             <hr />
             <div>
-              <p>
-                Alternatively, you can click <b>Create Private Friend</b>.
-              </p>
-
-              <button onClick={() => this.setState({ modalStage: 2 })}>
-                Create Private Friend
-              </button>
+              <div className={classes.container}>
+                <p>
+                  Alternatively, you can click <b>Create Private Friend</b>.
+                </p>
+                <Button
+                  color="primary"
+                  variant="outlined"
+                  onClick={() => this.setState({ modalStage: 2 })}
+                >
+                  Create Private Friend
+                </Button>
+              </div>
             </div>
           </div>
         );
@@ -256,7 +268,7 @@ class AddFriendModal extends Component {
         modalContent = (
           <div>
             <div className={classes.container}>
-              <h4>User Found!</h4>
+              <h4 className={classes.modalHeading}>User Found!</h4>
               <img src={image} style={{ width: 90 }} alt="Found User" />
               <strong>
                 <p className={classes.profileText}>
@@ -265,18 +277,27 @@ class AddFriendModal extends Component {
               </strong>
               <p className={classes.profileText}>{username}</p>
               <p>Do you want to add this user as a friend?</p>
-              <button onClick={this.addNewUser}>Add This Friend</button>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={this.addNewUser}
+              >
+                Add This Friend
+              </Button>
             </div>
             <br />
             <hr />
-            <div>
+            <div className={classes.container}>
               <p>
-                Alternatively, you can click <b>Create Private Friend</b>.
+                Alternatively, you can <b>Create a Private Friend</b>:
               </p>
-
-              <button onClick={() => this.setState({ modalStage: 2 })}>
+              <Button
+                color="primary"
+                variant="outlined"
+                onClick={() => this.setState({ modalStage: 2 })}
+              >
                 Create Private Friend
-              </button>
+              </Button>
             </div>
           </div>
         );
@@ -285,10 +306,15 @@ class AddFriendModal extends Component {
         // If NO associated email is found, prompt to make a new Private Friend
         modalContent = (
           <div>
-            <h4>Creating a private friend</h4>
+            <h4 className={classes.modalHeading}>Create a Private Friend</h4>
             {errorMessage ? (
               <p style={{ color: "red" }}>{errorMessage}</p>
             ) : null}
+            <p>
+              Give your friend a <strong>name</strong> (required) and a{" "}
+              <strong>profile picture</strong>
+              (optional):
+            </p>
             <div>
               <TextField
                 id="outlined-friend-name-input"
@@ -303,15 +329,17 @@ class AddFriendModal extends Component {
               />
 
               <ImgUpload updateImg={this.handleProfileImg} />
-              <div>
+              <br />
+              <div className={classes.container}>
                 <Button
                   id="AddFriendModal_submit_btn"
-                  fullWidth
                   variant="contained"
+                  color="primary"
                   className={classes.button}
                   onClick={this.addNewTarget}
+                  disabled={!username}
                 >
-                  Add Friend
+                  Create Private Friend
                 </Button>
               </div>
             </div>
@@ -330,121 +358,6 @@ class AddFriendModal extends Component {
       default:
         break;
     }
-
-    // if (modalStage === 0) {
-    //   modalContent = (
-    //     <div>
-    //       <p>
-    //         If you want the ability to send thoughts to a friend, enter their
-    //         email address in the field below.
-    //       </p>
-    //       <p>
-    //         If they are an existing user, you'll can choose to add them using
-    //         their existing profile info.
-    //       </p>
-
-    //       <TextField
-    //         id="outlined-friend-email-input"
-    //         label="Friend's email"
-    //         className={classes.textField}
-    //         type="email"
-    //         fullWidth
-    //         required
-    //         value={this.state.email}
-    //         onChange={this.handleInputChange("email")}
-    //         autoComplete="current-email"
-    //         margin="normal"
-    //         variant="outlined"
-    //       />
-    //       {errorMessage ? <p style={{ color: "red" }}>{errorMessage}</p> : null}
-    //       {!isUser ? (
-    //         <div>
-    //           <p>
-    //             Alternatively, you can click <b>Create Private Friend</b>.
-    //           </p>
-
-    //           <button onClick={this.incrementModalStage}>
-    //             Create Private Friend
-    //           </button>
-    //         </div>
-    //       ) : (
-    //         <div>
-    //           <div className={classes.userImageModal}>
-    //             <img src={image} alt="Found user" />
-    //             <p>
-    //               <b>{username}</b>
-    //             </p>
-    //           </div>
-    //           <div className={classes.modalNav}>
-    //             <button
-    //               onClick={() =>
-    //                 this.setState({
-    //                   name: "",
-    //                   image: "",
-    //                   email: "",
-    //                   isUser: false,
-    //                   isUser_id: "",
-    //                   errorMessage: null
-    //                 })
-    //               }
-    //             >
-    //               Back
-    //             </button>
-    //             <button onClick={this.addNewUser}>Add This Friend</button>
-    //           </div>
-    //           <p>
-    //             Alternatively, you can click <b>Create Private Friend</b>.
-    //           </p>
-    //           <button
-    //             onClick={() =>
-    //               this.setState({
-    //                 name: "",
-    //                 image: "",
-    //                 email: "",
-    //                 isUser: false,
-    //                 isUser_id: "",
-    //                 modalStage: 1,
-    //                 errorMessage: null
-    //               })
-    //             }
-    //           >
-    //             Create Private Friend
-    //           </button>
-    //         </div>
-    //       )}
-    //     </div>
-    //   );
-    // } else if (modalStage === 1) {
-    //   modalContent = (
-    // <div>
-    //   <TextField
-    //     id="outlined-friend-name-input"
-    //     label="Friend's Name"
-    //     required
-    //     fullWidth
-    //     className={classes.textField}
-    //     value={this.state.username}
-    //     onChange={this.handleInputChange("username")}
-    //     margin="normal"
-    //     variant="outlined"
-    //   />
-
-    //   <ImgUpload updateImg={this.handleProfileImg} />
-    //   <div>
-    //     <button onClick={this.decrementModalStage}>Back</button>
-    //     <Button
-    //       id="AddFriendModal_submit_btn"
-    //       fullWidth
-    //       variant="contained"
-    //       className={classes.button}
-    //       onClick={this.addNewTarget}
-    //     >
-    //       Add Friend
-    //     </Button>
-    //   </div>
-    //     </div>
-    //   );
-    // }
 
     return (
       <div>
