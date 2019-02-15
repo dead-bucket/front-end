@@ -357,9 +357,9 @@ class SendEntriesModal extends Component {
                 We couldn't find that email.
               </h5>
               <p>Would you like to send a Thoughtline invite to this email?</p>
-              <p>
+              <h5 className={classes.modalHeading}>
                 <strong>{email}</strong>
-              </p>
+              </h5>
               <p>
                 You'll receive a notification when they join. Once they've
                 joined, you can try sending your thoughts again.
