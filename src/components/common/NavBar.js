@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutUser } from "../../_actions/authActions";
-import isEmpty from "../../utils/isEmpty";
+import { isEmpty } from "../../utils/validation";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -79,7 +79,7 @@ class NavBar extends Component {
             {!isEmpty(currentUser) ? (
               <div className={classes.profileContainer}>
                 <div>
-                  <p>{currentUser.username}</p>
+                  <p>{currentUser.firstname || currentUser.username}</p>
                 </div>
                 <div>
                   <IconButton

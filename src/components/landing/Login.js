@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
+
 //REDUX
 import { connect } from "react-redux";
 import { loginUser } from "../../_actions/authActions";
@@ -20,7 +21,10 @@ const styles = {
   loginCard: {
     marginTop: 50,
     padding: 20,
-    width: 350
+    width: 350,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
   }
 };
 
@@ -60,6 +64,7 @@ class Login extends Component {
 
   render() {
     const { classes } = this.props;
+    const { username, password } = this.state;
 
     return (
       <div
@@ -69,10 +74,8 @@ class Login extends Component {
       >
         <h1>Welcome to Thoughtline</h1>
         <Card className={classes.loginCard}>
-          <p>Login to your Thoughtline</p>
+          <h4>Login</h4>
           <form className={classes.container} autoComplete="off">
-            <p>* = required field</p>
-
             <TextField
               id="outlined-email"
               label="Username"
@@ -97,6 +100,7 @@ class Login extends Component {
               margin="normal"
               variant="outlined"
             />
+            <p style={{ margin: "0px" }}>* = required</p>
             <div>
               <Button
                 fullWidth
@@ -104,12 +108,18 @@ class Login extends Component {
                 color="primary"
                 className={classes.button}
                 onClick={this.loginUser}
+                disabled={!username || !password}
               >
                 Login
               </Button>
             </div>
           </form>
-          <Link to="/signup">Need an account?</Link>
+          <br />
+          <Link to="/signup">
+            <Button color="primary" variant="outlined">
+              Create An Account
+            </Button>
+          </Link>
         </Card>
       </div>
     );

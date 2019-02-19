@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 
 import ImgUpload from "../common/ImgUpload";
-
+import { isEmpty, signupValidate } from "../../utils/validation";
 import { registerUser } from "../../_actions/authActions";
 
 const styles = {
@@ -17,12 +17,21 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    marginBottom: 30
   },
   signupCard: {
     marginTop: 50,
     padding: 20,
-    width: 350
+    width: 350,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  passwordError: {
+    color: "red",
+    fontSize: "10px",
+    margin: 0
   }
 };
 
@@ -34,7 +43,8 @@ class Signup extends Component {
     email: "",
     picture: "",
     password: "",
-    password2: ""
+    password2: "",
+    passwordError: ""
   };
 
   handleProfileImg = picture => {
@@ -56,12 +66,10 @@ class Signup extends Component {
       username,
       email,
       password,
+      password2,
       picture
     } = this.state;
-    if (!username || !email || !password) {
-      console.log("fill out form");
-      return;
-    }
+
     let signupData;
     if (firstname && lastname && username && email && password && picture) {
       signupData = {
@@ -74,19 +82,34 @@ class Signup extends Component {
       };
     } else {
       signupData = {
+        firstname,
+        lastname,
         username,
         email,
         password
       };
     }
 
-    // console.log(signupData);
+    const results = signupValidate(signupData, password2);
+    if (!isEmpty(results)) {
+      this.setState({ passwordError: results });
+      return;
+    }
 
     this.props.registerUser(signupData, this.props.history);
   };
   // TODO - get rid of ids on TextFields
   render() {
     const { classes } = this.props;
+    const {
+      passwordError,
+      firstname,
+      lastname,
+      username,
+      email,
+      password,
+      password2
+    } = this.state;
 
     return (
       <div
@@ -96,14 +119,16 @@ class Signup extends Component {
       >
         <h1>Welcome to Thoughtline</h1>
         <Card className={classes.signupCard} onSubmit={this.onCommentSubmit}>
-          <p>Create a Thoughtline Account</p>
+          <h4 style={{ margin: 0 }}>Create Account</h4>
+
           <ImgUpload updateImg={this.handleProfileImg} />
+
           <form autoComplete="off">
-            <p>* = required field</p>
             <TextField
               id="outlined-firstname"
               label="First name"
               fullWidth
+              required
               // className={classes.textField}
               value={this.state.firstname}
               onChange={this.handleInputChange("firstname")}
@@ -114,6 +139,7 @@ class Signup extends Component {
               id="outlined-lastname"
               label="Lastname"
               fullWidth
+              required
               // className={classes.textField}
               value={this.state.lastname}
               onChange={this.handleInputChange("lastname")}
@@ -142,6 +168,9 @@ class Signup extends Component {
               margin="normal"
               variant="outlined"
             />
+            {passwordError.email ? (
+              <p className={classes.passwordError}>{passwordError.email}</p>
+            ) : null}
             <TextField
               id="outlined-password1-input"
               label="Password"
@@ -155,6 +184,9 @@ class Signup extends Component {
               margin="normal"
               variant="outlined"
             />
+            {passwordError.password ? (
+              <p className={classes.passwordError}>{passwordError.password}</p>
+            ) : null}
             <TextField
               id="outlined-password2-input"
               label="Confirm Password"
@@ -168,6 +200,10 @@ class Signup extends Component {
               margin="normal"
               variant="outlined"
             />
+            {passwordError.password2 ? (
+              <p className={classes.passwordError}>{passwordError.password2}</p>
+            ) : null}
+            <p style={{ margin: 0 }}>* = required</p>
             <div>
               <Button
                 fullWidth
@@ -175,12 +211,23 @@ class Signup extends Component {
                 color="primary"
                 className={classes.button}
                 onClick={this.registerUser}
+                disabled={
+                  !firstname ||
+                  !lastname ||
+                  !username ||
+                  !password ||
+                  !password2 ||
+                  !email
+                }
               >
                 Signup!
               </Button>
             </div>
           </form>
-          <Link to="/">Want to login?</Link>
+          <br />
+          <Button color="primary" variant="outlined">
+            <Link to="/">Want to login?</Link>
+          </Button>
         </Card>
       </div>
     );

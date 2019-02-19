@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+import { isEmail } from "../../utils/validation";
 
 import { withStyles } from "@material-ui/core/styles";
 // import Typography from "@material-ui/core/Typography";
@@ -101,11 +102,6 @@ const styles = theme => ({
   }
 });
 
-// VALIDATE email function
-function validateEmail(email) {
-  var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-}
 // TODO: refactor/modularize modal content
 class SendEntriesModal extends Component {
   state = {
@@ -144,9 +140,8 @@ class SendEntriesModal extends Component {
 
   handleInputChange = name => event => {
     const { value } = event.target;
-
     this.setState({
-      [name]: event.target.value
+      [name]: value
     });
   };
 
@@ -300,7 +295,7 @@ class SendEntriesModal extends Component {
                   size="medium"
                   color="primary"
                   aria-label="Search"
-                  disabled={!validateEmail(email)}
+                  disabled={!isEmail(email)}
                   onClick={() => this.searchEmail(email)}
                   className={classes.searchButton}
                 >

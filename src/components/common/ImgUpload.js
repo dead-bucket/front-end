@@ -6,8 +6,9 @@ import Avatar from "react-avatar-edit";
 const styles = {
   uploadContainer: {
     display: "flex",
-    justifyContent: "space-around",
-    alignItems: "center"
+    flexDirection: "column",
+    alignItems: "center",
+    width: "100%"
   }
 };
 
@@ -16,7 +17,8 @@ class ImgUpload extends Component {
     super(props);
 
     this.state = {
-      preview: null
+      preview: null,
+      src: "https://img.icons8.com/android/100/add8e6/user.png"
     };
     this.onCrop = this.onCrop.bind(this);
     this.onClose = this.onClose.bind(this);
@@ -35,13 +37,11 @@ class ImgUpload extends Component {
     const { classes } = this.props;
 
     return (
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-8">
-            <p>Profile Image (Optional):</p>
-          </div>
+      <div className={classes.uploadContainer}>
+        <div>
+          <p>Profile Image (Optional):</p>
         </div>
-        <div className={classes.uploadContainer}>
+        <div>
           <div>
             <Avatar
               width={150}
@@ -51,12 +51,12 @@ class ImgUpload extends Component {
               // src={this.state.src}
             />
           </div>
-          <div>
-            <p>Preview</p>
+          <div className={classes.uploadContainer}>
+            <p>Preview:</p>
             <img
               alt=""
               style={{ width: "100px", height: "100px" }}
-              src={this.state.preview}
+              src={this.state.preview || this.state.src}
             />
           </div>
         </div>
