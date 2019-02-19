@@ -1,8 +1,5 @@
 import { SET_CURRENT_TARGET } from "../_actions/types";
 
-// TODO: isEmpty needed?
-// import isEmpty from "../utils/isEmpty.js";
-
 const initialState = {};
 
 export default function(state = initialState, action) {

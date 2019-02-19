@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-
+import { isEmail } from "../../utils/validation";
 import ImgUpload from "../common/ImgUpload";
 
 import { withStyles } from "@material-ui/core/styles";
@@ -79,11 +79,6 @@ const styles = theme => ({
   }
 });
 
-// VALIDATE email function
-function validateEmail(email) {
-  var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-}
 // TODO - modularize modal content to reduce length of component
 
 class AddFriendModal extends Component {
@@ -186,6 +181,7 @@ class AddFriendModal extends Component {
     axios
       .put("/api/v1/addfriend", friend)
       .then(data => {
+        console.log(data);
         this.props.refreshTargets();
         this.setState({ modalStage: 3 });
       })
@@ -238,7 +234,7 @@ class AddFriendModal extends Component {
                 size="medium"
                 color="primary"
                 aria-label="Search"
-                disabled={!validateEmail(email)}
+                disabled={!isEmail(email)}
                 onClick={() => this.searchEmail(email)}
                 className={classes.searchButton}
               >

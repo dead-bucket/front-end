@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import isEmpty from "../../utils/isEmpty";
+import { isEmpty } from "../../utils/validation";
 // import axios from "axios";
 // MaterialUI
 import { withStyles } from "@material-ui/core";
