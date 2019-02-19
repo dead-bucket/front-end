@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core";
 import Moment from "react-moment";
 import SendEntriesModal from "./SendEntriesModal";
+import Axios from "axios";
 
 const styles = {
   timelineContainer: {
@@ -24,6 +25,12 @@ const styles = {
   }
 };
 class Thoughtline extends Component {
+  deleteEntry(id) {
+    Axios.delete(`api/v1/entry/`+ id)
+    .then(data => {
+      console.log('data from delete', data);
+    });
+  }
   render() {
     const { classes, userEntries, name } = this.props;
 
@@ -42,6 +49,13 @@ class Thoughtline extends Component {
               <Moment format="LLL">{entry.createdAt}</Moment>
             </p>
             <p style={{ fontSize: 20 }}>{entry.description}</p>
+            <i     
+            onClick={() => this.deleteEntry(entry._id)}     
+            className="material-icons"
+            style={{ position: "relative", left: "95%", fontSize: "36px"}}
+            >
+            delete
+            </i>
           </div>
         );
       });
