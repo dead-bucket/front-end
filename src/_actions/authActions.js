@@ -43,7 +43,7 @@ export const loginUser = (userData, history) => {
 
         history.push("/dashboard");
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log("signin err:", err.response));
   };
 };
 

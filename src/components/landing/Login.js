@@ -47,14 +47,9 @@ class Login extends Component {
     });
   };
 
-  // this.props.history.push("/dashboard");
   loginUser = () => {
     const { username, password } = this.state;
 
-    if (!username || !password) {
-      console.log("fill out form");
-      return;
-    }
     const loginData = {
       username,
       password
