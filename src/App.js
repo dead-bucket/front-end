@@ -11,6 +11,7 @@ import setAuthToken from "./utils/setAuthToken";
 
 // Components
 import NavBar from "./components/common/NavBar";
+import NoMatch from "./components/common/NoMatch";
 import Login from "./components/landing/Login";
 import Signup from "./components/landing/Signup";
 import Dashboard from "./components/dashboard/Dashboard";
@@ -40,6 +41,7 @@ class App extends Component {
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/dashboard" component={Dashboard} />
                 <Route exact path="/friendview" component={FriendView} />
+                <Route component={NoMatch} />
               </Switch>
             </div>
           </div>
