@@ -11,12 +11,9 @@ const styles = {
 const NoMatch = ({ location }) => (
   <div style={styles}>
     <h1>Oopsie!</h1>
+    <h5 style={{ textAlign: "center" }}>There is no Thoughtline page for:</h5>
     <h5>
-      There is no Thoughtline page for "
-      <strong>
-        <code>{location.pathname}</code>
-      </strong>
-      " !
+      <code style={{ backgroundColor: "lightgrey" }}>{location.pathname}</code>
     </h5>
     <p>
       Maybe go to <Link to="/">Login</Link> where it's safe.

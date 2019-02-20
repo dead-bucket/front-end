@@ -47,7 +47,7 @@ export const loginUser = (userData, history) => {
   };
 };
 
-export const loadUser = () => {
+export const loadUser = history => {
   return dispatch => {
     return axios
       .get("/api/v1/loggedinuser/")
@@ -58,7 +58,7 @@ export const loadUser = () => {
           payload: res.data
         });
       })
-      .catch(err => console.log(err));
+      .catch(err => history.push("/"));
   };
 };
 
