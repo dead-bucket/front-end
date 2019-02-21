@@ -13,6 +13,20 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 
 const styles = {
+  titleDiv: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  title: {
+    fontFamily: "Satisfy, cursive",
+    flexGrow: 1,
+    marginTop: 0
+  },
+  titleImg: {
+    width: 48,
+    marginBottom: 60
+  },
   loginSignupContainer: {
     display: "flex",
     flexDirection: "column",
@@ -36,6 +50,8 @@ const styles = {
     margin: 0
   }
 };
+
+const notificationPic = require("../common/notification.png");
 
 class Login extends Component {
   constructor(props) {
@@ -78,7 +94,11 @@ class Login extends Component {
         className={classes.loginSignupContainer}
         onKeyDown={e => (e.key === "Enter" ? this.loginUser() : null)}
       >
-        <h1>Welcome to Thoughtline</h1>
+        <p style={{ marginTop: "10%", marginBottom: 0 }}>Welcome to</p>
+        <div className={classes.titleDiv}>
+          <h1 className={classes.title}>Thoughtline </h1>
+          <img className={classes.titleImg} src={notificationPic} alt="logo" />
+        </div>
         <Card className={classes.loginCard}>
           <h4 style={{ margin: 0 }}>Login</h4>
           <form className={classes.form} autoComplete="off">
