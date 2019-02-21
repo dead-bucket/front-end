@@ -4,9 +4,8 @@ import { withRouter, Link } from "react-router-dom";
 
 //REDUX
 import { connect } from "react-redux";
-// import { bindActionCreators } from "redux";
-import { loginUser } from "../../_actions/authActions";
-// import { CLEAR_LOGIN_ERRORS } from "../../_actions/types";
+import { loginUser, clearLoginErrors } from "../../_actions/authActions";
+
 // MaterialUI
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -28,8 +27,10 @@ const styles = {
     flexDirection: "column",
     alignItems: "center"
   },
-  errorMsg: {
-    color: "red"
+  error: {
+    color: "red",
+    fontSize: "10px",
+    margin: 0
   }
 };
 
@@ -47,16 +48,13 @@ class Login extends Component {
   }
 
   handleInputChange = name => event => {
-    // this.props.dispatch({
-    //   type: CLEAR_LOGIN_ERRORS,
-    //   payload: null
-    // });
     this.setState({
       [name]: event.target.value
     });
   };
 
   loginUser = () => {
+    this.props.clearLoginErrors();
     const { username, password } = this.state;
 
     const loginData = {
@@ -79,20 +77,22 @@ class Login extends Component {
       >
         <h1>Welcome to Thoughtline</h1>
         <Card className={classes.loginCard}>
-          <h4>Login</h4>
+          <h4 style={{ margin: 0 }}>Login</h4>
           <form autoComplete="off">
             <TextField
               id="outlined-email"
               label="Username"
               required
               fullWidth
-              // className={classes.textField}
+              className={classes.textField}
               value={this.state.username}
               onChange={this.handleInputChange("username")}
               margin="normal"
               variant="outlined"
             />
-
+            {usernameErr ? (
+              <p className={classes.error}>{usernameErr}</p>
+            ) : null}
             <TextField
               id="outlined-password1-input"
               label="Password"
@@ -106,18 +106,12 @@ class Login extends Component {
               margin="normal"
               variant="outlined"
             />
-
-            <p style={{ margin: "0px" }}>* = required</p>
-            {usernameErr ? (
-              <p className={classes.errorMsg}>{usernameErr}</p>
-            ) : null}
-
             {passwordErr ? (
-              <p className={classes.errorMsg}>{passwordErr}</p>
+              <p className={classes.error}>{passwordErr}</p>
             ) : null}
-            {generalErr ? (
-              <p className={classes.errorMsg}>{generalErr}</p>
-            ) : null}
+            <p style={{ margin: "0px" }}>* = required</p>
+
+            {generalErr ? <p className={classes.error}>{generalErr}</p> : null}
             <div>
               <Button
                 fullWidth
@@ -146,19 +140,15 @@ class Login extends Component {
 Login.propTypes = {
   classes: PropTypes.object.isRequired,
   loginErrors: PropTypes.object.isRequired,
-  loginUser: PropTypes.func.isRequired
+  loginUser: PropTypes.func.isRequired,
+  clearLoginErrors: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   loginErrors: state.auth.loginErrors
 });
 
-// const mapDispatchToProps = (dispatch)=>{
-
-//   return bindActionCreators({ getApplications: getApplications },dispatch)
-// }
-
 export default connect(
   mapStateToProps,
-  { loginUser }
+  { loginUser, clearLoginErrors }
 )(withStyles(styles)(withRouter(Login)));
