@@ -20,6 +20,7 @@ const styles = {
   },
   title: {
     fontFamily: "Satisfy, cursive",
+    color: "#0058CF",
     flexGrow: 1,
     marginTop: 0
   },
