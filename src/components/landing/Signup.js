@@ -10,7 +10,7 @@ import TextField from "@material-ui/core/TextField";
 
 import ImgUpload from "../common/ImgUpload";
 import { isEmpty, signupValidate } from "../../utils/validation";
-import { registerUser } from "../../_actions/authActions";
+import { registerUser, clearSignupErrors } from "../../_actions/authActions";
 
 const styles = {
   loginSignupContainer: {
@@ -60,6 +60,7 @@ class Signup extends Component {
   registerUser = () => {
     // TODO - Authenticate passwords
     this.setState({ passwordError: {} });
+    this.props.clearSignupErrors();
     const {
       firstname,
       lastname,
@@ -100,7 +101,8 @@ class Signup extends Component {
   };
   // TODO - get rid of ids on TextFields
   render() {
-    const { classes } = this.props;
+    const { classes, signupErrors } = this.props;
+    const { usernameErr, emailErr, generalErr } = signupErrors;
     const {
       passwordError,
       firstname,
@@ -137,7 +139,7 @@ class Signup extends Component {
             />
             <TextField
               id="outlined-lastname"
-              label="Lastname"
+              label="Last name"
               fullWidth
               required
               // className={classes.textField}
@@ -157,6 +159,9 @@ class Signup extends Component {
               margin="normal"
               variant="outlined"
             />
+            {usernameErr ? (
+              <p className={classes.passwordError}>{usernameErr}</p>
+            ) : null}
             <TextField
               id="outlined-email"
               label="Email"
@@ -170,6 +175,9 @@ class Signup extends Component {
             />
             {passwordError.email ? (
               <p className={classes.passwordError}>{passwordError.email}</p>
+            ) : null}
+            {emailErr ? (
+              <p className={classes.passwordError}>{emailErr}</p>
             ) : null}
             <TextField
               id="outlined-password1-input"
@@ -202,6 +210,9 @@ class Signup extends Component {
             />
             {passwordError.password2 ? (
               <p className={classes.passwordError}>{passwordError.password2}</p>
+            ) : null}
+            {generalErr ? (
+              <p className={classes.passwordError}>{generalErr}</p>
             ) : null}
             <p style={{ margin: 0 }}>* = required</p>
             <div>
@@ -236,16 +247,16 @@ class Signup extends Component {
 
 Signup.propTypes = {
   classes: PropTypes.object.isRequired,
-  registerUser: PropTypes.func.isRequired
+  registerUser: PropTypes.func.isRequired,
+  signupErrors: PropTypes.object.isRequired,
+  clearSignupErrors: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors,
-  messages: state.messages
+  signupErrors: state.auth.signupErrors
 });
 
 export default connect(
   mapStateToProps,
-  { registerUser }
+  { registerUser, clearSignupErrors }
 )(withStyles(styles)(withRouter(Signup)));

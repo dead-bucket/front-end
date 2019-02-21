@@ -4,9 +4,8 @@ import { withRouter, Link } from "react-router-dom";
 
 //REDUX
 import { connect } from "react-redux";
-// import { bindActionCreators } from "redux";
-import { loginUser } from "../../_actions/authActions";
-// import { CLEAR_LOGIN_ERRORS } from "../../_actions/types";
+import { loginUser, clearLoginErrors } from "../../_actions/authActions";
+
 // MaterialUI
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -47,16 +46,13 @@ class Login extends Component {
   }
 
   handleInputChange = name => event => {
-    // this.props.dispatch({
-    //   type: CLEAR_LOGIN_ERRORS,
-    //   payload: null
-    // });
     this.setState({
       [name]: event.target.value
     });
   };
 
   loginUser = () => {
+    this.props.clearLoginErrors();
     const { username, password } = this.state;
 
     const loginData = {
@@ -146,19 +142,15 @@ class Login extends Component {
 Login.propTypes = {
   classes: PropTypes.object.isRequired,
   loginErrors: PropTypes.object.isRequired,
-  loginUser: PropTypes.func.isRequired
+  loginUser: PropTypes.func.isRequired,
+  clearLoginErrors: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   loginErrors: state.auth.loginErrors
 });
 
-// const mapDispatchToProps = (dispatch)=>{
-
-//   return bindActionCreators({ getApplications: getApplications },dispatch)
-// }
-
 export default connect(
   mapStateToProps,
-  { loginUser }
+  { loginUser, clearLoginErrors }
 )(withStyles(styles)(withRouter(Login)));

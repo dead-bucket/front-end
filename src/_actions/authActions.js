@@ -3,7 +3,10 @@ import axios from "axios";
 import {
   SET_CURRENT_USER,
   CLEAR_CURRENT_USER,
-  SET_LOGIN_ERRORS
+  SET_LOGIN_ERRORS,
+  SET_SIGNUP_ERRORS,
+  CLEAR_LOGIN_ERRORS,
+  CLEAR_SIGNUP_ERRORS
 } from "../_actions/types";
 
 import setAuthToken from "../utils/setAuthToken";
@@ -23,7 +26,33 @@ export const registerUser = (userData, history) => {
 
         history.push("/dashboard");
       })
-      .catch(err => console.log("signup error: ", err));
+      .catch(err => {
+        console.log("signup error: ", err.response);
+        const { data } = err.response;
+        if (data.includes("username")) {
+          dispatch({
+            type: SET_SIGNUP_ERRORS,
+            payload: {
+              usernameErr: "That username is taken.  Please try again."
+            }
+          });
+        } else if (data.includes("email")) {
+          dispatch({
+            type: SET_SIGNUP_ERRORS,
+            payload: {
+              emailErr:
+                "That email address is already in use.  Please try again."
+            }
+          });
+        } else {
+          dispatch({
+            type: SET_SIGNUP_ERRORS,
+            payload: {
+              generalErr: "We're having issues.  Please try again later."
+            }
+          });
+        }
+      });
   };
 };
 
@@ -67,7 +96,6 @@ export const loginUser = (userData, history) => {
             }
           });
         }
-        console.log("signin err:", data);
       });
   };
 };
@@ -77,7 +105,6 @@ export const loadUser = history => {
     return axios
       .get("/api/v1/loggedinuser/")
       .then(res => {
-        console.log(res);
         dispatch({
           type: SET_CURRENT_USER,
           payload: res.data
@@ -85,6 +112,19 @@ export const loadUser = history => {
       })
       .catch(err => history.push("/"));
   };
+};
+
+export const clearLoginErrors = () => dispatch => {
+  dispatch({
+    type: CLEAR_LOGIN_ERRORS,
+    payload: null
+  });
+};
+export const clearSignupErrors = () => dispatch => {
+  dispatch({
+    type: CLEAR_SIGNUP_ERRORS,
+    payload: null
+  });
 };
 
 //Log User Out
