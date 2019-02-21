@@ -15,9 +15,10 @@ import { loadUser } from "../../_actions/authActions";
 
 const styles = {
   friendContainer: {
+    background: "inherit",
     display: "flex",
     flexWrap: "wrap",
-    justifyContent: "space-around",
+    justifyContent: "center",
     overflowY: "scroll",
     height: "77vh"
   },
