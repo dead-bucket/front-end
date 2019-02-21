@@ -3,7 +3,6 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
-import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 // Custom Components
 import Spinner from "../common/Spinner";
 import FriendCard from "../common/FriendCard";
@@ -20,7 +19,7 @@ const styles = {
     flexWrap: "wrap",
     justifyContent: "space-around",
     overflowY: "scroll",
-    height: "80vh"
+    height: "77vh"
   },
   stickToBottom: {
     width: "100%",
@@ -102,13 +101,8 @@ class Dashboard extends Component {
           <div className={classes.friendContainer}>{dashboardContent}</div>
         </div>
         {/* <AddFriendModal refreshTargets={this.getTargets} /> */}
-        <BottomNavigation
-          onChange={this.handleBottomChange}
-          className={classes.stickToBottom}
-        >
-          <div>
-            <AddFriendModal refreshTargets={this.getTargets} />
-          </div>
+        <BottomNavigation className={classes.stickToBottom}>
+          <AddFriendModal refreshTargets={this.getTargets} />
         </BottomNavigation>
       </div>
     );
