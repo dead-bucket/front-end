@@ -27,8 +27,10 @@ const styles = {
     flexDirection: "column",
     alignItems: "center"
   },
-  errorMsg: {
-    color: "red"
+  error: {
+    color: "red",
+    fontSize: "10px",
+    margin: 0
   }
 };
 
@@ -75,20 +77,22 @@ class Login extends Component {
       >
         <h1>Welcome to Thoughtline</h1>
         <Card className={classes.loginCard}>
-          <h4>Login</h4>
+          <h4 style={{ margin: 0 }}>Login</h4>
           <form autoComplete="off">
             <TextField
               id="outlined-email"
               label="Username"
               required
               fullWidth
-              // className={classes.textField}
+              className={classes.textField}
               value={this.state.username}
               onChange={this.handleInputChange("username")}
               margin="normal"
               variant="outlined"
             />
-
+            {usernameErr ? (
+              <p className={classes.error}>{usernameErr}</p>
+            ) : null}
             <TextField
               id="outlined-password1-input"
               label="Password"
@@ -102,18 +106,12 @@ class Login extends Component {
               margin="normal"
               variant="outlined"
             />
-
-            <p style={{ margin: "0px" }}>* = required</p>
-            {usernameErr ? (
-              <p className={classes.errorMsg}>{usernameErr}</p>
-            ) : null}
-
             {passwordErr ? (
-              <p className={classes.errorMsg}>{passwordErr}</p>
+              <p className={classes.error}>{passwordErr}</p>
             ) : null}
-            {generalErr ? (
-              <p className={classes.errorMsg}>{generalErr}</p>
-            ) : null}
+            <p style={{ margin: "0px" }}>* = required</p>
+
+            {generalErr ? <p className={classes.error}>{generalErr}</p> : null}
             <div>
               <Button
                 fullWidth

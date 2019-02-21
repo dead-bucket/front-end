@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
 import { withRouter, Link } from "react-router-dom";
-import { connect } from "react-redux";
+import ImgUpload from "../common/ImgUpload";
 
+// MaterialUI
+import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 
-import ImgUpload from "../common/ImgUpload";
+//REDUX
+import { connect } from "react-redux";
 import { isEmpty, signupValidate } from "../../utils/validation";
 import { registerUser, clearSignupErrors } from "../../_actions/authActions";
 
@@ -28,7 +30,7 @@ const styles = {
     flexDirection: "column",
     alignItems: "center"
   },
-  passwordError: {
+  error: {
     color: "red",
     fontSize: "10px",
     margin: 0
@@ -120,7 +122,7 @@ class Signup extends Component {
         onKeyDown={e => (e.key === "Enter" ? this.registerUser() : null)}
       >
         <h1>Welcome to Thoughtline</h1>
-        <Card className={classes.signupCard} onSubmit={this.onCommentSubmit}>
+        <Card className={classes.signupCard}>
           <h4 style={{ margin: 0 }}>Create Account</h4>
 
           <ImgUpload updateImg={this.handleProfileImg} />
@@ -160,7 +162,7 @@ class Signup extends Component {
               variant="outlined"
             />
             {usernameErr ? (
-              <p className={classes.passwordError}>{usernameErr}</p>
+              <p className={classes.error}>{usernameErr}</p>
             ) : null}
             <TextField
               id="outlined-email"
@@ -174,11 +176,9 @@ class Signup extends Component {
               variant="outlined"
             />
             {passwordError.email ? (
-              <p className={classes.passwordError}>{passwordError.email}</p>
+              <p className={classes.error}>{passwordError.email}</p>
             ) : null}
-            {emailErr ? (
-              <p className={classes.passwordError}>{emailErr}</p>
-            ) : null}
+            {emailErr ? <p className={classes.error}>{emailErr}</p> : null}
             <TextField
               id="outlined-password1-input"
               label="Password"
@@ -193,7 +193,7 @@ class Signup extends Component {
               variant="outlined"
             />
             {passwordError.password ? (
-              <p className={classes.passwordError}>{passwordError.password}</p>
+              <p className={classes.error}>{passwordError.password}</p>
             ) : null}
             <TextField
               id="outlined-password2-input"
@@ -209,11 +209,9 @@ class Signup extends Component {
               variant="outlined"
             />
             {passwordError.password2 ? (
-              <p className={classes.passwordError}>{passwordError.password2}</p>
+              <p className={classes.error}>{passwordError.password2}</p>
             ) : null}
-            {generalErr ? (
-              <p className={classes.passwordError}>{generalErr}</p>
-            ) : null}
+            {generalErr ? <p className={classes.error}>{generalErr}</p> : null}
             <p style={{ margin: 0 }}>* = required</p>
             <div>
               <Button

@@ -27,7 +27,6 @@ export const registerUser = (userData, history) => {
         history.push("/dashboard");
       })
       .catch(err => {
-        console.log("signup error: ", err.response);
         const { data } = err.response;
         if (data.includes("username")) {
           dispatch({
