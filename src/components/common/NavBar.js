@@ -20,6 +20,10 @@ const styles = {
   grow: {
     flexGrow: 1
   },
+  title: {
+    fontFamily: "Satisfy, cursive",
+    flexGrow: 1
+  },
   menuButton: {
     marginLeft: -12,
     marginRight: 20
@@ -67,14 +71,7 @@ class NavBar extends Component {
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-            <Typography
-              component="h1"
-              variant="title"
-              color="inherit"
-              className={classes.grow}
-            >
-              Thoughtline
-            </Typography>
+            <h5 className={classes.title}>Thoughtline</h5>
 
             {!isEmpty(currentUser) ? (
               <div className={classes.profileContainer}>
