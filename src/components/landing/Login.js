@@ -27,6 +27,9 @@ const styles = {
     flexDirection: "column",
     alignItems: "center"
   },
+  form: {
+    width: "100%"
+  },
   error: {
     color: "red",
     fontSize: "10px",
@@ -78,13 +81,13 @@ class Login extends Component {
         <h1>Welcome to Thoughtline</h1>
         <Card className={classes.loginCard}>
           <h4 style={{ margin: 0 }}>Login</h4>
-          <form autoComplete="off">
+          <form className={classes.form} autoComplete="off">
             <TextField
               id="outlined-email"
               label="Username"
               required
               fullWidth
-              className={classes.textField}
+              // className={classes.textField}
               value={this.state.username}
               onChange={this.handleInputChange("username")}
               margin="normal"
@@ -126,6 +129,7 @@ class Login extends Component {
             </div>
           </form>
           <br />
+
           <Link to="/signup">
             <Button color="primary" variant="outlined">
               Create An Account
