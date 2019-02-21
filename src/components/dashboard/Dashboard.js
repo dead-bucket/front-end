@@ -98,7 +98,9 @@ class Dashboard extends Component {
     return (
       <div>
         <div>
-          <h4 style={{ textAlign: "center" }}>Thinking about...</h4>
+          <h4 style={{ textAlign: "center", fontFamily: "Satisfy, cursive" }}>
+            Thinking about...
+          </h4>
           <div className={classes.friendContainer}>{dashboardContent}</div>
         </div>
         {/* <AddFriendModal refreshTargets={this.getTargets} /> */}
