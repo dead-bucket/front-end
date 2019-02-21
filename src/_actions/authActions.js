@@ -1,6 +1,10 @@
 import axios from "axios";
 
-import { SET_CURRENT_USER, CLEAR_CURRENT_USER } from "../_actions/types";
+import {
+  SET_CURRENT_USER,
+  CLEAR_CURRENT_USER,
+  SET_LOGIN_ERRORS
+} from "../_actions/types";
 
 import setAuthToken from "../utils/setAuthToken";
 
@@ -43,11 +47,32 @@ export const loginUser = (userData, history) => {
 
         history.push("/dashboard");
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        const { data } = err.response;
+        if (data.includes("Username")) {
+          dispatch({
+            type: SET_LOGIN_ERRORS,
+            payload: { usernameErr: "Please enter a valid Username." }
+          });
+        } else if (data.includes("Password")) {
+          dispatch({
+            type: SET_LOGIN_ERRORS,
+            payload: { passwordErr: "Incorrect password. Please try again." }
+          });
+        } else {
+          dispatch({
+            type: SET_LOGIN_ERRORS,
+            payload: {
+              generalErr: "We're having issues.  Please try again later."
+            }
+          });
+        }
+        console.log("signin err:", data);
+      });
   };
 };
 
-export const loadUser = () => {
+export const loadUser = history => {
   return dispatch => {
     return axios
       .get("/api/v1/loggedinuser/")
@@ -58,7 +83,7 @@ export const loadUser = () => {
           payload: res.data
         });
       })
-      .catch(err => console.log(err));
+      .catch(err => history.push("/"));
   };
 };
 

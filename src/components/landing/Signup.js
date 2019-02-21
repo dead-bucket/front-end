@@ -59,7 +59,7 @@ class Signup extends Component {
 
   registerUser = () => {
     // TODO - Authenticate passwords
-
+    this.setState({ passwordError: {} });
     const {
       firstname,
       lastname,

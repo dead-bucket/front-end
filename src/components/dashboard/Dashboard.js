@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { withStyles } from "@material-ui/core";
 import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core";
+import BottomNavigation from "@material-ui/core/BottomNavigation";
 // Custom Components
 import Spinner from "../common/Spinner";
 import FriendCard from "../common/FriendCard";
@@ -18,7 +19,12 @@ const styles = {
     flexWrap: "wrap",
     justifyContent: "space-around",
     overflowY: "scroll",
-    height: 550
+    height: "77vh"
+  },
+  stickToBottom: {
+    width: "100%",
+    position: "fixed",
+    bottom: 0
   }
 };
 
@@ -52,16 +58,15 @@ class Dashboard extends Component {
   };
 
   setTarget = friend => {
-    console.log(friend);
     this.props.setCurrentTarget(friend);
     this.props.history.push("/friendview");
   };
 
   componentDidMount() {
-    this.props.loadUser();
+    this.props.loadUser(this.props.history);
     this.getTargets();
     // if (!this.props.currentUser) {
-    //   this.props.loadUser();
+    //   this.props.history.push("/");
     // }
   }
 
@@ -95,7 +100,10 @@ class Dashboard extends Component {
           <h4 style={{ textAlign: "center" }}>Thinking about...</h4>
           <div className={classes.friendContainer}>{dashboardContent}</div>
         </div>
-        <AddFriendModal refreshTargets={this.getTargets} />
+        {/* <AddFriendModal refreshTargets={this.getTargets} /> */}
+        <BottomNavigation className={classes.stickToBottom}>
+          <AddFriendModal refreshTargets={this.getTargets} />
+        </BottomNavigation>
       </div>
     );
   }
