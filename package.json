@@ -26,7 +26,8 @@
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm run build"
   },
-  "proxy": "http://localhost:4000/",
+  
+  "proxy": "https://dead-bucket-back-end.herokuapp.com",
   "eslintConfig": {
     "extends": "react-app"
   },
