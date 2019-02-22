@@ -27,7 +27,7 @@
     "heroku-postbuild": "npm run build"
   },
   
-  
+  "proxy": "https://dead-bucket-back-end.herokuapp.com",
   "eslintConfig": {
     "extends": "react-app"
   },
