@@ -74,17 +74,16 @@ class FriendView4 extends Component {
     if (isEmpty(this.props.profile)) {
       this.props.history.push("/dashboard");
     } else {
-      console.log(this.props.profile);
-      this.props.getEntries(this.props.profile.target._id);
       this.props.getInboxEntries(this.props.profile.target._id);
+      this.props.getEntries(this.props.profile.target._id);
     }
   }
 
   handleBottomChange = (event, value) => {
     this.setState({ value });
   };
+
   clearNotification() {
-    // console.log('propos.profile._id', this.props.profile.target._id);
     setTimeout(() => {
       axios
         .put("/api/v1/inboxclearnotification/", {
@@ -101,7 +100,7 @@ class FriendView4 extends Component {
   }
 
   render() {
-    const { classes, getEntries } = this.props;
+    const { classes } = this.props;
     const { target } = this.props.profile;
     const { value } = this.state;
 
@@ -109,10 +108,7 @@ class FriendView4 extends Component {
     switch (value) {
       case 0:
         actionContent = (
-          <Thoughtline
-            name={target.firstname || target.username}
-            onClick={getEntries(target._id)}
-          />
+          <Thoughtline name={target.firstname || target.username} />
         );
         break;
       case 1:

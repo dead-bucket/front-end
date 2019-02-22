@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
-import { postEntry } from "../../_actions/entryActions";
+import { postEntry, getEntries } from "../../_actions/entryActions";
 
 const styles = {
   composeDiv: {
@@ -78,6 +78,7 @@ class ComposeForm extends Component {
       thought: "",
       thoughtColor: "#fff"
     });
+    this.props.getEntries(this.props.profile.target._id);
   };
 
   render() {
@@ -142,7 +143,8 @@ class ComposeForm extends Component {
 
 ComposeForm.propTypes = {
   classes: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  getEntries: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -151,5 +153,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {}
+  { getEntries }
 )(withStyles(styles)(ComposeForm));
