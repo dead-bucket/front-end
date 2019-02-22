@@ -55,7 +55,7 @@ class ImgUpload extends Component {
             <p>Preview:</p>
             <img
               alt=""
-              style={{ width: "100px", height: "100px" }}
+              style={{ width: "50px", height: "50px" }}
               src={this.state.preview || this.state.src}
             />
           </div>
