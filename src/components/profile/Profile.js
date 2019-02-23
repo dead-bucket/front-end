@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import ComposeForm from "../friendView/ComposeForm";
 import ProfileCard from "./ProfileCard";
 import Spinner from "../common/Spinner";
+import Notification from "../profile/notification";
 // REDUX
 import { connect } from "react-redux";
 import { loadUser } from "../../_actions/authActions";
@@ -93,7 +94,8 @@ class Profile extends Component {
               <Typography className={classes.heading}>Notifications</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              All Notifications will be shown here.
+              
+              <Notification />
             </ExpansionPanelDetails>
           </ExpansionPanel>
 
