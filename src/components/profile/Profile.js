@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import ComposeForm from "../friendView/ComposeForm";
+import ProfileCard from "./ProfileCard";
+import Spinner from "../common/Spinner";
+// REDUX
 import { connect } from "react-redux";
 import { loadUser } from "../../_actions/authActions";
-
+// Material UI
 import { withStyles } from "@material-ui/core";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
@@ -11,8 +15,16 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const styles = theme => ({
+  profileContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "91vh",
+    width: "100vw",
+    border: "1px solid black"
+  },
   root: {
-    width: "100%"
+    width: "80%"
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -41,69 +53,59 @@ class Profile extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, currentUser } = this.props;
     const { expanded } = this.state;
+    let userProfile;
+    if (!currentUser) {
+      userProfile = <Spinner />;
+    } else {
+      userProfile = <ProfileCard user={currentUser} />;
+    }
     return (
-      <div>
-        <div>
-          <h1>This is the profile component</h1>
-        </div>
+      <div className={classes.profileContainer}>
+        <h4 style={{ textAlign: "center", fontFamily: "Satisfy, cursive" }}>
+          Your Profile:
+        </h4>
+        <div>{userProfile}</div>
         <div className={classes.root}>
           <ExpansionPanel
             expanded={expanded === "panel1"}
             onChange={this.handleChange("panel1")}
           >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography className={classes.heading}>
-                General settings
-              </Typography>
+              <Typography className={classes.heading}>Edit Profile</Typography>
               <Typography className={classes.secondaryHeading}>
-                I am an expansion panel
+                We can include text here.
               </Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Typography>
-                Nulla facilisi. Phasellus sollicitudin nulla et quam mattis
-                feugiat. Aliquam eget maximus est, id dignissim quam.
-              </Typography>
+              <p>Update all of the current user's info</p>
+              <p>this is a component test to make sure component render well</p>
+              <ComposeForm />
             </ExpansionPanelDetails>
           </ExpansionPanel>
+
           <ExpansionPanel
             expanded={expanded === "panel2"}
             onChange={this.handleChange("panel2")}
           >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography className={classes.heading}>Users</Typography>
-              <Typography className={classes.secondaryHeading}>
-                You are currently not an owner
-              </Typography>
+              <Typography className={classes.heading}>Notifications</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Typography>
-                Donec placerat, lectus sed mattis semper, neque lectus feugiat
-                lectus, varius pulvinar diam eros in elit. Pellentesque
-                convallis laoreet laoreet.
-              </Typography>
+              All Notifications will be shown here.
             </ExpansionPanelDetails>
           </ExpansionPanel>
+
           <ExpansionPanel
             expanded={expanded === "panel3"}
             onChange={this.handleChange("panel3")}
           >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography className={classes.heading}>
-                Advanced settings
-              </Typography>
-              <Typography className={classes.secondaryHeading}>
-                Filtering has been entirely disabled for whole web server
-              </Typography>
+              <Typography className={classes.heading}>Edit Friends</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Typography>
-                Nunc vitae orci ultricies, auctor nunc in, volutpat nisl.
-                Integer sit amet egestas eros, vitae egestas augue. Duis vel est
-                augue.
-              </Typography>
+              You'll be able to update targets and delete users targets
             </ExpansionPanelDetails>
           </ExpansionPanel>
           <ExpansionPanel
@@ -111,14 +113,12 @@ class Profile extends Component {
             onChange={this.handleChange("panel4")}
           >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography className={classes.heading}>Personal data</Typography>
+              <Typography className={classes.heading}>
+                Pending Friend Requests
+              </Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Typography>
-                Nunc vitae orci ultricies, auctor nunc in, volutpat nisl.
-                Integer sit amet egestas eros, vitae egestas augue. Duis vel est
-                augue.
-              </Typography>
+              You'll be able to see all of your friend requests
             </ExpansionPanelDetails>
           </ExpansionPanel>
         </div>
@@ -132,8 +132,7 @@ const mapStateToProps = state => ({
 });
 
 Profile.propTypes = {
-  classes: PropTypes.object.isRequired,
-  currentUser: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired
 };
 
 export default connect(

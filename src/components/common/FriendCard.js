@@ -8,7 +8,7 @@ const dashboardStyles = {
   alignItems: "center",
   width: 150,
   height: 150,
-  position: "relative",
+  position: "relative"
 };
 
 const friendViewStyles = {
@@ -17,7 +17,7 @@ const friendViewStyles = {
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  position: "relative",
+  position: "relative"
 };
 
 const friendViewImage = {
@@ -28,44 +28,51 @@ const iconStyleTopRight = {
   width: "36px",
   position: "absolute",
   left: "70%",
-  top: "0%",
-  
-}
+  top: "0%"
+};
 const iconStyleBottomRight = {
   position: "absolute",
   left: "80%",
-  bottom: "27%",
-  
-}
+  bottom: "27%"
+};
 const notificationPic = require("./notification.png");
 
 function FriendCard(props) {
   const { view, friend, loggedInUser } = props;
-  // console.log('logged in user in friend card', loggedInUser);
 
   if (view === "friendview") {
     return (
       <div style={friendViewStyles}>
-        <img  style={{visibility: loggedInUser.newmessages.includes(friend._id) ? "visible" : "hidden", ...iconStyleTopRight}}
-            src={notificationPic}
-            alt={'this is a cool pic'}
-              
+        <img
+          style={{
+            visibility: loggedInUser.newmessages.includes(friend._id)
+              ? "visible"
+              : "hidden",
+            ...iconStyleTopRight
+          }}
+          src={notificationPic}
+          alt={"this is a cool pic"}
         />
         <img alt="Profile" style={friendViewImage} src={friend.picture} />
         <h4 style={{ marginTop: 0 }}>
-          {props.friend.lastname
-            ? `${props.friend.firstname} ${props.friend.lastname}`
-            : props.friend.username}
+          {friend.lastname
+            ? `${friend.firstname} ${friend.lastname}`
+            : friend.username}
         </h4>
       </div>
     );
   } else if (view === "dashboard") {
     return (
       <div style={dashboardStyles}>
-        <img  style={{visibility: loggedInUser.newmessages.includes(friend._id) ? "visible" : "hidden", ...iconStyleTopRight}}
+        <img
+          style={{
+            visibility: loggedInUser.newmessages.includes(friend._id)
+              ? "visible"
+              : "hidden",
+            ...iconStyleTopRight
+          }}
           src={notificationPic}
-          alt={'this is a cool pic'}
-            
+          alt={"this is a cool pic"}
         />
         <img
           alt="Profile"
@@ -82,9 +89,9 @@ function FriendCard(props) {
           {/* favorite_border */}
         </i>
         <p style={{ marginTop: 0 }}>
-          {props.friend.lastname
-            ? `${props.friend.firstname} ${props.friend.lastname}`
-            : props.friend.username}
+          {friend.lastname
+            ? `${friend.firstname} ${friend.lastname}`
+            : friend.username}
         </p>
       </div>
     );

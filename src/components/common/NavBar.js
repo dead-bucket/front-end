@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import { withRouter, Link } from "react-router-dom";
+import { isEmpty } from "../../utils/validation";
+
+// Redux
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutUser } from "../../_actions/authActions";
-import { isEmpty } from "../../utils/validation";
+
+// Material UI
+import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MoreVert from "@material-ui/icons/MoreVert";
@@ -121,6 +124,7 @@ class NavBar extends Component {
                   <MenuItem onClick={() => this.handleMenuSelect("/dashboard")}>
                     Dashboard
                   </MenuItem>
+
                   <MenuItem onClick={() => this.handleMenuSelect("/profile")}>
                     Profile
                   </MenuItem>
