@@ -74,17 +74,16 @@ class FriendView4 extends Component {
     if (isEmpty(this.props.profile)) {
       this.props.history.push("/dashboard");
     } else {
-      console.log(this.props.profile);
-      this.props.getEntries(this.props.profile.target._id);
       this.props.getInboxEntries(this.props.profile.target._id);
+      this.props.getEntries(this.props.profile.target._id);
     }
   }
 
   handleBottomChange = (event, value) => {
     this.setState({ value });
   };
-  clearNotification() {
-    // console.log('propos.profile._id', this.props.profile.target._id);
+
+  clearNotification = () => {
     setTimeout(() => {
       axios
         .put("/api/v1/inboxclearnotification/", {
@@ -98,42 +97,37 @@ class FriendView4 extends Component {
         })
         .catch(err => console.log(err));
     }, 4000);
-  }
+  };
 
   render() {
-    const { classes, getEntries } = this.props;
+    const { classes } = this.props;
     const { target } = this.props.profile;
     const { value } = this.state;
 
+    console.log(isUser);
     let actionContent;
     switch (value) {
       case 0:
         actionContent = (
-          <Thoughtline
-            name={target.firstname || target.username}
-            onClick={getEntries(target._id)}
-          />
+          <Thoughtline name={target.firstname || target.username} />
         );
         break;
       case 1:
         actionContent = <ComposeForm friend={target} />;
         break;
       case 2:
-        actionContent = (
-          <Inbox
-            name={target.firstname || target.username}
-            onCLick={this.clearNotification()}
-          />
-        );
+        actionContent = <Inbox name={target.firstname || target.username} />;
         break;
       default:
         return null;
     }
 
     let friendViewContent;
+    let isUser;
     if (!target) {
       friendViewContent = <Spinner />;
     } else {
+      isUser = target.firstname ? true : false;
       friendViewContent = (
         <FriendCard
           friend={target}
@@ -165,7 +159,12 @@ class FriendView4 extends Component {
         >
           <BottomNavigationAction label="Thoughtline" icon={<List />} />
           <BottomNavigationAction label="Compose" icon={<AddCircleOutline />} />
-          <BottomNavigationAction label="Inbox" icon={<MoveToInbox />} />
+          {isUser ? (
+            <BottomNavigationAction
+              label="Inbox"
+              icon={<MoveToInbox onClick={this.clearNotification} />}
+            />
+          ) : null}
         </BottomNavigation>
       </div>
     );

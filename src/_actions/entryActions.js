@@ -20,13 +20,13 @@ export const postEntry = entry => {
 
 export const getEntries = targetId => {
   // need to correctly add-on targetID to request
+  console.log("targetId:", targetId);
   return dispatch => {
     return axios
       .post("/api/v1/targetentry/", {
         recipient: targetId
       })
       .then(data => {
-        // console.log("getEntries res data:", data);
         dispatch({
           type: GET_USER_ENTRIES,
           payload: data.data.userEntries

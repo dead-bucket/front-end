@@ -13,12 +13,13 @@ code {
     monospace;
 }
 
-.material-icons.red600 { 
-  color: red; 
-  
-
+.material-icons.red600 {
+  color: red;
 }
 
 .material-icons.red600:hover {
   cursor: pointer;
+}
+input {
+  padding-left: 12px !important;
 }

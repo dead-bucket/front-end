@@ -12,11 +12,15 @@ import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 
-const styles = {
+const styles = theme => ({
   titleDiv: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center"
+  },
+  textField: {
+    // paddingLeft: theme.spacing.unit
+    // marginRight: theme.spacing.unit
   },
   title: {
     fontFamily: "Satisfy, cursive",
@@ -50,7 +54,7 @@ const styles = {
     fontSize: "10px",
     margin: 0
   }
-};
+});
 
 const notificationPic = require("../common/notification.png");
 
@@ -108,7 +112,7 @@ class Login extends Component {
               label="Username"
               required
               fullWidth
-              // className={classes.textField}
+              className={classes.textField}
               value={this.state.username}
               onChange={this.handleInputChange("username")}
               margin="normal"
