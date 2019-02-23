@@ -66,9 +66,6 @@ class Dashboard extends Component {
   componentDidMount() {
     this.props.loadUser(this.props.history);
     this.getTargets();
-    // if (!this.props.currentUser) {
-    //   this.props.history.push("/");
-    // }
   }
 
   render() {
@@ -103,7 +100,7 @@ class Dashboard extends Component {
           </h4>
           <div className={classes.friendContainer}>{dashboardContent}</div>
         </div>
-        {/* <AddFriendModal refreshTargets={this.getTargets} /> */}
+
         <BottomNavigation className={classes.stickToBottom}>
           <AddFriendModal refreshTargets={this.getTargets} />
         </BottomNavigation>

@@ -16,6 +16,7 @@ import Login from "./components/landing/Login";
 import Signup from "./components/landing/Signup";
 import Dashboard from "./components/dashboard/Dashboard";
 import FriendView from "./components/friendView/FriendView4";
+import Profile from "./components/profile/Profile";
 
 import "./App.css";
 
@@ -41,6 +42,7 @@ class App extends Component {
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/dashboard" component={Dashboard} />
                 <Route exact path="/friendview" component={FriendView} />
+                <Route exact path="/profile" component={Profile} />
                 <Route component={NoMatch} />
               </Switch>
             </div>

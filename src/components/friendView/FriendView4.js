@@ -83,7 +83,7 @@ class FriendView4 extends Component {
     this.setState({ value });
   };
 
-  clearNotification() {
+  clearNotification = () => {
     setTimeout(() => {
       axios
         .put("/api/v1/inboxclearnotification/", {
@@ -97,13 +97,14 @@ class FriendView4 extends Component {
         })
         .catch(err => console.log(err));
     }, 4000);
-  }
+  };
 
   render() {
     const { classes } = this.props;
     const { target } = this.props.profile;
     const { value } = this.state;
 
+    console.log(isUser);
     let actionContent;
     switch (value) {
       case 0:
@@ -115,21 +116,18 @@ class FriendView4 extends Component {
         actionContent = <ComposeForm friend={target} />;
         break;
       case 2:
-        actionContent = (
-          <Inbox
-            name={target.firstname || target.username}
-            onCLick={this.clearNotification()}
-          />
-        );
+        actionContent = <Inbox name={target.firstname || target.username} />;
         break;
       default:
         return null;
     }
 
     let friendViewContent;
+    let isUser;
     if (!target) {
       friendViewContent = <Spinner />;
     } else {
+      isUser = target.firstname ? true : false;
       friendViewContent = (
         <FriendCard
           friend={target}
@@ -161,7 +159,12 @@ class FriendView4 extends Component {
         >
           <BottomNavigationAction label="Thoughtline" icon={<List />} />
           <BottomNavigationAction label="Compose" icon={<AddCircleOutline />} />
-          <BottomNavigationAction label="Inbox" icon={<MoveToInbox />} />
+          {isUser ? (
+            <BottomNavigationAction
+              label="Inbox"
+              icon={<MoveToInbox onClick={this.clearNotification} />}
+            />
+          ) : null}
         </BottomNavigation>
       </div>
     );
