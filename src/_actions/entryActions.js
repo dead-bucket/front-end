@@ -1,8 +1,9 @@
 import axios from "axios";
 import { GET_USER_ENTRIES, GET_INBOX_ENTRIES } from "../_actions/types";
+const API = process.env.REACT_APP_API;
 export const postEntry = entry => {
   axios
-    .post("/api/v1/entry", entry)
+    .post(`${API}/api/v1/entry`, entry)
     .then(data => console.log(data))
     // data.data =  {
     //     "delivered": false,
@@ -23,7 +24,7 @@ export const getEntries = targetId => {
   console.log("targetId:", targetId);
   return dispatch => {
     return axios
-      .post("/api/v1/targetentry/", {
+      .post(`${API}/api/v1/targetentry/`, {
         recipient: targetId
       })
       .then(data => {

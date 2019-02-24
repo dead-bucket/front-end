@@ -16,6 +16,8 @@ import CheckCircle from "@material-ui/icons/CheckCircleOutlined";
 import Search from "@material-ui/icons/Search";
 import Fab from "@material-ui/core/Fab";
 
+const API = process.env.REACT_APP_API;
+
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -128,7 +130,7 @@ class AddFriendModal extends Component {
 
   searchEmail = email => {
     axios
-      .get("/api/v1/usersearch/?email=" + email)
+      .get(`${API}/api/v1/usersearch/?email=` + email)
       .then(data => {
         console.log("USER SEARCH:", data);
 
@@ -168,7 +170,7 @@ class AddFriendModal extends Component {
 
     // TODO - move to actions
     axios
-      .post("/api/v1/target/", newTarget)
+      .post(`${API}/api/v1/target/`, newTarget)
       .then(data => {
         this.props.refreshTargets();
         this.setState({ modalStage: 3 });
@@ -179,7 +181,7 @@ class AddFriendModal extends Component {
   addNewUser = () => {
     let friend = { friend: this.state.isUser_id };
     axios
-      .put("/api/v1/addfriend", friend)
+      .put(`${API}/api/v1/addfriend`, friend)
       .then(data => {
         console.log(data);
         this.props.refreshTargets();

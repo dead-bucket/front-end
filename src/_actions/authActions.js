@@ -10,11 +10,12 @@ import {
 } from "../_actions/types";
 
 import setAuthToken from "../utils/setAuthToken";
+const API = process.env.REACT_APP_API;
 
 export const registerUser = (userData, history) => {
   return dispatch => {
     return axios
-      .post("/api/v1/signup", userData)
+      .post(`${API}/api/v1/signup`, userData)
       .then(res => {
         const { token, user } = res.data;
         localStorage.setItem("jwtToken", token);
@@ -58,7 +59,7 @@ export const registerUser = (userData, history) => {
 export const loginUser = (userData, history) => {
   return dispatch => {
     return axios
-      .get("/api/v1/signin", {
+      .get(`${API}/api/v1/signin`, {
         auth: {
           username: userData.username,
           password: userData.password
@@ -102,7 +103,7 @@ export const loginUser = (userData, history) => {
 export const loadUser = history => {
   return dispatch => {
     return axios
-      .get("/api/v1/loggedinuser/")
+      .get(`${API}/api/v1/loggedinuser/`)
       .then(res => {
         dispatch({
           type: SET_CURRENT_USER,

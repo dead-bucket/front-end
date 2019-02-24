@@ -26,6 +26,8 @@ import { getEntries, getInboxEntries } from "../../_actions/entryActions";
 import { loadUser } from "../../_actions/authActions";
 import axios from "axios";
 
+const API = process.env.REACT_APP_API;
+
 const styles = {
   friendContainer: {
     height: 250,
@@ -86,7 +88,7 @@ class FriendView4 extends Component {
   clearNotification = () => {
     setTimeout(() => {
       axios
-        .put("/api/v1/inboxclearnotification/", {
+        .put(`${API}/api/v1/inboxclearnotification/`, {
           sender: this.props.profile.target._id
         })
         .then(data => {

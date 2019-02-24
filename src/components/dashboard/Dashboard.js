@@ -3,6 +3,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
+
 // Custom Components
 import Spinner from "../common/Spinner";
 import FriendCard from "../common/FriendCard";
@@ -13,6 +14,7 @@ import { connect } from "react-redux";
 import { setCurrentTarget } from "../../_actions/profileActions";
 import { loadUser } from "../../_actions/authActions";
 
+const API = process.env.REACT_APP_API;
 const styles = {
   friendContainer: {
     background: "inherit",
@@ -38,7 +40,7 @@ class Dashboard extends Component {
   getTargets = () => {
     // TODO : move to profile actions - bring in friends through state, do a check in componentDidMount to see if this.props.friends exists, otherwise make the request
     axios
-      .get("/api/v1/dashboard/")
+      .get(`${API}/api/v1/dashboard/`)
       .then(data => {
         this.setState({ friends: data.data, loading: false });
       })
@@ -48,7 +50,7 @@ class Dashboard extends Component {
   togglePriority = friend => {
     console.log("in toggle priority fn", friend);
     axios
-      .put("/api/v1/togglepriority/", {
+      .put(`${API}/api/v1/togglepriority/`, {
         priority: friend._id
       })
       .then(data => {
