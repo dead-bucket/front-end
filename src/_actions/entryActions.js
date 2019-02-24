@@ -40,7 +40,7 @@ export const getEntries = targetId => {
 export const getInboxEntries = targetId => {
   return dispatch => {
     return axios
-      .get("/api/v1/inbox/?sender=" + targetId)
+      .get(`${API}/api/v1/inbox/?sender=` + targetId)
       .then(data => {
         console.log("getInboxEntries res data:", data);
         dispatch({
