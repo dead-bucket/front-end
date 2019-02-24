@@ -106,7 +106,7 @@ class FriendView4 extends Component {
     const { target } = this.props.profile;
     const { value } = this.state;
 
-    console.log(isUser);
+    
     let actionContent;
     switch (value) {
       case 0:
