@@ -1,11 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import ComposeForm from "../friendView/ComposeForm";
+
+// Custom components
 import ProfileCard from "./ProfileCard";
+import UpdateUser from "./UpdateUser";
+import ImgUpload from "../common/ImgUpload";
 import Spinner from "../common/Spinner";
+
 // REDUX
 import { connect } from "react-redux";
 import { loadUser } from "../../_actions/authActions";
+
 // Material UI
 import { withStyles } from "@material-ui/core";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
@@ -34,18 +39,34 @@ const styles = theme => ({
   secondaryHeading: {
     fontSize: theme.typography.pxToRem(15),
     color: theme.palette.text.secondary
+  },
+
+  updateUserContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    flexWrap: "wrap"
+  },
+  updateUserContainerMobile: {
+    display: "flex",
+    justifyContent: "center",
+    flexWrap: "wrap"
   }
 });
 
 class Profile extends Component {
   state = {
-    expanded: null
+    expanded: null,
+    image: ""
   };
 
   handleChange = panel => (event, expanded) => {
     this.setState({
       expanded: expanded ? panel : false
     });
+  };
+
+  handleProfileImg = image => {
+    this.setState({ image });
   };
 
   componentDidMount() {
@@ -73,15 +94,26 @@ class Profile extends Component {
             onChange={this.handleChange("panel1")}
           >
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography className={classes.heading}>Edit Profile</Typography>
+              <Typography className={classes.heading}>
+                Edit Profile {window.innerWidth}
+              </Typography>
               <Typography className={classes.secondaryHeading}>
-                We can include text here.
+                Update your profile pic and account details.
               </Typography>
             </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              <p>Update all of the current user's info</p>
-              <p>this is a component test to make sure component render well</p>
-              <ComposeForm />
+            <ExpansionPanelDetails
+              // TODO - verify this works
+              className={
+                window.innerWidth < 500
+                  ? classes.updateUserContainer
+                  : classes.updateUserContainerMobile
+              }
+            >
+              <ImgUpload updateImg={this.handleProfileImg} />
+
+              <UpdateUser userData={currentUser} />
+
+              <p>update fields</p>
             </ExpansionPanelDetails>
           </ExpansionPanel>
 
