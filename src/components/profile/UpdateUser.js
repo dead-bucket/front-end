@@ -6,7 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 
 //Redux
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 
 const styles = {
   formContainer: {
