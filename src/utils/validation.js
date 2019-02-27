@@ -25,7 +25,6 @@ export const signupValidate = (userData, password2) => {
   }
 
   if (!passwordMatch(password, password2)) {
-    console.log(`password 1 ${password} ||||| password2 ${password2}`);
     errors.password2 = "Passwords don't match.";
   }
   if (!isEmail(email)) {

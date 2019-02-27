@@ -45,6 +45,8 @@ class ImgUpload extends Component {
             <Avatar
               width={150}
               height={150}
+              imageWidth={200}
+              style={{ overflowX: "hidden" }}
               onCrop={this.onCrop}
               onClose={this.onClose}
               // src={this.state.src}
