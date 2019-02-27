@@ -5,7 +5,7 @@ export const isEmpty = value =>
   (typeof value === "string" && value.trim().length === 0);
 
 export const isEmail = email => {
-  var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
 };
 
@@ -25,7 +25,6 @@ export const signupValidate = (userData, password2) => {
   }
 
   if (!passwordMatch(password, password2)) {
-    console.log(`password 1 ${password} ||||| password2 ${password2}`);
     errors.password2 = "Passwords don't match.";
   }
   if (!isEmail(email)) {
