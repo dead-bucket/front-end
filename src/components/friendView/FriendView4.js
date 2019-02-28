@@ -153,7 +153,6 @@ class FriendView4 extends Component {
         <BottomNavigation
           value={value}
           onChange={this.handleBottomChange}
-          showLabels
           className={classes.stickToBottom}
         >
           <BottomNavigationAction label="Thoughtline" icon={<List />} />

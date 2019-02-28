@@ -16,8 +16,8 @@ export const passwordMatch = (pass1, pass2) => {
   return true;
 };
 
-export const signupValidate = (userData, password2) => {
-  const { password, email } = userData;
+export const signupValidate = ({ password, email }, password2) => {
+  // const { password, email } = userData;
   let errors = {};
 
   if (password.length <= 5) {
