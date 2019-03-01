@@ -41,6 +41,17 @@ const styles = {
   },
   link: {
     color: "black"
+  },
+  notification: {
+    width: 30,
+    height: 30,
+    borderRadius: 20,
+    backgroundColor: "red",
+    color: "white",
+    marginRight: 10,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   }
 };
 
@@ -91,6 +102,7 @@ class NavBar extends Component {
                 {/* <div>
                   <p>{currentUser.firstname || currentUser.username}</p>
                 </div> */}
+                <div className={classes.notification}>{currentUser.notifications.length}</div>
 
                 <img
                   className={classes.profileImage}
@@ -106,7 +118,6 @@ class NavBar extends Component {
                 >
                   <MoreVert />
                 </IconButton>
-
                 <Menu
                   id="menu-appbar"
                   anchorEl={anchorEl}
