@@ -32,7 +32,7 @@ const styles = {
   },
   error: {
     color: "red",
-    fontSize: "10px",
+    fontSize: 14,
     margin: 0
   }
 };

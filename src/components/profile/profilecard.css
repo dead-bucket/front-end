@@ -5,12 +5,12 @@
 
 #profile_user_image {
   margin: 10px;
-  height: 150px;
-  width: 150px;
+  height: 125px;
+  width: 125px;
 }
 #profile_user_info {
-  margin-top: 10px;
+  margin-right: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: flex;
+  justify-content: flex-start;
 }
