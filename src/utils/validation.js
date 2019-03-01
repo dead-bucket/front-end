@@ -16,10 +16,18 @@ export const passwordMatch = (pass1, pass2) => {
   return true;
 };
 
-export const signupValidate = ({ password, email }, password2) => {
-  // const { password, email } = userData;
+export const signupValidate = (
+  { password, email },
+  password2,
+  currentPassword
+) => {
   let errors = {};
 
+  if (currentPassword) {
+    if (passwordMatch(password2, currentPassword)) {
+      errors.currentPassword = "Current and New password must be different.";
+    }
+  }
   if (password.length <= 5) {
     errors.password = "Please use a stronger password";
   }

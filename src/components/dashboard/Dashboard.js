@@ -14,6 +14,10 @@ import { setCurrentTarget } from "../../_actions/profileActions";
 import { loadUser } from "../../_actions/authActions";
 
 const styles = {
+  intro: {
+    width: "90%",
+    textAlign: "center"
+  },
   friendContainer: {
     background: "inherit",
     display: "flex",
@@ -77,7 +81,17 @@ class Dashboard extends Component {
     } else {
       if (friends.length === 0) {
         dashboardContent = (
-          <h5>...adding a friend with add button below. :)</h5>
+          <div className={classes.intro}>
+            <h5>...adding a friend with add button below. :)</h5>
+            <h5>
+              Thoughtline is all about having a safe place to express yourself
+              and keep track of life's special moments.
+            </h5>
+            <h5>
+              Add a friend (either privately or by connecting with other
+              Thoughtline users) and start adding thoughts to your thoughtline!
+            </h5>
+          </div>
         );
       } else {
         dashboardContent = friends.map(friend => (
