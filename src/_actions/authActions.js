@@ -28,6 +28,7 @@ export const registerUser = (userData, history) => {
       })
       .catch(err => {
         const { data } = err.response;
+        console.log('error from signup', data)
         if (data.includes("username")) {
           dispatch({
             type: SET_SIGNUP_ERRORS,
