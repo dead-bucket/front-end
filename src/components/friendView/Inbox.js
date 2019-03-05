@@ -10,7 +10,8 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    overflowY: "scroll"
+    overflowY: "scroll",
+    height: "55vh"
   },
   inboxLineMessage: {
     textAlign: "left",
@@ -18,7 +19,10 @@ const styles = {
     borderRadius: 15,
     padding: 20,
     margin: 20,
-    border: "1px solid black"
+    border: "1px solid black",
+    webkitBoxShadow: "7px 10px 5px 1px rgba(0,0,0,0.25)",
+    mozBoxShadow: "7px 10px 5px 1px rgba(0,0,0,0.25)",
+    boxShadow: "7px 10px 5px 1px rgba(0,0,0,0.25)"
   }
 };
 
