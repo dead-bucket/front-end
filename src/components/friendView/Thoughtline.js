@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import _ from "lodash";
 
 // Material UI
-import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
 import Search from "@material-ui/icons/Search";
 
 //Custom
@@ -36,7 +36,7 @@ const styles = {
   searchContainer: {
     position: "absolute",
     alignItems: "center",
-    top: "280px",
+    top: "270px",
     left: "140px",
     display: "flex"
   },
@@ -78,7 +78,6 @@ class Thoughtline extends Component {
       searchResults = `No search results for '${this.state.searchTerm}'.`;
     }
     this.setState({ searchResults: searchResults });
-    console.log(searchResults);
   };
 
   handleSearchInput = e => {
@@ -142,11 +141,12 @@ class Thoughtline extends Component {
             className={classes.searchIcon}
             onClick={this.displaySearchInput}
           />
+          {/* TODO - Add autofocus - might need refs? */}
           <TextField
-            id="outlined-friend-email-input"
+            id="outlined-search-input"
             label="Searching for..."
             className={classes.searchInput}
-            type="email"
+            type="text"
             style={{ visibility: displaySearch ? "visible" : "hidden" }}
             name="searchTerm"
             value={this.state.searchTerm}
