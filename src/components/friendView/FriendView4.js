@@ -32,14 +32,15 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     textAlign: "center",
-    paddingTop: 20
+    paddingTop: 10
   },
   actionContainer: {
     height: 400,
     display: "flex",
     justifyContent: "center",
     textAlign: "center",
-    margin: 10
+    margin: 10,
+    paddingTop: 20
   },
   stickToBottom: {
     width: "100%",

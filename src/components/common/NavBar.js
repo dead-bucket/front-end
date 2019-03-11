@@ -26,7 +26,7 @@ const styles = {
   title: {
     fontFamily: "Satisfy, cursive",
     flexGrow: 1,
-    marginLeft: 10
+    margin: 10
   },
   menuButton: {
     marginLeft: -12,
@@ -51,7 +51,7 @@ const styles = {
     marginRight: 10,
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   }
 };
 
@@ -95,14 +95,16 @@ class NavBar extends Component {
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-            <h5 className={classes.title}>Thoughtline</h5>
+            <h1 className={classes.title}>Thoughtline</h1>
 
             {!isEmpty(currentUser) ? (
               <div className={classes.profileContainer}>
                 {/* <div>
                   <p>{currentUser.firstname || currentUser.username}</p>
                 </div> */}
-                <div className={classes.notification}>{currentUser.notifications.length}</div>
+                <div className={classes.notification}>
+                  {currentUser.notifications.length}
+                </div>
 
                 <img
                   className={classes.profileImage}

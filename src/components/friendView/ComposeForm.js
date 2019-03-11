@@ -99,7 +99,7 @@ class ComposeForm extends Component {
         <TextField
           label="Enter a thought..."
           multiline
-          rows="10"
+          rows="5"
           style={{ backgroundColor: thoughtColor }}
           value={this.state.thought}
           name="thought"

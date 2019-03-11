@@ -6,7 +6,7 @@ import axios from "axios";
 import ProfileCard from "./ProfileCard";
 import ImgUpload from "../common/ImgUpload";
 import Spinner from "../common/Spinner";
-import { passwordMatch, signupValidate, isEmpty } from "../../utils/validation";
+import { signupValidate, isEmpty } from "../../utils/validation";
 
 // REDUX
 import { connect } from "react-redux";
@@ -99,7 +99,13 @@ class Profile extends Component {
   updateUserDetails = () => {
     // IMAGE IS DISABLED
 
-    const { username, firstname, lastname, email, image } = this.state;
+    const {
+      username,
+      firstname,
+      lastname,
+      email
+      // image
+    } = this.state;
 
     const updateData = {
       username,
