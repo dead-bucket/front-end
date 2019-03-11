@@ -12,14 +12,14 @@ import Search from "@material-ui/icons/Search";
 //Custom
 import SendEntriesModal from "./SendEntriesModal";
 
-const styles = {
+const styles = theme => ({
   timelineContainer: {
     width: "100%",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     overflowY: "scroll",
-    height: "55vh"
+    height: "51vh"
   },
 
   thoughtLineMessage: {
@@ -36,18 +36,18 @@ const styles = {
   searchContainer: {
     position: "absolute",
     alignItems: "center",
-    top: "270px",
-    left: "140px",
+    width: 240,
+    top: 280,
+    left: "10%",
+    marginLeft: "14px",
     display: "flex"
   },
   searchIcon: {
-    width: 40,
-    height: 40
-  },
-  searchInput: {
-    width: "256px"
+    width: 30,
+    height: 30,
+    marginTop: 24
   }
-};
+});
 
 class Thoughtline extends Component {
   constructor(props) {
@@ -136,25 +136,25 @@ class Thoughtline extends Component {
 
     return (
       <div className={classes.timelineContainer}>
-        <div className={classes.searchContainer}>
-          <Search
-            className={classes.searchIcon}
-            onClick={this.displaySearchInput}
-          />
-          {/* TODO - Add autofocus - might need refs? */}
-          <TextField
-            id="outlined-search-input"
-            label="Searching for..."
-            className={classes.searchInput}
-            type="text"
-            style={{ visibility: displaySearch ? "visible" : "hidden" }}
-            name="searchTerm"
-            value={this.state.searchTerm}
-            onChange={this.handleSearchInput}
-            margin="normal"
-            variant="outlined"
-          />
-        </div>
+        {userEntries.length > 0 ? (
+          <div className={classes.searchContainer}>
+            <Search
+              className={classes.searchIcon}
+              onClick={this.displaySearchInput}
+            />
+            {/* TODO - Add autofocus - might need refs? */}
+            <TextField
+              id="outlined-search-input"
+              label="Searching for..."
+              type="text"
+              style={{ visibility: displaySearch ? "visible" : "hidden" }}
+              name="searchTerm"
+              value={this.state.searchTerm}
+              onChange={this.handleSearchInput}
+              margin="normal"
+            />
+          </div>
+        ) : null}
         {userEntries.length > 0 ? <SendEntriesModal /> : null}
         {messageContent}
       </div>

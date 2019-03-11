@@ -14,6 +14,11 @@ import { setCurrentTarget } from "../../_actions/profileActions";
 import { loadUser } from "../../_actions/authActions";
 
 const styles = {
+  mainTitle: {
+    textAlign: "center",
+    fontFamily: "Satisfy, cursive",
+    marginBottom: 0
+  },
   intro: {
     width: "90%",
     textAlign: "center"
@@ -109,9 +114,7 @@ class Dashboard extends Component {
     return (
       <div>
         <div>
-          <h4 style={{ textAlign: "center", fontFamily: "Satisfy, cursive" }}>
-            Thinking about...
-          </h4>
+          <h2 className={classes.mainTitle}>Thinking about...</h2>
           <div className={classes.friendContainer}>{dashboardContent}</div>
         </div>
 

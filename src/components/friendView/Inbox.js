@@ -17,7 +17,7 @@ const styles = {
     flexDirection: "column",
     alignItems: "center",
     overflowY: "scroll",
-    height: "55vh"
+    height: "51vh"
   },
   inboxMessage: {
     textAlign: "left",
@@ -33,16 +33,16 @@ const styles = {
   searchContainer: {
     position: "absolute",
     alignItems: "center",
-    top: "270px",
-    left: "140px",
+    width: 240,
+    top: 280,
+    left: "10%",
+    marginLeft: "14px",
     display: "flex"
   },
   searchIcon: {
-    width: 40,
-    height: 40
-  },
-  searchInput: {
-    width: "256px"
+    width: 30,
+    height: 30,
+    marginTop: 24
   }
 };
 
@@ -58,12 +58,7 @@ class Inbox extends Component {
     this.delayedSearch = _.debounce(this.searchMessages, 1000);
   }
 
-  setActiveInput = nameOfInput => () => {
-    this.inputWrapper.querySelector(`[name=${nameOfInput}]`).focus();
-  };
-
   displaySearchInput = () => {
-    this.setActiveInput("searchTerm");
     this.setState({
       displaySearch: !this.state.displaySearch,
       searchTerm: "",
@@ -117,7 +112,7 @@ class Inbox extends Component {
     } else {
       if (inboxEntries.length === 0) {
         messageContent = (
-          <h3>You haven't composed a thought for {name} yet.</h3>
+          <h3>You haven't received a thought from {name} yet.</h3>
         );
       } else {
         messageContent = inboxEntries.map(entry => {
@@ -137,27 +132,27 @@ class Inbox extends Component {
       }
     }
 
+    /* TODO - Add autofocus - might need refs? */
     return (
       <div className={classes.inboxContainer}>
-        <div className={classes.searchContainer}>
-          <Search
-            className={classes.searchIcon}
-            onClick={this.displaySearchInput}
-          />
-          {/* TODO - Add autofocus - might need refs? */}
-          <TextField
-            id="searchTerm"
-            label="Searching for..."
-            className={classes.searchInput}
-            type="text"
-            style={{ visibility: displaySearch ? "visible" : "hidden" }}
-            name="searchTerm"
-            value={this.state.searchTerm}
-            onChange={this.handleSearchInput}
-            margin="normal"
-            variant="outlined"
-          />
-        </div>
+        {inboxEntries.length > 0 ? (
+          <div className={classes.searchContainer}>
+            <Search
+              className={classes.searchIcon}
+              onClick={this.displaySearchInput}
+            />
+            <TextField
+              id="searchTerm"
+              label="Searching for..."
+              type="text"
+              style={{ visibility: displaySearch ? "visible" : "hidden" }}
+              name="searchTerm"
+              value={this.state.searchTerm}
+              onChange={this.handleSearchInput}
+              margin="normal"
+            />
+          </div>
+        ) : null}
         {messageContent}
       </div>
     );
