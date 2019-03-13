@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import Moment from "react-moment";
 import { connect } from "react-redux";
@@ -73,6 +73,7 @@ class Inbox extends Component {
         ? entry
         : null;
     });
+
     if (searchResults.length === 0) {
       searchResults = `No search results for '${this.state.searchTerm}'.`;
     }

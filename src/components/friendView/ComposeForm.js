@@ -29,6 +29,14 @@ const styles = {
     width: 30,
     border: "1px solid #d3d3d3"
   },
+  boxShadow: {
+    height: 40,
+    width: 40,
+
+    webkitBoxShadow: "0px 0px 17px 1px rgba(0,0,0,0.35)",
+    mozBoxShadow: "0px 0px 17px 1px rgba(0,0,0,0.35)",
+    boxShadow: "0px 0px 17px 1px rgba(0,0,0,0.35)"
+  },
   colorBlockActive: {
     height: 30,
     width: 30,
@@ -43,11 +51,11 @@ const styles = {
 };
 
 const colors = [
-  { id: "blue", hex: "#0abab5" },
-  { id: "green", hex: "#98fb98" },
+  { id: "green", hex: "#72ee8a" },
+  { id: "yellow", hex: "#eeea72" },
   { id: "white", hex: "#fff" },
   { id: "pink", hex: "#ffc0cb" },
-  { id: "red", hex: "#ff0000" }
+  { id: "purple", hex: "#9c95e4" }
 ];
 
 class ComposeForm extends Component {
@@ -120,7 +128,11 @@ class ComposeForm extends Component {
             <div
               key={color.id}
               style={{ backgroundColor: color.hex }}
-              className={classes.colorBlock}
+              className={
+                thoughtColor === color.hex
+                  ? classes.boxShadow
+                  : classes.colorBlock
+              }
               onClick={() => this.selectColorBox(color.hex)}
             />
           ))}

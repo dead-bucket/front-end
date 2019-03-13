@@ -74,9 +74,11 @@ class Thoughtline extends Component {
         ? entry
         : null;
     });
+
     if (searchResults.length === 0) {
       searchResults = `No search results for '${this.state.searchTerm}'.`;
     }
+
     this.setState({ searchResults: searchResults });
   };
 
