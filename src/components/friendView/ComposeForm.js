@@ -32,7 +32,6 @@ const styles = {
   boxShadow: {
     height: 40,
     width: 40,
-
     webkitBoxShadow: "0px 0px 17px 1px rgba(0,0,0,0.35)",
     mozBoxShadow: "0px 0px 17px 1px rgba(0,0,0,0.35)",
     boxShadow: "0px 0px 17px 1px rgba(0,0,0,0.35)"
