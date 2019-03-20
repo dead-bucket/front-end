@@ -10,7 +10,7 @@ import AddFriendModal from "./AddFriendModal";
 
 //Redux
 import { connect } from "react-redux";
-import { setCurrentTarget } from "../../_actions/profileActions";
+import { setCurrentTarget, getNotifications } from "../../_actions/profileActions";
 import { loadUser } from "../../_actions/authActions";
 
 const styles = {
@@ -41,7 +41,8 @@ const styles = {
 class Dashboard extends Component {
   state = {
     friends: [],
-    loading: true
+    loading: true,
+    
   };
 
   getTargets = () => {
@@ -53,6 +54,7 @@ class Dashboard extends Component {
       })
       .catch(err => console.log(err));
   };
+  
 
   togglePriority = friend => {
     console.log("in toggle priority fn", friend);
@@ -70,11 +72,13 @@ class Dashboard extends Component {
   setTarget = friend => {
     this.props.setCurrentTarget(friend);
     this.props.history.push("/friendview");
+    
   };
 
   componentDidMount() {
     this.props.loadUser(this.props.history);
     this.getTargets();
+    this.props.getNotifications();
   }
 
   render() {
@@ -136,5 +140,5 @@ Dashboard.propTypes = {
 
 export default connect(
   mapStateToProps,
-  { setCurrentTarget, loadUser }
+  { setCurrentTarget, loadUser, getNotifications }
 )(withStyles(styles)(Dashboard));
