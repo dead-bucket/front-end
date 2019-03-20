@@ -10,6 +10,7 @@ import {
 } from "../_actions/types";
 
 import setAuthToken from "../utils/setAuthToken";
+import { getNotifications } from "./profileActions";
 
 export const registerUser = (userData, history) => {
   return dispatch => {
@@ -19,6 +20,7 @@ export const registerUser = (userData, history) => {
         const { token, user } = res.data;
         localStorage.setItem("jwtToken", token);
         setAuthToken(token);
+        
         dispatch({
           type: SET_CURRENT_USER,
           payload: user
@@ -26,6 +28,7 @@ export const registerUser = (userData, history) => {
 
         history.push("/dashboard");
       })
+      .then(() => getNotifications())
       .catch(err => {
         const { data } = err.response;
         console.log('error from signup', data)
@@ -76,6 +79,7 @@ export const loginUser = (userData, history) => {
 
         history.push("/dashboard");
       })
+      .then(() => getNotifications())
       .catch(err => {
         const { data } = err.response;
         if (data.includes("Username")) {
@@ -110,6 +114,7 @@ export const loadUser = history => {
           payload: res.data
         });
       })
+      .then(() => getNotifications())
       .catch(err => history.push("/"));
   };
 };
