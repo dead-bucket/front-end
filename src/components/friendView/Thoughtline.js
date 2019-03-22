@@ -105,14 +105,14 @@ class Thoughtline extends Component {
     this.delayedSearch(value);
   };
   handleCloseModal = () => {
-    console.log('in handle close modal')
+   
     this.setState({
       modalOpen: false,
       idToDelete: null,
     });
   }
   handleOpenModal = (e) => {
-    console.log('in open modal ', e)
+    
     this.setState({
       modalOpen: true,
       idToDelete: e,
@@ -157,10 +157,8 @@ class Thoughtline extends Component {
               <p 
               
               style={{ fontSize: 20 }}>{entry.description}</p>
-              <i  
-
-                  value={entry.id}
-                  onClick={() => this.handleOpenModal()}
+              <i 
+                  onClick={this.handleOpenModal.bind(this, entry._id)}
                   className={`material-icons ${classes.deleteIcon}`}>delete
               </i>
               
@@ -188,8 +186,6 @@ class Thoughtline extends Component {
               <p          
               style={{ fontSize: 20 }}>{entry.description}</p>
               <i 
-                  data-id={entry.id}
-                  
                   onClick={this.handleOpenModal.bind(this, entry._id)}
                   className={`material-icons ${classes.deleteIcon}`}>delete
               </i>
