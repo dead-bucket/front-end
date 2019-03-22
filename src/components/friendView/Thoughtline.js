@@ -127,6 +127,8 @@ class Thoughtline extends Component {
       this.setState({
         modalOpen: false,
         idToDelete: null,
+        searchTerm: '',
+        searchResults: [],
       })
 
     })
