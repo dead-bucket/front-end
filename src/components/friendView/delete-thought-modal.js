@@ -46,7 +46,8 @@ const styles = theme => ({
     position: "relative",
     display: "flex",
     flexDirection: "row",
-    justifyContent: "spaceBetween"
+    width: "75%",
+    justifyContent: "space-around",
 
   },
   modalHeading: {
