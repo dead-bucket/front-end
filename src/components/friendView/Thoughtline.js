@@ -15,6 +15,7 @@ import Delete from "@material-ui/icons/Delete";
 import SendEntriesModal from "./SendEntriesModal";
 import { getEntries, deleteEntry } from "../../_actions/entryActions";
 import { relative } from "path";
+import DeleteModal from "./delete-thought-modal";
 
 const styles = theme => ({
   timelineContainer: {
@@ -66,9 +67,13 @@ class Thoughtline extends Component {
     this.state = {
       searchTerm: "",
       displaySearch: false,
-      searchResults: null
+      searchResults: null,
+      modalOpen: false,
     };
     this.delayedSearch = _.debounce(this.searchMessages, 1000);
+    // this.handleOpenModal = this.handleOpenModal.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   displaySearchInput = () =>
@@ -99,11 +104,32 @@ class Thoughtline extends Component {
     e.persist();
     this.delayedSearch(value);
   };
-  handleDelete = (id) => {
+  handleCloseModal = () => {
+    console.log('in handle close modal')
+    this.setState({
+      modalOpen: false,
+      idToDelete: null,
+    });
+  }
+  handleOpenModal = (e) => {
+    console.log('in open modal ', e)
+    this.setState({
+      modalOpen: true,
+      idToDelete: e,
+    })
+  }
+  handleDelete = () => {
    
     axios
-    .delete(`api/v1/entry/${id}`)
+    .delete(`api/v1/entry/${this.state.idToDelete}`)
     .then(() => this.props.getEntries(this.props.profile.target._id))
+    .then(() => {
+      this.setState({
+        modalOpen: false,
+        idToDelete: null,
+      })
+
+    })
     .catch(err => console.log(err));
    
     
@@ -128,13 +154,17 @@ class Thoughtline extends Component {
               <p style={{ fontSize: 16 }}>
                 <Moment format="LLL">{entry.createdAt}</Moment>
               </p>
-              <p style={{ fontSize: 20 }}>{entry.description}</p>
+              <p 
+              
+              style={{ fontSize: 20 }}>{entry.description}</p>
               <i  
 
                   value={entry.id}
-                  onClick={e => this.handleDelete(e)}
+                  onClick={() => this.handleOpenModal()}
                   className={`material-icons ${classes.deleteIcon}`}>delete
               </i>
+              
+              
             </div>
           );
         });
@@ -155,12 +185,15 @@ class Thoughtline extends Component {
               <p style={{ fontSize: 16 }}>
                 <Moment format="LLL">{entry.createdAt}</Moment>
               </p>
-              <p style={{ fontSize: 20 }}>{entry.description}</p>
+              <p          
+              style={{ fontSize: 20 }}>{entry.description}</p>
               <i 
-                  value={entry.id}
-                  onClick={this.handleDelete.bind(this, entry._id)}
+                  data-id={entry.id}
+                  
+                  onClick={this.handleOpenModal.bind(this, entry._id)}
                   className={`material-icons ${classes.deleteIcon}`}>delete
               </i>
+              
             </div>
           );
         });
@@ -189,6 +222,11 @@ class Thoughtline extends Component {
           </div>
         ) : null}
         {userEntries.length > 0 ? <SendEntriesModal /> : null}
+        {userEntries.length > 0 ? 
+                <DeleteModal isOpen={this.state.modalOpen}
+                yes={this.handleDelete}
+                no={this.handleCloseModal}/> 
+                : null}
         {messageContent}
       </div>
     );
