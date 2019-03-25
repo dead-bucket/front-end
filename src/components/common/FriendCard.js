@@ -12,7 +12,6 @@ const dashboardStyles = {
 };
 
 const friendViewStyles = {
-  cursor: "pointer",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -35,17 +34,17 @@ const iconStyleBottomRight = {
   left: "80%",
   bottom: "27%"
 };
-const notificationPic = require("./notification.png");
 
+const notificationPic = require("./notification.png");
 function FriendCard(props) {
   const { view, friend, loggedInUser } = props;
-
+  let currentUser = loggedInUser || { newmessages: [] };
   if (view === "friendview") {
     return (
       <div style={friendViewStyles}>
         <img
           style={{
-            visibility: loggedInUser.newmessages.includes(friend._id)
+            visibility: currentUser.newmessages.includes(friend._id)
               ? "visible"
               : "hidden",
             ...iconStyleTopRight
@@ -66,7 +65,7 @@ function FriendCard(props) {
       <div style={dashboardStyles}>
         <img
           style={{
-            visibility: loggedInUser.newmessages.includes(friend._id)
+            visibility: currentUser.newmessages.includes(friend._id)
               ? "visible"
               : "hidden",
             ...iconStyleTopRight

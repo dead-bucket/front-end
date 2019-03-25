@@ -19,6 +19,12 @@ import Button from "@material-ui/core/Button";
 import CheckCircle from "@material-ui/icons/CheckCircleOutlined";
 
 const styles = theme => ({
+  mainTitle: {
+    textAlign: "center",
+    fontFamily: "Satisfy, cursive",
+    marginBottom: 0,
+    fontSize: "1.75rem"
+  },
   profileContainer: {
     display: "flex",
     flexDirection: "column",
@@ -256,9 +262,7 @@ class Profile extends Component {
     }
     return (
       <div className={classes.profileContainer}>
-        <h4 style={{ textAlign: "center", fontFamily: "Satisfy, cursive" }}>
-          Your Profile:
-        </h4>
+        <p className={classes.mainTitle}>Your Profile:</p>
         <div>{userProfile}</div>
         <div className={classes.updateContainer}>
           <p>Update Profile Information:</p>
