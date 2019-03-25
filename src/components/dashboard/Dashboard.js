@@ -74,6 +74,7 @@ class Dashboard extends Component {
 
   componentDidMount() {
     this.props.loadUser(this.props.history);
+
     this.getTargets();
   }
 

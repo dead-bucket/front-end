@@ -68,7 +68,6 @@ class Thoughtline extends Component {
     });
 
   searchMessages = searchTerm => {
-    console.log(searchTerm);
     let searchResults = this.props.userEntries.filter(entry => {
       return entry.description.toLowerCase().includes(searchTerm.toLowerCase())
         ? entry
