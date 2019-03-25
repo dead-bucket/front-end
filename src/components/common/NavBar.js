@@ -50,7 +50,7 @@ const styles = {
     color: "white",
     marginRight: 10,
     display: "flex",
-    alignItems: "center",
+    flexDrirection: "row",
     justifyContent: "center"
   }
 };
@@ -59,7 +59,8 @@ class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      anchorEl: null
+      anchorEl: null,
+      showNotificatons: false,
     };
   }
 
@@ -87,9 +88,19 @@ class NavBar extends Component {
   };
 
   render() {
-    const { classes, currentUser } = this.props;
+    const { classes, currentUser, notifications } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
+    let notificationList;
+    if(notifications) {
+      
+      notificationList = notifications.map(el => {
+          return <li>{`${el.fromId.firstname}`}</li>
+      })
+
+    } else {
+      notificationList = [];
+    }
 
     return (
       <div className={classes.root}>
@@ -102,8 +113,14 @@ class NavBar extends Component {
                 {/* <div>
                   <p>{currentUser.firstname || currentUser.username}</p>
                 </div> */}
-                <div className={classes.notification}>
-                  {currentUser.notifications.length}
+                <div className={classes.notification}
+                      onClick={() => this.setState({showNotificatons: !this.state.showNotificatons})}>
+                  {notifications ? notifications.length : 0}
+                </div>
+                <div style={{display: this.state.showNotificatons ? '' : 'none'}}>
+                  <ul>
+                    {notificationList}
+                  </ul>
                 </div>
 
                 <img
@@ -162,7 +179,8 @@ class NavBar extends Component {
 }
 
 const mapStateToProps = state => ({
-  currentUser: state.auth.currentUser
+  currentUser: state.auth.currentUser,
+  notifications: state.profile.notifications,
 });
 
 NavBar.propTypes = {

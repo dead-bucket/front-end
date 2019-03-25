@@ -6,8 +6,16 @@ export const postEntry = entry => {
     .then(data => console.log(data))
     .catch(err => console.log(err));
 };
+export const deleteEntry = (entryId, targetId) => {
+  axios
+    .delete(`api/v1/entry/${entryId}`)
+    // .then(data => console.log(data))
+    .then(() => getEntries(targetId))
+    .catch(err => console.log(err));
+}
 
 export const getEntries = targetId => {
+  console.log('in get entries');
   return dispatch => {
     return axios
       .post("/api/v1/targetentry/", {

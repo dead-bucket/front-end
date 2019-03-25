@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from 'axios';
 import PropTypes from "prop-types";
 import Moment from "react-moment";
 import { connect } from "react-redux";
@@ -8,9 +9,13 @@ import _ from "lodash";
 import { withStyles } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Search from "@material-ui/icons/Search";
+import Delete from "@material-ui/icons/Delete";
 
 //Custom
 import SendEntriesModal from "./SendEntriesModal";
+import { getEntries, deleteEntry } from "../../_actions/entryActions";
+import { relative } from "path";
+import DeleteModal from "./delete-thought-modal";
 
 const styles = theme => ({
   timelineContainer: {
@@ -23,6 +28,7 @@ const styles = theme => ({
   },
 
   thoughtLineMessage: {
+    position: "relative",
     textAlign: "left",
     width: "80%",
     borderRadius: 15,
@@ -46,6 +52,12 @@ const styles = theme => ({
     width: 30,
     height: 30,
     marginTop: 24
+  },
+  deleteIcon: {
+    position: "absolute",
+    right: "2%",
+    bottom: "10%",
+    cursor: "pointer",
   }
 });
 
@@ -55,9 +67,13 @@ class Thoughtline extends Component {
     this.state = {
       searchTerm: "",
       displaySearch: false,
-      searchResults: null
+      searchResults: null,
+      modalOpen: false,
     };
     this.delayedSearch = _.debounce(this.searchMessages, 1000);
+    // this.handleOpenModal = this.handleOpenModal.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   displaySearchInput = () =>
@@ -87,6 +103,38 @@ class Thoughtline extends Component {
     e.persist();
     this.delayedSearch(value);
   };
+  handleCloseModal = () => {
+   
+    this.setState({
+      modalOpen: false,
+      idToDelete: null,
+    });
+  }
+  handleOpenModal = (e) => {
+    
+    this.setState({
+      modalOpen: true,
+      idToDelete: e,
+    })
+  }
+  handleDelete = () => {
+   
+    axios
+    .delete(`api/v1/entry/${this.state.idToDelete}`)
+    .then(() => this.props.getEntries(this.props.profile.target._id))
+    .then(() => {
+      this.setState({
+        modalOpen: false,
+        idToDelete: null,
+        searchTerm: '',
+        searchResults: [],
+      })
+
+    })
+    .catch(err => console.log(err));
+   
+    
+  }
 
   render() {
     const { classes, userEntries, name } = this.props;
@@ -107,7 +155,15 @@ class Thoughtline extends Component {
               <p style={{ fontSize: 16 }}>
                 <Moment format="LLL">{entry.createdAt}</Moment>
               </p>
-              <p style={{ fontSize: 20 }}>{entry.description}</p>
+              <p 
+              
+              style={{ fontSize: 20 }}>{entry.description}</p>
+              <i 
+                  onClick={this.handleOpenModal.bind(this, entry._id)}
+                  className={`material-icons ${classes.deleteIcon}`}>delete
+              </i>
+              
+              
             </div>
           );
         });
@@ -128,7 +184,13 @@ class Thoughtline extends Component {
               <p style={{ fontSize: 16 }}>
                 <Moment format="LLL">{entry.createdAt}</Moment>
               </p>
-              <p style={{ fontSize: 20 }}>{entry.description}</p>
+              <p          
+              style={{ fontSize: 20 }}>{entry.description}</p>
+              <i 
+                  onClick={this.handleOpenModal.bind(this, entry._id)}
+                  className={`material-icons ${classes.deleteIcon}`}>delete
+              </i>
+              
             </div>
           );
         });
@@ -157,6 +219,11 @@ class Thoughtline extends Component {
           </div>
         ) : null}
         {userEntries.length > 0 ? <SendEntriesModal /> : null}
+        {userEntries.length > 0 ? 
+                <DeleteModal isOpen={this.state.modalOpen}
+                yes={this.handleDelete}
+                no={this.handleCloseModal}/> 
+                : null}
         {messageContent}
       </div>
     );
@@ -165,11 +232,17 @@ class Thoughtline extends Component {
 
 Thoughtline.propTypes = {
   classes: PropTypes.object.isRequired,
-  userEntries: PropTypes.array.isRequired
+  userEntries: PropTypes.array.isRequired,
+  profile: PropTypes.object.isRequired,
+  getEntries: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  userEntries: state.entries.userEntries
+  userEntries: state.entries.userEntries,
+  profile: state.profile,
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(Thoughtline));
+export default connect(
+  mapStateToProps,
+  { getEntries, deleteEntry }
+  )(withStyles(styles)(Thoughtline));
