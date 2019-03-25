@@ -17,7 +17,8 @@ const styles = {
   mainTitle: {
     textAlign: "center",
     fontFamily: "Satisfy, cursive",
-    marginBottom: 0
+    marginBottom: 0,
+    fontSize: "1.75rem"
   },
   intro: {
     width: "90%",
@@ -77,6 +78,7 @@ class Dashboard extends Component {
 
   componentDidMount() {
     this.props.loadUser(this.props.history);
+
     this.getTargets();
     this.props.getNotifications();
   }
@@ -118,7 +120,7 @@ class Dashboard extends Component {
     return (
       <div>
         <div>
-          <h2 className={classes.mainTitle}>Thinking about...</h2>
+          <p className={classes.mainTitle}>Thinking about...</p>
           <div className={classes.friendContainer}>{dashboardContent}</div>
         </div>
 

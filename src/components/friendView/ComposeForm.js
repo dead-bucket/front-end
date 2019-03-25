@@ -14,7 +14,7 @@ const styles = {
     justifyContent: "start",
     alignItems: "center",
     width: "100%",
-    height: "100%"
+    maxWidth: 700
   },
   thoughtInput: {
     width: "80%",
@@ -22,7 +22,7 @@ const styles = {
   },
   //style for font size
   resize: {
-    fontSize: 15
+    fontSize: 20
   },
   colorBlock: {
     height: 30,
@@ -106,7 +106,7 @@ class ComposeForm extends Component {
         <TextField
           label="Enter a thought..."
           multiline
-          rows="5"
+          rows="7"
           style={{ backgroundColor: thoughtColor }}
           value={this.state.thought}
           name="thought"
