@@ -75,6 +75,7 @@ class Thoughtline extends Component {
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
+  
 
   displaySearchInput = () =>
     this.setState({
@@ -120,8 +121,9 @@ class Thoughtline extends Component {
   }
   handleDelete = () => {
    
-    axios
-    .delete(`api/v1/entry/${this.state.idToDelete}`)
+    // axios
+    // .delete(`api/v1/entry/${this.state.idToDelete}`)
+    // deleteEntry(entryId, this.props.profile.target._id)
     .then(() => this.props.getEntries(this.props.profile.target._id))
     .then(() => {
       this.setState({

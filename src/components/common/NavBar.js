@@ -95,7 +95,10 @@ class NavBar extends Component {
     this.handleClose();
     this.props.history.push("/");
   };
-
+  handleClick = e => {
+    console.log('this onclick', e.currentTarget);
+    this.setState({showNotificatons: !this.state.showNotificatons})
+  }
   render() {
     const { classes, currentUser, notifications } = this.props;
     const { anchorEl } = this.state;
@@ -123,8 +126,9 @@ class NavBar extends Component {
                   <p>{currentUser.firstname || currentUser.username}</p>
                 </div> */}
                 <div className={classes.notification}
-                      onClick={() => this.setState({showNotificatons: !this.state.showNotificatons})}
-                      devRef={node => this.enchorEl = node}>
+                      // onClick={() => this.setState({showNotificatons: !this.state.showNotificatons})}
+                      onClick={(e) => this.handleClick(e)}
+                      onClose={() => this.setState({showNotifications: false})}>
                   {notifications ? notifications.length : 0}
                 </div>
                 
@@ -182,6 +186,7 @@ class NavBar extends Component {
         {notifications ? <div 
         className={classes.NotificationList}
         style={{display: this.state.showNotificatons ? '' : 'none'}}>
+                  
                   <NotificationList notifications={notifications}/>
                   
         </div> : null}

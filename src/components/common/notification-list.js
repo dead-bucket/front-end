@@ -13,7 +13,11 @@ const styles = theme => ({
   root: {
     width: '100%',
     maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: "lightgrey",
+    position: "absolute",
+    top: 75,
+    right: 50,
+    zIndex: 999,
   },
 });
 
@@ -53,7 +57,7 @@ class CheckboxListSecondary extends React.Component {
               />
             </ListItemAvatar>
             <ListItemText 
-            primary={`Your Friend ${value.fromId.firstname} ${value.fromId.lastname} has joined Thoughtline`} 
+            primary={`Your Friend ${value.fromId.firstname} ${value.fromId.lastname} has joined Thoughtline. Try resending your thoughts.`} 
             />
             
           </ListItem>
