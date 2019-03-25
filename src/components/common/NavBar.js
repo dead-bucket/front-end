@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { isEmpty } from "../../utils/validation";
+import NotificationList from "./notification-list";
+import PopUp from "./notice-list-test";
 
 // Redux
 import { withRouter } from "react-router-dom";
@@ -50,8 +52,15 @@ const styles = {
     color: "white",
     marginRight: 10,
     display: "flex",
+    alignItems: "center",
     flexDrirection: "row",
     justifyContent: "center"
+  },
+  notificationList: {
+    postition: "fixed",
+    width: 300,
+    top: 150,
+    
   }
 };
 
@@ -78,7 +87,7 @@ class NavBar extends Component {
   };
 
   handleClose = () => {
-    this.setState({ anchorEl: null });
+    this.setState({ anchorEl: null, showNotificatons: false });
   };
 
   logout = () => {
@@ -114,14 +123,11 @@ class NavBar extends Component {
                   <p>{currentUser.firstname || currentUser.username}</p>
                 </div> */}
                 <div className={classes.notification}
-                      onClick={() => this.setState({showNotificatons: !this.state.showNotificatons})}>
+                      onClick={() => this.setState({showNotificatons: !this.state.showNotificatons})}
+                      devRef={node => this.enchorEl = node}>
                   {notifications ? notifications.length : 0}
                 </div>
-                <div style={{display: this.state.showNotificatons ? '' : 'none'}}>
-                  <ul>
-                    {notificationList}
-                  </ul>
-                </div>
+                
 
                 <img
                   className={classes.profileImage}
@@ -173,6 +179,12 @@ class NavBar extends Component {
             ) : null}
           </Toolbar>
         </AppBar>
+        {notifications ? <div 
+        className={classes.NotificationList}
+        style={{display: this.state.showNotificatons ? '' : 'none'}}>
+                  <NotificationList notifications={notifications}/>
+                  
+        </div> : null}
       </div>
     );
   } //end render
