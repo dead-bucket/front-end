@@ -16,6 +16,7 @@ export const getNotifications = () => {
     return axios
       .get("/api/v1/notifications/")
       .then(data => {
+        console.log('notifiactions: ', data.data)
         dispatch({
           type: SET_CURRENT_NOTIFICATIONS,
           payload: data.data,

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { isEmpty } from "../../utils/validation";
+import NotificationList from "./notification-list";
 
 // Redux
 import { withRouter } from "react-router-dom";
@@ -50,8 +51,15 @@ const styles = {
     color: "white",
     marginRight: 10,
     display: "flex",
+    alignItems: "center",
     flexDrirection: "row",
     justifyContent: "center"
+  },
+  notificationList: {
+    postition: "fixed",
+    width: 300,
+    top: 150,
+    
   }
 };
 
@@ -62,6 +70,7 @@ class NavBar extends Component {
       anchorEl: null,
       showNotificatons: false,
     };
+    this.handleClose = this.handleClose.bind(this);
   }
 
   handleChange = event => {
@@ -78,7 +87,7 @@ class NavBar extends Component {
   };
 
   handleClose = () => {
-    this.setState({ anchorEl: null });
+    this.setState({ anchorEl: null, showNotificatons: false });
   };
 
   logout = () => {
@@ -86,22 +95,14 @@ class NavBar extends Component {
     this.handleClose();
     this.props.history.push("/");
   };
-
+  handleClick = e => {
+    this.setState({showNotificatons: !this.state.showNotificatons})
+  }
   render() {
     const { classes, currentUser, notifications } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-    let notificationList;
-    if(notifications) {
-      
-      notificationList = notifications.map(el => {
-          return <li>{`${el.fromId.firstname}`}</li>
-      })
-
-    } else {
-      notificationList = [];
-    }
-
+    
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -114,14 +115,12 @@ class NavBar extends Component {
                   <p>{currentUser.firstname || currentUser.username}</p>
                 </div> */}
                 <div className={classes.notification}
-                      onClick={() => this.setState({showNotificatons: !this.state.showNotificatons})}>
+                      // onClick={() => this.setState({showNotificatons: !this.state.showNotificatons})}
+                      onClick={(e) => this.handleClick(e)}
+                      onClose={() => this.setState({showNotifications: false})}>
                   {notifications ? notifications.length : 0}
                 </div>
-                <div style={{display: this.state.showNotificatons ? '' : 'none'}}>
-                  <ul>
-                    {notificationList}
-                  </ul>
-                </div>
+                
 
                 <img
                   className={classes.profileImage}
@@ -173,6 +172,11 @@ class NavBar extends Component {
             ) : null}
           </Toolbar>
         </AppBar>
+        {notifications ? <div 
+        className={classes.NotificationList}
+        style={{display: this.state.showNotificatons ? '' : 'none'}}>
+                  <NotificationList notifications={notifications} closeList={this.handleClose}/>
+        </div> : null}
       </div>
     );
   } //end render
