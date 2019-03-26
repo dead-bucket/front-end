@@ -121,8 +121,8 @@ class Thoughtline extends Component {
   }
   handleDelete = () => {
    
-    // axios
-    // .delete(`api/v1/entry/${this.state.idToDelete}`)
+    axios
+    .delete(`api/v1/entry/${this.state.idToDelete}`)
     // deleteEntry(entryId, this.props.profile.target._id)
     .then(() => this.props.getEntries(this.props.profile.target._id))
     .then(() => {

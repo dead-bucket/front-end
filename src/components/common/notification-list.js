@@ -6,8 +6,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Checkbox from '@material-ui/core/Checkbox';
+// import Checkbox from '@material-ui/core/Checkbox';
 import Avatar from '@material-ui/core/Avatar';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
+import axios from 'axios';
 
 const styles = theme => ({
   root: {
@@ -41,28 +45,43 @@ class CheckboxListSecondary extends React.Component {
       checked: newChecked,
     });
   };
+  handelDeleteNotification = (notificationId) => {
+    return axios
+    .delete(`/api/v1/notifications/${notificationId}`)
+    
+    .then(status => console.log('back from delete route status', status))
+    .catch(err => console.log(err));
+
+  }
 
   render() {
     const { classes, notifications } = this.props;
-    console.log('in notification list ', notifications[0]);
 
     return (
-      <List dense className={classes.root}>
-        {notifications.map(value => (
-          <ListItem key={value._id} button>
-            <ListItemAvatar>
-              <Avatar
-                alt={`Avatar n°${value + 1}`}
-                src={`${value.fromId.picture}`}
+      <ClickAwayListener  onClickAway={() => this.props.closeList()}>
+        <List dense className={classes.root} >
+          {notifications.map(value => (
+            <ListItem key={value._id} button>
+              <ListItemAvatar>
+                <Avatar
+                  alt={`Avatar n°${value + 1}`}
+                  src={`${value.fromId.picture}`}
+                />
+              </ListItemAvatar>
+              <ListItemText 
+              primary={`Your Friend ${value.fromId.firstname} ${value.fromId.lastname} has joined Thoughtline. Try resending your thoughts.`} 
               />
-            </ListItemAvatar>
-            <ListItemText 
-            primary={`Your Friend ${value.fromId.firstname} ${value.fromId.lastname} has joined Thoughtline. Try resending your thoughts.`} 
-            />
-            
-          </ListItem>
-        ))}
-      </List>
+              <ListItemSecondaryAction>
+                      <IconButton aria-label="Delete">
+                        <DeleteIcon onClick={() => this.handelDeleteNotification(value._id)}/>
+                      </IconButton>
+                    </ListItemSecondaryAction>
+              
+            </ListItem>
+          ))}
+        </List>
+
+      </ClickAwayListener>
     );
   }
 }

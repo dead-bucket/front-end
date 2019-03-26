@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { isEmpty } from "../../utils/validation";
 import NotificationList from "./notification-list";
-import PopUp from "./notice-list-test";
 
 // Redux
 import { withRouter } from "react-router-dom";
@@ -71,6 +70,7 @@ class NavBar extends Component {
       anchorEl: null,
       showNotificatons: false,
     };
+    this.handleClose = this.handleClose.bind(this);
   }
 
   handleChange = event => {
@@ -96,24 +96,13 @@ class NavBar extends Component {
     this.props.history.push("/");
   };
   handleClick = e => {
-    console.log('this onclick', e.currentTarget);
     this.setState({showNotificatons: !this.state.showNotificatons})
   }
   render() {
     const { classes, currentUser, notifications } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-    let notificationList;
-    if(notifications) {
-      
-      notificationList = notifications.map(el => {
-          return <li>{`${el.fromId.firstname}`}</li>
-      })
-
-    } else {
-      notificationList = [];
-    }
-
+    
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -186,9 +175,7 @@ class NavBar extends Component {
         {notifications ? <div 
         className={classes.NotificationList}
         style={{display: this.state.showNotificatons ? '' : 'none'}}>
-                  
-                  <NotificationList notifications={notifications}/>
-                  
+                  <NotificationList notifications={notifications} closeList={this.handleClose}/>
         </div> : null}
       </div>
     );
