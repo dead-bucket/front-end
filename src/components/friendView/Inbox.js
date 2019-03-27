@@ -22,6 +22,7 @@ const styles = {
   inboxMessage: {
     textAlign: "left",
     width: "80%",
+    maxWidth: 700,
     borderRadius: 15,
     padding: 20,
     margin: 20,
