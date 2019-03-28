@@ -16,6 +16,7 @@ import SendEntriesModal from "./SendEntriesModal";
 import { getEntries, deleteEntry } from "../../_actions/entryActions";
 import { relative } from "path";
 import DeleteModal from "./delete-thought-modal";
+import API from "../../utils/API";
 
 const styles = theme => ({
   timelineContainer: {
@@ -124,7 +125,7 @@ class Thoughtline extends Component {
   handleDelete = () => {
     this.displaySearchInput();
     axios
-      .delete(`api/v1/entry/${this.state.idToDelete}`)
+      .delete(API + `/api/v1/entry/${this.state.idToDelete}`)
       .then(() => {
         this.props.getEntries(this.props.profile.target._id);
         this.handleCloseDeleteModal();
