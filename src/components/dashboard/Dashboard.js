@@ -117,7 +117,8 @@ class Dashboard extends Component {
             </p>
             <p>
               Thoughtline is all about having a safe place to express yourself
-              and keep track of life's special moments.
+              by keep track of life's special moments and (if you want to) share
+              them with friends!
             </p>
             <p>
               Add a friend (either privately or by connecting with other
