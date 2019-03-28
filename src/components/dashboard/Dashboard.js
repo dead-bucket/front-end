@@ -10,7 +10,10 @@ import AddFriendModal from "./AddFriendModal";
 
 //Redux
 import { connect } from "react-redux";
-import { setCurrentTarget, getNotifications } from "../../_actions/profileActions";
+import {
+  setCurrentTarget,
+  getNotifications
+} from "../../_actions/profileActions";
 import { loadUser } from "../../_actions/authActions";
 
 const styles = {
@@ -22,7 +25,8 @@ const styles = {
   },
   intro: {
     width: "90%",
-    textAlign: "center"
+    textAlign: "center",
+    fontSize: 18
   },
   friendContainer: {
     background: "inherit",
@@ -42,8 +46,7 @@ const styles = {
 class Dashboard extends Component {
   state = {
     friends: [],
-    loading: true,
-    
+    loading: true
   };
 
   getTargets = () => {
@@ -55,7 +58,6 @@ class Dashboard extends Component {
       })
       .catch(err => console.log(err));
   };
-  
 
   togglePriority = friend => {
     console.log("in toggle priority fn", friend);
@@ -73,7 +75,6 @@ class Dashboard extends Component {
   setTarget = friend => {
     this.props.setCurrentTarget(friend);
     this.props.history.push("/friendview");
-    
   };
 
   componentDidMount() {
@@ -93,15 +94,35 @@ class Dashboard extends Component {
       if (friends.length === 0) {
         dashboardContent = (
           <div className={classes.intro}>
-            <h5>...adding a friend with add button below. :)</h5>
-            <h5>
+            <h4>
+              ...adding a friend with add button below.{" "}
+              <span role="img" aria-label="heart-eyes-emoji">
+                😍
+              </span>
+            </h4>
+
+            <p>But first, a quick introduction...</p>
+
+            <p> Thank you for checking out the Thoughtline beta! </p>
+            <p>
+              We have poured our heart and soul into Thoughtline, and look
+              forward to continually improving it with your support and
+              feedback!
+            </p>
+
+            <p>
+              If you have suggestions, feedback or run into a technical issues,
+              please let us know by using the "Give Us Feedback" link found in
+              the Navbar menu.
+            </p>
+            <p>
               Thoughtline is all about having a safe place to express yourself
               and keep track of life's special moments.
-            </h5>
-            <h5>
+            </p>
+            <p>
               Add a friend (either privately or by connecting with other
-              Thoughtline users) and start adding thoughts to your thoughtline!
-            </h5>
+              Thoughtline users) and start adding thoughts to your Thoughtline!
+            </p>
           </div>
         );
       } else {
