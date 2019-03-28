@@ -19,6 +19,7 @@ import Thoughtline from "./Thoughtline";
 import Inbox from "./Inbox";
 import FriendCard from "../common/FriendCard";
 import Spinner from "../common/Spinner";
+import API from "../../utils/API";
 
 //Redux
 import { connect } from "react-redux";
@@ -87,7 +88,7 @@ class FriendView4 extends Component {
   clearNotification = () => {
     setTimeout(() => {
       axios
-        .put("/api/v1/inboxclearnotification/", {
+        .put(API + "/api/v1/inboxclearnotification/", {
           sender: this.props.profile.target._id
         })
         .then(data => {

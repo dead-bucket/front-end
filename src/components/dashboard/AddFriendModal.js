@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import { isEmail } from "../../utils/validation";
 import ImgUpload from "../common/ImgUpload";
-
+import API from "../../utils/API";
 import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
@@ -128,7 +128,7 @@ class AddFriendModal extends Component {
 
   searchEmail = email => {
     axios
-      .get("/api/v1/usersearch/?email=" + email)
+      .get(API + "/api/v1/usersearch/?email=" + email)
       .then(data => {
         console.log("USER SEARCH:", data);
 
@@ -168,7 +168,7 @@ class AddFriendModal extends Component {
 
     // TODO - move to actions
     axios
-      .post("/api/v1/target/", newTarget)
+      .post(API + "/api/v1/target/", newTarget)
       .then(data => {
         this.props.refreshTargets();
         this.setState({ modalStage: 3 });
@@ -179,7 +179,7 @@ class AddFriendModal extends Component {
   addNewUser = () => {
     let friend = { friend: this.state.isUser_id };
     axios
-      .put("/api/v1/addfriend", friend)
+      .put(API + "/api/v1/addfriend", friend)
       .then(data => {
         console.log(data);
         this.props.refreshTargets();

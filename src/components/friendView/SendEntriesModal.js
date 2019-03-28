@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { isEmail } from "../../utils/validation";
+import API from "../../utils/API";
 
 import { withStyles } from "@material-ui/core/styles";
 // import Typography from "@material-ui/core/Typography";
@@ -147,7 +148,7 @@ class SendEntriesModal extends Component {
 
   searchEmail = email => {
     axios
-      .get("/api/v1/usersearch/?email=" + email)
+      .get(API + "/api/v1/usersearch/?email=" + email)
       .then(data => {
         console.log("USER SEARCH:", data);
 
@@ -174,7 +175,9 @@ class SendEntriesModal extends Component {
     const { isUser_id } = this.state;
     if (isUser_id) {
       axios
-        .put("/api/v1/changetargettouser/?id=" + id, { newUser: isUser_id })
+        .put(API + "/api/v1/changetargettouser/?id=" + id, {
+          newUser: isUser_id
+        })
         // TODO - Add a toast of some visual confirmation on success
         .then(data => {
           this.setState({ convertedUser: true, modalStage: 3 });
@@ -191,7 +194,7 @@ class SendEntriesModal extends Component {
     const { isUser_id } = this.state;
     if (isUser_id) {
       axios
-        .put("/api/v1/addfriend/", { friend: isUser_id })
+        .put(API + "/api/v1/addfriend/", { friend: isUser_id })
         // TODO - Add a toast of some visual confirmation on success
         .then(data => {
           this.setState({ hasFriendConverted: true });
@@ -202,7 +205,7 @@ class SendEntriesModal extends Component {
 
   sendEntriesToUser = id => {
     axios
-      .put("/api/v1/deliverentries/", { recipient: id })
+      .put(API + "/api/v1/deliverentries/", { recipient: id })
 
       .then(data => {
         console.log("Friend Added and Entries sent!", data);
@@ -217,7 +220,7 @@ class SendEntriesModal extends Component {
 
   sendInvite = email => {
     axios
-      .post("/api/v1/sendinvite/", { email })
+      .post(API + "/api/v1/sendinvite/", { email })
       .then(data =>
         this.setState({
           modalStage: 3,

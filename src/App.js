@@ -5,9 +5,6 @@ import store from "./store";
 
 // auth
 import setAuthToken from "./utils/setAuthToken";
-// import jwt_decode from "jwt-decode";
-// import { setCurrentUser, logoutUser } from "./_actions/authActions";
-// import { clearCurrentProfile } from "./_actions/profileActions";
 
 // Components
 import NavBar from "./components/common/NavBar";
