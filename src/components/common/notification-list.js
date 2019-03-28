@@ -1,37 +1,38 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 // import Checkbox from '@material-ui/core/Checkbox';
-import Avatar from '@material-ui/core/Avatar';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import DeleteIcon from '@material-ui/icons/Delete';
-import IconButton from '@material-ui/core/IconButton';
-import axios from 'axios';
-import {connect} from 'react-redux';
-import {loadUser} from '../../_actions/authActions';
+import Avatar from "@material-ui/core/Avatar";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import DeleteIcon from "@material-ui/icons/Delete";
+import IconButton from "@material-ui/core/IconButton";
+import axios from "axios";
+import { connect } from "react-redux";
+import { loadUser } from "../../_actions/authActions";
 // import { getNotifications } from '../../_actions/profileActions';
-import {getNotifications} from '../../_actions/profileActions';
+import { getNotifications } from "../../_actions/profileActions";
+import API from "../../utils/API";
 
 const styles = theme => ({
   root: {
-    width: '100%',
+    width: "100%",
     maxWidth: 360,
     backgroundColor: "lightgrey",
     position: "absolute",
     top: 75,
     right: 50,
-    zIndex: 999,
-  },
+    zIndex: 999
+  }
 });
 
 class CheckboxListSecondary extends React.Component {
   state = {
-    checked: [1],
+    checked: [1]
   };
 
   handleToggle = value => () => {
@@ -46,38 +47,34 @@ class CheckboxListSecondary extends React.Component {
     }
 
     this.setState({
-      checked: newChecked,
+      checked: newChecked
     });
   };
-  handelDeleteNotification = (notificationId) => {
+  handelDeleteNotification = notificationId => {
     return axios
-    .delete(`/api/v1/notifications/${notificationId}`)
-    .then(status => console.log('back from delete route status', status))
-    .then(() => this.props.getNotifications())
-    .catch(err => console.log(err));
-
-  }
+      .delete(API + `/api/v1/notifications/${notificationId}`)
+      .then(status => console.log("back from delete route status", status))
+      .then(() => this.props.getNotifications())
+      .catch(err => console.log(err));
+  };
 
   render() {
     const { classes, notifications } = this.props;
 
-    if(notifications.length === 0) {
+    if (notifications.length === 0) {
       return (
-        <ClickAwayListener  onClickAway={() => this.props.closeList()}>
-        <List dense className={classes.root} >
+        <ClickAwayListener onClickAway={() => this.props.closeList()}>
+          <List dense className={classes.root}>
             <ListItem key={1} button>
-              <ListItemText 
-              primary={`You do not have any notifications.`} 
-              />
+              <ListItemText primary={`You do not have any notifications.`} />
             </ListItem>
-        </List>
-      </ClickAwayListener>
-      )
+          </List>
+        </ClickAwayListener>
+      );
     } else {
-      
       return (
-        <ClickAwayListener  onClickAway={() => this.props.closeList()}>
-          <List dense className={classes.root} >
+        <ClickAwayListener onClickAway={() => this.props.closeList()}>
+          <List dense className={classes.root}>
             {notifications.map(value => (
               <ListItem key={value._id} button>
                 <ListItemAvatar>
@@ -86,34 +83,36 @@ class CheckboxListSecondary extends React.Component {
                     src={`${value.fromId.picture}`}
                   />
                 </ListItemAvatar>
-                <ListItemText 
-                primary={`Your Friend ${value.fromId.firstname} ${value.fromId.lastname} has joined Thoughtline. Try resending your thoughts.`} 
+                <ListItemText
+                  primary={`Your Friend ${value.fromId.firstname} ${
+                    value.fromId.lastname
+                  } has joined Thoughtline. Try resending your thoughts.`}
                 />
                 <ListItemSecondaryAction>
-                        <IconButton aria-label="Delete">
-                          <DeleteIcon onClick={() => this.handelDeleteNotification(value._id)}/>
-                        </IconButton>
-                      </ListItemSecondaryAction>
-                
+                  <IconButton aria-label="Delete">
+                    <DeleteIcon
+                      onClick={() => this.handelDeleteNotification(value._id)}
+                    />
+                  </IconButton>
+                </ListItemSecondaryAction>
               </ListItem>
             ))}
           </List>
-  
         </ClickAwayListener>
       );
     }
-
   }
 }
 
 CheckboxListSecondary.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
   // currentUser: state.auth.currentUser,
-  notifications: state.profile.notifications,
-})
+  notifications: state.profile.notifications
+});
 
-export default connect (
-  mapStateToProps, { getNotifications},
+export default connect(
+  mapStateToProps,
+  { getNotifications }
 )(withStyles(styles)(CheckboxListSecondary));
