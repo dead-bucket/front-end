@@ -12,6 +12,10 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import axios from 'axios';
+import {connect} from 'react-redux';
+import {loadUser} from '../../_actions/authActions';
+// import { getNotifications } from '../../_actions/profileActions';
+import {getNotifications} from '../../_actions/profileActions';
 
 const styles = theme => ({
   root: {
@@ -48,8 +52,8 @@ class CheckboxListSecondary extends React.Component {
   handelDeleteNotification = (notificationId) => {
     return axios
     .delete(`/api/v1/notifications/${notificationId}`)
-    
     .then(status => console.log('back from delete route status', status))
+    .then(() => this.props.getNotifications())
     .catch(err => console.log(err));
 
   }
@@ -57,37 +61,59 @@ class CheckboxListSecondary extends React.Component {
   render() {
     const { classes, notifications } = this.props;
 
-    return (
-      <ClickAwayListener  onClickAway={() => this.props.closeList()}>
+    if(notifications.length === 0) {
+      return (
+        <ClickAwayListener  onClickAway={() => this.props.closeList()}>
         <List dense className={classes.root} >
-          {notifications.map(value => (
-            <ListItem key={value._id} button>
-              <ListItemAvatar>
-                <Avatar
-                  alt={`Avatar n°${value + 1}`}
-                  src={`${value.fromId.picture}`}
-                />
-              </ListItemAvatar>
+            <ListItem key={1} button>
               <ListItemText 
-              primary={`Your Friend ${value.fromId.firstname} ${value.fromId.lastname} has joined Thoughtline. Try resending your thoughts.`} 
+              primary={`You do not have any notifications.`} 
               />
-              <ListItemSecondaryAction>
-                      <IconButton aria-label="Delete">
-                        <DeleteIcon onClick={() => this.handelDeleteNotification(value._id)}/>
-                      </IconButton>
-                    </ListItemSecondaryAction>
-              
             </ListItem>
-          ))}
         </List>
-
       </ClickAwayListener>
-    );
+      )
+    } else {
+      
+      return (
+        <ClickAwayListener  onClickAway={() => this.props.closeList()}>
+          <List dense className={classes.root} >
+            {notifications.map(value => (
+              <ListItem key={value._id} button>
+                <ListItemAvatar>
+                  <Avatar
+                    alt={`Avatar n°${value + 1}`}
+                    src={`${value.fromId.picture}`}
+                  />
+                </ListItemAvatar>
+                <ListItemText 
+                primary={`Your Friend ${value.fromId.firstname} ${value.fromId.lastname} has joined Thoughtline. Try resending your thoughts.`} 
+                />
+                <ListItemSecondaryAction>
+                        <IconButton aria-label="Delete">
+                          <DeleteIcon onClick={() => this.handelDeleteNotification(value._id)}/>
+                        </IconButton>
+                      </ListItemSecondaryAction>
+                
+              </ListItem>
+            ))}
+          </List>
+  
+        </ClickAwayListener>
+      );
+    }
+
   }
 }
 
 CheckboxListSecondary.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+const mapStateToProps = state => ({
+  // currentUser: state.auth.currentUser,
+  notifications: state.profile.notifications,
+})
 
-export default withStyles(styles)(CheckboxListSecondary);
+export default connect (
+  mapStateToProps, { getNotifications},
+)(withStyles(styles)(CheckboxListSecondary));

@@ -175,7 +175,7 @@ class NavBar extends Component {
         {notifications ? <div 
         className={classes.NotificationList}
         style={{display: this.state.showNotificatons ? '' : 'none'}}>
-                  <NotificationList notifications={notifications} closeList={this.handleClose}/>
+                  <NotificationList  closeList={this.handleClose}/>
         </div> : null}
       </div>
     );
