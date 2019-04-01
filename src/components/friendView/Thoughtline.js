@@ -207,7 +207,7 @@ class Thoughtline extends Component {
               id="outlined-search-input"
               label="Searching for..."
               type="text"
-              autofocus
+              autoFocus
               style={{ visibility: displaySearch ? "visible" : "hidden" }}
               name="searchTerm"
               className={classes.searchInput}

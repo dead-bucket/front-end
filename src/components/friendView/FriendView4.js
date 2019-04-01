@@ -52,7 +52,7 @@ const styles = {
   },
   dashboardIconStyle: {
     position: "absolute",
-    top: "10%",
+    top: 80,
     left: "10%"
   },
   medium: {
