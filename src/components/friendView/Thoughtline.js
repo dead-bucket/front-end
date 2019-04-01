@@ -9,24 +9,22 @@ import _ from "lodash";
 import { withStyles } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Search from "@material-ui/icons/Search";
-import Delete from "@material-ui/icons/Delete";
+// import Delete from "@material-ui/icons/Delete";
 
 //Custom
 import SendEntriesModal from "./SendEntriesModal";
 import { getEntries, deleteEntry } from "../../_actions/entryActions";
-import { relative } from "path";
 import DeleteModal from "./delete-thought-modal";
 import API from "../../utils/API";
 
 const styles = theme => ({
   timelineContainer: {
     width: "100%",
-
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     overflowY: "scroll",
-    height: "51vh"
+    height: "60vh"
   },
 
   thoughtLineMessage: {
@@ -46,7 +44,7 @@ const styles = theme => ({
     position: "absolute",
     alignItems: "center",
     width: 240,
-    top: 280,
+    top: 160,
     left: "10%",
     marginLeft: "14px",
     display: "flex"
@@ -54,7 +52,11 @@ const styles = theme => ({
   searchIcon: {
     width: 30,
     height: 30,
-    marginTop: 24
+    marginTop: 24,
+    zIndex: 1000
+  },
+  searchInput: {
+    backgroundColor: "white"
   },
   deleteIcon: {
     position: "absolute",
@@ -176,10 +178,10 @@ class Thoughtline extends Component {
               style={{ backgroundColor: entry.mood }}
               key={entry._id}
             >
-              <p style={{ fontSize: 16 }}>
+              <em style={{ fontSize: 16, margin: "5px auto" }}>
                 <Moment format="LLL">{entry.createdAt}</Moment>
-              </p>
-              <p style={{ fontSize: 20 }}>{entry.description}</p>
+              </em>
+              <p style={{ fontSize: 18, marginTop: 10 }}>{entry.description}</p>
               <i
                 onClick={this.handleOpenDeleteModal.bind(this, entry._id)}
                 className={`material-icons ${classes.deleteIcon}`}
@@ -205,8 +207,10 @@ class Thoughtline extends Component {
               id="outlined-search-input"
               label="Searching for..."
               type="text"
+              autoFocus
               style={{ visibility: displaySearch ? "visible" : "hidden" }}
               name="searchTerm"
+              className={classes.searchInput}
               value={this.state.searchTerm}
               onChange={this.handleSearchInput}
               margin="normal"

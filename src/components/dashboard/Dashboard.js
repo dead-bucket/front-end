@@ -35,7 +35,7 @@ const styles = {
     flexWrap: "wrap",
     justifyContent: "center",
     overflowY: "scroll",
-    height: "77vh"
+    height: "75vh"
   },
   stickToBottom: {
     width: "100%",

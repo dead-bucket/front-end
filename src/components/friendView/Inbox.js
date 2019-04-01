@@ -17,7 +17,7 @@ const styles = {
     flexDirection: "column",
     alignItems: "center",
     overflowY: "scroll",
-    height: "51vh"
+    height: "60vh"
   },
   inboxMessage: {
     textAlign: "left",
@@ -35,7 +35,7 @@ const styles = {
     position: "absolute",
     alignItems: "center",
     width: 240,
-    top: 280,
+    top: 160,
     left: "10%",
     marginLeft: "14px",
     display: "flex"
@@ -44,6 +44,9 @@ const styles = {
     width: 30,
     height: 30,
     marginTop: 24
+  },
+  searchInput: {
+    backgroundColor: "white"
   }
 };
 
@@ -149,6 +152,7 @@ class Inbox extends Component {
               type="text"
               style={{ visibility: displaySearch ? "visible" : "hidden" }}
               name="searchTerm"
+              className={classes.searchInput}
               value={this.state.searchTerm}
               onChange={this.handleSearchInput}
               margin="normal"

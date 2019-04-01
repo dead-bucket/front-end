@@ -58,8 +58,7 @@ const styles = {
   notificationList: {
     postition: "fixed",
     width: 300,
-    top: 150,
-    
+    top: 150
   }
 };
 
@@ -68,7 +67,7 @@ class NavBar extends Component {
     super(props);
     this.state = {
       anchorEl: null,
-      showNotificatons: false,
+      showNotificatons: false
     };
     this.handleClose = this.handleClose.bind(this);
   }
@@ -96,13 +95,13 @@ class NavBar extends Component {
     this.props.history.push("/");
   };
   handleClick = e => {
-    this.setState({showNotificatons: !this.state.showNotificatons})
-  }
+    this.setState({ showNotificatons: !this.state.showNotificatons });
+  };
   render() {
     const { classes, currentUser, notifications } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-    
+
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -111,16 +110,14 @@ class NavBar extends Component {
 
             {!isEmpty(currentUser) ? (
               <div className={classes.profileContainer}>
-                {/* <div>
-                  <p>{currentUser.firstname || currentUser.username}</p>
-                </div> */}
-                <div className={classes.notification}
-                      // onClick={() => this.setState({showNotificatons: !this.state.showNotificatons})}
-                      onClick={(e) => this.handleClick(e)}
-                      onClose={() => this.setState({showNotifications: false})}>
+                <div
+                  className={classes.notification}
+                  // onClick={() => this.setState({showNotificatons: !this.state.showNotificatons})}
+                  onClick={e => this.handleClick(e)}
+                  onClose={() => this.setState({ showNotifications: false })}
+                >
                   {notifications ? notifications.length : 0}
                 </div>
-                
 
                 <img
                   className={classes.profileImage}
@@ -172,11 +169,14 @@ class NavBar extends Component {
             ) : null}
           </Toolbar>
         </AppBar>
-        {notifications ? <div 
-        className={classes.NotificationList}
-        style={{display: this.state.showNotificatons ? '' : 'none'}}>
-                  <NotificationList  closeList={this.handleClose}/>
-        </div> : null}
+        {notifications ? (
+          <div
+            className={classes.NotificationList}
+            style={{ display: this.state.showNotificatons ? "" : "none" }}
+          >
+            <NotificationList closeList={this.handleClose} />
+          </div>
+        ) : null}
       </div>
     );
   } //end render
@@ -184,7 +184,7 @@ class NavBar extends Component {
 
 const mapStateToProps = state => ({
   currentUser: state.auth.currentUser,
-  notifications: state.profile.notifications,
+  notifications: state.profile.notifications
 });
 
 NavBar.propTypes = {
