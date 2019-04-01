@@ -4,8 +4,9 @@ import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-
-import { postEntry, getEntries } from "../../_actions/entryActions";
+import axios from "axios";
+import API from "../../utils/API";
+import { getEntries } from "../../_actions/entryActions";
 
 const styles = {
   composeDiv: {
@@ -79,13 +80,17 @@ class ComposeForm extends Component {
       description: this.state.thought
     };
 
-    postEntry(newEntry);
+    axios
+      .post(API + "/api/v1/entry", newEntry)
+      .then(data => {
+        this.setState({
+          thought: "",
+          thoughtColor: "#fff"
+        });
+        this.props.getEntries(this.props.profile.target._id);
+      })
+      .catch(err => console.log(err));
     // TODO - have some sort of confirmation for user on successful post
-    this.setState({
-      thought: "",
-      thoughtColor: "#fff"
-    });
-    this.props.getEntries(this.props.profile.target._id);
   };
 
   render() {

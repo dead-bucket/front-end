@@ -3,12 +3,6 @@ import API from "../utils/API";
 
 import { GET_USER_ENTRIES, GET_INBOX_ENTRIES } from "../_actions/types";
 
-export const postEntry = entry => {
-  axios
-    .post(API + "/api/v1/entry", entry)
-    .then(data => console.log(data))
-    .catch(err => console.log(err));
-};
 export const deleteEntry = (entryId, targetId) => {
   axios
     .delete(API + `api/v1/entry/${entryId}`)
