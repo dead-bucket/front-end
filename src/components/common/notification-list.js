@@ -13,7 +13,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import axios from "axios";
 import { connect } from "react-redux";
-import { loadUser } from "../../_actions/authActions";
+// import { loadUser } from "../../_actions/authActions";
 // import { getNotifications } from '../../_actions/profileActions';
 import { getNotifications } from "../../_actions/profileActions";
 import API from "../../utils/API";

@@ -28,20 +28,19 @@ import { loadUser } from "../../_actions/authActions";
 import axios from "axios";
 
 const styles = {
+  container: {
+    height: "83vh"
+  },
   friendContainer: {
-    height: 250,
     display: "flex",
     justifyContent: "center",
     textAlign: "center",
     paddingTop: 10
   },
   actionContainer: {
-    height: 400,
     display: "flex",
     justifyContent: "center",
-    textAlign: "center",
-    margin: 10,
-    paddingTop: 20
+    textAlign: "center"
   },
   stickToBottom: {
     width: "100%",
@@ -139,7 +138,7 @@ class FriendView4 extends Component {
     }
 
     return (
-      <div>
+      <div className={classes.container}>
         <div className={classes.dashboardIconStyle}>
           <Link to="/dashboard">
             <IconButton style={styles.medium}>
@@ -154,6 +153,7 @@ class FriendView4 extends Component {
         </div>
         <BottomNavigation
           value={value}
+          showLabels
           onChange={this.handleBottomChange}
           className={classes.stickToBottom}
         >

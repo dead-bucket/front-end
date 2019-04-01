@@ -20,8 +20,8 @@ const friendViewStyles = {
 };
 
 const friendViewImage = {
-  width: 150,
-  borderRadius: 40
+  width: 100,
+  marginTop: 10
 };
 const iconStyleTopRight = {
   width: "36px",
@@ -71,7 +71,7 @@ function FriendCard(props) {
             ...iconStyleTopRight
           }}
           src={notificationPic}
-          alt={"this is a cool pic"}
+          alt={"You have new Thoughts from this friend"}
         />
         <img
           alt="Profile"
