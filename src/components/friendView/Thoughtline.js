@@ -18,15 +18,6 @@ import DeleteModal from "./delete-thought-modal";
 import API from "../../utils/API";
 
 const styles = theme => ({
-  timelineContainer: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    overflowY: "scroll",
-    height: "60vh"
-  },
-
   thoughtLineMessage: {
     position: "relative",
     textAlign: "left",
@@ -195,7 +186,7 @@ class Thoughtline extends Component {
     }
 
     return (
-      <div className={classes.timelineContainer}>
+      <div className="message-container">
         {userEntries.length > 0 ? (
           <div className={classes.searchContainer}>
             <Search
