@@ -18,15 +18,6 @@ import DeleteModal from "./delete-thought-modal";
 import API from "../../utils/API";
 
 const styles = theme => ({
-  timelineContainer: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    overflowY: "scroll",
-    height: "60vh"
-  },
-
   thoughtLineMessage: {
     position: "relative",
     textAlign: "left",

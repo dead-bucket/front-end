@@ -11,14 +11,6 @@ import Search from "@material-ui/icons/Search";
 import { withStyles } from "@material-ui/core";
 
 const styles = {
-  inboxContainer: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    overflowY: "scroll",
-    height: "60vh"
-  },
   inboxMessage: {
     textAlign: "left",
     width: "80%",
@@ -139,7 +131,7 @@ class Inbox extends Component {
 
     /* TODO - Add autofocus - might need refs? */
     return (
-      <div className={classes.inboxContainer}>
+      <div className="message-container">
         {inboxEntries.length > 0 ? (
           <div className={classes.searchContainer}>
             <Search
