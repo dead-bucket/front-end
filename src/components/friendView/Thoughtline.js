@@ -195,7 +195,7 @@ class Thoughtline extends Component {
     }
 
     return (
-      <div className={classes.timelineContainer}>
+      <div className="message-container">
         {userEntries.length > 0 ? (
           <div className={classes.searchContainer}>
             <Search

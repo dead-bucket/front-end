@@ -45,7 +45,8 @@ const styles = {
   stickToBottom: {
     width: "100%",
     position: "fixed",
-    bottom: 0
+    bottom: 0,
+    border: "1px solid red"
   },
   root: {
     width: "100%"
