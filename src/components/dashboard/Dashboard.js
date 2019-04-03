@@ -29,14 +29,7 @@ const styles = {
     textAlign: "center",
     fontSize: 18
   },
-  friendContainer: {
-    background: "inherit",
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    overflowY: "scroll",
-    height: "75vh"
-  },
+
   stickToBottom: {
     width: "100%",
     position: "fixed",
@@ -143,7 +136,7 @@ class Dashboard extends Component {
       <div>
         <div>
           <p className={classes.mainTitle}>Thinking about...</p>
-          <div className={classes.friendContainer}>{dashboardContent}</div>
+          <div className="friend-container">{dashboardContent}</div>
         </div>
 
         <BottomNavigation className={classes.stickToBottom}>

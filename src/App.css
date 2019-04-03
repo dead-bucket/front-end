@@ -2,6 +2,16 @@
   outline: none;
 }
 
+/* Dashboard - friend container */
+.friend-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow-y: scroll;
+  height: 75vh;
+}
+
+/* Friendview - Thoughtline/Inbox */
 .message-container {
   width: 100%;
   display: flex;
@@ -38,6 +48,9 @@
   .message-container {
     height: 49vh;
   }
+  .friend-container {
+    height: 66vh;
+  }
 }
 
 @media (min-width: 1366px) and (min-height: 768px) {
@@ -48,13 +61,27 @@
 
 @media (min-width: 1920px) and (min-height: 1080px) {
   .message-container {
-    height: 74vh;
+    height: 73.5vh;
   }
 }
+
+/* Galaxy s5  */
+@media (width: 360px) and (height: 640px) {
+  .message-container {
+    height: 72vh;
+  }
+  .friend-container {
+    height: 70vh;
+  }
+}
+
 /* iPad Pro */
 @media (width: 1024px) and (height: 1366px) {
   .message-container {
     height: 79vh;
+  }
+  .friend-container {
+    height: 86vh;
   }
 }
 
@@ -63,7 +90,11 @@
   .message-container {
     height: 72vh;
   }
+  .friend-container {
+    height: 81vh;
+  }
 }
+
 @media (width: 1280px) and (height: 1024px) {
   .message-container {
     height: 72vh;
