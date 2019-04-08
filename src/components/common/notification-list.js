@@ -21,11 +21,11 @@ import API from "../../utils/API";
 const styles = theme => ({
   root: {
     width: "100%",
-    maxWidth: 360,
+    maxWidth: 300,
     backgroundColor: "lightgrey",
     position: "absolute",
-    top: 75,
-    right: 50,
+    top: 70,
+    right: 20,
     zIndex: 999
   }
 });
@@ -66,7 +66,10 @@ class CheckboxListSecondary extends React.Component {
         <ClickAwayListener onClickAway={() => this.props.closeList()}>
           <List dense className={classes.root}>
             <ListItem key={1} button>
-              <ListItemText primary={`You do not have any notifications.`} />
+              <ListItemText
+                style={{ textAlign: "center" }}
+                primary={`You do not have any notifications.`}
+              />
             </ListItem>
           </List>
         </ClickAwayListener>

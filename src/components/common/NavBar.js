@@ -38,7 +38,8 @@ const styles = {
     alignItems: "center"
   },
   profileImage: {
-    maxWidth: 40
+    maxWidth: 40,
+    marginRight: 10
   },
   link: {
     color: "black"
@@ -49,11 +50,12 @@ const styles = {
     borderRadius: 20,
     backgroundColor: "red",
     color: "white",
-    marginRight: 10,
+    marginRight: 20,
     display: "flex",
     alignItems: "center",
     flexDrirection: "row",
-    justifyContent: "center"
+    justifyContent: "center",
+    cursor: "pointer"
   },
   notificationList: {
     postition: "fixed",
