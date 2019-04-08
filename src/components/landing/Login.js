@@ -18,10 +18,7 @@ const styles = theme => ({
     justifyContent: "center",
     alignItems: "center"
   },
-  textField: {
-    // paddingLeft: theme.spacing.unit
-    // marginRight: theme.spacing.unit
-  },
+
   title: {
     fontFamily: "Satisfy, cursive",
     color: "#0058CF",
@@ -39,7 +36,6 @@ const styles = theme => ({
     justifyContent: "center"
   },
   loginCard: {
-    marginTop: 50,
     padding: 20,
     width: 350,
     display: "flex",
@@ -82,7 +78,7 @@ class Login extends Component {
     const { username, password } = this.state;
 
     const loginData = {
-      username,
+      username: username.toLowerCase(),
       password
     };
     this.props.loginUser(loginData, this.props.history);
@@ -99,7 +95,7 @@ class Login extends Component {
         className={classes.loginSignupContainer}
         onKeyDown={e => (e.key === "Enter" ? this.loginUser() : null)}
       >
-        <p style={{ marginTop: "10%", marginBottom: 0 }}>Welcome to</p>
+        <p style={{ marginTop: "50px", marginBottom: 0 }}>Welcome to</p>
         <div className={classes.titleDiv}>
           <h1 className={classes.title}>Thoughtline </h1>
           <img className={classes.titleImg} src={notificationPic} alt="logo" />
@@ -137,9 +133,10 @@ class Login extends Component {
             {passwordErr ? (
               <p className={classes.error}>{passwordErr}</p>
             ) : null}
-            <p style={{ margin: "0px" }}>* = required</p>
+            <p style={{ margin: "0px" }}>*required</p>
 
             {generalErr ? <p className={classes.error}>{generalErr}</p> : null}
+            <br />
             <div>
               <Button
                 fullWidth

@@ -15,6 +15,22 @@ import { isEmpty, signupValidate } from "../../utils/validation";
 import { registerUser, clearSignupErrors } from "../../_actions/authActions";
 
 const styles = {
+  titleDiv: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+
+  title: {
+    fontFamily: "Satisfy, cursive",
+    color: "#0058CF",
+    flexGrow: 1,
+    marginTop: 0
+  },
+  titleImg: {
+    width: 48,
+    marginBottom: 60
+  },
   loginSignupContainer: {
     display: "flex",
     flexDirection: "column",
@@ -23,7 +39,6 @@ const styles = {
     marginBottom: 30
   },
   signupCard: {
-    marginTop: 50,
     padding: 20,
     width: 350,
     display: "flex",
@@ -36,6 +51,8 @@ const styles = {
     margin: 0
   }
 };
+
+const notificationPic = require("../common/notification.png");
 
 class Signup extends Component {
   state = {
@@ -121,9 +138,13 @@ class Signup extends Component {
         className={classes.loginSignupContainer}
         onKeyDown={e => (e.key === "Enter" ? this.registerUser() : null)}
       >
-        <h1>Welcome to Thoughtline</h1>
+        <p style={{ marginTop: "50px", marginBottom: 0 }}>Welcome to</p>
+        <div className={classes.titleDiv}>
+          <h1 className={classes.title}>Thoughtline </h1>
+          <img className={classes.titleImg} src={notificationPic} alt="logo" />
+        </div>
         <Card className={classes.signupCard}>
-          <h4 style={{ margin: 0 }}>Create Account</h4>
+          <h4 style={{ margin: 0 }}>Create an Account</h4>
 
           <ImgUpload updateImg={this.handleProfileImg} />
 
@@ -212,7 +233,9 @@ class Signup extends Component {
               <p className={classes.error}>{passwordError.password2}</p>
             ) : null}
             {generalErr ? <p className={classes.error}>{generalErr}</p> : null}
-            <p style={{ margin: 0 }}>* = required</p>
+
+            <p style={{ margin: 0 }}>*required</p>
+            <br />
             <div>
               <Button
                 fullWidth

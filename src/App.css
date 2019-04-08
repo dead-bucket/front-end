@@ -8,7 +8,7 @@
   flex-wrap: wrap;
   justify-content: center;
   overflow-y: scroll;
-  height: 75vh;
+  height: 77vh;
 }
 
 /* Friendview - Thoughtline/Inbox */
@@ -33,6 +33,9 @@
 @media screen and (min-width: 414px), screen and (max-height: 736px) {
   .message-container {
     height: 61vh;
+  }
+  .friend-container {
+    height: 74vh;
   }
 }
 
@@ -59,6 +62,12 @@
   }
 }
 
+@media (min-width: 1366px) and (min-height: 800px) {
+  .message-container {
+    height: 76.5vh;
+  }
+}
+
 @media (min-width: 1920px) and (min-height: 1080px) {
   .message-container {
     height: 73.5vh;
@@ -68,7 +77,7 @@
 /* Galaxy s5  */
 @media (width: 360px) and (height: 640px) {
   .message-container {
-    height: 72vh;
+    height: 56vh;
   }
   .friend-container {
     height: 70vh;
