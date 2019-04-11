@@ -19,7 +19,6 @@ export const getFriends = () => {
     return axios
       .get(API + "/api/v1/dashboard/")
       .then(data => {
-        console.log(data.data);
         dispatch({
           type: SET_DASHBOARD,
           payload: data.data
