@@ -10,6 +10,7 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import DeleteIcon from "@material-ui/icons/Delete";
+import CheckCircle from "@material-ui/icons/CheckCircle";
 import IconButton from "@material-ui/core/IconButton";
 import axios from "axios";
 import { connect } from "react-redux";
@@ -57,6 +58,13 @@ class CheckboxListSecondary extends React.Component {
       .then(() => this.props.getNotifications())
       .catch(err => console.log(err));
   };
+  handleAcceptConnection = (notificationId, friendId) => {
+    return axios
+     .put(API + `/api/v1/acceptfriend/`,
+     {friend: friendId})
+     .then(() => this.handelDeleteNotification(notificationId))
+     .catch(err => console.log(err));
+  }
 
   render() {
     const { classes, notifications } = this.props;
@@ -78,7 +86,40 @@ class CheckboxListSecondary extends React.Component {
       return (
         <ClickAwayListener onClickAway={() => this.props.closeList()}>
           <List dense className={classes.root}>
-            {notifications.map(value => (
+            {notifications.map(value => {
+              console.log('notifications', value);
+              if (value.type === 'Friend Request'){
+                return (
+                <ListItem key={value._id} button>
+                <ListItemAvatar>
+                  <Avatar
+                    alt={`Avatar n°${value + 1}`}
+                    src={`${value.fromId.picture}`}
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={`Your Friend ${value.fromId.firstname} ${
+                    value.fromId.lastname
+                  } sent you a connection request`}
+                />
+                <ListItemSecondaryAction>
+                  <IconButton aria-label="Delete">
+                    <DeleteIcon
+                      onClick={() => this.handelDeleteNotification(value._id)}
+                    />
+                  </IconButton>
+                  <IconButton aria-label="CheckCircle">
+                    <CheckCircle
+                      onClick={() => this.handleAcceptConnection(value._id, value.fromId._id)}
+                    />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+
+                )
+
+              } else {
+                return (
               <ListItem key={value._id} button>
                 <ListItemAvatar>
                   <Avatar
@@ -99,7 +140,11 @@ class CheckboxListSecondary extends React.Component {
                   </IconButton>
                 </ListItemSecondaryAction>
               </ListItem>
-            ))}
+
+                )
+
+              }
+            })}
           </List>
         </ClickAwayListener>
       );

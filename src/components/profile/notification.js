@@ -37,13 +37,26 @@ class Notifications extends Component {
     if(currentUser.notifications.length > 0) {
       notifications = currentUser.notifications.map(notice => {
         // eslint-disable-next-line no-unused-expressions
-        return(
-        <div key={notice._id} className={classes.notificationContainer}>
+        console.log('notice in notification.js', notice);
+        if (notice.type === 'Friend Request') {
+          return(
+            <div key={notice._id} className={classes.notificationContainer}>
           <img src={notice.picture} style={{ height: 75, paddingRight: 20}} />
-          <p style={{ fontSize: 20}}>Your friend {notice.firstname} {notice.lastname} has joined Thoughtline</p>
+          <p style={{ fontSize: 20}}>Your friend {notice.firstname} {notice.lastname} sent you a connection request</p>
 
-        </div>)
-      })
+        </div>
+          )
+        } else {
+          return(
+          <div key={notice._id} className={classes.notificationContainer}>
+            <img src={notice.picture} style={{ height: 75, paddingRight: 20}} />
+            <p style={{ fontSize: 20}}>Your friend {notice.firstname} {notice.lastname} has joined Thoughtline</p>
+  
+          </div>
+          )
+        }
+
+        })
       console.log('notifications div', notifications)
     }
     return (
