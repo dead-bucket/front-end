@@ -12,6 +12,7 @@ import AddFriendModal from "./AddFriendModal";
 //Redux
 import { connect } from "react-redux";
 import {
+  getFriends,
   setCurrentTarget,
   getNotifications
 } from "../../_actions/profileActions";
@@ -38,19 +39,13 @@ const styles = {
 };
 
 class Dashboard extends Component {
-  state = {
-    friends: [],
-    loading: true
-  };
-
-  getTargets = () => {
-    axios
-      .get(API + "/api/v1/dashboard/")
-      .then(data => {
-        this.setState({ friends: data.data, loading: false });
-      })
-      .catch(err => console.log(err));
-  };
+  componentDidMount() {
+    this.props.loadUser(this.props.history);
+    if (!this.props.friends) {
+      this.props.getFriends();
+    }
+    this.props.getNotifications();
+  }
 
   togglePriority = friend => {
     console.log("in toggle priority fn", friend);
@@ -59,8 +54,7 @@ class Dashboard extends Component {
         priority: friend._id
       })
       .then(data => {
-        console.log(data);
-        this.getTargets();
+        this.props.getFriends();
       })
       .catch(err => console.log(err));
   };
@@ -70,16 +64,10 @@ class Dashboard extends Component {
     this.props.history.push("/friendview");
   };
 
-  componentDidMount() {
-    this.props.loadUser(this.props.history);
-
-    this.getTargets();
-    this.props.getNotifications();
-  }
-
   render() {
-    const { loading, friends } = this.state;
-    const { classes } = this.props;
+    const { classes, friends } = this.props;
+    let loading = !friends ? true : false;
+
     let dashboardContent;
     if (loading) {
       dashboardContent = <Spinner />;
@@ -136,11 +124,12 @@ class Dashboard extends Component {
       <div>
         <div>
           <p className={classes.mainTitle}>Thinking about...</p>
+
           <div className="friend-container">{dashboardContent}</div>
         </div>
 
         <BottomNavigation className={classes.stickToBottom}>
-          <AddFriendModal refreshTargets={this.getTargets} />
+          <AddFriendModal refreshTargets={this.props.getFriends} />
         </BottomNavigation>
       </div>
     );
@@ -148,7 +137,8 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = state => ({
-  currentUser: state.auth.currentUser
+  currentUser: state.auth.currentUser,
+  friends: state.profile.friends
 });
 
 Dashboard.propTypes = {
@@ -157,5 +147,5 @@ Dashboard.propTypes = {
 
 export default connect(
   mapStateToProps,
-  { setCurrentTarget, loadUser, getNotifications }
+  { getFriends, setCurrentTarget, loadUser, getNotifications }
 )(withStyles(styles)(Dashboard));
