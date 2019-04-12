@@ -1,4 +1,8 @@
-import { SET_CURRENT_TARGET, SET_CURRENT_NOTIFICATIONS } from "../_actions/types";
+import {
+  SET_CURRENT_TARGET,
+  SET_CURRENT_NOTIFICATIONS,
+  SET_DASHBOARD
+} from "../_actions/types";
 
 const initialState = {};
 
@@ -9,10 +13,15 @@ export default function(state = initialState, action) {
         ...state,
         target: action.payload
       };
-      case SET_CURRENT_NOTIFICATIONS:
+    case SET_CURRENT_NOTIFICATIONS:
       return {
         ...state,
         notifications: action.payload
+      };
+    case SET_DASHBOARD:
+      return {
+        ...state,
+        friends: action.payload
       };
     default:
       return state;

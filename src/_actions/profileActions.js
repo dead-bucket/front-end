@@ -1,6 +1,10 @@
 import axios from "axios";
 import API from "../utils/API";
-import { SET_CURRENT_TARGET, SET_CURRENT_NOTIFICATIONS } from "./types";
+import {
+  SET_CURRENT_TARGET,
+  SET_CURRENT_NOTIFICATIONS,
+  SET_DASHBOARD
+} from "./types";
 
 // set the current target so that FriendView can be displayed
 export const setCurrentTarget = target => dispatch => {
@@ -8,6 +12,20 @@ export const setCurrentTarget = target => dispatch => {
     type: SET_CURRENT_TARGET,
     payload: target
   });
+};
+
+export const getFriends = () => {
+  return dispatch => {
+    return axios
+      .get(API + "/api/v1/dashboard/")
+      .then(data => {
+        dispatch({
+          type: SET_DASHBOARD,
+          payload: data.data
+        });
+      })
+      .catch(err => console.log(err));
+  };
 };
 
 export const getNotifications = () => {
@@ -23,17 +41,3 @@ export const getNotifications = () => {
       .catch(err => console.log(err));
   };
 };
-
-// // Profile loading
-// export const setProfileLoading = () => {
-//   return {
-//     type: PROFILE_LOADING
-//   };
-// };
-
-// // Clear profile
-// export const clearCurrentProfile = () => {
-//   return {
-//     type: CLEAR_CURRENT_PROFILE
-//   };
-// };
