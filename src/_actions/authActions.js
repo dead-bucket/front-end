@@ -8,6 +8,7 @@ import {
   CLEAR_LOGIN_ERRORS,
   CLEAR_SIGNUP_ERRORS,
   SET_DASHBOARD,
+  SET_CURRENT_NOTIFICATIONS,
 } from "../_actions/types";
 
 import setAuthToken from "../utils/setAuthToken";
@@ -145,6 +146,10 @@ export const logoutUser = () => dispatch => {
     type: SET_DASHBOARD,
     payload: null,
   });
+  dispatch({
+    type: SET_CURRENT_NOTIFICATIONS,
+    payload: null,
+  })
 
   //remove the auth header for future requests
   // setAuthToken sets the header with the token for every request

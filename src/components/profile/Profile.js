@@ -7,6 +7,7 @@ import ProfileCard from "./ProfileCard";
 import ImgUpload from "../common/ImgUpload";
 import Spinner from "../common/Spinner";
 import { signupValidate, isEmpty } from "../../utils/validation";
+import API from "../../utils/API";
 
 // REDUX
 import { connect } from "react-redux";
@@ -90,7 +91,9 @@ class Profile extends Component {
     msgColor: "",
     passwordSuccess: "",
     profileSuccess: "",
-    errMsg: {}
+    errMsg: {},
+    updatePasswordButtonColor: "secondary",
+
   };
 
   handleProfileImg = image => {
@@ -132,7 +135,7 @@ class Profile extends Component {
 
     if (isEmpty(validatedDetails)) {
       axios
-        .put("/api/v1/user", updateData)
+        .put(API + "/api/v1/user", updateData)
         .then(data => {
           this.setState({
             msgColor: "green",
@@ -180,20 +183,24 @@ class Profile extends Component {
       newPassword2,
       password
     );
-    console.log(passwordIsValid);
+    // console.log(passwordIsValid);
     if (isEmpty(passwordIsValid)) {
       const passwordUpdate = {
         newpassword: newPassword1,
         oldpassword: password
       };
-
+      // console.log('in password update', passwordUpdate);
       axios
-        .put("/api/v1/changepassword", passwordUpdate)
+        .put(API + "/api/v1/changepassword", passwordUpdate)
         .then(data => {
           this.setState({
             passwordSuccess: "Password Updated!",
             errMsg: {},
-            msgColor: "green"
+            msgColor: "green",
+            password: "",
+            newPassword1: "",
+            newPassword2: "",
+
           });
         })
         .catch(err =>
@@ -213,7 +220,7 @@ class Profile extends Component {
       });
     }
 
-    console.log(passwordData);
+    // console.log(passwordData);
   };
 
   componentDidMount() {
@@ -234,7 +241,8 @@ class Profile extends Component {
       errMsg,
       passwordSuccess,
       profileSuccess,
-      msgColor
+      msgColor,
+      updatePasswordButtonColor,
     } = this.state;
 
     const changePasswordEnabled =
@@ -419,7 +427,7 @@ class Profile extends Component {
               <Button
                 id="AddFriendModal_submit_btn"
                 variant="contained"
-                color="secondary"
+                color={newPassword1 === newPassword2 ? "primary" : "secondary"}
                 className={classes.button}
                 onClick={this.updateUserPassword}
                 disabled={!changePasswordEnabled}
