@@ -104,6 +104,7 @@ class NavBar extends Component {
     const { classes, currentUser, notifications } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
+    console.log('notifications', notifications);
 
     return (
       <div className={classes.root}>
@@ -120,7 +121,7 @@ class NavBar extends Component {
               <div className={classes.profileContainer}>
                 <div
                   className={classes.notification}
-                  style={{display: notifications < 1 ? 'none' : ''}}
+                  style={{ display: (notifications && notifications.length > 0) ? "" : "none" }}
                   // onClick={() => this.setState({showNotificatons: !this.state.showNotificatons})}
                   onClick={e => this.handleClick(e)}
                   onClose={() => this.setState({ showNotifications: false })}
