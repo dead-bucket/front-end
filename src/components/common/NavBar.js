@@ -4,7 +4,7 @@ import { isEmpty } from "../../utils/validation";
 import NotificationList from "./notification-list";
 
 // Redux
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutUser } from "../../_actions/authActions";
 
@@ -16,6 +16,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import MoreVert from "@material-ui/icons/MoreVert";
+// import Link from '@material-ui/core/Link';
 
 const styles = {
   root: {
@@ -108,12 +109,18 @@ class NavBar extends Component {
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-            <h1 className={classes.title}>Thoughtline</h1>
+            <h1 className={classes.title}>
+            <Link  to="/dashboard"
+            style={{textDecoration: "none", color: "white"}}>
+            Thoughtline
+            </Link>
+            </h1>
 
             {!isEmpty(currentUser) ? (
               <div className={classes.profileContainer}>
                 <div
                   className={classes.notification}
+                  style={{display: notifications < 1 ? 'none' : ''}}
                   // onClick={() => this.setState({showNotificatons: !this.state.showNotificatons})}
                   onClick={e => this.handleClick(e)}
                   onClose={() => this.setState({ showNotifications: false })}
