@@ -104,7 +104,7 @@ class NavBar extends Component {
     const { classes, currentUser, notifications } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-    console.log('notifications', notifications);
+    // console.log('notifications', notifications);
 
     return (
       <div className={classes.root}>

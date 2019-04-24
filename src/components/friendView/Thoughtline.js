@@ -173,6 +173,9 @@ class Thoughtline extends Component {
                 <Moment format="LLL">{entry.createdAt}</Moment>
               </em>
               <p style={{ fontSize: 18, marginTop: 10 }}>{entry.description}</p>
+              <em style={{ fontSize: 16, margin: "5px auto" }}>
+                <Moment format="LLL">{entry.deliverOn}</Moment>
+              </em>
               <i
                 onClick={this.handleOpenDeleteModal.bind(this, entry._id)}
                 className={`material-icons ${classes.deleteIcon}`}

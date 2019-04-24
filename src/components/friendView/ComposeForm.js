@@ -4,6 +4,9 @@ import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import Switch from '@material-ui/core/Switch';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import axios from "axios";
 import API from "../../utils/API";
 import { getEntries } from "../../_actions/entryActions";
@@ -61,7 +64,9 @@ const colors = [
 class ComposeForm extends Component {
   state = {
     thought: "",
-    thoughtColor: "#fff"
+    thoughtColor: "#fff",
+    checkedA: false,
+    deliverOn: '',
   };
 
   handleInputChange = e => {
@@ -72,20 +77,41 @@ class ComposeForm extends Component {
   selectColorBox = color => {
     this.setState({ thoughtColor: color });
   };
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.checked });
+    if (this.state.checkedA) {
+      this.setState({
+        deliverOn: ''
+      })
+    }
+  };
 
   submitThought = () => {
-    const newEntry = {
-      recipient: this.props.profile.target._id,
-      mood: this.state.thoughtColor,
-      description: this.state.thought
-    };
+    let newEntry;
+    if (this.state.deliverOn === '') {
+      newEntry = {
+        recipient: this.props.profile.target._id,
+        mood: this.state.thoughtColor,
+        description: this.state.thought,
+        deliverOn: Date.now(),
+      };
+    } else {
+      newEntry = {
+        recipient: this.props.profile.target._id,
+        mood: this.state.thoughtColor,
+        description: this.state.thought,
+        deliverOn: this.state.deliverOn,
+      };
 
+    }
+    console.log('new entry ', newEntry);
     axios
       .post(API + "/api/v1/entry", newEntry)
       .then(data => {
         this.setState({
           thought: "",
-          thoughtColor: "#fff"
+          thoughtColor: "#fff",
+          checkedA: false,
         });
         this.props.getEntries(this.props.profile.target._id);
       })
@@ -96,7 +122,27 @@ class ComposeForm extends Component {
   render() {
     const { classes, friend } = this.props;
     const { thoughtColor, thought } = this.state;
-    let textMessage;
+    let textMessage, datePicker;
+
+    if (this.state.checkedA) {
+      datePicker = (
+        <TextField
+        style={{ display: this.state.checkedA ? '' : 'none'}}
+        id="date"
+        label="Deliver On"
+        type="date"
+        name="deliverOn"
+        // defaultValue={Date.now()}
+        value={this.state.deliverOn}
+        className={classes.textField}
+        InputLabelProps={{
+          shrink: true,
+        }}
+        
+        onChange={this.handleInputChange}
+      />
+      )
+    }
 
     if (!friend) {
       textMessage = null;
@@ -126,6 +172,34 @@ class ComposeForm extends Component {
           margin="normal"
           variant="outlined"
         />
+        <FormGroup row>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={this.state.checkedA}
+              onChange={this.handleChange('checkedA')}
+              value="checkedA"
+            />
+          }
+          label="Delayed Delivery"
+        />
+        
+      </FormGroup>
+        {/* <TextField
+        style={{ display: this.state.checkedA ? '' : 'none'}}
+        id="date"
+        label="Deliver On"
+        type="date"
+        name="deliverOn"
+        value={this.state.deliverOn}
+        className={classes.textField}
+        InputLabelProps={{
+          shrink: true,
+        }}
+        
+        onChange={this.handleInputChange}
+      /> */}
+      {datePicker}
 
         <div className={classes.colorContainer}>
           {colors.map(color => (
