@@ -50,7 +50,10 @@ const styles = {
     justifyContent: "space-around",
     width: "80%",
     marginBottom: 40
-  }
+  },
+  grid: {
+    width: '60%',
+  },
 };
 
 const colors = [
@@ -121,7 +124,7 @@ class ComposeForm extends Component {
 
   render() {
     const { classes, friend } = this.props;
-    const { thoughtColor, thought } = this.state;
+    const { thoughtColor, thought, deliverOn } = this.state;
     let textMessage, datePicker;
 
     if (this.state.checkedA) {
@@ -132,7 +135,6 @@ class ComposeForm extends Component {
         label="Deliver On"
         type="date"
         name="deliverOn"
-        // defaultValue={Date.now()}
         value={this.state.deliverOn}
         className={classes.textField}
         InputLabelProps={{
