@@ -92,8 +92,7 @@ class Profile extends Component {
     passwordSuccess: "",
     profileSuccess: "",
     errMsg: {},
-    updatePasswordButtonColor: "secondary",
-
+    updatePasswordButtonColor: "secondary"
   };
 
   handleProfileImg = image => {
@@ -199,8 +198,7 @@ class Profile extends Component {
             msgColor: "green",
             password: "",
             newPassword1: "",
-            newPassword2: "",
-
+            newPassword2: ""
           });
         })
         .catch(err =>
@@ -219,8 +217,6 @@ class Profile extends Component {
         passwordSuccess: ""
       });
     }
-
-    // console.log(passwordData);
   };
 
   componentDidMount() {
@@ -241,8 +237,8 @@ class Profile extends Component {
       errMsg,
       passwordSuccess,
       profileSuccess,
-      msgColor,
-      updatePasswordButtonColor,
+      msgColor
+      // updatePasswordButtonColor,
     } = this.state;
 
     const changePasswordEnabled =

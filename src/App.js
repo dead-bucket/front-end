@@ -15,7 +15,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import FriendView from "./components/friendView/FriendView4";
 import Profile from "./components/profile/Profile";
 
-import "./App.css";
+// import "./App.css";
 
 // for removing material-ui typography warning
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;

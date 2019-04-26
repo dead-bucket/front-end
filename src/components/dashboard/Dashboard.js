@@ -19,22 +19,32 @@ import {
 import { loadUser } from "../../_actions/authActions";
 
 const styles = {
+  dashboardWrapper: {
+    width: "100vw",
+    height: "91.75vh",
+    display: "flex",
+    flexDirection: "column",
+    position: "relative"
+  },
+
   mainTitle: {
     textAlign: "center",
     fontFamily: "Satisfy, cursive",
     marginBottom: 0,
-    fontSize: "1.75rem"
+    fontSize: "1.75rem",
+    flexGrow: 1
+  },
+  friendContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    overflowY: "scroll",
+    flexGrow: 2
   },
   intro: {
-    width: "90%",
+    width: "100%",
     textAlign: "center",
     fontSize: 18
-  },
-
-  stickToBottom: {
-    width: "100%",
-    position: "fixed",
-    bottom: 0
   }
 };
 
@@ -121,14 +131,13 @@ class Dashboard extends Component {
       }
     }
     return (
-      <div>
-        <div>
-          <p className={classes.mainTitle}>Thinking about...</p>
-
-          <div className="friend-container">{dashboardContent}</div>
+      <div className={classes.dashboardWrapper}>
+        <div className={classes.mainTitle}>
+          <p style={{ margin: "10px auto" }}>Thinking about...</p>
         </div>
+        <div className={classes.friendContainer}>{dashboardContent}</div>
 
-        <BottomNavigation className={classes.stickToBottom}>
+        <BottomNavigation>
           <AddFriendModal refreshTargets={this.props.getFriends} />
         </BottomNavigation>
       </div>
