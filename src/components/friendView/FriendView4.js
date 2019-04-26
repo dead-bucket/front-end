@@ -28,31 +28,32 @@ import { loadUser } from "../../_actions/authActions";
 import axios from "axios";
 
 const styles = {
-  container: {
-    height: "83vh"
+  friendviewWrapper: {
+    // width: "100vw",
+    height: "91.5vh",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    position: "relative",
+    border: "1px solid blue"
   },
   friendContainer: {
-    display: "flex",
-    justifyContent: "center",
-    textAlign: "center",
-    paddingTop: 10
+    // display: "flex",
+    // justifyContent: "center",
+    // textAlign: "center",
+    // paddingTop: 10
+    // fontSize: "1.75rem",
   },
   actionContainer: {
     display: "flex",
+    flexWrap: "wrap",
     justifyContent: "center",
-    textAlign: "center"
-  },
-  stickToBottom: {
-    width: "100%",
-    position: "fixed",
-    bottom: 0
-  },
-  root: {
-    width: "100%"
+    overflowY: "scroll",
+    flexGrow: 2
   },
   dashboardIconStyle: {
     position: "absolute",
-    top: 80,
+    top: 5,
     left: "10%"
   },
   medium: {
@@ -61,8 +62,8 @@ const styles = {
     padding: 12
   },
   mediumIcon: {
-    width: 40,
-    height: 40
+    width: 32,
+    height: 32
   }
 };
 
@@ -138,7 +139,7 @@ class FriendView4 extends Component {
     }
 
     return (
-      <div className={classes.container}>
+      <div className={classes.friendviewWrapper}>
         <div className={classes.dashboardIconStyle}>
           <Link to="/dashboard">
             <IconButton style={styles.medium}>
@@ -147,10 +148,10 @@ class FriendView4 extends Component {
           </Link>
         </div>
 
-        <div className={classes.friendViewDiv}>
-          <div className={classes.friendContainer}>{friendViewContent}</div>
-          <div className={classes.actionContainer}>{actionContent}</div>
-        </div>
+        {/* <div className={classes.friendViewDiv}> */}
+        <div className={classes.friendContainer}>{friendViewContent}</div>
+        <div className={classes.actionContainer}>{actionContent}</div>
+        {/* </div> */}
         <BottomNavigation
           value={value}
           showLabels

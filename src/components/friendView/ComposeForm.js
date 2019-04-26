@@ -46,7 +46,7 @@ const styles = {
     display: "flex",
     justifyContent: "space-around",
     width: "80%",
-    marginBottom: 40
+    marginBottom: 25
   }
 };
 

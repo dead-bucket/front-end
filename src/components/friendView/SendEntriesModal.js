@@ -65,12 +65,12 @@ const styles = theme => ({
     top: -30
   },
   mediumIcon: {
-    width: 40,
-    height: 40
+    width: 30,
+    height: 30
   },
   sendIconStyle: {
     position: "absolute",
-    top: 80,
+    top: 0,
     right: "10%"
   },
   compareFound: {

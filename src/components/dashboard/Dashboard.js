@@ -21,7 +21,7 @@ import { loadUser } from "../../_actions/authActions";
 const styles = {
   dashboardWrapper: {
     width: "100vw",
-    height: "91.75vh",
+    height: "91vh",
     display: "flex",
     flexDirection: "column",
     position: "relative"

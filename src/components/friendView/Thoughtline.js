@@ -35,9 +35,9 @@ const styles = theme => ({
     position: "absolute",
     alignItems: "center",
     width: 240,
-    top: 160,
+    top: 80,
     left: "10%",
-    marginLeft: "14px",
+    marginLeft: "17px",
     display: "flex"
   },
   searchIcon: {
@@ -48,6 +48,11 @@ const styles = theme => ({
   },
   searchInput: {
     backgroundColor: "white"
+  },
+  messageContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
   },
   deleteIcon: {
     position: "absolute",
@@ -186,7 +191,7 @@ class Thoughtline extends Component {
     }
 
     return (
-      <div className="message-container">
+      <div>
         {userEntries.length > 0 ? (
           <div className={classes.searchContainer}>
             <Search
@@ -216,7 +221,7 @@ class Thoughtline extends Component {
             no={this.handleCloseDeleteModal}
           />
         ) : null}
-        {messageContent}
+        <div className={classes.messageContainer}>{messageContent}</div>
       </div>
     );
   }

@@ -27,9 +27,9 @@ const styles = {
     position: "absolute",
     alignItems: "center",
     width: 240,
-    top: 160,
+    top: 80,
     left: "10%",
-    marginLeft: "14px",
+    marginLeft: "17px",
     display: "flex"
   },
   searchIcon: {
@@ -39,6 +39,11 @@ const styles = {
   },
   searchInput: {
     backgroundColor: "white"
+  },
+  messageContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
   }
 };
 
@@ -131,7 +136,7 @@ class Inbox extends Component {
 
     /* TODO - Add autofocus - might need refs? */
     return (
-      <div className="message-container">
+      <div className={classes.messageContainer}>
         {inboxEntries.length > 0 ? (
           <div className={classes.searchContainer}>
             <Search
