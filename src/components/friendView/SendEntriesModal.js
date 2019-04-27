@@ -70,7 +70,7 @@ const styles = theme => ({
   },
   sendIconStyle: {
     position: "absolute",
-    top: 0,
+    top: 10,
     right: "10%"
   },
   compareFound: {
@@ -208,7 +208,7 @@ class SendEntriesModal extends Component {
       .put(API + "/api/v1/deliverentries/", { recipient: id })
 
       .then(data => {
-        console.log("Friend Added and Entries sent!", data);
+        // console.log("Friend Added and Entries sent!", data);
         this.setState({
           convertedUser: true,
           modalStage: 3,

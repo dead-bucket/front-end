@@ -30,7 +30,7 @@ import axios from "axios";
 const styles = {
   friendviewWrapper: {
     // width: "100vw",
-    height: "91.5vh",
+    height: "92vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -38,10 +38,10 @@ const styles = {
     border: "1px solid blue"
   },
   friendContainer: {
-    // display: "flex",
-    // justifyContent: "center",
-    // textAlign: "center",
-    // paddingTop: 10
+    display: "flex",
+    justifyContent: "center",
+    textAlign: "center",
+    paddingTop: 10
     // fontSize: "1.75rem",
   },
   actionContainer: {
@@ -53,8 +53,10 @@ const styles = {
   },
   dashboardIconStyle: {
     position: "absolute",
-    top: 5,
-    left: "10%"
+    top: 10,
+    left: "10%",
+    cursor: "pointer",
+    zIndex: 20
   },
   medium: {
     width: 60,
@@ -86,26 +88,28 @@ class FriendView4 extends Component {
   };
 
   clearNotification = () => {
-    setTimeout(() => {
-      axios
-        .put(API + "/api/v1/inboxclearnotification/", {
-          sender: this.props.profile.target._id
-        })
-        .then(data => {
-          // console.log('data back from clearnotification',data.status);
-          if (data.status === 204) {
-            this.props.loadUser();
-          }
-        })
-        .catch(err => console.log(err));
-    }, 4000);
+    if (this.props.currentUser.newmessages.length > 0) {
+      setTimeout(() => {
+        axios
+          .put(API + "/api/v1/inboxclearnotification/", {
+            sender: this.props.profile.target._id
+          })
+          .then(data => {
+            // console.log('data back from clearnotification',data.status);
+            if (data.status === 204) {
+              this.props.loadUser();
+            }
+          })
+          .catch(err => console.log(err));
+      }, 3000);
+    }
   };
 
   render() {
     const { classes } = this.props;
     const { target } = this.props.profile;
     const { value } = this.state;
-
+    console.log(this.props.currentUser);
     let actionContent;
     switch (value) {
       case 0:

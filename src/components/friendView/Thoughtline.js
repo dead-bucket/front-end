@@ -44,7 +44,8 @@ const styles = theme => ({
     width: 30,
     height: 30,
     marginTop: 24,
-    zIndex: 1000
+    zIndex: 20,
+    cursor: "pointer"
   },
   searchInput: {
     backgroundColor: "white"
