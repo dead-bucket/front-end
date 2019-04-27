@@ -20,7 +20,7 @@ import MoreVert from "@material-ui/icons/MoreVert";
 
 const styles = {
   root: {
-    flexGrow: 1
+    // flexGrow: 1
   },
   grow: {
     flexGrow: 1
@@ -104,24 +104,29 @@ class NavBar extends Component {
     const { classes, currentUser, notifications } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-    console.log('notifications', notifications);
+    // console.log('notifications', notifications);
 
     return (
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
             <h1 className={classes.title}>
-            <Link  to="/dashboard"
-            style={{textDecoration: "none", color: "white"}}>
-            Thoughtline
-            </Link>
+              <Link
+                to="/dashboard"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                Thoughtline
+              </Link>
             </h1>
 
             {!isEmpty(currentUser) ? (
               <div className={classes.profileContainer}>
                 <div
                   className={classes.notification}
-                  style={{ display: (notifications && notifications.length > 0) ? "" : "none" }}
+                  style={{
+                    display:
+                      notifications && notifications.length > 0 ? "" : "none"
+                  }}
                   // onClick={() => this.setState({showNotificatons: !this.state.showNotificatons})}
                   onClick={e => this.handleClick(e)}
                   onClose={() => this.setState({ showNotifications: false })}

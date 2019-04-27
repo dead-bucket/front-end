@@ -3,8 +3,9 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
-// Custom Components
 import API from "../../utils/API";
+// Custom Components
+import NavBar from "../common/NavBar";
 import Spinner from "../common/Spinner";
 import FriendCard from "../common/FriendCard";
 import AddFriendModal from "./AddFriendModal";
@@ -19,22 +20,36 @@ import {
 import { loadUser } from "../../_actions/authActions";
 
 const styles = {
-  mainTitle: {
-    textAlign: "center",
-    fontFamily: "Satisfy, cursive",
-    marginBottom: 0,
-    fontSize: "1.75rem"
-  },
-  intro: {
-    width: "90%",
-    textAlign: "center",
-    fontSize: 18
+  dashboardWrapper: {
+    height: "99.5vh",
+    display: "flex",
+    flexDirection: "column",
+    position: "relative"
   },
 
-  stickToBottom: {
+  mainTitle: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    fontFamily: "Satisfy, cursive",
+    marginBottom: 0,
+    fontSize: "1.75rem",
+    flexGrow: 1
+  },
+  friendContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    overflowY: "scroll",
+    height: "100%",
+    flexGrow: 2
+  },
+  intro: {
     width: "100%",
-    position: "fixed",
-    bottom: 0
+    textAlign: "center",
+    padding: 15,
+    fontSize: 16
   }
 };
 
@@ -121,14 +136,14 @@ class Dashboard extends Component {
       }
     }
     return (
-      <div>
-        <div>
-          <p className={classes.mainTitle}>Thinking about...</p>
-
-          <div className="friend-container">{dashboardContent}</div>
+      <div className={classes.dashboardWrapper}>
+        <NavBar />
+        <div className={classes.mainTitle}>
+          <p style={{ margin: "10px auto" }}>Thinking about...</p>
         </div>
+        <div className={classes.friendContainer}>{dashboardContent}</div>
 
-        <BottomNavigation className={classes.stickToBottom}>
+        <BottomNavigation>
           <AddFriendModal refreshTargets={this.props.getFriends} />
         </BottomNavigation>
       </div>

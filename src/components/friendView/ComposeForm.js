@@ -19,7 +19,15 @@ const styles = {
   },
   thoughtInput: {
     width: "80%",
-    marginBottom: 40
+    marginBottom: 15,
+    marginTop: 0
+  },
+  colorContainer: {
+    display: "flex",
+    justifyContent: "space-around",
+    width: "88%",
+    marginBottom: 25,
+    zIndex: 20
   },
   //style for font size
   resize: {
@@ -30,23 +38,18 @@ const styles = {
     width: 30,
     border: "1px solid #d3d3d3"
   },
+  colorBlockActive: {
+    height: 30,
+    width: 30,
+    border: "1px solid #d3d3d3",
+    zIndex: 20
+  },
   boxShadow: {
     height: 40,
     width: 40,
     webkitBoxShadow: "0px 0px 17px 1px rgba(0,0,0,0.35)",
     mozBoxShadow: "0px 0px 17px 1px rgba(0,0,0,0.35)",
     boxShadow: "0px 0px 17px 1px rgba(0,0,0,0.35)"
-  },
-  colorBlockActive: {
-    height: 30,
-    width: 30,
-    border: "1px solid #d3d3d3"
-  },
-  colorContainer: {
-    display: "flex",
-    justifyContent: "space-around",
-    width: "80%",
-    marginBottom: 40
   }
 };
 

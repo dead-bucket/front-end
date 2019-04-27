@@ -7,15 +7,13 @@ import store from "./store";
 import setAuthToken from "./utils/setAuthToken";
 
 // Components
-import NavBar from "./components/common/NavBar";
+
 import NoMatch from "./components/common/NoMatch";
 import Login from "./components/landing/Login";
 import Signup from "./components/landing/Signup";
 import Dashboard from "./components/dashboard/Dashboard";
 import FriendView from "./components/friendView/FriendView4";
 import Profile from "./components/profile/Profile";
-
-import "./App.css";
 
 // for removing material-ui typography warning
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
@@ -31,18 +29,15 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router>
-          <div>
-            <NavBar />
-            <div className="App">
-              <Switch>
-                <Route exact path="/" component={Login} />
-                <Route exact path="/signup" component={Signup} />
-                <Route exact path="/dashboard" component={Dashboard} />
-                <Route exact path="/friendview" component={FriendView} />
-                <Route exact path="/profile" component={Profile} />
-                <Route component={NoMatch} />
-              </Switch>
-            </div>
+          <div className="App">
+            <Switch>
+              <Route exact path="/" component={Login} />
+              <Route exact path="/signup" component={Signup} />
+              <Route exact path="/dashboard" component={Dashboard} />
+              <Route exact path="/friendview" component={FriendView} />
+              <Route exact path="/profile" component={Profile} />
+              <Route component={NoMatch} />
+            </Switch>
           </div>
         </Router>
       </Provider>

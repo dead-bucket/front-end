@@ -14,6 +14,7 @@ import Home from "@material-ui/icons/Home";
 import IconButton from "@material-ui/core/IconButton";
 
 // Custom Components
+import NavBar from "../common/NavBar";
 import ComposeForm from "./ComposeForm";
 import Thoughtline from "./Thoughtline";
 import Inbox from "./Inbox";
@@ -28,8 +29,12 @@ import { loadUser } from "../../_actions/authActions";
 import axios from "axios";
 
 const styles = {
-  container: {
-    height: "83vh"
+  friendviewWrapper: {
+    height: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    position: "relative"
   },
   friendContainer: {
     display: "flex",
@@ -39,21 +44,17 @@ const styles = {
   },
   actionContainer: {
     display: "flex",
+    flexWrap: "wrap",
     justifyContent: "center",
-    textAlign: "center"
-  },
-  stickToBottom: {
-    width: "100%",
-    position: "fixed",
-    bottom: 0
-  },
-  root: {
-    width: "100%"
+    overflowY: "scroll",
+    flexGrow: 2
   },
   dashboardIconStyle: {
     position: "absolute",
-    top: 80,
-    left: "10%"
+    top: 75,
+    left: "10%",
+    cursor: "pointer",
+    zIndex: 20
   },
   medium: {
     width: 60,
@@ -61,8 +62,8 @@ const styles = {
     padding: 12
   },
   mediumIcon: {
-    width: 40,
-    height: 40
+    width: 32,
+    height: 32
   }
 };
 
@@ -85,26 +86,28 @@ class FriendView4 extends Component {
   };
 
   clearNotification = () => {
-    setTimeout(() => {
-      axios
-        .put(API + "/api/v1/inboxclearnotification/", {
-          sender: this.props.profile.target._id
-        })
-        .then(data => {
-          // console.log('data back from clearnotification',data.status);
-          if (data.status === 204) {
-            this.props.loadUser();
-          }
-        })
-        .catch(err => console.log(err));
-    }, 4000);
+    if (this.props.currentUser.newmessages.length > 0) {
+      setTimeout(() => {
+        axios
+          .put(API + "/api/v1/inboxclearnotification/", {
+            sender: this.props.profile.target._id
+          })
+          .then(data => {
+            // console.log('data back from clearnotification',data.status);
+            if (data.status === 204) {
+              this.props.loadUser();
+            }
+          })
+          .catch(err => console.log(err));
+      }, 3000);
+    }
   };
 
   render() {
     const { classes } = this.props;
     const { target } = this.props.profile;
     const { value } = this.state;
-
+    console.log(this.props.currentUser);
     let actionContent;
     switch (value) {
       case 0:
@@ -138,7 +141,8 @@ class FriendView4 extends Component {
     }
 
     return (
-      <div className={classes.container}>
+      <div className={classes.friendviewWrapper}>
+        <NavBar />
         <div className={classes.dashboardIconStyle}>
           <Link to="/dashboard">
             <IconButton style={styles.medium}>
@@ -147,10 +151,10 @@ class FriendView4 extends Component {
           </Link>
         </div>
 
-        <div className={classes.friendViewDiv}>
-          <div className={classes.friendContainer}>{friendViewContent}</div>
-          <div className={classes.actionContainer}>{actionContent}</div>
-        </div>
+        {/* <div className={classes.friendViewDiv}> */}
+        <div className={classes.friendContainer}>{friendViewContent}</div>
+        <div className={classes.actionContainer}>{actionContent}</div>
+        {/* </div> */}
         <BottomNavigation
           value={value}
           showLabels
