@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
-
+import NavBar from "../common/NavBar";
 //REDUX
 import { connect } from "react-redux";
 import { loginUser, clearLoginErrors } from "../../_actions/authActions";
@@ -90,74 +90,83 @@ class Login extends Component {
     const { username, password } = this.state;
 
     return (
-      <div
-        tabIndex={-1}
-        className={classes.loginSignupContainer}
-        onKeyDown={e => (e.key === "Enter" ? this.loginUser() : null)}
-      >
-        <p style={{ marginTop: "50px", marginBottom: 0 }}>Welcome to</p>
-        <div className={classes.titleDiv}>
-          <h1 className={classes.title}>Thoughtline </h1>
-          <img className={classes.titleImg} src={notificationPic} alt="logo" />
-        </div>
-        <Card className={classes.loginCard}>
-          <h4 style={{ margin: 0 }}>Login</h4>
-          <form className={classes.form} autoComplete="off">
-            <TextField
-              id="outlined-email"
-              label="Username"
-              required
-              fullWidth
-              className={classes.textField}
-              value={this.state.username}
-              onChange={this.handleInputChange("username")}
-              margin="normal"
-              variant="outlined"
+      <div>
+        <NavBar />
+        <div
+          tabIndex={-1}
+          className={classes.loginSignupContainer}
+          onKeyDown={e => (e.key === "Enter" ? this.loginUser() : null)}
+        >
+          <p style={{ marginTop: "50px", marginBottom: 0 }}>Welcome to</p>
+          <div className={classes.titleDiv}>
+            <h1 className={classes.title}>Thoughtline </h1>
+            <img
+              className={classes.titleImg}
+              src={notificationPic}
+              alt="logo"
             />
-            {usernameErr ? (
-              <p className={classes.error}>{usernameErr}</p>
-            ) : null}
-            <TextField
-              id="outlined-password1-input"
-              label="Password"
-              className={classes.textField}
-              type="password"
-              fullWidth
-              required
-              value={this.state.password1}
-              onChange={this.handleInputChange("password")}
-              autoComplete="current-password"
-              margin="normal"
-              variant="outlined"
-            />
-            {passwordErr ? (
-              <p className={classes.error}>{passwordErr}</p>
-            ) : null}
-            <p style={{ margin: "0px" }}>*required</p>
-
-            {generalErr ? <p className={classes.error}>{generalErr}</p> : null}
-            <br />
-            <div>
-              <Button
+          </div>
+          <Card className={classes.loginCard}>
+            <h4 style={{ margin: 0 }}>Login</h4>
+            <form className={classes.form} autoComplete="off">
+              <TextField
+                id="outlined-email"
+                label="Username"
+                required
                 fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                onClick={this.loginUser}
-                disabled={!username || !password}
-              >
-                Login
-              </Button>
-            </div>
-          </form>
-          <br />
+                className={classes.textField}
+                value={this.state.username}
+                onChange={this.handleInputChange("username")}
+                margin="normal"
+                variant="outlined"
+              />
+              {usernameErr ? (
+                <p className={classes.error}>{usernameErr}</p>
+              ) : null}
+              <TextField
+                id="outlined-password1-input"
+                label="Password"
+                className={classes.textField}
+                type="password"
+                fullWidth
+                required
+                value={this.state.password1}
+                onChange={this.handleInputChange("password")}
+                autoComplete="current-password"
+                margin="normal"
+                variant="outlined"
+              />
+              {passwordErr ? (
+                <p className={classes.error}>{passwordErr}</p>
+              ) : null}
+              <p style={{ margin: "0px" }}>*required</p>
 
-          <Link to="/signup">
-            <Button color="primary" variant="outlined">
-              Create An Account
-            </Button>
-          </Link>
-        </Card>
+              {generalErr ? (
+                <p className={classes.error}>{generalErr}</p>
+              ) : null}
+              <br />
+              <div>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  onClick={this.loginUser}
+                  disabled={!username || !password}
+                >
+                  Login
+                </Button>
+              </div>
+            </form>
+            <br />
+
+            <Link to="/signup">
+              <Button color="primary" variant="outlined">
+                Create An Account
+              </Button>
+            </Link>
+          </Card>
+        </div>
       </div>
     );
   }

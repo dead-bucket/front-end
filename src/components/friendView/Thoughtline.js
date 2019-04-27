@@ -35,7 +35,7 @@ const styles = theme => ({
     position: "absolute",
     alignItems: "center",
     width: 240,
-    top: 80,
+    top: 150,
     left: "10%",
     marginLeft: "17px",
     display: "flex"
@@ -53,7 +53,8 @@ const styles = theme => ({
   messageContainer: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
+    textAlign: "center"
   },
   deleteIcon: {
     position: "absolute",

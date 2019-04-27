@@ -14,6 +14,7 @@ import Home from "@material-ui/icons/Home";
 import IconButton from "@material-ui/core/IconButton";
 
 // Custom Components
+import NavBar from "../common/NavBar";
 import ComposeForm from "./ComposeForm";
 import Thoughtline from "./Thoughtline";
 import Inbox from "./Inbox";
@@ -29,20 +30,17 @@ import axios from "axios";
 
 const styles = {
   friendviewWrapper: {
-    // width: "100vw",
-    height: "92vh",
+    height: "100vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    position: "relative",
-    border: "1px solid blue"
+    position: "relative"
   },
   friendContainer: {
     display: "flex",
     justifyContent: "center",
     textAlign: "center",
     paddingTop: 10
-    // fontSize: "1.75rem",
   },
   actionContainer: {
     display: "flex",
@@ -53,7 +51,7 @@ const styles = {
   },
   dashboardIconStyle: {
     position: "absolute",
-    top: 10,
+    top: 75,
     left: "10%",
     cursor: "pointer",
     zIndex: 20
@@ -144,6 +142,7 @@ class FriendView4 extends Component {
 
     return (
       <div className={classes.friendviewWrapper}>
+        <NavBar />
         <div className={classes.dashboardIconStyle}>
           <Link to="/dashboard">
             <IconButton style={styles.medium}>

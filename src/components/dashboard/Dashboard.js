@@ -3,8 +3,9 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
-// Custom Components
 import API from "../../utils/API";
+// Custom Components
+import NavBar from "../common/NavBar";
 import Spinner from "../common/Spinner";
 import FriendCard from "../common/FriendCard";
 import AddFriendModal from "./AddFriendModal";
@@ -20,15 +21,16 @@ import { loadUser } from "../../_actions/authActions";
 
 const styles = {
   dashboardWrapper: {
-    width: "100vw",
-    height: "91vh",
+    height: "99.5vh",
     display: "flex",
     flexDirection: "column",
     position: "relative"
   },
 
   mainTitle: {
-    textAlign: "center",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     fontFamily: "Satisfy, cursive",
     marginBottom: 0,
     fontSize: "1.75rem",
@@ -38,13 +40,16 @@ const styles = {
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "center",
+    alignItems: "center",
     overflowY: "scroll",
+    height: "100%",
     flexGrow: 2
   },
   intro: {
     width: "100%",
     textAlign: "center",
-    fontSize: 18
+    padding: 15,
+    fontSize: 16
   }
 };
 
@@ -132,6 +137,7 @@ class Dashboard extends Component {
     }
     return (
       <div className={classes.dashboardWrapper}>
+        <NavBar />
         <div className={classes.mainTitle}>
           <p style={{ margin: "10px auto" }}>Thinking about...</p>
         </div>
