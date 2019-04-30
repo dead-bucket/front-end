@@ -43,7 +43,10 @@ const styles = {
   messageContainer: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
+    textAlign: "center",
+    overflowY: "scroll",
+    height: "100%"
   }
 };
 

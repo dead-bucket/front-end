@@ -20,7 +20,9 @@ import MoreVert from "@material-ui/icons/MoreVert";
 
 const styles = {
   root: {
-    // flexGrow: 1
+    flexGrow: 1,
+    maxHeight: 67,
+    minHeight: 67
   },
   grow: {
     flexGrow: 1

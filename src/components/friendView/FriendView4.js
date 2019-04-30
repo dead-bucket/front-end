@@ -40,6 +40,9 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     textAlign: "center",
+    flexGrow: 1,
+    maxHeight: 152,
+    minHeight: 152,
     paddingTop: 10
   },
   actionContainer: {
@@ -47,7 +50,12 @@ const styles = {
     flexWrap: "wrap",
     justifyContent: "center",
     overflowY: "scroll",
-    flexGrow: 2
+    flexGrow: 3
+  },
+  bottomNav: {
+    flexGrow: 1,
+    maxHeight: 56,
+    minHeight: 56
   },
   dashboardIconStyle: {
     position: "absolute",
@@ -150,16 +158,14 @@ class FriendView4 extends Component {
             </IconButton>
           </Link>
         </div>
-
-        {/* <div className={classes.friendViewDiv}> */}
         <div className={classes.friendContainer}>{friendViewContent}</div>
         <div className={classes.actionContainer}>{actionContent}</div>
-        {/* </div> */}
+
         <BottomNavigation
           value={value}
           showLabels
           onChange={this.handleBottomChange}
-          className={classes.stickToBottom}
+          className={classes.bottomNav}
         >
           <BottomNavigationAction label="Thoughtline" icon={<List />} />
           <BottomNavigationAction label="Compose" icon={<AddCircleOutline />} />
