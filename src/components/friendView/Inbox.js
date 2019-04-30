@@ -46,7 +46,8 @@ const styles = {
     alignItems: "center",
     textAlign: "center",
     overflowY: "scroll",
-    height: "100%"
+    height: "100%",
+    width: "100%",
   }
 };
 

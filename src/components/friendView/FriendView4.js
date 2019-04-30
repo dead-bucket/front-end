@@ -50,7 +50,8 @@ const styles = {
     flexWrap: "wrap",
     justifyContent: "center",
     overflowY: "scroll",
-    flexGrow: 3
+    flexGrow: 3,
+    
   },
   bottomNav: {
     flexGrow: 1,
