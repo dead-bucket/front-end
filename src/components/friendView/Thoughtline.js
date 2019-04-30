@@ -12,6 +12,7 @@ import Search from "@material-ui/icons/Search";
 // import Delete from "@material-ui/icons/Delete";
 
 //Custom
+import EntryMenu from "./entryMenu";
 import SendEntriesModal from "./SendEntriesModal";
 import { getEntries, deleteEntry } from "../../_actions/entryActions";
 import DeleteModal from "./delete-thought-modal";
@@ -55,13 +56,13 @@ const styles = theme => ({
     flexDirection: "column",
     alignItems: "center",
     textAlign: "center",
-
     height: "100%"
+
   },
   deleteIcon: {
     position: "absolute",
-    right: "15px",
-    bottom: "15px",
+    right: "15%",
+    bottom: "15%",
     cursor: "pointer"
   }
 });
@@ -76,7 +77,7 @@ class Thoughtline extends Component {
       modalOpen: false
     };
     this.delayedSearch = _.debounce(this.searchMessages, 1000);
-
+    this.handleOpenDeleteModal = this.handleOpenDeleteModal.bind(this);
     this.handleCloseDeleteModal = this.handleCloseDeleteModal.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
@@ -182,12 +183,17 @@ class Thoughtline extends Component {
                 <Moment format="LLL">{entry.createdAt}</Moment>
               </em>
               <p style={{ fontSize: 18, marginTop: 10 }}>{entry.description}</p>
-              <i
+              {/* <i
                 onClick={this.handleOpenDeleteModal.bind(this, entry._id)}
                 className={`material-icons ${classes.deleteIcon}`}
               >
                 delete
-              </i>
+              </i> */}
+              <EntryMenu 
+              className={classes.deleteIcon}
+              deleteModal={this.handleOpenDeleteModal}
+              identifier={entry._id}
+              />
             </div>
           );
         });
@@ -195,7 +201,7 @@ class Thoughtline extends Component {
     }
 
     return (
-      <div>
+      <div style={{width: "100%"}}>
         {userEntries.length > 0 ? (
           <div className={classes.searchContainer}>
             <Search
