@@ -45,7 +45,7 @@ const styles = {
     flexDirection: "column",
     alignItems: "center",
     textAlign: "center",
-    overflowY: "scroll",
+
     height: "100%"
   }
 };

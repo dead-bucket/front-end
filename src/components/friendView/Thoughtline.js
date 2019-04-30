@@ -55,7 +55,7 @@ const styles = theme => ({
     flexDirection: "column",
     alignItems: "center",
     textAlign: "center",
-    overflowY: "scroll",
+
     height: "100%"
   },
   deleteIcon: {
