@@ -16,6 +16,7 @@ import EntryMenu from "./entryMenu";
 import SendEntriesModal from "./SendEntriesModal";
 import { getEntries, deleteEntry } from "../../_actions/entryActions";
 import DeleteModal from "./delete-thought-modal";
+import ScheduleModal from "./scheduleModal";
 import API from "../../utils/API";
 
 const styles = theme => ({
@@ -64,6 +65,19 @@ const styles = theme => ({
     right: "15%",
     bottom: "15%",
     cursor: "pointer"
+  },
+  scheduleIcon: {
+    position: "absolute",
+    right: "3%",
+    top: "15%",
+    cursor: "pointer"
+  },
+  deliveredIcon: {
+    position: "absolute",
+    right: "3%",
+    top: "15%",
+    cursor: "pointer",
+    color: "green",
   }
 });
 
@@ -74,12 +88,15 @@ class Thoughtline extends Component {
       searchTerm: "",
       displaySearch: false,
       searchResults: null,
-      modalOpen: false
+      modalOpen: false,
+      scheduleModalOpen: false,
     };
     this.delayedSearch = _.debounce(this.searchMessages, 1000);
     this.handleOpenDeleteModal = this.handleOpenDeleteModal.bind(this);
     this.handleCloseDeleteModal = this.handleCloseDeleteModal.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleCloseScheduleModal = this.handleCloseScheduleModal.bind(this);
+    this.handleOpenScheduleModal = this.handleOpenScheduleModal.bind(this);
   }
 
   displaySearchInput = () =>
@@ -117,6 +134,14 @@ class Thoughtline extends Component {
     });
   };
 
+  handleCloseScheduleModal = () => {
+    this.setState({
+      scheduleModalOpen: false,
+      idToSchedule: null,
+      sendDate: '',
+    });
+  };
+
   handleOpenDeleteModal = e => {
     console.log(e);
     this.setState({
@@ -124,6 +149,27 @@ class Thoughtline extends Component {
       idToDelete: e
     });
   };
+  handleOpenScheduleModal = e => {
+    console.log(e);
+    this.setState({
+      scheduleModalOpen: true,
+      idToSchedule: e
+    });
+  }
+  handleScheduleSend = (date) => {
+    console.log('schedule date', date);
+    console.log('id to schedule', this.state.idToSchedule)
+    axios
+      .put(API + `/api/v1/entry/${this.state.idToSchedule}`, {
+        deliverOn: new Date(date),
+      })
+      .then(response => console.log('put response', response))
+      .then(() => {
+        this.props.getEntries(this.props.profile.target._id);
+        this.handleCloseScheduleModal();
+      })
+      .catch(err => console.log(err));
+  }
 
   handleDelete = () => {
     this.displaySearchInput();
@@ -156,12 +202,12 @@ class Thoughtline extends Component {
                 <Moment format="LLL">{entry.createdAt}</Moment>
               </p>
               <p style={{ fontSize: 20 }}>{entry.description}</p>
-              <i
-                onClick={this.handleOpenDeleteModal.bind(this, entry._id)}
-                className={`material-icons ${classes.deleteIcon}`}
-              >
-                delete
-              </i>
+              <EntryMenu 
+              className={classes.deleteIcon}
+              deleteModal={this.handleOpenDeleteModal}
+              identifier={entry._id}
+              scheduleModal={this.handleOpenScheduleModal}
+              />
             </div>
           );
         });
@@ -173,6 +219,8 @@ class Thoughtline extends Component {
         );
       } else {
         messageContent = userEntries.map(entry => {
+          
+          
           return (
             <div
               className={classes.thoughtLineMessage}
@@ -183,17 +231,22 @@ class Thoughtline extends Component {
                 <Moment format="LLL">{entry.createdAt}</Moment>
               </em>
               <p style={{ fontSize: 18, marginTop: 10 }}>{entry.description}</p>
-              {/* <i
-                onClick={this.handleOpenDeleteModal.bind(this, entry._id)}
-                className={`material-icons ${classes.deleteIcon}`}
-              >
-                delete
-              </i> */}
+              
+
               <EntryMenu 
               className={classes.deleteIcon}
               deleteModal={this.handleOpenDeleteModal}
               identifier={entry._id}
+              scheduleModal={this.handleOpenScheduleModal}
               />
+              <i style={{display: new Date(entry.deliverOn) >= Date.now() ? '' : 'none'}}
+                 className={`material-icons ${classes.scheduleIcon}`}>
+                schedule
+              </i>
+              <i style={{display: entry.delivered ? '' : 'none'}}
+                 className={`material-icons ${classes.deliveredIcon}`}>
+                done
+              </i>
             </div>
           );
         });
@@ -230,7 +283,16 @@ class Thoughtline extends Component {
             yes={this.handleDelete}
             no={this.handleCloseDeleteModal}
           />
+          
         ) : null}
+        {userEntries.length > 0 ? 
+        <ScheduleModal
+        isOpen={this.state.scheduleModalOpen}
+        yes={this.handleScheduleSend}
+        no={this.handleCloseScheduleModal}
+        sendDate={this.state.sendDate}
+        
+      />: null}
         <div className={classes.messageContainer}>{messageContent}</div>
       </div>
     );

@@ -13,6 +13,7 @@ import API from "../../utils/API";
 class EntryMenu extends React.Component {
   state = {
     anchorEl: null,
+    showDatePicker: false,
   };
 
   handleClick = event => {
@@ -28,6 +29,11 @@ class EntryMenu extends React.Component {
     // .then(result => console.log('result from send one', result))
     .then(() => this.handleClose())
     .catch(err => console.log(err))
+  }
+  handleDateSelect =  () => {
+    this.setState({
+      showDatePicker: true,
+    })
   }
 
   render() {
@@ -52,7 +58,8 @@ class EntryMenu extends React.Component {
                                     this.handleClose()}}>Delete</MenuItem>
           <MenuItem onClick={() => this.handleSendOneEntry(this.props.identifier)
           }>Send Now</MenuItem>
-          <MenuItem onClick={this.handleClose}>Schedule Send</MenuItem>
+          <MenuItem onClick={() => {this.props.scheduleModal(this.props.identifier)
+                                  this.handleClose()}}>Schedule Send</MenuItem>
         </Menu>
       </div>
     );
