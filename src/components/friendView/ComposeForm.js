@@ -84,7 +84,7 @@ class ComposeForm extends Component {
     };
 
     axios
-      .post(API + "/api/v1/entry", newEntry)
+      .post(API + "/api/v1/entry/", newEntry)
       .then(data => {
         this.setState({
           thought: "",
