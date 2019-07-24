@@ -8,9 +8,13 @@ import { loginUser, clearLoginErrors } from "../../_actions/authActions";
 
 // MaterialUI
 import { withStyles } from "@material-ui/core/styles";
+import InputAdornment from '@material-ui/core/InputAdornment';
 import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import IconButton from '@material-ui/core/IconButton';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 const styles = theme => ({
   titleDiv: {
@@ -49,7 +53,12 @@ const styles = theme => ({
     color: "red",
     fontSize: "10px",
     margin: 0
+  },
+ 
+  inputStyle: {
+    width: "100%"
   }
+
 });
 
 const notificationPic = require("../common/notification.png");
@@ -63,7 +72,8 @@ class Login extends Component {
       email: "",
       imgLink: "",
       password: "",
-      password2: ""
+      password2: "",
+      passwordVisible: false,
     };
   }
 
@@ -72,6 +82,12 @@ class Login extends Component {
       [name]: event.target.value
     });
   };
+  togglePasswordMask = () => {
+    this.setState(prevState => ({
+      passwordVisible: !prevState.passwordVisible,
+    }));
+    
+  }
 
   loginUser = () => {
     this.props.clearLoginErrors();
@@ -87,7 +103,7 @@ class Login extends Component {
   render() {
     const { classes, loginErrors } = this.props;
     const { usernameErr, passwordErr, generalErr } = loginErrors;
-    const { username, password } = this.state;
+    const { username, password, passwordVisible } = this.state;
 
     return (
       <div>
@@ -113,8 +129,8 @@ class Login extends Component {
                 id="outlined-email"
                 label="Username"
                 required
-                fullWidth
-                className={classes.textField}
+                // fullWidth
+                className={classes.inputStyle}
                 value={this.state.username}
                 onChange={this.handleInputChange("username")}
                 margin="normal"
@@ -126,9 +142,22 @@ class Login extends Component {
               <TextField
                 id="outlined-password1-input"
                 label="Password"
-                className={classes.textField}
-                type="password"
-                fullWidth
+                className={classes.inputStyle}
+                type={passwordVisible ? "text" : "password"}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                       
+                        onClick={this.togglePasswordMask}
+                      >
+                      {passwordVisible ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                // fullWidth
+                
                 required
                 value={this.state.password1}
                 onChange={this.handleInputChange("password")}
