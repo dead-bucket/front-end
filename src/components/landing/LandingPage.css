@@ -1,0 +1,52 @@
+.landing__container {
+  background-color: lightskyblue;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap-reverse;
+}
+
+.landing__title {
+  font-family: "Satisfy, cursive";
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.landing__menu {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 43vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* min-width: 50vw; */
+  background-color: #ee5f3f;
+  transform: translateX(92%);
+  transition-duration: 1000ms;
+  transition-timing-function: ease-out;
+}
+
+.landing__menu:hover {
+  transform: translateX(4%);
+}
+
+.landing__menu:before {
+  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  content: "Login";
+  align-items: center;
+  left: 0;
+  top: 0;
+  width: 100px;
+  height: 100vh;
+  border-radius: 100% 0% 0% 100%;
+  background-color: #ee5f3f;
+  font-family: Satisfy, cursive;
+  font-size: 40px;
+  color: lightskyblue;
+  transform: translateX(-72px);
+}

@@ -28,54 +28,6 @@ import { getEntries, getInboxEntries } from "../../_actions/entryActions";
 import { loadUser } from "../../_actions/authActions";
 import axios from "axios";
 
-const styles = {
-  friendviewWrapper: {
-    height: "100vh",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    position: "relative"
-  },
-  friendContainer: {
-    display: "flex",
-    justifyContent: "center",
-    textAlign: "center",
-    flexGrow: 1,
-    maxHeight: 152,
-    minHeight: 152,
-    paddingTop: 10
-  },
-  actionContainer: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    overflowY: "scroll",
-    flexGrow: 3,
-    
-  },
-  bottomNav: {
-    flexGrow: 1,
-    maxHeight: 56,
-    minHeight: 56
-  },
-  dashboardIconStyle: {
-    position: "absolute",
-    top: 75,
-    left: "10%",
-    cursor: "pointer",
-    zIndex: 20
-  },
-  medium: {
-    width: 60,
-    height: 60,
-    padding: 12
-  },
-  mediumIcon: {
-    width: 32,
-    height: 32
-  }
-};
-
 class FriendView4 extends Component {
   state = {
     value: 1
@@ -193,6 +145,53 @@ const mapStateToProps = state => ({
   profile: state.profile,
   currentUser: state.auth.currentUser
 });
+
+const styles = {
+  friendviewWrapper: {
+    height: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    position: "relative"
+  },
+  friendContainer: {
+    display: "flex",
+    justifyContent: "center",
+    textAlign: "center",
+    flexGrow: 1,
+    maxHeight: 152,
+    minHeight: 152,
+    paddingTop: 10
+  },
+  actionContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    overflowY: "scroll",
+    flexGrow: 3
+  },
+  bottomNav: {
+    flexGrow: 1,
+    maxHeight: 56,
+    minHeight: 56
+  },
+  dashboardIconStyle: {
+    position: "absolute",
+    top: 75,
+    left: "10%",
+    cursor: "pointer",
+    zIndex: 20
+  },
+  medium: {
+    width: 60,
+    height: 60,
+    padding: 12
+  },
+  mediumIcon: {
+    width: 32,
+    height: 32
+  }
+};
 
 export default connect(
   mapStateToProps,

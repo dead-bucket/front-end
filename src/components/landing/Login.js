@@ -13,37 +13,43 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 
 const styles = theme => ({
-  titleDiv: {
+  // titleDiv: {
+  //   display: "flex",
+  //   justifyContent: "center",
+  //   alignItems: "center"
+  // },
+  loginSignupContainer: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center"
   },
+  // title: {
+  //   fontFamily: "Satisfy, cursive",
+  //   color: "#0058CF",
+  //   flexGrow: 1,
+  //   marginTop: 0
+  // },
+  // titleImg: {
+  //   width: 48,
+  //   marginBottom: 60
+  // },
 
-  title: {
-    fontFamily: "Satisfy, cursive",
-    color: "#0058CF",
-    flexGrow: 1,
-    marginTop: 0
-  },
-  titleImg: {
-    width: 48,
-    marginBottom: 60
-  },
-  loginSignupContainer: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center"
-  },
   loginCard: {
     padding: 20,
     width: 350,
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
+    backgroundColor: "#ee5f3f"
   },
   form: {
-    width: "100%"
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    width: 350
+  },
+  button: {
+    backgroundColor: "lightskyblue"
   },
   error: {
     color: "red",
@@ -90,83 +96,73 @@ class Login extends Component {
     const { username, password } = this.state;
 
     return (
-      <div>
-        <NavBar />
-        <div
-          tabIndex={-1}
-          className={classes.loginSignupContainer}
-          onKeyDown={e => (e.key === "Enter" ? this.loginUser() : null)}
-        >
-          <p style={{ marginTop: "50px", marginBottom: 0 }}>Welcome to</p>
-          <div className={classes.titleDiv}>
+      <div
+        tabIndex={-1}
+        className={classes.loginSignupContainer}
+        onKeyDown={e => (e.key === "Enter" ? this.loginUser() : null)}
+      >
+        {/* <p style={{ marginTop: "50px", marginBottom: 0 }}>Welcome to</p> */}
+        {/* <div className={classes.titleDiv}>
             <h1 className={classes.title}>Thoughtline </h1>
             <img
               className={classes.titleImg}
               src={notificationPic}
               alt="logo"
             />
+          </div> */}
+        {/* <Card className={classes.loginCard}> */}
+        <form className={classes.form} autoComplete="off">
+          <TextField
+            id="outlined-email"
+            label="Username"
+            required
+            fullWidth
+            className={classes.textField}
+            value={this.state.username}
+            onChange={this.handleInputChange("username")}
+            margin="normal"
+            variant="outlined"
+          />
+          {usernameErr ? <p className={classes.error}>{usernameErr}</p> : null}
+          <TextField
+            id="outlined-password1-input"
+            label="Password"
+            className={classes.textField}
+            type="password"
+            fullWidth
+            required
+            value={this.state.password1}
+            onChange={this.handleInputChange("password")}
+            autoComplete="current-password"
+            margin="normal"
+            variant="outlined"
+          />
+          {passwordErr ? <p className={classes.error}>{passwordErr}</p> : null}
+          <p style={{ margin: "0px" }}>*required</p>
+
+          {generalErr ? <p className={classes.error}>{generalErr}</p> : null}
+          <br />
+          <div>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              onClick={this.loginUser}
+              disabled={!username || !password}
+            >
+              Login
+            </Button>
           </div>
-          <Card className={classes.loginCard}>
-            <h4 style={{ margin: 0 }}>Login</h4>
-            <form className={classes.form} autoComplete="off">
-              <TextField
-                id="outlined-email"
-                label="Username"
-                required
-                fullWidth
-                className={classes.textField}
-                value={this.state.username}
-                onChange={this.handleInputChange("username")}
-                margin="normal"
-                variant="outlined"
-              />
-              {usernameErr ? (
-                <p className={classes.error}>{usernameErr}</p>
-              ) : null}
-              <TextField
-                id="outlined-password1-input"
-                label="Password"
-                className={classes.textField}
-                type="password"
-                fullWidth
-                required
-                value={this.state.password1}
-                onChange={this.handleInputChange("password")}
-                autoComplete="current-password"
-                margin="normal"
-                variant="outlined"
-              />
-              {passwordErr ? (
-                <p className={classes.error}>{passwordErr}</p>
-              ) : null}
-              <p style={{ margin: "0px" }}>*required</p>
+          <br />
+          <Link to="/signup">
+            <Button color="primary" variant="outlined">
+              Create An Account
+            </Button>
+          </Link>
+        </form>
 
-              {generalErr ? (
-                <p className={classes.error}>{generalErr}</p>
-              ) : null}
-              <br />
-              <div>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                  onClick={this.loginUser}
-                  disabled={!username || !password}
-                >
-                  Login
-                </Button>
-              </div>
-            </form>
-            <br />
-
-            <Link to="/signup">
-              <Button color="primary" variant="outlined">
-                Create An Account
-              </Button>
-            </Link>
-          </Card>
-        </div>
+        {/* </Card> */}
       </div>
     );
   }
