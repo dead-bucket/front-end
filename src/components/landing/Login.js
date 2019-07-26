@@ -13,26 +13,11 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 
 const styles = theme => ({
-  // titleDiv: {
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   alignItems: "center"
-  // },
   loginSignupContainer: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center"
   },
-  // title: {
-  //   fontFamily: "Satisfy, cursive",
-  //   color: "#0058CF",
-  //   flexGrow: 1,
-  //   marginTop: 0
-  // },
-  // titleImg: {
-  //   width: 48,
-  //   marginBottom: 60
-  // },
 
   loginCard: {
     padding: 20,
@@ -51,6 +36,7 @@ const styles = theme => ({
   button: {
     backgroundColor: "lightskyblue"
   },
+
   error: {
     color: "red",
     fontSize: "10px",
@@ -111,57 +97,63 @@ class Login extends Component {
             />
           </div> */}
         {/* <Card className={classes.loginCard}> */}
-        <form className={classes.form} autoComplete="off">
-          <TextField
-            id="outlined-email"
-            label="Username"
-            required
-            fullWidth
-            className={classes.textField}
-            value={this.state.username}
-            onChange={this.handleInputChange("username")}
-            margin="normal"
-            variant="outlined"
-          />
-          {usernameErr ? <p className={classes.error}>{usernameErr}</p> : null}
-          <TextField
-            id="outlined-password1-input"
-            label="Password"
-            className={classes.textField}
-            type="password"
-            fullWidth
-            required
-            value={this.state.password1}
-            onChange={this.handleInputChange("password")}
-            autoComplete="current-password"
-            margin="normal"
-            variant="outlined"
-          />
-          {passwordErr ? <p className={classes.error}>{passwordErr}</p> : null}
-          <p style={{ margin: "0px" }}>*required</p>
-
-          {generalErr ? <p className={classes.error}>{generalErr}</p> : null}
-          <br />
-          <div>
-            <Button
+        <div>
+          <h4 style={{ margin: 0, textAlign: "center" }}>Login</h4>
+          <form className={classes.form} autoComplete="off">
+            <TextField
+              id="outlined-email"
+              label="Username"
+              required
               fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.button}
-              onClick={this.loginUser}
-              disabled={!username || !password}
-            >
-              Login
-            </Button>
-          </div>
-          <br />
-          <Link to="/signup">
+              className={classes.textField}
+              value={this.state.username}
+              onChange={this.handleInputChange("username")}
+              margin="normal"
+              variant="outlined"
+            />
+            {usernameErr ? (
+              <p className={classes.error}>{usernameErr}</p>
+            ) : null}
+            <TextField
+              id="outlined-password1-input"
+              label="Password"
+              className={classes.textField}
+              type="password"
+              fullWidth
+              required
+              value={this.state.password1}
+              onChange={this.handleInputChange("password")}
+              autoComplete="current-password"
+              margin="normal"
+              variant="outlined"
+            />
+            {passwordErr ? (
+              <p className={classes.error}>{passwordErr}</p>
+            ) : null}
+            <p style={{ margin: "0px" }}>*required</p>
+
+            {generalErr ? <p className={classes.error}>{generalErr}</p> : null}
+            <br />
+            <div>
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                onClick={this.loginUser}
+                disabled={!username || !password}
+              >
+                Login
+              </Button>
+            </div>
+            <br />
+            {/* <Link to="/signup">
             <Button color="primary" variant="outlined">
               Create An Account
             </Button>
-          </Link>
-        </form>
-
+          </Link> */}
+          </form>
+        </div>
         {/* </Card> */}
       </div>
     );

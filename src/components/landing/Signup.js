@@ -137,13 +137,13 @@ class Signup extends Component {
 
     return (
       <div className={classes.signupContainer}>
-        <NavBar />
+        {/* <NavBar /> */}
         <div
           tabIndex={-1}
           className={classes.loginSignupContainer}
           onKeyDown={e => (e.key === "Enter" ? this.registerUser() : null)}
         >
-          <p style={{ marginTop: "50px", marginBottom: 0 }}>Welcome to</p>
+          {/* <p style={{ marginTop: "50px", marginBottom: 0 }}>Welcome to</p>
           <div className={classes.titleDiv}>
             <h1 className={classes.title}>Thoughtline </h1>
             <img
@@ -151,50 +151,50 @@ class Signup extends Component {
               src={notificationPic}
               alt="logo"
             />
-          </div>
-          <Card className={classes.signupCard}>
-            <h4 style={{ margin: 0 }}>Create an Account</h4>
+          </div> */}
+          {/* <Card className={classes.signupCard}> */}
+          <h4 style={{ margin: 0 }}>Create an Account</h4>
 
-            <ImgUpload updateImg={this.handleProfileImg} />
+          {/* <ImgUpload updateImg={this.handleProfileImg} /> */}
 
-            <form autoComplete="off">
-              <TextField
-                id="outlined-firstname"
-                label="First name"
-                fullWidth
-                required
-                // className={classes.textField}
-                value={this.state.firstname}
-                onChange={this.handleInputChange("firstname")}
-                margin="normal"
-                variant="outlined"
-              />
-              <TextField
-                id="outlined-lastname"
-                label="Last name"
-                fullWidth
-                required
-                // className={classes.textField}
-                value={this.state.lastname}
-                onChange={this.handleInputChange("lastname")}
-                margin="normal"
-                variant="outlined"
-              />
-              <TextField
-                id="outlined-username"
-                label="Username"
-                required
-                fullWidth
-                // className={classes.textField}
-                value={this.state.username}
-                onChange={this.handleInputChange("username")}
-                margin="normal"
-                variant="outlined"
-              />
-              {usernameErr ? (
-                <p className={classes.error}>{usernameErr}</p>
-              ) : null}
-              <TextField
+          <form autoComplete="off">
+            <TextField
+              id="outlined-firstname"
+              label="First name"
+              fullWidth
+              required
+              // className={classes.textField}
+              value={this.state.firstname}
+              onChange={this.handleInputChange("firstname")}
+              margin="normal"
+              variant="outlined"
+            />
+            <TextField
+              id="outlined-lastname"
+              label="Last name"
+              fullWidth
+              required
+              // className={classes.textField}
+              value={this.state.lastname}
+              onChange={this.handleInputChange("lastname")}
+              margin="normal"
+              variant="outlined"
+            />
+            <TextField
+              id="outlined-username"
+              label="Username"
+              required
+              fullWidth
+              // className={classes.textField}
+              value={this.state.username}
+              onChange={this.handleInputChange("username")}
+              margin="normal"
+              variant="outlined"
+            />
+            {usernameErr ? (
+              <p className={classes.error}>{usernameErr}</p>
+            ) : null}
+            {/* <TextField
                 id="outlined-email"
                 label="Email"
                 required
@@ -245,33 +245,33 @@ class Signup extends Component {
                 <p className={classes.error}>{generalErr}</p>
               ) : null}
 
-              <p style={{ margin: 0 }}>*required</p>
-              <br />
-              <div>
-                <Button
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                  onClick={this.registerUser}
-                  disabled={
-                    !firstname ||
-                    !lastname ||
-                    !username ||
-                    !password ||
-                    !password2 ||
-                    !email
-                  }
-                >
-                  Signup!
-                </Button>
-              </div>
-            </form>
-            <br />
-            <Button color="primary" variant="outlined">
+              <p style={{ margin: 0 }}>*required</p> */}
+            {/* <br /> */}
+            <div>
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                onClick={this.registerUser}
+                disabled={
+                  !firstname ||
+                  !lastname ||
+                  !username ||
+                  !password ||
+                  !password2 ||
+                  !email
+                }
+              >
+                Signup!
+              </Button>
+            </div>
+          </form>
+          {/* <br /> */}
+          {/* <Button color="primary" variant="outlined">
               <Link to="/">Want to login?</Link>
-            </Button>
-          </Card>
+            </Button> */}
+          {/* </Card> */}
         </div>
       </div>
     );

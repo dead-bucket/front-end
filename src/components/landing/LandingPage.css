@@ -1,10 +1,9 @@
 .landing__container {
-  background-color: lightskyblue;
-  height: 100vh;
-  overflow: hidden;
   position: relative;
-  display: flex;
-  flex-wrap: wrap-reverse;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: lightskyblue;
 }
 
 .landing__title {
@@ -13,40 +12,62 @@
   margin-bottom: 0px;
 }
 
-.landing__menu {
+.landing__login {
   position: absolute;
-  right: 0;
   top: 0;
+  right: 0;
+  width: 100vw;
   height: 100vh;
-  width: 43vw;
+  background-color: #ee5f3f;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: transform 1s;
+  transform: translateX(100%);
   display: flex;
   justify-content: center;
   align-items: center;
-  /* min-width: 50vw; */
-  background-color: #ee5f3f;
-  transform: translateX(92%);
-  transition-duration: 1000ms;
-  transition-timing-function: ease-out;
 }
 
-.landing__menu:hover {
-  transform: translateX(4%);
-}
-
-.landing__menu:before {
+.landing__signup {
   position: absolute;
-  display: flex;
-  justify-content: flex-end;
-  content: "Login";
-  align-items: center;
-  left: 0;
   top: 0;
-  width: 100px;
+  right: 0;
+  width: 100vw;
   height: 100vh;
-  border-radius: 100% 0% 0% 100%;
   background-color: #ee5f3f;
-  font-family: Satisfy, cursive;
-  font-size: 40px;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: transform 1s;
+  transform: translateX(100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.landing__login.show {
+  transform: translateX(0px);
+}
+.landing__signup.show {
+  transform: translateX(0px);
+}
+
+.landing__loginSignupBtn {
+  position: relative;
+  width: 150px;
+  height: 50px;
+  border-radius: 25px;
+  border: 3px solid #e8745a;
+  background-color: lightskyblue;
+  color: #ee5f3f;
+  margin: 50px;
+  transition: all 1s;
+  overflow: hidden;
+}
+
+.landing__loginSignupBtn:hover {
   color: lightskyblue;
-  transform: translateX(-72px);
+  background-color: #ee5f3f;
+  font-weight: bold;
 }
