@@ -233,13 +233,13 @@ class Thoughtline extends Component {
               <p style={{ fontSize: 18, marginTop: 10 }}>{entry.description}</p>
               
 
-              <EntryMenu 
+              { !entry.delivered ? <EntryMenu 
               className={classes.deleteIcon}
               deleteModal={this.handleOpenDeleteModal}
               identifier={entry._id}
               scheduleModal={this.handleOpenScheduleModal}
-              />
-              <i style={{display: new Date(entry.deliverOn) >= Date.now() ? '' : 'none'}}
+              /> : null }
+              <i style={{display: (new Date(entry.deliverOn) >= Date.now() && !entry.delivered) ? '' : 'none'}}
                  className={`material-icons ${classes.scheduleIcon}`}>
                 schedule
               </i>

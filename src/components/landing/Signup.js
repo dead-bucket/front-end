@@ -17,29 +17,30 @@ import { registerUser, clearSignupErrors } from "../../_actions/authActions";
 const styles = {
   signupContainer: {
     display: "flex",
-    flexDirection: "column",
-    marginBottom: 100
+    flexDirection: "column"
   },
-  titleDiv: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  title: {
-    fontFamily: "Satisfy, cursive",
-    color: "#0058CF",
-    flexGrow: 1,
-    marginTop: 0
-  },
-  titleImg: {
-    width: 48,
-    marginBottom: 60
-  },
+  // titleDiv: {
+  //   display: "flex",
+  //   justifyContent: "center",
+  //   alignItems: "center"
+  // },
+  // title: {
+  //   fontFamily: "Satisfy, cursive",
+  //   color: "#0058CF",
+  //   flexGrow: 1,
+  //   marginTop: 0
+  // },
+  // titleImg: {
+  //   width: 48,
+  //   marginBottom: 60
+  // },
   loginSignupContainer: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    width: "100%",
+    maxWidth: "400px"
   },
   signupCard: {
     padding: 20,
@@ -47,6 +48,12 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center"
+  },
+  form: {
+    width: "90%"
+  },
+  button: {
+    backgroundColor: "lightskyblue"
   },
   error: {
     color: "red",
@@ -157,7 +164,7 @@ class Signup extends Component {
 
           {/* <ImgUpload updateImg={this.handleProfileImg} /> */}
 
-          <form autoComplete="off">
+          <form className={classes.form} autoComplete="off">
             <TextField
               id="outlined-firstname"
               label="First name"
