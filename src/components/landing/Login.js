@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+
 import { withRouter, Link } from "react-router-dom";
-import NavBar from "../common/NavBar";
+// import NavBar from "../common/NavBar";
 //REDUX
 import { connect } from "react-redux";
 import { loginUser, clearLoginErrors } from "../../_actions/authActions";
 // MaterialUI
 import { withStyles } from "@material-ui/core/styles";
+
 import InputAdornment from "@material-ui/core/InputAdornment";
-import Card from "@material-ui/core/Card";
+// import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
@@ -113,7 +115,7 @@ class Login extends Component {
             />
           </div> */}
         {/* <Card className={classes.loginCard}> */}
-        <h4 style={{ margin: 0 }}>Login</h4>
+        <h6 style={{ margin: 0 }}>Login</h6>
         <form className={classes.form} autoComplete="off">
           <TextField
             id="outlined-email"
@@ -151,7 +153,7 @@ class Login extends Component {
             variant="outlined"
           />
           {passwordErr ? <p className={classes.error}>{passwordErr}</p> : null}
-          <p style={{ margin: "0px" }}>*required</p>
+          <p style={{ margin: "0px", fontSize: 15 }}>*required</p>
           {generalErr ? <p className={classes.error}>{generalErr}</p> : null}
 
           <div>

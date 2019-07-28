@@ -18,7 +18,7 @@ import {
   getNotifications
 } from "../../_actions/profileActions";
 import { loadUser } from "../../_actions/authActions";
-
+// TODO: checkout touch-action for sliding on mobile: https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action
 const styles = {
   dashboardWrapper: {
     height: "99.5vh",

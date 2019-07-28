@@ -4,21 +4,24 @@ import CloseButton from "@material-ui/icons/Close";
 import Login from "./Login";
 import "./LandingPage.css";
 import Signup from "./Signup";
+import SignUpSlider from "./SignUpSlider";
+const logoPrimary = require("../common/thoughtline-logo-primary.svg");
+const logoSecondary = require("../common/thoughtline-logo-secondary.svg");
 
-const notificationPic = require("../common/notification.png");
 const styles = theme => ({
   title: {
     fontFamily: "Satisfy, cursive",
     fontSize: "3rem",
     color: "#ee5f3f",
-    margin: "100px 30px 0px"
+    margin: "0px 30px 0px"
   },
   copy: {
     fontFamily: "Roboto, sans-serif",
-    fontWeight: 100,
+    fontWeight: 200,
     // fontSize: 25,
     fontSize: "1rem",
     textAlign: "center",
+    margin: 0,
     width: "80%",
     maxWidth: 700
   },
@@ -26,9 +29,14 @@ const styles = theme => ({
     // marginTop: "50px",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     alignItems: "center",
-    flex: 2
+    width: "100vw",
+    height: "100vh"
+    // flex: 2
+  },
+  logo: {
+    width: 125
   },
   // landing__loginSignupBtn: {
   //   width: 150,
@@ -38,15 +46,16 @@ const styles = theme => ({
     position: "relative",
     display: "flex",
     flexDirection: "column",
-    // justifyContent: "center",
+    justifyContent: "space-evenly",
     alignItems: "center",
     width: "100vw",
     height: "100vh"
   },
+
   landing__loginContainerCloseBtn: {
     position: "absolute",
-    top: "20px",
-    left: "20px",
+    top: "15px",
+    left: "15px",
     color: "lightskyblue",
     fontSize: "40px"
   },
@@ -93,32 +102,40 @@ class LandingPage extends Component {
     return (
       <div className="landing__container">
         <div className={classes.landingLeft}>
+          <img
+            src={logoPrimary}
+            alt="Thoughtline logo"
+            className={classes.logo}
+          />
           <p className={classes.title}>Thoughtline</p>
+          <p className={classes.copy}>
+            Journaling is a vehicle of emotional exploration, a way to channel
+            difficult feelings into healthy and creative outcomes.
+          </p>
+          <p className={classes.copy}>
+            By writing down your thoughts and feelings, you are forced to slow
+            down and pay attention to everything that is going on in your life.
+            You have to listen rather than run away from your feelings.
+          </p>
           <button
             className="landing__loginSignupBtn"
             onClick={this.handleOpenMenu}
           >
             Login
           </button>
-          <p className={classes.copy}>
-            Journaling is a vehicle of emotional exploration, a way to channel
-            difficult feelings into healthy and creative outcomes.
-          </p>
-
-          <p className={classes.copy}>
-            By writing down your thoughts and feelings, you are forced to slow
-            down and pay attention to everything that is going on in your life.
-            You have to listen rather than run away from your feelings.
-          </p>
         </div>
 
-        {/* <img className={classes.titleImg} src={notificationPic} alt="logo" /> */}
         {/* LOGIN */}
         <div className={slideLogin.join(" ")}>
           <div className={classes.landing__loginContainer}>
             <CloseButton
               className={classes.landing__loginContainerCloseBtn}
               onClick={this.handleCloseMenu}
+            />
+            <img
+              src={logoSecondary}
+              alt="Thoughtline logo"
+              className={classes.logo}
             />
             <p className={classes.title} style={{ color: "lightskyblue" }}>
               Thoughtline
@@ -130,7 +147,7 @@ class LandingPage extends Component {
               className="landing__loginSignupBtn"
               onClick={this.cycleLoginSignup}
             >
-              Create an account
+              Create account
             </button>
           </div>
         </div>
@@ -140,6 +157,11 @@ class LandingPage extends Component {
             <CloseButton
               className={classes.landing__loginContainerCloseBtn}
               onClick={this.handleCloseMenu}
+            />
+            <img
+              src={logoSecondary}
+              alt="Thoughtline logo"
+              className={classes.logo}
             />
             <p className={classes.title} style={{ color: "lightskyblue" }}>
               Thoughtline

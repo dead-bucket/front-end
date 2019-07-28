@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
-import ImgUpload from "../common/ImgUpload";
-import NavBar from "../common/NavBar";
+// import ImgUpload from "../common/ImgUpload";
+// import NavBar from "../common/NavBar";
+
 // MaterialUI
 import { withStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
+// import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 
@@ -160,7 +161,7 @@ class Signup extends Component {
             />
           </div> */}
           {/* <Card className={classes.signupCard}> */}
-          <h4 style={{ margin: 0 }}>Create an Account</h4>
+          <h6 style={{ margin: 0 }}>Create an Account</h6>
 
           {/* <ImgUpload updateImg={this.handleProfileImg} /> */}
 
@@ -202,58 +203,55 @@ class Signup extends Component {
               <p className={classes.error}>{usernameErr}</p>
             ) : null}
             {/* <TextField
-                id="outlined-email"
-                label="Email"
-                required
-                fullWidth
-                // className={classes.textField}
-                value={this.state.email}
-                onChange={this.handleInputChange("email")}
-                margin="normal"
-                variant="outlined"
-              />
-              {passwordError.email ? (
-                <p className={classes.error}>{passwordError.email}</p>
-              ) : null}
-              {emailErr ? <p className={classes.error}>{emailErr}</p> : null}
-              <TextField
-                id="outlined-password1-input"
-                label="Password"
-                className={classes.textField}
-                type="password"
-                fullWidth
-                required
-                value={this.state.password}
-                onChange={this.handleInputChange("password")}
-                autoComplete="current-password"
-                margin="normal"
-                variant="outlined"
-              />
-              {passwordError.password ? (
-                <p className={classes.error}>{passwordError.password}</p>
-              ) : null}
-              <TextField
-                id="outlined-password2-input"
-                label="Confirm Password"
-                className={classes.textField}
-                type="password"
-                fullWidth
-                required
-                value={this.state.password2}
-                onChange={this.handleInputChange("password2")}
-                autoComplete="current-password"
-                margin="normal"
-                variant="outlined"
-              />
-              {passwordError.password2 ? (
-                <p className={classes.error}>{passwordError.password2}</p>
-              ) : null}
-              {generalErr ? (
-                <p className={classes.error}>{generalErr}</p>
-              ) : null}
+              id="outlined-email"
+              label="Email"
+              required
+              fullWidth
+              // className={classes.textField}
+              value={this.state.email}
+              onChange={this.handleInputChange("email")}
+              margin="normal"
+              variant="outlined"
+            />
+            {passwordError.email ? (
+              <p className={classes.error}>{passwordError.email}</p>
+            ) : null}
+            {emailErr ? <p className={classes.error}>{emailErr}</p> : null}
+            <TextField
+              id="outlined-password1-input"
+              label="Password"
+              className={classes.textField}
+              type="password"
+              fullWidth
+              required
+              value={this.state.password}
+              onChange={this.handleInputChange("password")}
+              autoComplete="current-password"
+              margin="normal"
+              variant="outlined"
+            />
+            {passwordError.password ? (
+              <p className={classes.error}>{passwordError.password}</p>
+            ) : null}
+            <TextField
+              id="outlined-password2-input"
+              label="Confirm Password"
+              className={classes.textField}
+              type="password"
+              fullWidth
+              required
+              value={this.state.password2}
+              onChange={this.handleInputChange("password2")}
+              autoComplete="current-password"
+              margin="normal"
+              variant="outlined"
+            />
+            {passwordError.password2 ? (
+              <p className={classes.error}>{passwordError.password2}</p>
+            ) : null} */}
+            {generalErr ? <p className={classes.error}>{generalErr}</p> : null}
+            <p style={{ margin: 0, fontSize: 15 }}>*required</p>
 
-              <p style={{ margin: 0 }}>*required</p> */}
-            {/* <br /> */}
             <div>
               <Button
                 fullWidth
