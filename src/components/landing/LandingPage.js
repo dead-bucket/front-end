@@ -4,7 +4,8 @@ import CloseButton from "@material-ui/icons/Close";
 import Login from "./Login";
 import "./LandingPage.css";
 import Signup from "./Signup";
-import SignUpSlider from "./SignUpSlider";
+// import zIndex from "@material-ui/core/styles/zIndex";
+import CustomButton from "../common/Button";
 const logoPrimary = require("../common/thoughtline-logo-primary.svg");
 const logoSecondary = require("../common/thoughtline-logo-secondary.svg");
 
@@ -15,38 +16,46 @@ const styles = theme => ({
     color: "#ee5f3f",
     margin: "0px 30px 0px"
   },
-  copy: {
-    fontFamily: "Roboto, sans-serif",
-    fontWeight: 200,
-    // fontSize: 25,
-    fontSize: "1rem",
-    textAlign: "center",
-    margin: 0,
-    width: "80%",
-    maxWidth: 700
-  },
-  landingLeft: {
-    // marginTop: "50px",
+  logoContainer: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-evenly",
     alignItems: "center",
-    width: "100vw",
-    height: "100vh"
-    // flex: 2
+    marginTop: "40px"
   },
   logo: {
     width: 125
   },
-  // landing__loginSignupBtn: {
-  //   width: 150,
-  //   height: 50
-  // },
-  landing__loginContainer: {
-    position: "relative",
+  logoSmall: {
+    width: 100
+  },
+  logoContainerSmall: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+    marginTop: "20px"
+  },
+  titleSmall: {
+    fontFamily: "Satisfy, cursive",
+    fontSize: "2rem",
+    color: "#ee5f3f",
+    margin: "0px 30px 0px"
+  },
+
+  copy: {
+    fontFamily: "Roboto, sans-serif",
+    fontWeight: 200,
+    fontSize: "1rem",
+    textAlign: "center",
+    margin: "20px 0px",
+    width: "80%",
+    maxWidth: 700
+  },
+
+  landingLeft: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-evenly",
+    justifyContent: "flex-start",
     alignItems: "center",
     width: "100vw",
     height: "100vh"
@@ -99,15 +108,18 @@ class LandingPage extends Component {
     if (showSignup) {
       slideSignup.push("show");
     }
+
     return (
       <div className="landing__container">
         <div className={classes.landingLeft}>
-          <img
-            src={logoPrimary}
-            alt="Thoughtline logo"
-            className={classes.logo}
-          />
-          <p className={classes.title}>Thoughtline</p>
+          <div className={classes.logoContainer}>
+            <img
+              src={logoPrimary}
+              alt="Thoughtline logo"
+              className={classes.logo}
+            />
+            <p className={classes.title}>Thoughtline</p>
+          </div>
           <p className={classes.copy}>
             Journaling is a vehicle of emotional exploration, a way to channel
             difficult feelings into healthy and creative outcomes.
@@ -117,21 +129,18 @@ class LandingPage extends Component {
             down and pay attention to everything that is going on in your life.
             You have to listen rather than run away from your feelings.
           </p>
-          <button
-            className="landing__loginSignupBtn"
-            onClick={this.handleOpenMenu}
-          >
+          <CustomButton primary handleClick={this.handleOpenMenu}>
             Login
-          </button>
+          </CustomButton>
         </div>
 
         {/* LOGIN */}
         <div className={slideLogin.join(" ")}>
-          <div className={classes.landing__loginContainer}>
-            <CloseButton
-              className={classes.landing__loginContainerCloseBtn}
-              onClick={this.handleCloseMenu}
-            />
+          <CloseButton
+            className={classes.landing__loginContainerCloseBtn}
+            onClick={this.handleCloseMenu}
+          />
+          <div className={classes.logoContainer}>
             <img
               src={logoSecondary}
               alt="Thoughtline logo"
@@ -140,42 +149,41 @@ class LandingPage extends Component {
             <p className={classes.title} style={{ color: "lightskyblue" }}>
               Thoughtline
             </p>
-
-            <Login />
-
-            <button
-              className="landing__loginSignupBtn"
-              onClick={this.cycleLoginSignup}
-            >
-              Create account
-            </button>
           </div>
+          <Login />
+
+          <br />
+          <CustomButton secondary handleClick={this.cycleLoginSignup}>
+            Create Account
+          </CustomButton>
         </div>
         {/* SIGNUP */}
         <div className={slideSignup.join(" ")}>
-          <div className={classes.landing__loginContainer}>
-            <CloseButton
-              className={classes.landing__loginContainerCloseBtn}
-              onClick={this.handleCloseMenu}
-            />
+          <CloseButton
+            className={classes.landing__loginContainerCloseBtn}
+            onClick={this.handleCloseMenu}
+          />
+          <div className={classes.logoContainerSmall}>
             <img
               src={logoSecondary}
               alt="Thoughtline logo"
-              className={classes.logo}
+              className={classes.logoSmall}
             />
-            <p className={classes.title} style={{ color: "lightskyblue" }}>
+            <p className={classes.titleSmall} style={{ color: "lightskyblue" }}>
               Thoughtline
             </p>
-
-            <Signup className="landing__login" />
-
-            <button
-              className="landing__loginSignupBtn"
-              onClick={this.cycleLoginSignup}
-            >
-              Login
-            </button>
+            <h6 style={{ margin: 0, textAlign: "center" }}>Create Account</h6>
           </div>
+
+          <Signup
+            cycleLoginSignup={this.cycleLoginSignup}
+            className="landing__login"
+          />
+
+          <br />
+          {/* <CustomButton secondary handleClick={this.cycleLoginSignup}>
+            Login
+          </CustomButton> */}
         </div>
       </div>
     );

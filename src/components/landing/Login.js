@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 
-import { withRouter, Link } from "react-router-dom";
-// import NavBar from "../common/NavBar";
 //REDUX
 import { connect } from "react-redux";
 import { loginUser, clearLoginErrors } from "../../_actions/authActions";
@@ -17,21 +16,6 @@ import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 const styles = theme => ({
-  // titleDiv: {
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   alignItems: "center"
-  // },
-  // title: {
-  //   fontFamily: "Satisfy, cursive",
-  //   color: "#0058CF",
-  //   flexGrow: 1,
-  //   marginTop: 0
-  // },
-  // titleImg: {
-  //   width: 48,
-  //   marginBottom: 60
-  // },
   loginSignupContainer: {
     display: "flex",
     flexDirection: "column",
@@ -40,13 +24,7 @@ const styles = theme => ({
     width: "100%",
     maxWidth: "400px"
   },
-  // loginCard: {
-  //   padding: 20,
-  //   width: 350,
-  //   display: "flex",
-  //   flexDirection: "column",
-  //   alignItems: "center"
-  // },
+
   form: {
     width: "90%"
   },
@@ -62,7 +40,7 @@ const styles = theme => ({
     width: "100%"
   }
 });
-const notificationPic = require("../common/notification.png");
+// const notificationPic = require("../common/notification.png");
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -103,25 +81,15 @@ class Login extends Component {
       <div
         tabIndex={-1}
         className={classes.loginSignupContainer}
-        onKeyDown={e => (e.key === "Enter" ? this.loginUser() : null)}
+        // onKeyDown={e => (e.key === "Enter" ? this.loginUser() : null)}
       >
-        {/* <p style={{ marginTop: "50px", marginBottom: 0 }}>Welcome to</p>
-          <div className={classes.titleDiv}>
-            <h1 className={classes.title}>Thoughtline </h1>
-            <img
-              className={classes.titleImg}
-              src={notificationPic}
-              alt="logo"
-            />
-          </div> */}
-        {/* <Card className={classes.loginCard}> */}
         <h6 style={{ margin: 0 }}>Login</h6>
         <form className={classes.form} autoComplete="off">
           <TextField
-            id="outlined-email"
+            id="login-outlined-email"
             label="Username"
             required
-            // fullWidth
+            autoComplete="username"
             className={classes.inputStyle}
             value={this.state.username}
             onChange={this.handleInputChange("username")}
@@ -130,8 +98,9 @@ class Login extends Component {
           />
           {usernameErr ? <p className={classes.error}>{usernameErr}</p> : null}
           <TextField
-            id="outlined-password1-input"
+            id="login-outlined-password1-input"
             label="Password"
+            autoComplete="current-password"
             className={classes.inputStyle}
             type={passwordVisible ? "text" : "password"}
             InputProps={{
@@ -143,8 +112,6 @@ class Login extends Component {
                 </InputAdornment>
               )
             }}
-            // fullWidth
-
             required
             value={this.state.password1}
             onChange={this.handleInputChange("password")}
@@ -169,13 +136,6 @@ class Login extends Component {
             </Button>
           </div>
         </form>
-        {/* <br />
-            <Link to="/signup">
-              <Button color="primary" variant="outlined">
-                Create An Account
-              </Button>
-            </Link> */}
-        {/* </Card> */}
       </div>
     );
   }

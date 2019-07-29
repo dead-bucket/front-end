@@ -1,0 +1,54 @@
+.tl-btn-primary {
+  position: relative;
+  width: 250px;
+  height: 50px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid #e8745a;
+  background-color: lightskyblue;
+  color: #ee5f3f;
+  transition: all 0.5s;
+}
+
+.tl-btn-primary:hover {
+  color: lightskyblue;
+  background-color: #ee5f3f;
+  font-weight: bold;
+  letter-spacing: 4px;
+}
+
+.tl-btn-secondary {
+  position: relative;
+  width: 250px;
+  height: 50px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid #e8745a;
+  color: lightskyblue;
+  background-color: #ee5f3f;
+  transition: all 0.5s;
+}
+
+.tl-btn-secondary:hover {
+  background-color: lightskyblue;
+  color: #ee5f3f;
+  font-weight: bold;
+  letter-spacing: 4px;
+}
+
+.disabled-btn {
+  position: relative;
+  width: 250px;
+  height: 50px;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #747474;
+  color: #5f5654;
+  border: none;
+}
