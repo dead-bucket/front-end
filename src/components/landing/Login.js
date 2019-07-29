@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
+import Button from "../common/Button";
 
 //REDUX
 import { connect } from "react-redux";
@@ -10,7 +11,6 @@ import { withStyles } from "@material-ui/core/styles";
 
 import InputAdornment from "@material-ui/core/InputAdornment";
 // import Card from "@material-ui/core/Card";
-import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
@@ -29,31 +29,28 @@ const styles = theme => ({
     width: "90%"
   },
   error: {
-    color: "red",
-    fontSize: "10px",
+    color: "white",
+    fontSize: 14,
     margin: 0
-  },
-  button: {
-    backgroundColor: "lightskyblue"
   },
   inputStyle: {
     width: "100%"
+  },
+  buttonContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 // const notificationPic = require("../common/notification.png");
 class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: 0,
-      username: "",
-      email: "",
-      imgLink: "",
-      password: "",
-      password2: "",
-      passwordVisible: false
-    };
-  }
+  state = {
+    username: "",
+    password: "",
+    passwordVisible: false
+  };
+
   handleInputChange = name => event => {
     this.setState({
       [name]: event.target.value
@@ -67,10 +64,12 @@ class Login extends Component {
   loginUser = () => {
     this.props.clearLoginErrors();
     const { username, password } = this.state;
+    console.log({ username, password });
     const loginData = {
       username: username.toLowerCase(),
       password
     };
+    console.log("props.history: ", this.props.histoy);
     this.props.loginUser(loginData, this.props.history);
   };
   render() {
@@ -88,7 +87,6 @@ class Login extends Component {
           <TextField
             id="login-outlined-email"
             label="Username"
-            required
             autoComplete="username"
             className={classes.inputStyle}
             value={this.state.username}
@@ -112,30 +110,29 @@ class Login extends Component {
                 </InputAdornment>
               )
             }}
-            required
-            value={this.state.password1}
+            value={this.state.password}
             onChange={this.handleInputChange("password")}
-            autoComplete="current-password"
             margin="normal"
             variant="outlined"
           />
           {passwordErr ? <p className={classes.error}>{passwordErr}</p> : null}
-          <p style={{ margin: "0px", fontSize: 15 }}>*required</p>
-          {generalErr ? <p className={classes.error}>{generalErr}</p> : null}
 
-          <div>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.button}
-              onClick={this.loginUser}
-              disabled={!username || !password}
-            >
-              Login
-            </Button>
-          </div>
+          {generalErr ? <p className={classes.error}>{generalErr}</p> : null}
         </form>
+        <div className={classes.buttonContainer}>
+          <br />
+          <Button
+            primary
+            handleClick={this.loginUser}
+            disabled={!username || !password}
+          >
+            Login
+          </Button>
+          <p className="or_seperator">or</p>
+          <Button secondary handleClick={this.props.cycleLoginSignup}>
+            Create Account
+          </Button>
+        </div>
       </div>
     );
   }

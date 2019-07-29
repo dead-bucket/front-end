@@ -8,7 +8,7 @@ import {
   CLEAR_LOGIN_ERRORS,
   CLEAR_SIGNUP_ERRORS,
   SET_DASHBOARD,
-  SET_CURRENT_NOTIFICATIONS,
+  SET_CURRENT_NOTIFICATIONS
 } from "../_actions/types";
 
 import setAuthToken from "../utils/setAuthToken";
@@ -33,7 +33,7 @@ export const registerUser = (userData, history) => {
       .then(() => getNotifications())
       .catch(err => {
         const { data } = err.response;
-        console.log("error from signup", data);
+
         if (data.includes("username")) {
           dispatch({
             type: SET_SIGNUP_ERRORS,
@@ -144,12 +144,12 @@ export const logoutUser = () => dispatch => {
   });
   dispatch({
     type: SET_DASHBOARD,
-    payload: null,
+    payload: null
   });
   dispatch({
     type: SET_CURRENT_NOTIFICATIONS,
-    payload: null,
-  })
+    payload: null
+  });
 
   //remove the auth header for future requests
   // setAuthToken sets the header with the token for every request

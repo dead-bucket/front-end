@@ -12,7 +12,7 @@ const logoSecondary = require("../common/thoughtline-logo-secondary.svg");
 const styles = theme => ({
   title: {
     fontFamily: "Satisfy, cursive",
-    fontSize: "3rem",
+    fontSize: "2rem",
     color: "#ee5f3f",
     margin: "0px 30px 0px"
   },
@@ -37,7 +37,7 @@ const styles = theme => ({
   },
   titleSmall: {
     fontFamily: "Satisfy, cursive",
-    fontSize: "2rem",
+    fontSize: "1.5rem",
     color: "#ee5f3f",
     margin: "0px 30px 0px"
   },
@@ -45,7 +45,7 @@ const styles = theme => ({
   copy: {
     fontFamily: "Roboto, sans-serif",
     fontWeight: 200,
-    fontSize: "1rem",
+    fontSize: ".9rem",
     textAlign: "center",
     margin: "20px 0px",
     width: "80%",
@@ -80,7 +80,6 @@ class LandingPage extends Component {
   };
 
   handleOpenMenu = e => {
-    console.log(e.target.value);
     this.setState({ showLogin: !this.state.showLogin });
   };
 
@@ -150,12 +149,12 @@ class LandingPage extends Component {
               Thoughtline
             </p>
           </div>
-          <Login />
+          <Login cycleLoginSignup={this.cycleLoginSignup} />
 
           <br />
-          <CustomButton secondary handleClick={this.cycleLoginSignup}>
+          {/* <CustomButton secondary handleClick={this.cycleLoginSignup}>
             Create Account
-          </CustomButton>
+          </CustomButton> */}
         </div>
         {/* SIGNUP */}
         <div className={slideSignup.join(" ")}>
@@ -181,9 +180,6 @@ class LandingPage extends Component {
           />
 
           <br />
-          {/* <CustomButton secondary handleClick={this.cycleLoginSignup}>
-            Login
-          </CustomButton> */}
         </div>
       </div>
     );
