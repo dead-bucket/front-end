@@ -10,6 +10,7 @@
   background-color: lightskyblue;
   color: #ee5f3f;
   transition: all 0.5s;
+  border-radius: 9px;
 }
 
 .tl-btn-primary:hover {
@@ -31,6 +32,7 @@
   color: lightskyblue;
   background-color: #ee5f3f;
   transition: all 0.5s;
+  border-radius: 9px;
 }
 
 .tl-btn-secondary:hover {
@@ -51,4 +53,5 @@
   background-color: #747474;
   color: #5f5654;
   border: none;
+  border-radius: 9px;
 }
