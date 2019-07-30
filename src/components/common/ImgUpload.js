@@ -5,10 +5,13 @@ import Avatar from "react-avatar-edit";
 
 const styles = {
   uploadContainer: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center"
+    fontSize: 15,
+    margin: "20px 0"
   }
+  // uploadTitle: {
+  //   fontSize: 16,
+  //   marginBottom: 0
+  // }
 };
 
 class ImgUpload extends Component {
@@ -37,30 +40,25 @@ class ImgUpload extends Component {
 
     return (
       <div className={classes.uploadContainer}>
-        <div>
-          <p>Profile Image (Optional):</p>
-        </div>
-        <div>
-          <div>
-            <Avatar
-              width={150}
-              height={150}
-              imageWidth={200}
-              style={{ overflowX: "hidden" }}
-              onCrop={this.onCrop}
-              onClose={this.onClose}
-              // src={this.state.src}
-            />
-          </div>
-          <div className={classes.uploadContainer}>
+        {/* <div> */}
+        <Avatar
+          width={150}
+          height={150}
+          imageWidth={150}
+          onCrop={this.onCrop}
+          onClose={this.onClose}
+          label="Profile Image"
+          // src={this.state.src}
+        />
+        {/* </div> */}
+        {/* <div className={classes.uploadContainer}>
             <p>Preview:</p>
             <img
               alt=""
               style={{ width: "50px", height: "50px" }}
               src={this.state.preview || this.state.src}
             />
-          </div>
-        </div>
+          </div> */}
       </div>
     );
   }
