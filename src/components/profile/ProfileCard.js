@@ -4,7 +4,7 @@ export default function ProfileCard(props) {
   const { picture, firstname, lastname, username, email } = props.user;
   return (
     <div id="profile_card">
-      <img id="profile_user_image" src={picture} alt="current user" />
+      <img id="profile_user_image" src={`${picture}?${new Date().getTime()}`} alt="current user" />
       <div id="profile_user_info">
         <p>
           <strong>Name: </strong> {firstname} {lastname}

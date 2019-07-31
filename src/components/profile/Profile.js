@@ -112,22 +112,22 @@ class Profile extends Component {
   };
 
   updateUserDetails = () => {
-    // IMAGE IS DISABLED
+    // IMAGE IS Working
 
     const {
       username,
       firstname,
       lastname,
-      email
-      // image
+      email,
+      image,
     } = this.state;
 
     const updateData = {
       username,
       firstname,
       lastname,
-      email
-      // image
+      email,
+      image
     };
 
     const validatedDetails = signupValidate(
@@ -147,8 +147,12 @@ class Profile extends Component {
             msgColor: "green",
             profileSuccess: "Profile Updated!",
             errMsg: {}
-          });
+          })
+        })
+        .then(() => {
           this.props.loadUser();
+          console.log('user reloaded');
+
         })
         .catch(err => {
           const { data } = err.response;
@@ -229,6 +233,9 @@ class Profile extends Component {
   componentDidMount() {
     this.props.loadUser();
   }
+  componentDidUpdate() {
+    this.props.loadUser();
+  }
 
   render() {
     const { classes, currentUser } = this.props;
@@ -268,6 +275,7 @@ class Profile extends Component {
         username: "Username"
       };
     } else {
+      console.log('about ti send to Profile card current user', currentUser);
       userProfile = <ProfileCard user={currentUser} />;
       formData = currentUser;
     }
