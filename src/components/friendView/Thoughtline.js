@@ -243,9 +243,13 @@ class Thoughtline extends Component {
                  className={`material-icons ${classes.scheduleIcon}`}>
                 schedule
               </i>
-              <i style={{display: entry.delivered ? '' : 'none'}}
+              <i style={{display: (entry.delivered && !entry.read) ? '' : 'none'}}
                  className={`material-icons ${classes.deliveredIcon}`}>
                 done
+              </i>
+              <i style={{display: (entry.delivered && entry.read) ? '' : 'none'}}
+                 className={`material-icons ${classes.deliveredIcon}`}>
+                done_all
               </i>
             </div>
           );

@@ -23,7 +23,7 @@ class EntryMenu extends React.Component {
   };
   handleSendOneEntry = identifier => {
     axios
-      .put(API + `/api/v1/entry/${identifier}`, { delivered: true })
+      .put(API + `/api/v1/entry/${identifier}`, { delivered: true, deliverOn: Date.now() })
       // .then(result => console.log('result from send one', result))
       .then(() => this.handleClose())
       .catch(err => console.log(err));
