@@ -116,7 +116,8 @@ class SendEntriesModal extends Component {
     convertedUser: false,
     hasFriendConverted: false,
     haveEntriesSent: false,
-    haveInvitesSent: false
+    haveInvitesSent: false,
+    inviteDuplicate: false,
   };
 
   handleOpen = () => {
@@ -165,6 +166,7 @@ class SendEntriesModal extends Component {
 
       .catch(err =>
         // TODO : if the user can't be found, ask if they want to send an invite to the email address
+        
         this.setState({
           modalStage: 2
         })
@@ -220,12 +222,24 @@ class SendEntriesModal extends Component {
 
   sendInvite = email => {
     axios
-      .post(API + "/api/v1/sendinvite/", { email })
-      .then(data =>
-        this.setState({
-          modalStage: 3,
-          haveInvitesSent: true
-        })
+      .post(API + "/api/v1/sendinvite/", { email: email })
+      .then(data => {
+
+        if (data.status === 200) {
+          this.setState({
+            modalStage: 3,
+            haveInvitesSent: true
+          })
+          
+        }
+        if (data.status === 209) {
+          this.setState({
+            modalStage: 3,
+            inviteDuplicate: true,
+          })
+          
+        }
+      }
       )
       .catch(err => console.log(err));
   };
@@ -240,7 +254,9 @@ class SendEntriesModal extends Component {
       convertedUser,
       hasFriendConverted,
       haveEntriesSent,
-      haveInvitesSent
+      haveInvitesSent,
+      inviteDuplicate,
+
     } = this.state;
     const { classes } = this.props;
     const { target } = this.props.profile;
@@ -395,6 +411,12 @@ class SendEntriesModal extends Component {
                   <div className={classes.statusMessage}>
                     <CheckCircle className={classes.checkCircle} />{" "}
                     <p style={{ marginLeft: 10 }}>Invite Sent!</p>
+                  </div>
+                ) : null}
+                {inviteDuplicate ? (
+                  <div className={classes.statusMessage}>
+                    <CheckCircle className={classes.checkCircle} />{" "}
+                    <p style={{ marginLeft: 10 }}>Already Sent Invite!</p>
                   </div>
                 ) : null}
               </div>

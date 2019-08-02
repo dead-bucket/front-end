@@ -7,6 +7,9 @@ import MoreVert from "@material-ui/icons/MoreVert";
 // import PropTypes from "prop-types";
 import axios from "axios";
 import API from "../../utils/API";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { getEntries } from "../../_actions/entryActions";
 
 class EntryMenu extends React.Component {
   state = {
@@ -24,7 +27,11 @@ class EntryMenu extends React.Component {
   handleSendOneEntry = identifier => {
     axios
       .put(API + `/api/v1/entry/${identifier}`, { delivered: true, deliverOn: Date.now() })
-      // .then(result => console.log('result from send one', result))
+      .then(result => {
+        if (result.status === 204) {
+          this.props.getEntries(this.props.profile.target._id);
+        }
+      })
       .then(() => this.handleClose())
       .catch(err => console.log(err));
   };
@@ -79,4 +86,18 @@ class EntryMenu extends React.Component {
   }
 }
 
-export default EntryMenu;
+EntryMenu.propTypes = {
+  
+  profile: PropTypes.object.isRequired,
+  getEntries: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  profile: state.profile
+});
+
+export default connect(
+  mapStateToProps,
+  { getEntries }
+)(EntryMenu);
+
