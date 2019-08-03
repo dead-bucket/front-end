@@ -3,75 +3,12 @@ import { withStyles } from "@material-ui/core/styles";
 import CloseButton from "@material-ui/icons/Close";
 import Login from "./Login";
 import "./LandingPage.css";
+import styles from "./LandingPage_styles";
 import Signup from "./Signup";
 // import zIndex from "@material-ui/core/styles/zIndex";
 import CustomButton from "../common/Button";
 const logoPrimary = require("../common/thoughtline-logo-primary.svg");
 const logoSecondary = require("../common/thoughtline-logo-secondary.svg");
-
-const styles = theme => ({
-  title: {
-    fontFamily: "Satisfy, cursive",
-    fontSize: "2rem",
-    color: "#ee5f3f",
-    margin: "0px 30px 0px"
-  },
-  logoContainer: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    marginTop: "40px"
-  },
-  logo: {
-    width: 125
-  },
-  logoSmall: {
-    width: 100
-  },
-  logoContainerSmall: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-    marginTop: "20px"
-  },
-  titleSmall: {
-    fontFamily: "Satisfy, cursive",
-    fontSize: "1.5rem",
-    color: "#ee5f3f",
-    margin: "0px 30px 0px"
-  },
-
-  copy: {
-    fontFamily: "Roboto, sans-serif",
-    fontWeight: 200,
-    fontSize: ".9rem",
-    textAlign: "center",
-    margin: "20px 0px",
-    width: "80%",
-    maxWidth: 700
-  },
-
-  landingLeft: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    width: "100vw",
-    height: "100vh"
-  },
-
-  landing__loginContainerCloseBtn: {
-    position: "absolute",
-    top: "15px",
-    left: "15px",
-    color: "lightskyblue",
-    fontSize: "40px"
-  },
-  titleImg: {
-    alignSelf: "center"
-  }
-});
 
 class LandingPage extends Component {
   state = {

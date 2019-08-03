@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import Button from "../common/Button";
+import loginStyles from "./Login_styles";
+import textFieldStyles from "../common/styles/TextField_styles";
 
 //REDUX
 import { connect } from "react-redux";
@@ -15,34 +17,7 @@ import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-const styles = theme => ({
-  loginSignupContainer: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-    maxWidth: "400px"
-  },
 
-  form: {
-    width: "90%"
-  },
-  error: {
-    color: "white",
-    fontSize: 14,
-    margin: 0
-  },
-  inputStyle: {
-    width: "100%"
-  },
-  buttonContainer: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center"
-  }
-});
 // const notificationPic = require("../common/notification.png");
 class Login extends Component {
   state = {
@@ -69,7 +44,6 @@ class Login extends Component {
       username: username.toLowerCase(),
       password
     };
-    console.log("props.history: ", this.props.histoy);
     this.props.loginUser(loginData, this.props.history);
   };
   render() {
@@ -82,7 +56,7 @@ class Login extends Component {
         className={classes.loginSignupContainer}
         // onKeyDown={e => (e.key === "Enter" ? this.loginUser() : null)}
       >
-        <h6 style={{ margin: 0 }}>Login</h6>
+        <p className={classes.loginTitle}>Login</p>
         <form className={classes.form} autoComplete="off">
           <TextField
             id="login-outlined-email"
@@ -93,6 +67,20 @@ class Login extends Component {
             onChange={this.handleInputChange("username")}
             margin="normal"
             variant="outlined"
+            // floatingLabelFocusStyle={classes.floatingLabel}
+            InputLabelProps={{
+              classes: {
+                root: classes.cssLabel,
+                focused: classes.cssFocused
+              }
+            }}
+            InputProps={{
+              classes: {
+                root: classes.cssOutlinedInput,
+                focused: classes.cssFocused,
+                notchedOutline: classes.notchedOutline
+              }
+            }}
           />
           {usernameErr ? <p className={classes.error}>{usernameErr}</p> : null}
           <TextField
@@ -101,11 +89,27 @@ class Login extends Component {
             autoComplete="current-password"
             className={classes.inputStyle}
             type={passwordVisible ? "text" : "password"}
+            // floatingLabelFocusStyle={classes.floatingLabel}
+            InputLabelProps={{
+              classes: {
+                root: classes.cssLabel,
+                focused: classes.cssFocused
+              }
+            }}
             InputProps={{
+              classes: {
+                root: classes.cssOutlinedInput,
+                focused: classes.cssFocused,
+                notchedOutline: classes.notchedOutline
+              },
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton onClick={this.togglePasswordMask}>
-                    {passwordVisible ? <Visibility /> : <VisibilityOff />}
+                    {passwordVisible ? (
+                      <Visibility className={classes.passwordEye} />
+                    ) : (
+                      <VisibilityOff className={classes.passwordEye} />
+                    )}
                   </IconButton>
                 </InputAdornment>
               )
@@ -146,6 +150,8 @@ Login.propTypes = {
 const mapStateToProps = state => ({
   loginErrors: state.auth.loginErrors
 });
+
+const styles = { ...loginStyles, ...textFieldStyles };
 export default connect(
   mapStateToProps,
   { loginUser, clearLoginErrors }
