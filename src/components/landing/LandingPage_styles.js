@@ -27,8 +27,8 @@ export default () => ({
   titleSmall: {
     fontFamily: "Satisfy, cursive",
     fontSize: "1.5rem",
-    color: "#ee5f3f",
-    margin: "0px 30px 0px"
+    margin: "0px 30px 0px",
+    color: "lightskyblue"
   },
 
   copy: {

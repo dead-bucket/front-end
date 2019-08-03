@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router-dom";
+// import { withRouter } from "react-router-dom";
 
 import Button from "../common/Button";
-import ImgUpload from "../common/ImgUpload";
+// import ImgUpload from "../common/ImgUpload";
 
 // MaterialUI
 import { withStyles } from "@material-ui/core/styles";
@@ -14,23 +14,27 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 //REDUX
-import { connect } from "react-redux";
-import { isEmpty, signupValidate } from "../../utils/validation";
-import { registerUser, clearSignupErrors } from "../../_actions/authActions";
+// import { connect } from "react-redux";
+// import { isEmpty, signupValidate } from "../../utils/validation";
+// import { registerUser, clearSignupErrors } from "../../_actions/authActions";
 
 const styles = {
   signupContainer: {
-    width: "100%",
     display: "flex",
-    flexDirection: "column",
-    overflowY: "scroll"
+    flexDirection: "column"
+  },
+  loginTitle: {
+    margin: 0,
+    color: "lightskyblue",
+    fontSize: "1rem",
+    fontWeight: "lighter"
   },
   form: {
     width: "90%",
-    margin: "auto",
+    maxWidth: 1300,
     display: "flex",
     flexWrap: "wrap",
-    justifyContent: "space-around",
+    justifyContent: "space-evenly",
     alignItems: "center"
   },
   imgUploadContainer: {
@@ -40,7 +44,7 @@ const styles = {
     alignItems: "center"
   },
   inputContainer: {
-    height: "100px",
+    height: 80,
     // border: "1px solid black",
     width: 310,
     display: "flex",
@@ -69,102 +73,36 @@ const styles = {
   }
 };
 
-// const notificationPic = require("../common/notification.png");
-
 class Signup extends Component {
   state = {
-    firstname: "",
-    lastname: "",
-    username: "",
-    email: "",
-    picture: "",
-    password: "",
-    password2: "",
-    passwordError: "",
     passwordVisible: false
   };
-
-  handleProfileImg = picture => {
-    this.setState({ picture });
-  };
-
-  handleInputChange = name => event => {
-    this.setState({
-      [name]: event.target.value
-    });
-  };
-
-  registerUser = () => {
-    // TODO - Authenticate passwords
-    this.setState({ passwordError: {} });
-    this.props.clearSignupErrors();
-    const {
-      firstname,
-      lastname,
-      username,
-      email,
-      password,
-      password2,
-      picture
-    } = this.state;
-
-    let signupData;
-    if (firstname && lastname && username && email && password && picture) {
-      signupData = {
-        firstname,
-        lastname,
-        username,
-        email,
-        password,
-        picture
-      };
-    } else {
-      signupData = {
-        firstname,
-        lastname,
-        username,
-        email,
-        password
-      };
-    }
-
-    const results = signupValidate(signupData, password2);
-    if (!isEmpty(results)) {
-      this.setState({ passwordError: results });
-      return;
-    }
-
-    this.props.registerUser(signupData, this.props.history);
-  };
-
   togglePasswordMask = () => {
+    console.log("click");
     this.setState(prevState => ({
       passwordVisible: !prevState.passwordVisible
     }));
   };
 
-  // TODO - get rid of ids on TextFields
   render() {
-    const { classes, signupErrors } = this.props;
-    const { usernameErr, emailErr, generalErr } = signupErrors;
     const {
-      passwordError,
       firstname,
       lastname,
       username,
       email,
       password,
       password2,
-      passwordVisible
-    } = this.state;
+      passwordError,
+
+      classes,
+      signupErrors
+    } = this.props;
+    const { passwordVisible } = this.state;
+    const { usernameErr, emailErr, generalErr } = signupErrors;
 
     return (
-      <div
-        tabIndex={-1}
-        className="landing__signupContainer"
-        // className={classes.signupContainer}
-        // onKeyDown={e => (e.key === "Enter" ? this.registerUser() : null)}
-      >
+      <div tabIndex={-1} className="landing__signupContainer">
+        <p className={classes.loginTitle}>Create Account</p>
         <form className={classes.form} autoComplete="off">
           <div className={classes.inputContainer}>
             <TextField
@@ -173,8 +111,8 @@ class Signup extends Component {
               required
               autoComplete="firstname"
               className={classes.inputStyle}
-              value={this.state.firstname}
-              onChange={this.handleInputChange("firstname")}
+              value={firstname}
+              onChange={this.props.updateFields("firstname")}
               margin="dense"
               variant="outlined"
             />
@@ -186,8 +124,8 @@ class Signup extends Component {
               required
               autoComplete="lastname"
               className={classes.inputStyle}
-              value={this.state.lastname}
-              onChange={this.handleInputChange("lastname")}
+              value={lastname}
+              onChange={this.props.updateFields("lastname")}
               margin="dense"
               variant="outlined"
             />
@@ -199,8 +137,8 @@ class Signup extends Component {
               required
               autoComplete="username"
               className={classes.inputStyle}
-              value={this.state.username}
-              onChange={this.handleInputChange("username")}
+              value={username}
+              onChange={this.props.updateFields("username")}
               margin="dense"
               variant="outlined"
             />
@@ -216,8 +154,8 @@ class Signup extends Component {
               required
               autoComplete="email"
               className={classes.inputStyle}
-              value={this.state.email}
-              onChange={this.handleInputChange("email")}
+              value={email}
+              onChange={this.props.updateFields("email")}
               margin="dense"
               variant="outlined"
             />
@@ -243,8 +181,8 @@ class Signup extends Component {
                 )
               }}
               required
-              value={this.state.password1}
-              onChange={this.handleInputChange("password")}
+              value={password}
+              onChange={this.props.updateFields("password")}
               margin="dense"
               variant="outlined"
             />
@@ -269,8 +207,8 @@ class Signup extends Component {
                 )
               }}
               required
-              value={this.state.password2}
-              onChange={this.handleInputChange("password2")}
+              value={password2}
+              onChange={this.props.updateFields("password2")}
               margin="dense"
               variant="outlined"
             />
@@ -282,11 +220,11 @@ class Signup extends Component {
         </form>
 
         <div className={classes.imgUploadContainer}>
-          <ImgUpload updateImg={this.handleProfileImg} />
+          {/* <ImgUpload updateImg={this.handleProfileImg} /> */}
           <div className={classes.buttonContainer}>
             <Button
               primary
-              handleClick={this.registerUser}
+              handleClick={this.props.cycleShowImgUpload}
               disabled={
                 !firstname ||
                 !lastname ||
@@ -296,11 +234,7 @@ class Signup extends Component {
                 !email
               }
             >
-              Register
-            </Button>
-            <p className="or_seperator">or</p>
-            <Button secondary handleClick={this.props.cycleLoginSignup}>
-              Login
+              Next
             </Button>
           </div>
         </div>
@@ -310,17 +244,7 @@ class Signup extends Component {
 }
 
 Signup.propTypes = {
-  classes: PropTypes.object.isRequired,
-  registerUser: PropTypes.func.isRequired,
-  signupErrors: PropTypes.object.isRequired,
-  clearSignupErrors: PropTypes.func.isRequired
+  classes: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
-  signupErrors: state.auth.signupErrors
-});
-
-export default connect(
-  mapStateToProps,
-  { registerUser, clearSignupErrors }
-)(withStyles(styles)(withRouter(Signup)));
+export default withStyles(styles)(Signup);

@@ -16,48 +16,51 @@ import { getNotifications } from "./profileActions";
 
 export const registerUser = (userData, history) => {
   return dispatch => {
-    return axios
-      .post(API + "/api/v1/signup", userData)
-      .then(res => {
-        const { token, user } = res.data;
-        localStorage.setItem("jwtToken", token);
-        setAuthToken(token);
+    return (
+      axios
+        .post(API + "/api/v1/signup", userData)
+        .then(res => {
+          const { token, user } = res.data;
+          localStorage.setItem("jwtToken", token);
+          setAuthToken(token);
 
-        dispatch({
-          type: SET_CURRENT_USER,
-          payload: user
-        });
+          dispatch({
+            type: SET_CURRENT_USER,
+            payload: user
+          });
 
-        history.push("/dashboard");
-      })
-      .then(() => getNotifications())
-      .catch(err => {
-        const { data } = err.response;
+          history.push("/dashboard");
+        })
+        // .then(() => getNotifications())
+        .catch(err => {
+          console.log(err.response);
+          const { data } = err.response;
 
-        if (data.includes("username")) {
-          dispatch({
-            type: SET_SIGNUP_ERRORS,
-            payload: {
-              usernameErr: "That username is taken.  Please try again."
-            }
-          });
-        } else if (data.includes("email")) {
-          dispatch({
-            type: SET_SIGNUP_ERRORS,
-            payload: {
-              emailErr:
-                "That email address is already in use.  Please try again."
-            }
-          });
-        } else {
-          dispatch({
-            type: SET_SIGNUP_ERRORS,
-            payload: {
-              generalErr: "We're having issues.  Please try again later."
-            }
-          });
-        }
-      });
+          if (data.includes("username")) {
+            dispatch({
+              type: SET_SIGNUP_ERRORS,
+              payload: {
+                usernameErr: "That username is taken.  Please try again."
+              }
+            });
+          } else if (data.includes("email")) {
+            dispatch({
+              type: SET_SIGNUP_ERRORS,
+              payload: {
+                emailErr:
+                  "That email address is already in use.  Please try again."
+              }
+            });
+          } else {
+            dispatch({
+              type: SET_SIGNUP_ERRORS,
+              payload: {
+                generalErr: "We're having issues.  Please try again later."
+              }
+            });
+          }
+        })
+    );
   };
 };
 

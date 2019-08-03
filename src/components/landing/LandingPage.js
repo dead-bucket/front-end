@@ -1,19 +1,37 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import CloseButton from "@material-ui/icons/Close";
 import Login from "./Login";
 import "./LandingPage.css";
 import styles from "./LandingPage_styles";
 import Signup from "./Signup";
+import ImgUpload from "../common/ImgUpload";
 // import zIndex from "@material-ui/core/styles/zIndex";
-import CustomButton from "../common/Button";
+import Button from "../common/Button";
+
+//REDUX
+import { connect } from "react-redux";
+import { isEmpty, signupValidate } from "../../utils/validation";
+import { registerUser, clearSignupErrors } from "../../_actions/authActions";
+
 const logoPrimary = require("../common/thoughtline-logo-primary.svg");
 const logoSecondary = require("../common/thoughtline-logo-secondary.svg");
 
 class LandingPage extends Component {
   state = {
+    firstname: "",
+    lastname: "",
+    username: "",
+    email: "",
+    picture: "",
+    password: "",
+    password2: "",
+    passwordError: "",
+    passwordVisible: false,
     showLogin: false,
-    showSignup: false
+    showSignup: false,
+    showImageUpload: false
   };
 
   handleOpenMenu = e => {
@@ -23,7 +41,8 @@ class LandingPage extends Component {
   handleCloseMenu = () => {
     this.setState({
       showLogin: false,
-      showSignup: false
+      showSignup: false,
+      showImageUpload: false
     });
   };
   cycleLoginSignup = () => {
@@ -32,17 +51,103 @@ class LandingPage extends Component {
       showSignup: !this.state.showSignup
     });
   };
-  render() {
-    const { classes } = this.props;
-    const { showLogin, showSignup } = this.state;
+  cycleSignup = () => {
+    this.setState({
+      showImageUpload: !this.state.showImageUpload,
+      showSignup: !this.state.showSignup
+    });
+  };
 
+  cycleShowImgUpload = () => {
+    this.props.clearSignupErrors();
+    const results = signupValidate(this.getSignupInfo(), this.state.password2);
+
+    console.log(results);
+    if (!isEmpty(results)) {
+      this.setState({
+        passwordError: results
+      });
+    } else {
+      this.setState({
+        showImageUpload: !this.state.showImageUpload,
+        passwordError: ""
+      });
+    }
+  };
+  handleProfileImg = picture => {
+    this.setState({ picture });
+  };
+
+  handleInputChange = name => event => {
+    this.setState({
+      [name]: event.target.value
+    });
+  };
+
+  getSignupInfo = () => {
+    const {
+      firstname,
+      lastname,
+      username,
+      email,
+      password,
+      picture
+    } = this.state;
+
+    let signupData;
+    if (firstname && lastname && username && email && password && picture) {
+      signupData = {
+        firstname,
+        lastname,
+        username,
+        email,
+        password,
+        picture
+      };
+    } else {
+      signupData = {
+        firstname,
+        lastname,
+        username,
+        email,
+        password
+      };
+    }
+
+    return signupData;
+  };
+
+  registerUser = () => {
+    this.props.clearSignupErrors();
+    this.props.registerUser(this.getSignupInfo(), this.props.history);
+  };
+
+  render() {
+    // const { classes, signupErrors } = this.props;
+    const { classes, signupErrors } = this.props;
+    // const { usernameErr, emailErr, generalErr } = signupErrors;
+    const { showLogin, showSignup, showImageUpload } = this.state;
+    // const {
+    //   firstname,
+    //   lastname,
+    //   username,
+    //   email,
+    //   password,
+    //   password2,
+    //   passwordError,
+    //   passwordVisible
+    // } = this.state;
     const slideLogin = ["landing__login"];
     const slideSignup = ["landing__signup"];
+    const slideImageUpload = ["landing__imgUpload"];
     if (showLogin) {
       slideLogin.push("show");
     }
     if (showSignup) {
       slideSignup.push("show");
+    }
+    if (showImageUpload && isEmpty(signupErrors)) {
+      slideImageUpload.push("show");
     }
 
     return (
@@ -65,9 +170,9 @@ class LandingPage extends Component {
             down and pay attention to everything that is going on in your life.
             You have to listen rather than run away from your feelings.
           </p>
-          <CustomButton primary handleClick={this.handleOpenMenu}>
+          <Button primary handleClick={this.handleOpenMenu}>
             Login
-          </CustomButton>
+          </Button>
         </div>
 
         {/* LOGIN */}
@@ -87,11 +192,6 @@ class LandingPage extends Component {
             </p>
           </div>
           <Login cycleLoginSignup={this.cycleLoginSignup} />
-
-          <br />
-          {/* <CustomButton secondary handleClick={this.cycleLoginSignup}>
-            Create Account
-          </CustomButton> */}
         </div>
         {/* SIGNUP */}
         <div className={slideSignup.join(" ")}>
@@ -100,22 +200,41 @@ class LandingPage extends Component {
             onClick={this.handleCloseMenu}
           />
           <div className={classes.logoContainerSmall}>
-            <img
-              src={logoSecondary}
-              alt="Thoughtline logo"
-              className={classes.logoSmall}
-            />
-            <p className={classes.titleSmall} style={{ color: "lightskyblue" }}>
-              Thoughtline
-            </p>
-            <h6 style={{ margin: 0, textAlign: "center" }}>Create Account</h6>
+            <p className={classes.titleSmall}>Thoughtline</p>
           </div>
 
           <Signup
+            {...this.state}
+            updateFields={this.handleInputChange}
+            signupErrors={signupErrors}
+            cycleShowImgUpload={this.cycleShowImgUpload}
             cycleLoginSignup={this.cycleLoginSignup}
             className="landing__login"
           />
+          <br />
+        </div>
 
+        {/* imgUpload */}
+        <div className={slideImageUpload.join(" ")}>
+          <CloseButton
+            className={classes.landing__loginContainerCloseBtn}
+            onClick={this.handleCloseMenu}
+          />
+          <div className={classes.logoContainerSmall}>
+            <p className={classes.titleSmall}>Thoughtline</p>
+          </div>
+          <Button secondary handleClick={this.cycleShowImgUpload}>
+            Back
+          </Button>
+
+          <ImgUpload updateImg={this.handleProfileImg} />
+          <Button primary handleClick={this.registerUser}>
+            Register
+          </Button>
+          <p className="or_seperator">or</p>
+          <Button secondary handleClick={this.cycleSignup}>
+            Login
+          </Button>
           <br />
         </div>
       </div>
@@ -123,4 +242,11 @@ class LandingPage extends Component {
   }
 }
 
-export default withStyles(styles)(LandingPage);
+const mapStateToProps = state => ({
+  signupErrors: state.auth.signupErrors
+});
+
+export default connect(
+  mapStateToProps,
+  { registerUser, clearSignupErrors }
+)(withStyles(styles)(withRouter(LandingPage)));

@@ -1,4 +1,18 @@
 export default {
+  form: {
+    width: "90%"
+  },
+  error: {
+    color: "white",
+    fontSize: 14,
+    margin: 0
+  },
+  inputStyle: {
+    width: "100%"
+  },
+  input: {
+    color: "white"
+  },
   floatingLabel: {
     color: "white"
   },
