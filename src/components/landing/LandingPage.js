@@ -28,7 +28,6 @@ class LandingPage extends Component {
     password: "",
     password2: "",
     passwordError: "",
-    passwordVisible: false,
     showLogin: false,
     showSignup: false,
     showImageUpload: false
@@ -46,6 +45,7 @@ class LandingPage extends Component {
     });
   };
   cycleLoginSignup = () => {
+    console.log("click");
     this.setState({
       showLogin: !this.state.showLogin,
       showSignup: !this.state.showSignup
@@ -57,12 +57,18 @@ class LandingPage extends Component {
       showSignup: !this.state.showSignup
     });
   };
+  switchSignupToLogin = () => {
+    console.log("switchSignupToLogin");
 
+    this.setState({
+      showLogin: true,
+      showImageUpload: false,
+      showSignup: false
+    });
+  };
   cycleShowImgUpload = () => {
     this.props.clearSignupErrors();
     const results = signupValidate(this.getSignupInfo(), this.state.password2);
-
-    console.log(results);
     if (!isEmpty(results)) {
       this.setState({
         passwordError: results
@@ -146,7 +152,7 @@ class LandingPage extends Component {
     if (showSignup) {
       slideSignup.push("show");
     }
-    if (showImageUpload && isEmpty(signupErrors)) {
+    if (showImageUpload) {
       slideImageUpload.push("show");
     }
 
@@ -207,6 +213,7 @@ class LandingPage extends Component {
             {...this.state}
             updateFields={this.handleInputChange}
             signupErrors={signupErrors}
+            switchSignupToLogin={this.switchSignupToLogin}
             cycleShowImgUpload={this.cycleShowImgUpload}
             cycleLoginSignup={this.cycleLoginSignup}
             className="landing__login"
@@ -232,7 +239,7 @@ class LandingPage extends Component {
             Register
           </Button>
           <p className="or_seperator">or</p>
-          <Button secondary handleClick={this.cycleSignup}>
+          <Button secondary handleClick={this.switchSignupToLogin}>
             Login
           </Button>
           <br />

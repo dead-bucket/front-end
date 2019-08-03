@@ -19,7 +19,6 @@ export default function Button({
     : "null";
 
   if (disabled) propColor = "disabled-btn";
-
   return (
     <button className={propColor} disabled={disabled} onClick={handleClick}>
       {disabled ? "Please Complete the Form" : children}

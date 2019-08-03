@@ -78,7 +78,6 @@ class Signup extends Component {
     passwordVisible: false
   };
   togglePasswordMask = () => {
-    console.log("click");
     this.setState(prevState => ({
       passwordVisible: !prevState.passwordVisible
     }));
@@ -93,9 +92,9 @@ class Signup extends Component {
       password,
       password2,
       passwordError,
-
       classes,
-      signupErrors
+      signupErrors,
+      cycleLoginSignup
     } = this.props;
     const { passwordVisible } = this.state;
     const { usernameErr, emailErr, generalErr } = signupErrors;
@@ -235,6 +234,10 @@ class Signup extends Component {
               }
             >
               Next
+            </Button>
+            <p className="or_seperator">or</p>
+            <Button secondary handleClick={cycleLoginSignup}>
+              Login
             </Button>
           </div>
         </div>
