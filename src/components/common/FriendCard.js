@@ -51,7 +51,7 @@ const iconStyleBottomRight = {
 
 const notificationPic = require("./notification.png");
 function FriendCard(props) {
-  const { view, friend, loggedInUser } = props;
+  const { view, friend, loggedInUser, deleting } = props;
   let currentUser = loggedInUser || { newmessages: [] };
   if (view === "friendview") {
     return (
@@ -100,6 +100,12 @@ function FriendCard(props) {
         >
           {friend.priority ? "favorite" : "favorite_border"}
         </i>
+        <i
+          style={iconStyleTopRight}
+          className="material-icons"
+          >
+            {deleting ? "delete" : ""}
+          </i>
         <p style={dashboard.name}>
           {friend.lastname
             ? `${friend.firstname} ${friend.lastname}`

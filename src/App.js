@@ -30,6 +30,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" render={() => <LandingPage />} />
               <Route exact path="/dashboard" component={Dashboard} />
+              <Route exact path="/deletefriend" render={(props) => <Dashboard {...props} deleting={true} />} />
               <Route exact path="/friendview" component={FriendView} />
               <Route exact path="/profile" component={Profile} />
               <Route component={NoMatch} />

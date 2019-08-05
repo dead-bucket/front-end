@@ -13,8 +13,8 @@ import { withStyles } from "@material-ui/core";
 const styles = {
   inboxMessage: {
     textAlign: "left",
-    width: "80%",
-    maxWidth: 700,
+    width: "100%",
+    maxWidth: 800,
     borderRadius: 15,
     padding: 20,
     margin: 20,

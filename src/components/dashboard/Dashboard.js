@@ -84,7 +84,7 @@ class Dashboard extends Component {
   };
 
   render() {
-    const { classes, friends } = this.props;
+    const { classes, friends, deleting } = this.props;
     let loading = !friends ? true : false;
 
     let dashboardContent;
@@ -135,6 +135,7 @@ class Dashboard extends Component {
             handleToggle={this.togglePriority}
             view="dashboard"
             loggedInUser={this.props.currentUser}
+            deleting={deleting}
           />
         ));
       }

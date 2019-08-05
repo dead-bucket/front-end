@@ -168,6 +168,9 @@ class NavBar extends Component {
                   <MenuItem onClick={() => this.handleMenuSelect("/profile")}>
                     Profile
                   </MenuItem>
+                  <MenuItem onClick={() => this.handleMenuSelect("/deletefriend")}>
+                    Delete Friend
+                  </MenuItem>
                   <MenuItem onClick={this.logout}>Logout</MenuItem>
                   <MenuItem>
                     <a

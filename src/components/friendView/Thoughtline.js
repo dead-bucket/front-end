@@ -23,8 +23,8 @@ const styles = theme => ({
   thoughtLineMessage: {
     position: "relative",
     textAlign: "left",
-    width: "80%",
-    maxWidth: 700,
+    width: "100%",
+    maxWidth: 800,
     borderRadius: 15,
     padding: 20,
     margin: 20,
