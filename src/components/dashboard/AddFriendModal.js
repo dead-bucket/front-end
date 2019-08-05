@@ -59,11 +59,7 @@ const styles = theme => ({
     left: -30,
     top: -30
   },
-  // addIconStyle: {
-  //   position: "absolute",
-  //   top: "8%",
-  //   right: "4%"
-  // },
+
   container: {
     display: "flex",
     flexDirection: "column",

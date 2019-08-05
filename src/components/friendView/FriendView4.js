@@ -120,10 +120,19 @@ class FriendView4 extends Component {
           onChange={this.handleBottomChange}
           className={classes.bottomNav}
         >
-          <BottomNavigationAction label="Thoughtline" icon={<List />} />
-          <BottomNavigationAction label="Compose" icon={<AddCircleOutline />} />
+          <BottomNavigationAction
+            className={classes.label}
+            label="Thoughtline"
+            icon={<List />}
+          />
+          <BottomNavigationAction
+            className={classes.label}
+            label="Compose"
+            icon={<AddCircleOutline />}
+          />
           {isUser ? (
             <BottomNavigationAction
+              className={classes.label}
               label="Inbox"
               icon={<MoveToInbox onClick={this.clearNotification} />}
             />
@@ -159,8 +168,6 @@ const styles = {
     justifyContent: "center",
     textAlign: "center",
     flexGrow: 1,
-    maxHeight: 152,
-    minHeight: 152,
     paddingTop: 10
   },
   actionContainer: {
@@ -171,10 +178,12 @@ const styles = {
     flexGrow: 3
   },
   bottomNav: {
-    flexGrow: 1,
-    maxHeight: 56,
-    minHeight: 56
+    height: 80,
+    label: {
+      fontSize: "16px"
+    }
   },
+
   dashboardIconStyle: {
     position: "absolute",
     top: 75,

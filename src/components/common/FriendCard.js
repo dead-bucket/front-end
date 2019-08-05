@@ -30,6 +30,10 @@ const friendview = {
   image: {
     width: 100,
     marginTop: 10
+  },
+  name: {
+    fontSize: ".6rem",
+    marginTop: 0
   }
 };
 
@@ -63,7 +67,7 @@ function FriendCard(props) {
           alt={friend.firstname}
         />
         <img alt="Profile" style={friendview.image} src={friend.picture} />
-        <p style={{ margin: 0 }}>
+        <p style={friendview.name}>
           {friend.lastname
             ? `${friend.firstname} ${friend.lastname}`
             : friend.username}
