@@ -60,11 +60,10 @@ class CheckboxListSecondary extends React.Component {
   };
   handleAcceptConnection = (notificationId, friendId) => {
     return axios
-     .put(API + `/api/v1/acceptfriend/`,
-     {friend: friendId})
-     .then(() => this.handelDeleteNotification(notificationId))
-     .catch(err => console.log(err));
-  }
+      .put(API + `/api/v1/acceptfriend/`, { friend: friendId })
+      .then(() => this.handelDeleteNotification(notificationId))
+      .catch(err => console.log(err));
+  };
 
   render() {
     const { classes, notifications } = this.props;
@@ -87,62 +86,67 @@ class CheckboxListSecondary extends React.Component {
         <ClickAwayListener onClickAway={() => this.props.closeList()}>
           <List dense className={classes.root}>
             {notifications.map(value => {
-              console.log('notifications', value);
-              if (value.type === 'Friend Request'){
+              // console.log("notifications", value);
+              if (value.type === "Friend Request") {
                 return (
-                <ListItem key={value._id} button>
-                <ListItemAvatar>
-                  <Avatar
-                    alt={`Avatar n°${value + 1}`}
-                    src={`${value.fromId.picture}`}
-                  />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={`Your Friend ${value.fromId.firstname} ${
-                    value.fromId.lastname
-                  } sent you a connection request`}
-                />
-                <ListItemSecondaryAction>
-                  <IconButton aria-label="Delete">
-                    <DeleteIcon
-                      onClick={() => this.handelDeleteNotification(value._id)}
+                  <ListItem key={value._id} button>
+                    <ListItemAvatar>
+                      <Avatar
+                        alt={`Avatar n°${value + 1}`}
+                        src={`${value.fromId.picture}`}
+                      />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={`Your Friend ${value.fromId.firstname} ${
+                        value.fromId.lastname
+                      } sent you a connection request`}
                     />
-                  </IconButton>
-                  <IconButton aria-label="CheckCircle">
-                    <CheckCircle
-                      onClick={() => this.handleAcceptConnection(value._id, value.fromId._id)}
-                    />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>
-
-                )
-
+                    <ListItemSecondaryAction>
+                      <IconButton
+                        aria-label="Delete"
+                        onClick={() => this.handelDeleteNotification(value._id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                      <IconButton
+                        aria-label="CheckCircle"
+                        onClick={() =>
+                          this.handleAcceptConnection(
+                            value._id,
+                            value.fromId._id
+                          )
+                        }
+                      >
+                        <CheckCircle />
+                      </IconButton>
+                    </ListItemSecondaryAction>
+                  </ListItem>
+                );
               } else {
                 return (
-              <ListItem key={value._id} button>
-                <ListItemAvatar>
-                  <Avatar
-                    alt={`Avatar n°${value + 1}`}
-                    src={`${value.fromId.picture}`}
-                  />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={`Your Friend ${value.fromId.firstname} ${
-                    value.fromId.lastname
-                  } has joined Thoughtline. Try resending your thoughts.`}
-                />
-                <ListItemSecondaryAction>
-                  <IconButton aria-label="Delete">
-                    <DeleteIcon
-                      onClick={() => this.handelDeleteNotification(value._id)}
+                  <ListItem key={value._id} button>
+                    <ListItemAvatar>
+                      <Avatar
+                        alt={`Avatar n°${value + 1}`}
+                        src={`${value.fromId.picture}`}
+                      />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={`Your Friend ${value.fromId.firstname} ${
+                        value.fromId.lastname
+                      } has joined Thoughtline. Try resending your thoughts.`}
                     />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>
-
-                )
-
+                    <ListItemSecondaryAction>
+                      <IconButton aria-label="Delete">
+                        <DeleteIcon
+                          onClick={() =>
+                            this.handelDeleteNotification(value._id)
+                          }
+                        />
+                      </IconButton>
+                    </ListItemSecondaryAction>
+                  </ListItem>
+                );
               }
             })}
           </List>

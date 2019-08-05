@@ -15,7 +15,6 @@ import LandingPage from "./components/landing/LandingPage";
 
 // for removing material-ui typography warning
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
-
 // check for token
 if (localStorage.jwtToken) {
   //set the auth token header auth
@@ -29,7 +28,7 @@ class App extends Component {
         <Router>
           <div className="App">
             <Switch>
-              <Route exact path="/" component={LandingPage} />
+              <Route exact path="/" render={() => <LandingPage />} />
               <Route exact path="/dashboard" component={Dashboard} />
               <Route exact path="/friendview" component={FriendView} />
               <Route exact path="/profile" component={Profile} />

@@ -30,10 +30,12 @@ function getModalStyle() {
 const styles = theme => ({
   paper: {
     position: "absolute",
-    width: theme.spacing.unit * 35,
-    backgroundColor: theme.palette.background.paper,
+    minWidth: 300,
+    maxWidth: 500,
+    backgroundColor: "white",
     boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4
+    padding: 30,
+    fontSize: ".8rem"
   },
   medium: {
     width: 60,
@@ -49,7 +51,7 @@ const styles = theme => ({
   },
   closeButton: {
     position: "absolute",
-    right: -30,
+    right: -20,
     top: -30
   },
   backButton: {
@@ -57,11 +59,7 @@ const styles = theme => ({
     left: -30,
     top: -30
   },
-  // addIconStyle: {
-  //   position: "absolute",
-  //   top: "8%",
-  //   right: "4%"
-  // },
+
   container: {
     display: "flex",
     flexDirection: "column",
@@ -311,7 +309,13 @@ class AddFriendModal extends Component {
               <strong>profile picture</strong>
               (optional):
             </p>
-            <div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center"
+              }}
+            >
               <TextField
                 id="outlined-friend-name-input"
                 label="Friend's Name"
@@ -356,8 +360,8 @@ class AddFriendModal extends Component {
     }
 
     return (
-      <div>
-        <div onClick={this.handleOpen} className={classes.addIconStyle}>
+      <div className={classes.addFriendModal}>
+        <div onClick={this.handleOpen}>
           <IconButton className={classes.medium}>
             <PersonAdd className={classes.mediumIcon} />
           </IconButton>
@@ -375,15 +379,20 @@ class AddFriendModal extends Component {
           >
             <div className={classes.buttonDiv}>
               {modalStage === 1 || modalStage === 2 ? (
-                <IconButton className={classes.backButton}>
-                  <BackArrow onClick={this.resetModal} />
+                <IconButton
+                  className={classes.backButton}
+                  onClick={this.handleClose}
+                >
+                  <BackArrow />
                 </IconButton>
               ) : null}
-              <IconButton className={classes.closeButton}>
-                <Close onClick={this.handleClose} />
+              <IconButton
+                className={classes.closeButton}
+                onClick={this.handleClose}
+              >
+                <Close />
               </IconButton>
 
-              {/* TODO - fix padding on input fields */}
               {modalContent}
             </div>
           </div>

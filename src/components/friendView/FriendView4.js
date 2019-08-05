@@ -68,7 +68,7 @@ class FriendView4 extends Component {
     const { classes } = this.props;
     const { target } = this.props.profile;
     const { value } = this.state;
-    console.log(this.props.currentUser);
+    // console.log(this.props.currentUser);
     let actionContent;
     switch (value) {
       case 0:
@@ -120,12 +120,19 @@ class FriendView4 extends Component {
           onChange={this.handleBottomChange}
           className={classes.bottomNav}
         >
-          <BottomNavigationAction label="Thoughtline" icon={<List />} />
-          <BottomNavigationAction label="Compose" icon={<AddCircleOutline />} />
+          <BottomNavigationAction
+            label="Thoughtline"
+            icon={<List className={classes.mediumIcon} />}
+          />
+          <BottomNavigationAction
+            label="Compose"
+            icon={<AddCircleOutline className={classes.mediumIcon} />}
+          />
           {isUser ? (
             <BottomNavigationAction
+              onClick={this.clearNotification}
               label="Inbox"
-              icon={<MoveToInbox onClick={this.clearNotification} />}
+              icon={<MoveToInbox className={classes.mediumIcon} />}
             />
           ) : null}
         </BottomNavigation>
@@ -159,8 +166,6 @@ const styles = {
     justifyContent: "center",
     textAlign: "center",
     flexGrow: 1,
-    maxHeight: 152,
-    minHeight: 152,
     paddingTop: 10
   },
   actionContainer: {
@@ -171,10 +176,14 @@ const styles = {
     flexGrow: 3
   },
   bottomNav: {
-    flexGrow: 1,
-    maxHeight: 56,
-    minHeight: 56
+    height: 80,
+    justifyContent: "space-evenly",
+    fontSize: 10
   },
+  icon: {
+    fontSize: 30
+  },
+
   dashboardIconStyle: {
     position: "absolute",
     top: 75,

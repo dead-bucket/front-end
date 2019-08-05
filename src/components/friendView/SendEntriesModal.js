@@ -36,10 +36,12 @@ function getModalStyle() {
 const styles = theme => ({
   paper: {
     position: "absolute",
-    width: theme.spacing.unit * 35,
-    backgroundColor: theme.palette.background.paper,
+    minWidth: 300,
+    maxWidth: 500,
+    backgroundColor: "white",
     boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4
+    padding: 30,
+    fontSize: ".8rem"
   },
   medium: {
     width: 60,
@@ -117,7 +119,7 @@ class SendEntriesModal extends Component {
     hasFriendConverted: false,
     haveEntriesSent: false,
     haveInvitesSent: false,
-    inviteDuplicate: false,
+    inviteDuplicate: false
   };
 
   handleOpen = () => {
@@ -166,7 +168,7 @@ class SendEntriesModal extends Component {
 
       .catch(err =>
         // TODO : if the user can't be found, ask if they want to send an invite to the email address
-        
+
         this.setState({
           modalStage: 2
         })
@@ -224,23 +226,19 @@ class SendEntriesModal extends Component {
     axios
       .post(API + "/api/v1/sendinvite/", { email: email })
       .then(data => {
-
         if (data.status === 200) {
           this.setState({
             modalStage: 3,
             haveInvitesSent: true
-          })
-          
+          });
         }
         if (data.status === 209) {
           this.setState({
             modalStage: 3,
-            inviteDuplicate: true,
-          })
-          
+            inviteDuplicate: true
+          });
         }
-      }
-      )
+      })
       .catch(err => console.log(err));
   };
 
@@ -255,8 +253,7 @@ class SendEntriesModal extends Component {
       hasFriendConverted,
       haveEntriesSent,
       haveInvitesSent,
-      inviteDuplicate,
-
+      inviteDuplicate
     } = this.state;
     const { classes } = this.props;
     const { target } = this.props.profile;

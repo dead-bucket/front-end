@@ -1,28 +1,42 @@
 import React from "react";
-
-const dashboardStyles = {
-  cursor: "pointer",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-  width: 150,
-  height: 150,
-  position: "relative"
+const dashboard = {
+  container: {
+    cursor: "pointer",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    width: 150,
+    height: 150,
+    position: "relative"
+  },
+  image: {
+    width: 90
+  },
+  name: {
+    fontSize: ".6rem",
+    marginTop: 5
+  }
 };
 
-const friendViewStyles = {
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-  position: "relative"
+const friendview = {
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative"
+  },
+  image: {
+    width: 100,
+    marginTop: 10
+  },
+  name: {
+    fontSize: ".6rem",
+    marginTop: 0
+  }
 };
 
-const friendViewImage = {
-  width: 100,
-  marginTop: 10
-};
 const iconStyleTopRight = {
   width: "36px",
   position: "absolute",
@@ -41,7 +55,7 @@ function FriendCard(props) {
   let currentUser = loggedInUser || { newmessages: [] };
   if (view === "friendview") {
     return (
-      <div style={friendViewStyles}>
+      <div style={friendview.container}>
         <img
           style={{
             visibility: currentUser.newmessages.includes(friend._id)
@@ -50,19 +64,19 @@ function FriendCard(props) {
             ...iconStyleTopRight
           }}
           src={notificationPic}
-          alt={"this is a cool pic"}
+          alt={friend.firstname}
         />
-        <img alt="Profile" style={friendViewImage} src={friend.picture} />
-        <h4 style={{ marginTop: 0 }}>
+        <img alt="Profile" style={friendview.image} src={friend.picture} />
+        <p style={friendview.name}>
           {friend.lastname
             ? `${friend.firstname} ${friend.lastname}`
             : friend.username}
-        </h4>
+        </p>
       </div>
     );
   } else if (view === "dashboard") {
     return (
-      <div style={dashboardStyles}>
+      <div style={dashboard.container}>
         <img
           style={{
             visibility: currentUser.newmessages.includes(friend._id)
@@ -74,8 +88,8 @@ function FriendCard(props) {
           alt={"You have new Thoughts from this friend"}
         />
         <img
-          alt="Profile"
-          style={{ borderRadius: 40, width: 100 }}
+          alt={friend.firstname}
+          style={dashboard.image}
           src={friend.picture}
           onClick={() => props.handleSetTarget(friend)}
         />
@@ -85,9 +99,8 @@ function FriendCard(props) {
           onClick={() => props.handleToggle(friend)}
         >
           {friend.priority ? "favorite" : "favorite_border"}
-          {/* favorite_border */}
         </i>
-        <p style={{ marginTop: 0 }}>
+        <p style={dashboard.name}>
           {friend.lastname
             ? `${friend.firstname} ${friend.lastname}`
             : friend.username}
