@@ -89,7 +89,6 @@ class Login extends Component {
             autoComplete="current-password"
             className={classes.inputStyle}
             type={passwordVisible ? "text" : "password"}
-            // floatingLabelFocusStyle={classes.floatingLabel}
             InputLabelProps={{
               classes: {
                 root: classes.cssLabel,

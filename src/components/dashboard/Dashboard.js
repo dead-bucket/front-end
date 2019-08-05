@@ -19,6 +19,7 @@ import {
 } from "../../_actions/profileActions";
 import { loadUser } from "../../_actions/authActions";
 // TODO: checkout touch-action for sliding on mobile: https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action
+
 const styles = {
   dashboardWrapper: {
     height: "99.5vh",
@@ -33,7 +34,7 @@ const styles = {
     alignItems: "center",
     fontFamily: "Satisfy, cursive",
     marginBottom: 0,
-    fontSize: "1.75rem",
+    fontSize: "1.5rem",
     flexGrow: 1
   },
   friendContainer: {
@@ -50,6 +51,9 @@ const styles = {
     textAlign: "center",
     padding: 15,
     fontSize: 16
+  },
+  bottomNavigation: {
+    height: 55
   }
 };
 
@@ -63,7 +67,7 @@ class Dashboard extends Component {
   }
 
   togglePriority = friend => {
-    console.log("in toggle priority fn", friend);
+    // console.log("in toggle priority fn", friend);
     axios
       .put(API + "/api/v1/togglepriority/", {
         priority: friend._id
@@ -139,11 +143,11 @@ class Dashboard extends Component {
       <div className={classes.dashboardWrapper}>
         <NavBar />
         <div className={classes.mainTitle}>
-          <p style={{ margin: "10px auto" }}>Thinking about...</p>
+          <p style={{ margin: "0 auto" }}>Thinking about...</p>
         </div>
         <div className={classes.friendContainer}>{dashboardContent}</div>
 
-        <BottomNavigation>
+        <BottomNavigation className={classes.bottomNavigation}>
           <AddFriendModal refreshTargets={this.props.getFriends} />
         </BottomNavigation>
       </div>

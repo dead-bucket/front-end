@@ -9,7 +9,6 @@ export default () => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center"
-    // marginTop: "40px"
   },
   logo: {
     width: 125

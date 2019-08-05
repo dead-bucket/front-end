@@ -20,17 +20,14 @@ import MoreVert from "@material-ui/icons/MoreVert";
 
 const styles = {
   root: {
-    flexGrow: 1,
-    maxHeight: 67,
-    minHeight: 67
+    fontSize: ".5rem"
   },
-  grow: {
-    flexGrow: 1
-  },
+
   title: {
     fontFamily: "Satisfy, cursive",
     flexGrow: 1,
-    margin: 10
+    margin: 4,
+    fontWeight: "normal"
   },
   menuButton: {
     marginLeft: -12,
