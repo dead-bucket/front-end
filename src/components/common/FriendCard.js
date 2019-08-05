@@ -40,8 +40,9 @@ const friendview = {
 const iconStyleTopRight = {
   width: "36px",
   position: "absolute",
-  left: "70%",
-  top: "0%"
+  left: "80%",
+  top: "15%",
+  fontSize:"0.9rem",
 };
 const iconStyleBottomRight = {
   position: "absolute",
@@ -51,6 +52,7 @@ const iconStyleBottomRight = {
 
 const notificationPic = require("./notification.png");
 function FriendCard(props) {
+  
   const { view, friend, loggedInUser, deleting } = props;
   let currentUser = loggedInUser || { newmessages: [] };
   if (view === "friendview") {
@@ -72,6 +74,12 @@ function FriendCard(props) {
             ? `${friend.firstname} ${friend.lastname}`
             : friend.username}
         </p>
+        <i
+          style={iconStyleTopRight}
+          className="material-icons"
+          >
+            delete
+          </i>
       </div>
     );
   } else if (view === "dashboard") {
@@ -97,6 +105,7 @@ function FriendCard(props) {
           style={iconStyleBottomRight}
           className="material-icons red600"
           onClick={() => props.handleToggle(friend)}
+          
         >
           {friend.priority ? "favorite" : "favorite_border"}
         </i>
