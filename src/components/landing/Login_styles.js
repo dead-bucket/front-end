@@ -5,7 +5,7 @@ export default {
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    maxWidth: "400px"
+    maxWidth: "310px"
   },
   loginTitle: {
     margin: 0,

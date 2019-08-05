@@ -45,27 +45,20 @@ class LandingPage extends Component {
     });
   };
   cycleLoginSignup = () => {
-    console.log("click");
     this.setState({
       showLogin: !this.state.showLogin,
       showSignup: !this.state.showSignup
     });
   };
-  cycleSignup = () => {
-    this.setState({
-      showImageUpload: !this.state.showImageUpload,
-      showSignup: !this.state.showSignup
-    });
-  };
-  switchSignupToLogin = () => {
-    console.log("switchSignupToLogin");
 
+  switchSignupToLogin = () => {
     this.setState({
       showLogin: true,
       showImageUpload: false,
       showSignup: false
     });
   };
+
   cycleShowImgUpload = () => {
     this.props.clearSignupErrors();
     const results = signupValidate(this.getSignupInfo(), this.state.password2);
@@ -129,20 +122,9 @@ class LandingPage extends Component {
   };
 
   render() {
-    // const { classes, signupErrors } = this.props;
     const { classes, signupErrors } = this.props;
-    // const { usernameErr, emailErr, generalErr } = signupErrors;
     const { showLogin, showSignup, showImageUpload } = this.state;
-    // const {
-    //   firstname,
-    //   lastname,
-    //   username,
-    //   email,
-    //   password,
-    //   password2,
-    //   passwordError,
-    //   passwordVisible
-    // } = this.state;
+
     const slideLogin = ["landing__login"];
     const slideSignup = ["landing__signup"];
     const slideImageUpload = ["landing__imgUpload"];
@@ -205,7 +187,13 @@ class LandingPage extends Component {
             className={classes.landing__loginContainerCloseBtn}
             onClick={this.handleCloseMenu}
           />
+
           <div className={classes.logoContainerSmall}>
+            <img
+              src={logoPrimary}
+              alt="Thoughtline logo"
+              className={classes.logoSmall}
+            />
             <p className={classes.titleSmall}>Thoughtline</p>
           </div>
 
@@ -228,6 +216,11 @@ class LandingPage extends Component {
             onClick={this.handleCloseMenu}
           />
           <div className={classes.logoContainerSmall}>
+            <img
+              src={logoPrimary}
+              alt="Thoughtline logo"
+              className={classes.logoSmall}
+            />
             <p className={classes.titleSmall}>Thoughtline</p>
           </div>
           <Button secondary handleClick={this.cycleShowImgUpload}>

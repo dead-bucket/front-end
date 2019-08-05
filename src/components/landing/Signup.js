@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-// import { withRouter } from "react-router-dom";
-
+import signupStyles from "./Signup_styles";
+import textFieldStyles from "../common/styles/TextField_styles";
 import Button from "../common/Button";
-// import ImgUpload from "../common/ImgUpload";
 
 // MaterialUI
 import { withStyles } from "@material-ui/core/styles";
@@ -12,66 +11,6 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-
-//REDUX
-// import { connect } from "react-redux";
-// import { isEmpty, signupValidate } from "../../utils/validation";
-// import { registerUser, clearSignupErrors } from "../../_actions/authActions";
-
-const styles = {
-  signupContainer: {
-    display: "flex",
-    flexDirection: "column"
-  },
-  loginTitle: {
-    margin: 0,
-    color: "lightskyblue",
-    fontSize: "1rem",
-    fontWeight: "lighter"
-  },
-  form: {
-    width: "90%",
-    maxWidth: 1300,
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "space-evenly",
-    alignItems: "center"
-  },
-  imgUploadContainer: {
-    display: "flex",
-    flexWrap: "wrap",
-    justifyContent: "space-evenly",
-    alignItems: "center"
-  },
-  inputContainer: {
-    height: 80,
-    // border: "1px solid black",
-    width: 310,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "flex-start"
-  },
-
-  buttonContainer: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  adornmentIcon: {
-    padding: 0
-  },
-  inputStyle: {
-    width: "100%"
-  },
-
-  error: {
-    color: "white",
-    fontSize: 14,
-    margin: 0
-  }
-};
 
 class Signup extends Component {
   state = {
@@ -108,12 +47,26 @@ class Signup extends Component {
               id="signup-outlined-firstname"
               label="First name"
               required
-              autoComplete="firstname"
+              autoComplete="given-name"
               className={classes.inputStyle}
               value={firstname}
               onChange={this.props.updateFields("firstname")}
               margin="dense"
               variant="outlined"
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused,
+                  active: classes.cssFocused
+                }
+              }}
+              InputProps={{
+                classes: {
+                  root: classes.cssOutlinedInput,
+                  focused: classes.cssFocused,
+                  notchedOutline: classes.notchedOutline
+                }
+              }}
             />
           </div>
           <div className={classes.inputContainer}>
@@ -121,12 +74,25 @@ class Signup extends Component {
               id="signup-outlined-lastname"
               label="Last name"
               required
-              autoComplete="lastname"
+              autoComplete="family-name"
               className={classes.inputStyle}
               value={lastname}
               onChange={this.props.updateFields("lastname")}
               margin="dense"
               variant="outlined"
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused
+                }
+              }}
+              InputProps={{
+                classes: {
+                  root: classes.cssOutlinedInput,
+                  focused: classes.cssFocused,
+                  notchedOutline: classes.notchedOutline
+                }
+              }}
             />
           </div>
           <div className={classes.inputContainer}>
@@ -140,6 +106,19 @@ class Signup extends Component {
               onChange={this.props.updateFields("username")}
               margin="dense"
               variant="outlined"
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused
+                }
+              }}
+              InputProps={{
+                classes: {
+                  root: classes.cssOutlinedInput,
+                  focused: classes.cssFocused,
+                  notchedOutline: classes.notchedOutline
+                }
+              }}
             />
             {usernameErr ? (
               <p className={classes.error}>{usernameErr}</p>
@@ -151,12 +130,26 @@ class Signup extends Component {
               id="signup-outlined-email"
               label="Email"
               required
+              type="email"
               autoComplete="email"
               className={classes.inputStyle}
               value={email}
               onChange={this.props.updateFields("email")}
               margin="dense"
               variant="outlined"
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused
+                }
+              }}
+              InputProps={{
+                classes: {
+                  root: classes.cssOutlinedInput,
+                  focused: classes.cssFocused,
+                  notchedOutline: classes.notchedOutline
+                }
+              }}
             />
             {passwordError.email ? (
               <p className={classes.error}>{passwordError.email}</p>
@@ -170,11 +163,26 @@ class Signup extends Component {
               autoComplete="current-password"
               className={classes.inputStyle}
               type={passwordVisible ? "text" : "password"}
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused
+                }
+              }}
               InputProps={{
+                classes: {
+                  root: classes.cssOutlinedInput,
+                  focused: classes.cssFocused,
+                  notchedOutline: classes.notchedOutline
+                },
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton onClick={this.togglePasswordMask}>
-                      {passwordVisible ? <Visibility /> : <VisibilityOff />}
+                      {passwordVisible ? (
+                        <Visibility className={classes.passwordEye} />
+                      ) : (
+                        <VisibilityOff className={classes.passwordEye} />
+                      )}
                     </IconButton>
                   </InputAdornment>
                 )
@@ -193,14 +201,29 @@ class Signup extends Component {
             <TextField
               id="signup-outlined-password2-input"
               label="Confirm Password"
-              autoComplete="current-password"
+              autoComplete="new-password"
               className={classes.inputStyle}
               type={passwordVisible ? "text" : "password"}
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused
+                }
+              }}
               InputProps={{
+                classes: {
+                  root: classes.cssOutlinedInput,
+                  focused: classes.cssFocused,
+                  notchedOutline: classes.notchedOutline
+                },
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton onClick={this.togglePasswordMask}>
-                      {passwordVisible ? <Visibility /> : <VisibilityOff />}
+                      {passwordVisible ? (
+                        <Visibility className={classes.passwordEye} />
+                      ) : (
+                        <VisibilityOff className={classes.passwordEye} />
+                      )}
                     </IconButton>
                   </InputAdornment>
                 )
@@ -219,7 +242,6 @@ class Signup extends Component {
         </form>
 
         <div className={classes.imgUploadContainer}>
-          {/* <ImgUpload updateImg={this.handleProfileImg} /> */}
           <div className={classes.buttonContainer}>
             <Button
               primary
@@ -249,5 +271,7 @@ class Signup extends Component {
 Signup.propTypes = {
   classes: PropTypes.object.isRequired
 };
+
+const styles = { ...signupStyles, ...textFieldStyles };
 
 export default withStyles(styles)(Signup);

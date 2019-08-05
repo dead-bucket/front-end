@@ -15,7 +15,7 @@ export default () => ({
     width: 125
   },
   logoSmall: {
-    width: 100
+    width: 50
   },
   logoContainerSmall: {
     display: "flex",

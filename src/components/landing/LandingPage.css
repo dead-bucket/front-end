@@ -66,7 +66,8 @@ html {
   right: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #ee5f3f;
+  /* background-color: #ee5f3f; */
+  background-color: #e8745a;
   -webkit-transition: 0.5s;
   -moz-transition: 0.5s;
   -o-transition: 0.5s;
@@ -110,7 +111,7 @@ html {
 
 .or_seperator {
   position: relative;
-  margin: 10px 0;
+  margin: 0;
   font-style: italic;
   font-size: 25px;
   font-weight: bold;

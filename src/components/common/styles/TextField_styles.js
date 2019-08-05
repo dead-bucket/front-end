@@ -1,7 +1,4 @@
 export default {
-  form: {
-    width: "90%"
-  },
   error: {
     color: "white",
     fontSize: 14,
@@ -21,10 +18,10 @@ export default {
   },
   cssLabel: {
     color: "white",
-    fontSize: ".9rem"
+    fontSize: ".85rem"
   },
   cssFocused: {
-    color: "#87cefa"
+    color: "#white"
   },
 
   cssOutlinedInput: {
