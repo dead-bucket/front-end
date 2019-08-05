@@ -68,7 +68,7 @@ class FriendView4 extends Component {
     const { classes } = this.props;
     const { target } = this.props.profile;
     const { value } = this.state;
-    console.log(this.props.currentUser);
+    // console.log(this.props.currentUser);
     let actionContent;
     switch (value) {
       case 0:
@@ -121,20 +121,18 @@ class FriendView4 extends Component {
           className={classes.bottomNav}
         >
           <BottomNavigationAction
-            className={classes.label}
             label="Thoughtline"
-            icon={<List />}
+            icon={<List className={classes.mediumIcon} />}
           />
           <BottomNavigationAction
-            className={classes.label}
             label="Compose"
-            icon={<AddCircleOutline />}
+            icon={<AddCircleOutline className={classes.mediumIcon} />}
           />
           {isUser ? (
             <BottomNavigationAction
-              className={classes.label}
+              onClick={this.clearNotification}
               label="Inbox"
-              icon={<MoveToInbox onClick={this.clearNotification} />}
+              icon={<MoveToInbox className={classes.mediumIcon} />}
             />
           ) : null}
         </BottomNavigation>
@@ -179,9 +177,11 @@ const styles = {
   },
   bottomNav: {
     height: 80,
-    label: {
-      fontSize: "16px"
-    }
+    justifyContent: "space-evenly",
+    fontSize: 10
+  },
+  icon: {
+    fontSize: 30
   },
 
   dashboardIconStyle: {

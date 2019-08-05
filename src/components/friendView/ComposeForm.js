@@ -15,7 +15,8 @@ const styles = {
     justifyContent: "start",
     alignItems: "center",
     width: "100%",
-    maxWidth: 700
+    maxWidth: 700,
+    marginTop: 10
   },
   thoughtInput: {
     width: "80%",
