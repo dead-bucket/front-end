@@ -14,11 +14,18 @@ import { getEntries } from "../../_actions/entryActions";
 class EntryMenu extends React.Component {
   state = {
     anchorEl: null,
-    showDatePicker: false
+    showDatePicker: false,
+    showMenu: false,
   };
 
   handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
+   
+      this.setState({ 
+        anchorEl: event.currentTarget,
+        // showMenu: !this.state.showMenu,
+      });
+      
+    
   };
 
   handleClose = () => {
@@ -53,6 +60,7 @@ class EntryMenu extends React.Component {
         >
           <MoreVert />
         </Button>
+
         <Menu
           id="simple-menu"
           anchorEl={anchorEl}
@@ -60,17 +68,23 @@ class EntryMenu extends React.Component {
           onClose={this.handleClose}
         >
           <MenuItem
+            style={{ position: "relative", right: "0%", top: "1.5%" }}
             onClick={() => {
               this.props.deleteModal(this.props.identifier);
               this.handleClose();
             }}
           >
-            Delete
+            <i className={`material-icons`}>
+              delete
+            </i>
           </MenuItem>
           <MenuItem
             onClick={() => this.handleSendOneEntry(this.props.identifier)}
           >
-            Send Now
+            <i className={`material-icons`}>
+              send
+            </i>
+            
           </MenuItem>
           <MenuItem
             onClick={() => {
@@ -78,7 +92,10 @@ class EntryMenu extends React.Component {
               this.handleClose();
             }}
           >
-            Schedule Send
+            <i className={`material-icons`}>
+              schedule
+            </i>
+            
           </MenuItem>
         </Menu>
       </div>
