@@ -22,12 +22,17 @@ import API from "../../utils/API";
 const styles = theme => ({
   root: {
     width: "100%",
-    maxWidth: 300,
-    backgroundColor: "lightgrey",
+    maxWidth: 325,
+    backgroundColor: "#fff",
+    border: "1px solid lightgrey",
     position: "absolute",
     top: 70,
     right: 20,
     zIndex: 999
+  },
+  notificationActions: {
+    display: "flex",
+    flexDirection: "column-reverse"
   }
 });
 
@@ -97,11 +102,14 @@ class CheckboxListSecondary extends React.Component {
                       />
                     </ListItemAvatar>
                     <ListItemText
+                      style={{ fontSize: 16 }}
                       primary={`Your Friend ${value.fromId.firstname} ${
                         value.fromId.lastname
                       } sent you a connection request`}
                     />
-                    <ListItemSecondaryAction>
+                    <ListItemSecondaryAction
+                      className={classes.notificationActions}
+                    >
                       <IconButton
                         aria-label="Delete"
                         onClick={() => this.handelDeleteNotification(value._id)}
@@ -132,11 +140,14 @@ class CheckboxListSecondary extends React.Component {
                       />
                     </ListItemAvatar>
                     <ListItemText
+                      style={{ fontSize: 16 }}
                       primary={`Your Friend ${value.fromId.firstname} ${
                         value.fromId.lastname
                       } has joined Thoughtline. Try resending your thoughts.`}
                     />
-                    <ListItemSecondaryAction>
+                    <ListItemSecondaryAction
+                      className={classes.notificationActions}
+                    >
                       <IconButton aria-label="Delete">
                         <DeleteIcon
                           onClick={() =>

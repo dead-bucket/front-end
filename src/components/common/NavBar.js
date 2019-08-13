@@ -22,6 +22,10 @@ const styles = {
   root: {
     fontSize: ".5rem"
   },
+  appBarStyle: {
+    backgroundColor: "#EE5F3F",
+    height: 64
+  },
 
   title: {
     fontFamily: "Satisfy, cursive",
@@ -61,6 +65,9 @@ const styles = {
     postition: "fixed",
     width: 300,
     top: 150
+  },
+  dropdownItem: {
+    fontSize: 16
   }
 };
 
@@ -107,12 +114,12 @@ class NavBar extends Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="static" className={classes.appBarStyle}>
           <Toolbar>
             <h1 className={classes.title}>
               <Link
                 to="/dashboard"
-                style={{ textDecoration: "none", color: "white" }}
+                style={{ textDecoration: "none", color: "#87CEFA" }}
               >
                 Thoughtline
               </Link>
@@ -161,16 +168,28 @@ class NavBar extends Component {
                   open={open}
                   onClose={this.handleClose}
                 >
-                  <MenuItem onClick={() => this.handleMenuSelect("/dashboard")}>
+                  <MenuItem
+                    className={classes.dropdownItem}
+                    onClick={() => this.handleMenuSelect("/dashboard")}
+                  >
                     Dashboard
                   </MenuItem>
 
-                  <MenuItem onClick={() => this.handleMenuSelect("/profile")}>
+                  <MenuItem
+                    className={classes.dropdownItem}
+                    onClick={() => this.handleMenuSelect("/profile")}
+                  >
                     Profile
                   </MenuItem>
-                  <MenuItem onClick={this.logout}>Logout</MenuItem>
+                  <MenuItem
+                    className={classes.dropdownItem}
+                    onClick={this.logout}
+                  >
+                    Logout
+                  </MenuItem>
                   <MenuItem>
                     <a
+                      className={classes.dropdownItem}
                       target="_blank"
                       rel="noopener noreferrer"
                       href="https://docs.google.com/forms/d/e/1FAIpQLSexHUomT5AEqG5QO88cEx_IlsTJrUjlClFpvn0G8ksuXqlgKQ/viewform?usp=sf_link"
@@ -185,7 +204,7 @@ class NavBar extends Component {
         </AppBar>
         {notifications ? (
           <div
-            className={classes.NotificationList}
+            className={classes.notificationList}
             style={{ display: this.state.showNotificatons ? "" : "none" }}
           >
             <NotificationList closeList={this.handleClose} />

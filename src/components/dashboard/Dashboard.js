@@ -48,12 +48,13 @@ const styles = {
   },
   intro: {
     width: "100%",
+    maxWidth: 500,
     textAlign: "center",
     padding: 15,
     fontSize: 16
   },
   bottomNavigation: {
-    height: 55
+    height: 56
   }
 };
 

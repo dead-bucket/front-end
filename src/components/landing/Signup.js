@@ -56,8 +56,7 @@ class Signup extends Component {
               InputLabelProps={{
                 classes: {
                   root: classes.cssLabel,
-                  focused: classes.cssFocused,
-                  active: classes.cssFocused
+                  focused: classes.cssFocused
                 }
               }}
               InputProps={{
