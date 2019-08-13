@@ -68,6 +68,7 @@ const styles = {
   },
   dropdownItem: {
     fontSize: 16
+    // borderBottom: "1px solid lightgrey"
   }
 };
 
@@ -187,9 +188,8 @@ class NavBar extends Component {
                   >
                     Logout
                   </MenuItem>
-                  <MenuItem>
+                  <MenuItem className={classes.dropdownItem}>
                     <a
-                      className={classes.dropdownItem}
                       target="_blank"
                       rel="noopener noreferrer"
                       href="https://docs.google.com/forms/d/e/1FAIpQLSexHUomT5AEqG5QO88cEx_IlsTJrUjlClFpvn0G8ksuXqlgKQ/viewform?usp=sf_link"

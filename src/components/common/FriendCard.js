@@ -49,7 +49,7 @@ const iconStyleBottomRight = {
   bottom: "27%"
 };
 
-const notificationPic = require("./notification.png");
+const notificationPic = require("./thoughtline-logo-primary.svg");
 function FriendCard(props) {
   const { view, friend, loggedInUser } = props;
   let currentUser = loggedInUser || { newmessages: [] };
