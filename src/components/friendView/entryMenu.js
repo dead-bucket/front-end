@@ -10,7 +10,10 @@ import API from "../../utils/API";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getEntries } from "../../_actions/entryActions";
-
+const dropdownItem = {
+  fontSize: 16
+  // borderBottom: "1px solid lightgrey"
+};
 class EntryMenu extends React.Component {
   state = {
     anchorEl: null,
@@ -26,7 +29,10 @@ class EntryMenu extends React.Component {
   };
   handleSendOneEntry = identifier => {
     axios
-      .put(API + `/api/v1/entry/${identifier}`, { delivered: true, deliverOn: Date.now() })
+      .put(API + `/api/v1/entry/${identifier}`, {
+        delivered: true,
+        deliverOn: Date.now()
+      })
       .then(result => {
         if (result.status === 204) {
           this.props.getEntries(this.props.profile.target._id);
@@ -60,6 +66,7 @@ class EntryMenu extends React.Component {
           onClose={this.handleClose}
         >
           <MenuItem
+            style={dropdownItem}
             onClick={() => {
               this.props.deleteModal(this.props.identifier);
               this.handleClose();
@@ -68,11 +75,13 @@ class EntryMenu extends React.Component {
             Delete
           </MenuItem>
           <MenuItem
+            style={dropdownItem}
             onClick={() => this.handleSendOneEntry(this.props.identifier)}
           >
             Send Now
           </MenuItem>
           <MenuItem
+            style={dropdownItem}
             onClick={() => {
               this.props.scheduleModal(this.props.identifier);
               this.handleClose();
@@ -87,7 +96,6 @@ class EntryMenu extends React.Component {
 }
 
 EntryMenu.propTypes = {
-  
   profile: PropTypes.object.isRequired,
   getEntries: PropTypes.func.isRequired
 };
@@ -100,4 +108,3 @@ export default connect(
   mapStateToProps,
   { getEntries }
 )(EntryMenu);
-

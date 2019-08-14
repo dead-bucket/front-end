@@ -73,7 +73,6 @@ const styles = theme => ({
     margin: 0
   },
   searchButton: {
-    backgroundColor: "#ee5f3f",
     marginLeft: 10,
     width: 55
   },

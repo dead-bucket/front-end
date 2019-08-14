@@ -14,7 +14,7 @@ const dashboard = {
     width: 90
   },
   name: {
-    fontSize: ".6rem",
+    fontSize: 16,
     marginTop: 5
   },
   notificationIcon: {
@@ -51,8 +51,8 @@ const friendview = {
   notificationIcon: {
     width: 50,
     position: "absolute",
-    left: 90,
-    top: 30
+    left: 100,
+    top: 0
   }
 };
 

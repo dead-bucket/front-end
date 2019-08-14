@@ -6,7 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 // import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Modal from "@material-ui/core/Modal";
-import TextField from '@material-ui/core/TextField';
+import TextField from "@material-ui/core/TextField";
 // import TextField from "@material-ui/core/TextField";
 
 // Redux
@@ -26,10 +26,13 @@ function getModalStyle() {
 const styles = theme => ({
   paper: {
     position: "absolute",
-    width: theme.spacing.unit * 35,
-    backgroundColor: theme.palette.background.paper,
+    minWidth: 300,
+    maxWidth: 500,
+    backgroundColor: "#87CEFA",
+    border: "1px solid #EE5F3F",
     boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4
+    padding: 30,
+    fontSize: ".8rem"
   },
   medium: {
     width: 60,
@@ -52,21 +55,20 @@ const styles = theme => ({
     textAlign: "center"
   },
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
-  },
+    margin: "20px auto",
+    width: 300
+  }
 });
 
 class ScheduleModal extends Component {
   state = {
-    sendDate: this.props.sendDate || '',
+    sendDate: this.props.sendDate || ""
   };
- 
-  handleSetDate = (e) => {
+
+  handleSetDate = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
-  }
+  };
 
   render() {
     const { classes, isOpen } = this.props;
@@ -75,22 +77,22 @@ class ScheduleModal extends Component {
 
     modalContent = (
       <div className={classes.container}>
-        <h5 className={classes.modalHeading}>
+        <p className={classes.modalHeading}>
           Do you want to send this message at a later time?
-        </h5>
-        <br />
+        </p>
+
         <TextField
-        id="date"
-        name="sendDate"
-        label="Date to Deliver"
-        type="date"
-        defaultValue={this.state.sendDate}
-        className={classes.textField}
-        InputLabelProps={{
-          shrink: true,
-        }}
-        onChange={e => this.handleSetDate(e)}
-      />
+          id="date"
+          name="sendDate"
+          label="Date to Deliver"
+          type="date"
+          defaultValue={this.state.sendDate}
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true
+          }}
+          onChange={e => this.handleSetDate(e)}
+        />
         <div className={classes.buttonDiv}>
           <Button
             color="primary"
