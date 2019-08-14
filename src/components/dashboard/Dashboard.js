@@ -57,7 +57,7 @@ const styles = {
   },
   bottomNavigation: {
     height: 60,
-    backgroundColor: "#87CEFA"
+    backgroundColor: "#EE5F3F"
   }
 };
 

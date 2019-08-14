@@ -159,7 +159,8 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    position: "relative"
+    position: "relative",
+    backgroundColor: "#87CEFA"
   },
   friendContainer: {
     display: "flex",
@@ -177,8 +178,10 @@ const styles = {
   },
   bottomNav: {
     height: 80,
+    color: "white",
     justifyContent: "space-evenly",
-    fontSize: 10
+    fontSize: 10,
+    backgroundColor: "#87CEFA"
   },
   icon: {
     fontSize: 30
@@ -186,6 +189,7 @@ const styles = {
 
   dashboardIconStyle: {
     position: "absolute",
+
     top: 75,
     left: "10%",
     cursor: "pointer",
@@ -197,6 +201,7 @@ const styles = {
     padding: 12
   },
   mediumIcon: {
+    color: "#EE5F3F",
     width: 32,
     height: 32
   }

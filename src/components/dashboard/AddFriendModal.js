@@ -47,7 +47,8 @@ const styles = theme => ({
   },
   mediumIcon: {
     width: 40,
-    height: 40
+    height: 40,
+    color: "#87CEFA"
   },
   buttonDiv: {
     position: "relative"
