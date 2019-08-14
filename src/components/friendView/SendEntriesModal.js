@@ -7,6 +7,7 @@ import API from "../../utils/API";
 import { withStyles } from "@material-ui/core/styles";
 // import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+// import Button from "../common/Button";
 import Modal from "@material-ui/core/Modal";
 import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
@@ -38,7 +39,8 @@ const styles = theme => ({
     position: "absolute",
     minWidth: 300,
     maxWidth: 500,
-    backgroundColor: "white",
+    backgroundColor: "#87CEFA",
+    border: "1px solid #EE5F3F",
     boxShadow: theme.shadows[5],
     padding: 30,
     fontSize: ".8rem"
@@ -68,7 +70,8 @@ const styles = theme => ({
   },
   mediumIcon: {
     width: 30,
-    height: 30
+    height: 30,
+    color: "#EE5F3F"
   },
   sendIconStyle: {
     position: "absolute",
@@ -223,9 +226,11 @@ class SendEntriesModal extends Component {
   };
 
   sendInvite = email => {
+    console.log("INSIDE SENDINVITE", email);
     axios
       .post(API + "/api/v1/sendinvite/", { email: email })
       .then(data => {
+        console.log(data);
         if (data.status === 200) {
           this.setState({
             modalStage: 3,
@@ -271,7 +276,7 @@ class SendEntriesModal extends Component {
             variant="contained"
             onClick={() => this.sendEntriesToUser(target._id)}
           >
-            Yes! Send my thoughts.
+            Send my thoughts.
           </Button>
         </div>
       );

@@ -39,7 +39,6 @@ class Login extends Component {
   loginUser = () => {
     this.props.clearLoginErrors();
     const { username, password } = this.state;
-    console.log({ username, password });
     const loginData = {
       username: username.toLowerCase(),
       password

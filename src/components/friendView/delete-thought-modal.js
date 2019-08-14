@@ -25,10 +25,13 @@ function getModalStyle() {
 const styles = theme => ({
   paper: {
     position: "absolute",
-    width: theme.spacing.unit * 35,
-    backgroundColor: theme.palette.background.paper,
+    minWidth: 300,
+    maxWidth: 500,
+    backgroundColor: "#87CEFA",
+    border: "1px solid #EE5F3F",
     boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4
+    padding: 30,
+    fontSize: ".8rem"
   },
   medium: {
     width: 60,
@@ -62,9 +65,9 @@ class DeleteEntriesModal extends Component {
 
     modalContent = (
       <div className={classes.container}>
-        <h5 className={classes.modalHeading}>
+        <p className={classes.modalHeading}>
           Are you sure you want to delete this message?
-        </h5>
+        </p>
         <br />
         <div className={classes.buttonDiv}>
           <Button

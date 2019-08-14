@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import Button from "../common/Button";
+// import Button from "@material-ui/core/Button";
 import axios from "axios";
 import API from "../../utils/API";
 import { getEntries } from "../../_actions/entryActions";
@@ -32,7 +33,7 @@ const styles = {
   },
   //style for font size
   resize: {
-    fontSize: 20
+    fontSize: 25
   },
   colorBlock: {
     height: 30,
@@ -146,15 +147,8 @@ class ComposeForm extends Component {
           ))}
         </div>
 
-        <Button
-          variant="contained"
-          size="large"
-          color="primary"
-          className={classes.margin}
-          onClick={this.submitThought}
-          disabled={!thought}
-        >
-          Add To Thoughtline
+        <Button primary handleClick={this.submitThought} disabled={!thought}>
+          Create Thought
         </Button>
       </div>
     );

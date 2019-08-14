@@ -22,12 +22,20 @@ import API from "../../utils/API";
 const styles = theme => ({
   root: {
     width: "100%",
-    maxWidth: 300,
-    backgroundColor: "lightgrey",
+    maxWidth: 325,
+    backgroundColor: "#fff",
+    border: "1px solid lightgrey",
     position: "absolute",
     top: 70,
     right: 20,
     zIndex: 999
+  },
+  notificationActions: {
+    display: "flex",
+    flexDirection: "column-reverse"
+  },
+  buttonStyle: {
+    padding: 5
   }
 });
 
@@ -97,18 +105,23 @@ class CheckboxListSecondary extends React.Component {
                       />
                     </ListItemAvatar>
                     <ListItemText
+                      style={{ fontSize: 16 }}
                       primary={`Your Friend ${value.fromId.firstname} ${
                         value.fromId.lastname
                       } sent you a connection request`}
                     />
-                    <ListItemSecondaryAction>
+                    <ListItemSecondaryAction
+                      className={classes.notificationActions}
+                    >
                       <IconButton
                         aria-label="Delete"
+                        className={classes.buttonStyle}
                         onClick={() => this.handelDeleteNotification(value._id)}
                       >
                         <DeleteIcon />
                       </IconButton>
                       <IconButton
+                        className={classes.buttonStyle}
                         aria-label="CheckCircle"
                         onClick={() =>
                           this.handleAcceptConnection(
@@ -120,6 +133,7 @@ class CheckboxListSecondary extends React.Component {
                         <CheckCircle />
                       </IconButton>
                     </ListItemSecondaryAction>
+                    <hr />
                   </ListItem>
                 );
               } else {
@@ -132,12 +146,18 @@ class CheckboxListSecondary extends React.Component {
                       />
                     </ListItemAvatar>
                     <ListItemText
+                      style={{ fontSize: 16 }}
                       primary={`Your Friend ${value.fromId.firstname} ${
                         value.fromId.lastname
                       } has joined Thoughtline. Try resending your thoughts.`}
                     />
-                    <ListItemSecondaryAction>
-                      <IconButton aria-label="Delete">
+                    <ListItemSecondaryAction
+                      className={classes.notificationActions}
+                    >
+                      <IconButton
+                        className={classes.buttonStyle}
+                        aria-label="Delete"
+                      >
                         <DeleteIcon
                           onClick={() =>
                             this.handelDeleteNotification(value._id)

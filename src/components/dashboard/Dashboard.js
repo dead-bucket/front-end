@@ -22,10 +22,11 @@ import { loadUser } from "../../_actions/authActions";
 
 const styles = {
   dashboardWrapper: {
-    height: "99.5vh",
+    height: "100vh",
     display: "flex",
     flexDirection: "column",
-    position: "relative"
+    position: "relative",
+    backgroundColor: "#87CEFA"
   },
 
   mainTitle: {
@@ -35,7 +36,8 @@ const styles = {
     fontFamily: "Satisfy, cursive",
     marginBottom: 0,
     fontSize: "1.5rem",
-    flexGrow: 1
+    flexGrow: 1,
+    color: "#EE5F3F"
   },
   friendContainer: {
     display: "flex",
@@ -48,12 +50,14 @@ const styles = {
   },
   intro: {
     width: "100%",
+    maxWidth: 500,
     textAlign: "center",
     padding: 15,
     fontSize: 16
   },
   bottomNavigation: {
-    height: 55
+    height: 60,
+    backgroundColor: "#EE5F3F"
   }
 };
 

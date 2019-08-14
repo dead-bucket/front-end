@@ -122,17 +122,20 @@ class FriendView4 extends Component {
         >
           <BottomNavigationAction
             label="Thoughtline"
-            icon={<List className={classes.mediumIcon} />}
+            style={{ color: "white", fontSize: 14 }}
+            icon={<List className={classes.navIcons} />}
           />
           <BottomNavigationAction
             label="Compose"
-            icon={<AddCircleOutline className={classes.mediumIcon} />}
+            style={{ color: "white", fontSize: 14 }}
+            icon={<AddCircleOutline className={classes.navIcons} />}
           />
           {isUser ? (
             <BottomNavigationAction
               onClick={this.clearNotification}
+              style={{ color: "white", fontSize: 14 }}
               label="Inbox"
-              icon={<MoveToInbox className={classes.mediumIcon} />}
+              icon={<MoveToInbox className={classes.navIcons} />}
             />
           ) : null}
         </BottomNavigation>
@@ -159,26 +162,29 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    position: "relative"
+    position: "relative",
+    backgroundColor: "#87CEFA"
   },
   friendContainer: {
     display: "flex",
     justifyContent: "center",
     textAlign: "center",
-    flexGrow: 1,
     paddingTop: 10
   },
   actionContainer: {
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "center",
-    overflowY: "scroll",
+    overflowY: "auto",
     flexGrow: 3
   },
   bottomNav: {
     height: 80,
+    color: "white",
     justifyContent: "space-evenly",
-    fontSize: 10
+    fontSize: 10,
+    // backgroundColor: "#87CEFA"
+    backgroundColor: "#EE5F3F"
   },
   icon: {
     fontSize: 30
@@ -197,8 +203,12 @@ const styles = {
     padding: 12
   },
   mediumIcon: {
+    color: "#EE5F3F",
     width: 32,
     height: 32
+  },
+  navIcons: {
+    color: "#87CEFA"
   }
 };
 

@@ -14,10 +14,11 @@ const styles = {
   inboxMessage: {
     textAlign: "left",
     width: "80%",
-    maxWidth: 700,
+    maxWidth: 800,
     borderRadius: 15,
+    margin: "20px 20px 20px 25px",
     padding: 20,
-    margin: 20,
+
     border: "1px solid black",
     webkitBoxShadow: "7px 10px 5px 1px rgba(0,0,0,0.25)",
     mozBoxShadow: "7px 10px 5px 1px rgba(0,0,0,0.25)",
@@ -27,18 +28,28 @@ const styles = {
     position: "absolute",
     alignItems: "center",
     width: 240,
-    top: 150,
+    top: 172,
     left: "10%",
     marginLeft: "17px",
     display: "flex"
   },
+  dateText: {
+    // fontSize: ".7rem"
+    fontSize: 16
+  },
+  messageText: {
+    // fontSize: ".9rem"
+    fontSize: 20
+  },
   searchIcon: {
     width: 30,
     height: 30,
-    marginTop: 24
+    marginTop: 24,
+    color: "#EE5F3F",
+    cursor: "pointer"
   },
   searchInput: {
-    backgroundColor: "white"
+    backgroundColor: "#87CEFA"
   },
   messageContainer: {
     display: "flex",
@@ -46,7 +57,6 @@ const styles = {
     alignItems: "center",
     textAlign: "center",
     height: "100%"
-
   }
 };
 
@@ -71,7 +81,6 @@ class Inbox extends Component {
   };
 
   searchMessages = searchTerm => {
-    console.log(searchTerm);
     let searchResults = this.props.inboxEntries.filter(entry => {
       return entry.description.toLowerCase().includes(searchTerm.toLowerCase())
         ? entry
@@ -106,10 +115,10 @@ class Inbox extends Component {
               style={{ backgroundColor: entry.mood }}
               key={entry._id}
             >
-              <p style={{ fontSize: 16 }}>
+              <em className={classes.dateText}>
                 <Moment format="LLL">{entry.createdAt}</Moment>
-              </p>
-              <p style={{ fontSize: 20 }}>{entry.description}</p>
+              </em>
+              <p className={classes.messageText}>{entry.description}</p>
             </div>
           );
         });
@@ -127,10 +136,10 @@ class Inbox extends Component {
               style={{ backgroundColor: entry.mood }}
               key={entry._id}
             >
-              <p style={{ fontSize: 16 }}>
+              <em className={classes.dateText}>
                 <Moment format="LLL">{entry.createdAt}</Moment>
-              </p>
-              <p style={{ fontSize: 20 }}>{entry.description}</p>
+              </em>
+              <p className={classes.messageText}>{entry.description}</p>
             </div>
           );
         });
@@ -139,27 +148,29 @@ class Inbox extends Component {
 
     /* TODO - Add autofocus - might need refs? */
     return (
-      <div className={classes.messageContainer}>
-        {inboxEntries.length > 0 ? (
-          <div className={classes.searchContainer}>
-            <Search
-              className={classes.searchIcon}
-              onClick={this.displaySearchInput}
-            />
-            <TextField
-              id="searchTerm"
-              label="Searching for..."
-              type="text"
-              style={{ visibility: displaySearch ? "visible" : "hidden" }}
-              name="searchTerm"
-              className={classes.searchInput}
-              value={this.state.searchTerm}
-              onChange={this.handleSearchInput}
-              margin="normal"
-            />
-          </div>
-        ) : null}
-        {messageContent}
+      <div style={{ width: "100%" }}>
+        <div className={classes.messageContainer}>
+          {inboxEntries.length > 0 ? (
+            <div className={classes.searchContainer}>
+              <Search
+                className={classes.searchIcon}
+                onClick={this.displaySearchInput}
+              />
+              <TextField
+                id="searchTerm"
+                label="Searching for..."
+                type="text"
+                style={{ visibility: displaySearch ? "visible" : "hidden" }}
+                name="searchTerm"
+                className={classes.searchInput}
+                value={this.state.searchTerm}
+                onChange={this.handleSearchInput}
+                margin="normal"
+              />
+            </div>
+          ) : null}
+          {messageContent}
+        </div>
       </div>
     );
   }
