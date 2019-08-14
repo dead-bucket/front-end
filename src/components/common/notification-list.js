@@ -33,6 +33,9 @@ const styles = theme => ({
   notificationActions: {
     display: "flex",
     flexDirection: "column-reverse"
+  },
+  buttonStyle: {
+    padding: 5
   }
 });
 
@@ -112,11 +115,13 @@ class CheckboxListSecondary extends React.Component {
                     >
                       <IconButton
                         aria-label="Delete"
+                        className={classes.buttonStyle}
                         onClick={() => this.handelDeleteNotification(value._id)}
                       >
                         <DeleteIcon />
                       </IconButton>
                       <IconButton
+                        className={classes.buttonStyle}
                         aria-label="CheckCircle"
                         onClick={() =>
                           this.handleAcceptConnection(
@@ -128,6 +133,7 @@ class CheckboxListSecondary extends React.Component {
                         <CheckCircle />
                       </IconButton>
                     </ListItemSecondaryAction>
+                    <hr />
                   </ListItem>
                 );
               } else {
@@ -148,7 +154,10 @@ class CheckboxListSecondary extends React.Component {
                     <ListItemSecondaryAction
                       className={classes.notificationActions}
                     >
-                      <IconButton aria-label="Delete">
+                      <IconButton
+                        className={classes.buttonStyle}
+                        aria-label="Delete"
+                      >
                         <DeleteIcon
                           onClick={() =>
                             this.handelDeleteNotification(value._id)

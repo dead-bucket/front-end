@@ -69,7 +69,7 @@ function FriendCard(props) {
         <img alt="Profile" style={friendview.image} src={friend.picture} />
         <p style={friendview.name}>
           {friend.lastname
-            ? `${friend.firstname} ${friend.lastname}`
+            ? `${friend.firstname} ${friend.lastname.slice(0, 1)}.`
             : friend.username}
         </p>
       </div>
@@ -102,7 +102,7 @@ function FriendCard(props) {
         </i>
         <p style={dashboard.name}>
           {friend.lastname
-            ? `${friend.firstname} ${friend.lastname}`
+            ? `${friend.firstname} ${friend.lastname.slice(0, 1)}.`
             : friend.username}
         </p>
       </div>

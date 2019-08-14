@@ -6,7 +6,9 @@ import ImgUpload from "../common/ImgUpload";
 import API from "../../utils/API";
 import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
+import Button from "../common/Button";
+
 import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import PersonAdd from "@material-ui/icons/PersonAdd";
@@ -15,6 +17,7 @@ import BackArrow from "@material-ui/icons/ArrowBack";
 import CheckCircle from "@material-ui/icons/CheckCircleOutlined";
 import Search from "@material-ui/icons/Search";
 import Fab from "@material-ui/core/Fab";
+// import textFieldStyles from "../common/styles/TextField_styles";
 
 function getModalStyle() {
   const top = 50;
@@ -26,13 +29,13 @@ function getModalStyle() {
     transform: `translate(-${top}%, -${left}%)`
   };
 }
-
 const styles = theme => ({
   paper: {
     position: "absolute",
     minWidth: 300,
     maxWidth: 500,
-    backgroundColor: "white",
+    backgroundColor: "#87CEFA",
+    border: "1px solid #EE5F3F",
     boxShadow: theme.shadows[5],
     padding: 30,
     fontSize: ".8rem"
@@ -69,11 +72,21 @@ const styles = theme => ({
     margin: 0
   },
   searchButton: {
+    backgroundColor: "#ee5f3f",
     marginLeft: 10,
     width: 55
   },
   modalHeading: {
-    textAlign: "center"
+    fontFamily: "Satisfy, cursive",
+    textAlign: "center",
+    color: "#EE5F3F",
+    fontSize: 40,
+    margin: 0
+  },
+  error: {
+    color: "white",
+    fontSize: 14,
+    margin: 0
   }
 });
 
@@ -246,9 +259,8 @@ class AddFriendModal extends Component {
                   Alternatively, you can click <b>Create Private Friend</b>.
                 </p>
                 <Button
-                  color="primary"
-                  variant="outlined"
-                  onClick={() => this.setState({ modalStage: 2 })}
+                  primary
+                  handleClick={() => this.setState({ modalStage: 2 })}
                 >
                   Create Private Friend
                 </Button>
@@ -271,11 +283,7 @@ class AddFriendModal extends Component {
               </strong>
               <p className={classes.profileText}>{username}</p>
               <p>Do you want to add this user as a friend?</p>
-              <Button
-                color="primary"
-                variant="contained"
-                onClick={this.addNewUser}
-              >
+              <Button secondary handleClick={this.addNewUser}>
                 Add This Friend
               </Button>
             </div>
@@ -286,9 +294,8 @@ class AddFriendModal extends Component {
                 Alternatively, you can <b>Create a Private Friend</b>:
               </p>
               <Button
-                color="primary"
-                variant="outlined"
-                onClick={() => this.setState({ modalStage: 2 })}
+                primary
+                handleClick={() => this.setState({ modalStage: 2 })}
               >
                 Create Private Friend
               </Button>
@@ -332,11 +339,8 @@ class AddFriendModal extends Component {
               <br />
               <div className={classes.container}>
                 <Button
-                  id="AddFriendModal_submit_btn"
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                  onClick={this.addNewTarget}
+                  primary
+                  handleClick={this.addNewTarget}
                   disabled={!username}
                 >
                   Create Private Friend
@@ -381,7 +385,7 @@ class AddFriendModal extends Component {
               {modalStage === 1 || modalStage === 2 ? (
                 <IconButton
                   className={classes.backButton}
-                  onClick={this.handleClose}
+                  onClick={this.resetModal}
                 >
                   <BackArrow />
                 </IconButton>
