@@ -9,6 +9,9 @@ import NavBar from "../common/NavBar";
 import Spinner from "../common/Spinner";
 import FriendCard from "../common/FriendCard";
 import AddFriendModal from "./AddFriendModal";
+import RemoveCircleOutline from "@material-ui/icons/RemoveCircleOutline";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
 
 //Redux
 import { connect } from "react-redux";
@@ -56,12 +59,31 @@ const styles = {
     fontSize: 16
   },
   bottomNavigation: {
+    alignItems: "center",
     height: 60,
     backgroundColor: "#EE5F3F"
-  }
+  },
+  medium: {
+    width: 60,
+    height: 60,
+    padding: 12
+  },
+  mediumIcon: {
+    width: 40,
+    height: 40,
+    color: "#87CEFA"
+  },
 };
 
 class Dashboard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      deleteLayer: false,
+    }
+    this.toggleDeleteLayer = this.toggleDeleteLayer.bind(this);
+  }
+  
   componentDidMount() {
     this.props.loadUser(this.props.history);
     if (!this.props.friends) {
@@ -69,7 +91,12 @@ class Dashboard extends Component {
     }
     this.props.getNotifications();
   }
-
+  toggleDeleteLayer = () => {
+    // alert('toggle delete layer fired');
+    this.setState({
+      deleteLayer: !this.state.deleteLayer,
+    })
+  }
   togglePriority = friend => {
     // console.log("in toggle priority fn", friend);
     axios
@@ -139,6 +166,7 @@ class Dashboard extends Component {
             handleToggle={this.togglePriority}
             view="dashboard"
             loggedInUser={this.props.currentUser}
+            deleteLayer={this.state.deleteLayer}
           />
         ));
       }
@@ -152,7 +180,23 @@ class Dashboard extends Component {
         <div className={classes.friendContainer}>{dashboardContent}</div>
 
         <BottomNavigation className={classes.bottomNavigation}>
-          <AddFriendModal refreshTargets={this.props.getFriends} />
+          
+          <AddFriendModal refreshTargets={this.props.getFriends}
+                          toggleDelete={this.toggleDeleteLayer} />
+          <div className={classes.medium}>
+          <Tooltip title="Remove Friend">
+            <IconButton className={classes.medium}
+              onClick={() => this.toggleDeleteLayer()}>
+              <RemoveCircleOutline 
+                className={classes.mediumIcon} 
+                />
+            </IconButton>
+
+          </Tooltip>
+
+          </div>
+
+          
         </BottomNavigation>
       </div>
     );

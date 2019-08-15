@@ -8,10 +8,11 @@ import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 // import Button from "@material-ui/core/Button";
 import Button from "../common/Button";
-
+import Tooltip from "@material-ui/core/Tooltip";
 import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import PersonAdd from "@material-ui/icons/PersonAdd";
+import RemoveCircleOutline from "@material-ui/icons/RemoveCircleOutline";
 import Close from "@material-ui/icons/Close";
 import BackArrow from "@material-ui/icons/ArrowBack";
 import CheckCircle from "@material-ui/icons/CheckCircleOutlined";
@@ -100,12 +101,14 @@ class AddFriendModal extends Component {
     image: "",
     modalStage: 0,
     isUser_id: null,
-    errorMessage: null
+    errorMessage: null,
+    
   };
 
   handleOpen = () => {
     this.setState({ open: true });
   };
+  
 
   handleClose = () => {
     this.setState({
@@ -118,7 +121,8 @@ class AddFriendModal extends Component {
       name: "",
       isUser_id: "",
       errorMessage: null,
-      modalStage: 0
+      modalStage: 0,
+      
     });
   };
 
@@ -365,10 +369,17 @@ class AddFriendModal extends Component {
 
     return (
       <div className={classes.addFriendModal}>
-        <div onClick={this.handleOpen}>
-          <IconButton className={classes.medium}>
-            <PersonAdd className={classes.mediumIcon} />
-          </IconButton>
+        <div >
+          <Tooltip title="Add Friend">
+            <IconButton onClick={this.handleOpen} className={classes.medium}>
+              <PersonAdd className={classes.mediumIcon} />
+            </IconButton>
+          </Tooltip>
+          {/* <Tooltip title="Delete Friend" >
+              <IconButton className={classes.medium} onClick={() => this.props.toggleDelete()}>
+                <RemoveCircleOutline className={classes.mediumIcon} />
+              </IconButton>
+          </Tooltip> */}
         </div>
         <Modal
           aria-labelledby="add-friend-modal"
