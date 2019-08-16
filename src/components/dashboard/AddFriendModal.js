@@ -8,10 +8,11 @@ import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 // import Button from "@material-ui/core/Button";
 import Button from "../common/Button";
-
+import Tooltip from "@material-ui/core/Tooltip";
 import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import PersonAdd from "@material-ui/icons/PersonAdd";
+
 import Close from "@material-ui/icons/Close";
 import BackArrow from "@material-ui/icons/ArrowBack";
 import CheckCircle from "@material-ui/icons/CheckCircleOutlined";
@@ -365,11 +366,12 @@ class AddFriendModal extends Component {
 
     return (
       <div className={classes.addFriendModal}>
-        <div onClick={this.handleOpen}>
-          <IconButton className={classes.medium}>
+        <Tooltip title="Add Friend">
+          <IconButton onClick={this.handleOpen} className={classes.medium}>
             <PersonAdd className={classes.mediumIcon} />
           </IconButton>
-        </div>
+        </Tooltip>
+
         <Modal
           aria-labelledby="add-friend-modal"
           aria-describedby="create a new friend by entering their name, email, image address"

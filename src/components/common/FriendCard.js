@@ -27,6 +27,22 @@ const dashboard = {
     position: "absolute",
     left: "80%",
     bottom: "27%"
+  },
+  deleteContainer: {
+    position: "absolute",
+    width: 90,
+    height: 90,
+    top: 6,
+    border: "3px dashed #EE5F3F",
+    borderRadius: "50%",
+    backgroundColor: "rgba(0,0,0, .5)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  deleteIcon: {
+    fontSize: 60,
+    color: "#EE5F3F"
   }
 };
 
@@ -58,7 +74,7 @@ const friendview = {
 
 const notificationPic = require("./thoughtline-logo-primary.svg");
 function FriendCard(props) {
-  const { view, friend, loggedInUser } = props;
+  const { view, friend, loggedInUser, deleteLayer } = props;
   let currentUser = loggedInUser || { newmessages: [] };
   if (view === "friendview") {
     return (
@@ -94,6 +110,22 @@ function FriendCard(props) {
           src={notificationPic}
           alt={"You have new Thoughts from this friend"}
         />
+        <div
+          style={{
+            visibility: deleteLayer ? "visible" : "hidden",
+            ...dashboard.deleteContainer
+          }}
+          onClick={() => props.remove(friend)}
+        >
+          <i
+            className="material-icons"
+            style={{
+              ...dashboard.deleteIcon
+            }}
+          >
+            delete_forever
+          </i>
+        </div>
         <img
           alt={friend.firstname}
           style={dashboard.image}

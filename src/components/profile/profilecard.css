@@ -7,10 +7,15 @@
   margin: 10px;
   height: 125px;
   width: 125px;
+  align-self: center;
 }
 #profile_user_info {
   margin-right: 10px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+}
+
+.profile_info {
+  margin: 10px 0;
 }
