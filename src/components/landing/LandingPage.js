@@ -189,11 +189,11 @@ class LandingPage extends Component {
           />
 
           <div className={classes.logoContainerSmall}>
-            <img
+            {/* <img
               src={logoPrimary}
               alt="Thoughtline logo"
               className={classes.logoSmall}
-            />
+            /> */}
             <p className={classes.titleSmall}>Thoughtline</p>
           </div>
 
@@ -216,12 +216,12 @@ class LandingPage extends Component {
             onClick={this.handleCloseMenu}
           />
           <div className={classes.logoContainerSmall}>
-            <img
+            <p className={classes.titleSmall}>Thoughtline</p>
+            {/* <img
               src={logoPrimary}
               alt="Thoughtline logo"
               className={classes.logoSmall}
-            />
-            <p className={classes.titleSmall}>Thoughtline</p>
+            /> */}
           </div>
           <Button secondary handleClick={this.cycleShowImgUpload}>
             Back
