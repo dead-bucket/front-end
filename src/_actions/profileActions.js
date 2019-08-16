@@ -41,3 +41,11 @@ export const getNotifications = () => {
       .catch(err => console.log(err));
   };
 };
+
+// export const removeFriend = (id) => {
+  
+//   return axios
+//     .put(API + "/api/v1/deletefriend/", {friend: id})
+//     .then(() => getFriends())
+//     .catch(err => console.log(err))
+// }

@@ -57,7 +57,7 @@ const friendview = {
   deleteIcon: {
     position: "absolute",
     fontSize: 80,
-    color: "#EE5F3F",
+    color: "lightGrey",
     top: "10%",
   }
 };
@@ -100,8 +100,11 @@ function FriendCard(props) {
           src={notificationPic}
           alt={"You have new Thoughts from this friend"}
         />
-        <i className="material-icons" style={{ visibility: deleteLayer ?  "visible" : "hidden", ...friendview.deleteIcon}}>
-          delete
+        <i  className="material-icons" 
+            style={{ visibility: deleteLayer ?  "visible" : "hidden", ...friendview.deleteIcon}}
+            onClick={() => props.remove(friend)}
+        >
+          delete_forever
         </i>
         <img
           alt={friend.firstname}

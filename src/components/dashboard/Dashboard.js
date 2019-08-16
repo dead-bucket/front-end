@@ -12,13 +12,15 @@ import AddFriendModal from "./AddFriendModal";
 import RemoveCircleOutline from "@material-ui/icons/RemoveCircleOutline";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
+import DeleteFriendModal from "./removeFriendModal";
 
 //Redux
 import { connect } from "react-redux";
 import {
   getFriends,
   setCurrentTarget,
-  getNotifications
+  getNotifications,
+  
 } from "../../_actions/profileActions";
 import { loadUser } from "../../_actions/authActions";
 // TODO: checkout touch-action for sliding on mobile: https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action
@@ -80,8 +82,12 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       deleteLayer: false,
+      deleteFriendModalOpen: false,
+
     }
     this.toggleDeleteLayer = this.toggleDeleteLayer.bind(this);
+    this.removeFriend = this.removeFriend.bind(this);
+    this.handleOpenRemoveModal = this.handleOpenRemoveModal.bind(this);
   }
   
   componentDidMount() {
@@ -113,6 +119,29 @@ class Dashboard extends Component {
     this.props.setCurrentTarget(friend);
     this.props.history.push("/friendview");
   };
+  removeFriend = () => {
+    // console.log('removing friend', this.state.friendToRemove);
+    axios
+      .put(API + "/api/v1/deletefriend", {friend: this.state.friendToRemove._id})
+      .then(res => console.log('response', res.status))
+      .then(() => this.handleCloseModal())
+      .catch(err => console.log(err))
+  };
+  handleOpenRemoveModal = friend => {
+    // console.log('this is open modal and friend to put in state', friend)
+    this.setState({
+      deleteFriendModalOpen: true,
+      friendToRemove: friend,
+    })
+  }
+  handleCloseModal = () => {
+    this.setState({
+      deleteFriendModalOpen: false,
+      deleteLayer: false,
+      friendToRemove: null,
+    })
+    this.props.getFriends();
+  }
 
   render() {
     const { classes, friends } = this.props;
@@ -167,6 +196,7 @@ class Dashboard extends Component {
             view="dashboard"
             loggedInUser={this.props.currentUser}
             deleteLayer={this.state.deleteLayer}
+            remove={this.handleOpenRemoveModal}
           />
         ));
       }
@@ -178,14 +208,19 @@ class Dashboard extends Component {
           <p style={{ margin: "0 auto" }}>Thinking about...</p>
         </div>
         <div className={classes.friendContainer}>{dashboardContent}</div>
-
+        <DeleteFriendModal 
+            isOpen={this.state.deleteFriendModalOpen} 
+            yes={this.removeFriend}
+            no={this.handleCloseModal}
+            friendToDelete={this.state.friendToRemove}
+        />
         <BottomNavigation className={classes.bottomNavigation}>
           
           <AddFriendModal refreshTargets={this.props.getFriends}
                           toggleDelete={this.toggleDeleteLayer} />
           <div className={classes.medium}>
           <Tooltip title="Remove Friend">
-            <IconButton className={classes.medium}
+            <IconButton 
               onClick={() => this.toggleDeleteLayer()}>
               <RemoveCircleOutline 
                 className={classes.mediumIcon} 
