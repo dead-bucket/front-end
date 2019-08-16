@@ -9,18 +9,17 @@ import NavBar from "../common/NavBar";
 import Spinner from "../common/Spinner";
 import FriendCard from "../common/FriendCard";
 import AddFriendModal from "./AddFriendModal";
-import RemoveCircleOutline from "@material-ui/icons/RemoveCircleOutline";
+import Intro from "./Intro";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteFriendModal from "./removeFriendModal";
-
+import removeFriend from "../common/remove-friend.svg";
 //Redux
 import { connect } from "react-redux";
 import {
   getFriends,
   setCurrentTarget,
-  getNotifications,
-  
+  getNotifications
 } from "../../_actions/profileActions";
 import { loadUser } from "../../_actions/authActions";
 // TODO: checkout touch-action for sliding on mobile: https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action
@@ -49,20 +48,21 @@ const styles = {
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center",
-    overflowY: "scroll",
+    overflowY: "auto",
     height: "100%",
     flexGrow: 2
   },
   intro: {
     width: "100%",
-    maxWidth: 500,
+    maxWidth: 800,
     textAlign: "center",
     padding: 15,
-    fontSize: 16
+    fontSize: ".8rem"
   },
   bottomNavigation: {
     alignItems: "center",
-    height: 60,
+    justifyContent: "space-evenly",
+    height: 83,
     backgroundColor: "#EE5F3F"
   },
   medium: {
@@ -74,7 +74,7 @@ const styles = {
     width: 40,
     height: 40,
     color: "#87CEFA"
-  },
+  }
 };
 
 class Dashboard extends Component {
@@ -82,14 +82,10 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       deleteLayer: false,
-      deleteFriendModalOpen: false,
-
-    }
-    this.toggleDeleteLayer = this.toggleDeleteLayer.bind(this);
-    this.removeFriend = this.removeFriend.bind(this);
-    this.handleOpenRemoveModal = this.handleOpenRemoveModal.bind(this);
+      deleteFriendModalOpen: false
+    };
   }
-  
+
   componentDidMount() {
     this.props.loadUser(this.props.history);
     if (!this.props.friends) {
@@ -100,9 +96,9 @@ class Dashboard extends Component {
   toggleDeleteLayer = () => {
     // alert('toggle delete layer fired');
     this.setState({
-      deleteLayer: !this.state.deleteLayer,
-    })
-  }
+      deleteLayer: !this.state.deleteLayer
+    });
+  };
   togglePriority = friend => {
     // console.log("in toggle priority fn", friend);
     axios
@@ -122,26 +118,28 @@ class Dashboard extends Component {
   removeFriend = () => {
     // console.log('removing friend', this.state.friendToRemove);
     axios
-      .put(API + "/api/v1/deletefriend", {friend: this.state.friendToRemove._id})
-      .then(res => console.log('response', res.status))
+      .put(API + "/api/v1/deletefriend", {
+        friend: this.state.friendToRemove._id
+      })
+      .then(res => console.log("response", res.status))
       .then(() => this.handleCloseModal())
-      .catch(err => console.log(err))
+      .catch(err => console.log(err));
   };
   handleOpenRemoveModal = friend => {
     // console.log('this is open modal and friend to put in state', friend)
     this.setState({
       deleteFriendModalOpen: true,
-      friendToRemove: friend,
-    })
-  }
+      friendToRemove: friend
+    });
+  };
   handleCloseModal = () => {
     this.setState({
       deleteFriendModalOpen: false,
       deleteLayer: false,
-      friendToRemove: null,
-    })
+      friendToRemove: null
+    });
     this.props.getFriends();
-  }
+  };
 
   render() {
     const { classes, friends } = this.props;
@@ -154,36 +152,7 @@ class Dashboard extends Component {
       if (friends.length === 0) {
         dashboardContent = (
           <div className={classes.intro}>
-            <h4>
-              ...adding a friend with add button below.{" "}
-              <span role="img" aria-label="heart-eyes-emoji">
-                😍
-              </span>
-            </h4>
-
-            <p>But first, a quick introduction...</p>
-
-            <p> Thank you for checking out the Thoughtline beta! </p>
-            <p>
-              We have poured our heart and soul into Thoughtline, and look
-              forward to continually improving it with your support and
-              feedback!
-            </p>
-
-            <p>
-              If you have suggestions, feedback or run into a technical issues,
-              please let us know by using the "Give Us Feedback" link found in
-              the Navbar menu.
-            </p>
-            <p>
-              Thoughtline is all about having a safe place to express yourself
-              by keep track of life's special moments and (if you want to) share
-              them with friends!
-            </p>
-            <p>
-              Add a friend (either privately or by connecting with other
-              Thoughtline users) and start adding thoughts to your Thoughtline!
-            </p>
+            <Intro />
           </div>
         );
       } else {
@@ -208,30 +177,30 @@ class Dashboard extends Component {
           <p style={{ margin: "0 auto" }}>Thinking about...</p>
         </div>
         <div className={classes.friendContainer}>{dashboardContent}</div>
-        <DeleteFriendModal 
-            isOpen={this.state.deleteFriendModalOpen} 
-            yes={this.removeFriend}
-            no={this.handleCloseModal}
-            friendToDelete={this.state.friendToRemove}
+        <DeleteFriendModal
+          isOpen={this.state.deleteFriendModalOpen}
+          yes={this.removeFriend}
+          no={this.handleCloseModal}
+          friendToDelete={this.state.friendToRemove}
         />
         <BottomNavigation className={classes.bottomNavigation}>
-          
-          <AddFriendModal refreshTargets={this.props.getFriends}
-                          toggleDelete={this.toggleDeleteLayer} />
-          <div className={classes.medium}>
-          <Tooltip title="Remove Friend">
-            <IconButton 
-              onClick={() => this.toggleDeleteLayer()}>
-              <RemoveCircleOutline 
-                className={classes.mediumIcon} 
-                />
-            </IconButton>
-
-          </Tooltip>
-
-          </div>
-
-          
+          <AddFriendModal
+            refreshTargets={this.props.getFriends}
+            toggleDelete={this.toggleDeleteLayer}
+          />
+          {friends && friends.length > 0 ? (
+            <div className={classes.medium}>
+              <Tooltip title="Remove Friend">
+                <IconButton onClick={() => this.toggleDeleteLayer()}>
+                  <img
+                    alt="remove friend"
+                    className={classes.mediumIcon}
+                    src={removeFriend}
+                  />
+                </IconButton>
+              </Tooltip>
+            </div>
+          ) : null}
         </BottomNavigation>
       </div>
     );

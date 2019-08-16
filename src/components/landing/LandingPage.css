@@ -66,8 +66,8 @@ html {
   right: 0;
   width: 100vw;
   height: 100vh;
-  /* background-color: #ee5f3f; */
-  background-color: #e8745a;
+  background-color: #ee5f3f;
+  /* background-color: #e8745a; */
   -webkit-transition: 0.5s;
   -moz-transition: 0.5s;
   -o-transition: 0.5s;

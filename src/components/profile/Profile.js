@@ -30,15 +30,17 @@ const styles = theme => ({
     textAlign: "center",
     fontFamily: "Satisfy, cursive",
     marginBottom: 0,
-    fontSize: "1.75rem"
+    fontSize: "1.75rem",
+    color: "#EE5F3F"
   },
   profileContainer: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    height: "92vh",
-    width: "100vw",
-    overflow: "scroll"
+    height: "94vh",
+    // width: "100vw",
+    backgroundColor: "#87CEFA",
+    overflowY: "auto"
   },
   updateContainer: {
     width: "90%",
@@ -47,12 +49,14 @@ const styles = theme => ({
   updateComponents: {
     display: "flex",
     flexDirection: "column",
-    borderTop: "1px solid darkgrey"
+    borderTop: "1px solid darkgrey",
+    alignItems: "center"
   },
   updateDiv: {
     display: "flex",
     justifyContent: "space-around",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    width: "100%"
   },
   passwordComponents: {
     display: "flex",
@@ -69,8 +73,7 @@ const styles = theme => ({
   },
   formContainer: {
     display: "flex",
-    flexDirection: "column",
-    width: 200
+    flexDirection: "column"
   },
   errMsg: {
     margin: 0,
@@ -82,6 +85,12 @@ const styles = theme => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center"
+  },
+  textField: {
+    width: "100%"
+  },
+  button: {
+    width: "50%"
   }
 });
 
@@ -114,13 +123,7 @@ class Profile extends Component {
   updateUserDetails = () => {
     // IMAGE IS Working
 
-    const {
-      username,
-      firstname,
-      lastname,
-      email,
-      image,
-    } = this.state;
+    const { username, firstname, lastname, email, image } = this.state;
 
     const updateData = {
       username,
@@ -147,12 +150,10 @@ class Profile extends Component {
             msgColor: "green",
             profileSuccess: "Profile Updated!",
             errMsg: {}
-          })
+          });
         })
         .then(() => {
           this.props.loadUser();
-          console.log('user reloaded');
-
         })
         .catch(err => {
           const { data } = err.response;
@@ -233,9 +234,6 @@ class Profile extends Component {
   componentDidMount() {
     this.props.loadUser();
   }
-  componentDidUpdate() {
-    this.props.loadUser();
-  }
 
   render() {
     const { classes, currentUser } = this.props;
@@ -275,10 +273,11 @@ class Profile extends Component {
         username: "Username"
       };
     } else {
-      console.log('about ti send to Profile card current user', currentUser);
+      // console.log('about ti send to Profile card current user', currentUser);
       userProfile = <ProfileCard user={currentUser} />;
       formData = currentUser;
     }
+
     return (
       <div style={{ position: "relative" }}>
         <NavBar className={classes.navbar} />
@@ -304,7 +303,6 @@ class Profile extends Component {
                       label="First name"
                       name="firstname"
                       autoComplete="off"
-                      // className={classes.textField}
                       placeholder={formData.firstname}
                       value={this.state.firstname}
                       onChange={this.handleInputChange}
@@ -315,7 +313,7 @@ class Profile extends Component {
                       id="outlined-lastname"
                       label="Last name"
                       name="lastname"
-                      // className={classes.textField}
+                      className={classes.textField}
                       placeholder={formData.lastname}
                       value={this.state.lastname}
                       onChange={this.handleInputChange}
@@ -326,7 +324,7 @@ class Profile extends Component {
                       id="outlined-username"
                       label="Username"
                       name="username"
-                      // className={classes.textField}
+                      className={classes.textField}
                       placeholder={formData.username}
                       value={this.state.username}
                       onChange={this.handleInputChange}
@@ -342,7 +340,7 @@ class Profile extends Component {
                       id="outlined-email"
                       label="Email"
                       name="email"
-                      // className={classes.textField}
+                      className={classes.textField}
                       placeholder={formData.email}
                       value={this.state.email}
                       onChange={this.handleInputChange}
@@ -357,25 +355,25 @@ class Profile extends Component {
                   </div>
                 </div>
               </div>
+              <br />
+              <Button
+                id="AddFriendModal_submit_btn"
+                variant="contained"
+                color="primary"
+                className={classes.button}
+                onClick={this.updateUserDetails}
+                disabled={!updateProfileEnabled}
+              >
+                Update Account Information
+              </Button>
             </div>
           </div>
-          <br />
-
-          <Button
-            id="AddFriendModal_submit_btn"
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            onClick={this.updateUserDetails}
-            disabled={!updateProfileEnabled}
-          >
-            Update Account Information
-          </Button>
           <br />
           {/* PASSWORD RESET */}
           <div className={classes.updateContainer}>
             <p>Change Your Password:</p>
             <div className={classes.passwordComponents}>
+              <br />
               {passwordSuccess ? (
                 <div className={classes.successMsg}>
                   <CheckCircle style={{ color: msgColor }} />
@@ -383,73 +381,68 @@ class Profile extends Component {
                 </div>
               ) : null}
               <div className={classes.formContainer}>
-                <form autoComplete="off">
-                  <TextField
-                    id="outlined-current-password"
-                    label="Current Password"
-                    autoComplete="off"
-                    name="password"
-                    // className={classes.textField}
-                    value={this.state.password}
-                    onChange={this.handleInputChange}
-                    margin="normal"
-                    type="password"
-                    variant="outlined"
-                  />
-                  {errMsg.currentPassword ? (
-                    <p style={{ color: msgColor }} className={classes.errMsg}>
-                      {errMsg.currentPassword}
-                    </p>
-                  ) : null}
-                  <TextField
-                    id="outlined-new-password"
-                    name="newPassword1"
-                    label="New Password"
-                    autoComplete="off"
-                    // className={classes.textField}
-                    value={this.state.newPassword1}
-                    onChange={this.handleInputChange}
-                    margin="normal"
-                    type="password"
-                    variant="outlined"
-                  />
-                  {errMsg.password ? (
-                    <p style={{ color: msgColor }} className={classes.errMsg}>
-                      {errMsg.password}
-                    </p>
-                  ) : null}
-                  <TextField
-                    id="outlined-confirm-password"
-                    name="newPassword2"
-                    label="Confirm New Password"
-                    autoComplete="off"
-                    value={this.state.newPassword2}
-                    onChange={this.handleInputChange}
-                    margin="normal"
-                    type="password"
-                    variant="outlined"
-                  />
-                  {errMsg.password2 ? (
-                    <p style={{ color: msgColor }} className={classes.errMsg}>
-                      {errMsg.password2}
-                    </p>
-                  ) : null}
-                  <br />
-                </form>
+                <TextField
+                  id="outlined-current-password"
+                  label="Current Password"
+                  autoComplete="off"
+                  name="password"
+                  // className={classes.textField}
+                  value={this.state.password}
+                  onChange={this.handleInputChange}
+                  margin="normal"
+                  type="password"
+                  variant="outlined"
+                />
+                {errMsg.currentPassword ? (
+                  <p style={{ color: msgColor }} className={classes.errMsg}>
+                    {errMsg.currentPassword}
+                  </p>
+                ) : null}
+                <TextField
+                  id="outlined-new-password"
+                  name="newPassword1"
+                  label="New Password"
+                  autoComplete="off"
+                  // className={classes.textField}
+                  value={this.state.newPassword1}
+                  onChange={this.handleInputChange}
+                  margin="normal"
+                  type="password"
+                  variant="outlined"
+                />
+                {errMsg.password ? (
+                  <p style={{ color: msgColor }} className={classes.errMsg}>
+                    {errMsg.password}
+                  </p>
+                ) : null}
+                <TextField
+                  id="outlined-confirm-password"
+                  name="newPassword2"
+                  label="Confirm New Password"
+                  autoComplete="off"
+                  value={this.state.newPassword2}
+                  onChange={this.handleInputChange}
+                  margin="normal"
+                  type="password"
+                  variant="outlined"
+                />
+                {errMsg.password2 ? (
+                  <p style={{ color: msgColor }} className={classes.errMsg}>
+                    {errMsg.password2}
+                  </p>
+                ) : null}
                 <br />
-                <Button
-                  id="AddFriendModal_submit_btn"
-                  variant="contained"
-                  color={
-                    newPassword1 === newPassword2 ? "primary" : "secondary"
-                  }
-                  className={classes.button}
-                  onClick={this.updateUserPassword}
-                  disabled={!changePasswordEnabled}
-                >
-                  Change Password
-                </Button>
               </div>
+              <Button
+                id="AddFriendModal_submit_btn"
+                variant="contained"
+                color={newPassword1 === newPassword2 ? "primary" : "secondary"}
+                className={classes.button}
+                onClick={this.updateUserPassword}
+                disabled={!changePasswordEnabled}
+              >
+                Change Password
+              </Button>
             </div>
           </div>
         </div>

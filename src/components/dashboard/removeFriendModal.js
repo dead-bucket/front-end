@@ -60,18 +60,24 @@ class DeleteFriendModal extends Component {
 
   render() {
     const { classes, isOpen, friendToDelete } = this.props;
-    console.log('friend to delete in delete friend modal', friendToDelete);
-    let modalContent, message;
-    if(friendToDelete) {
-      message = `Are you sure you want to delete ${friendToDelete.firstname} ${friendToDelete.lastname}`;
 
+    let modalContent, message;
+    if (friendToDelete) {
+      message = (
+        <div>
+          <p>Are you sure you want to delete:</p>
+          <strong>
+            {friendToDelete.firstname
+              ? `${friendToDelete.firstname} ${friendToDelete.lastname}`
+              : friendToDelete.username}
+          </strong>
+        </div>
+      );
     }
 
     modalContent = (
       <div className={classes.container}>
-        <p className={classes.modalHeading}>
-          {message}
-        </p>
+        <p className={classes.modalHeading}>{message}</p>
         <br />
         <div className={classes.buttonDiv}>
           <Button
