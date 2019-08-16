@@ -6,7 +6,8 @@ import Avatar from "react-avatar-edit";
 const styles = {
   uploadContainer: {
     fontSize: 15,
-    margin: "20px 0"
+    margin: "20px 0",
+    alignSelf: "center"
   }
   // uploadTitle: {
   //   fontSize: 16,
