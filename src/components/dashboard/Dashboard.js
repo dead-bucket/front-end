@@ -142,9 +142,9 @@ class Dashboard extends Component {
   };
 
   render() {
+
     const { classes, friends } = this.props;
     let loading = !friends ? true : false;
-
     let dashboardContent;
     if (loading) {
       dashboardContent = <Spinner />;
