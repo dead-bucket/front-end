@@ -10,6 +10,7 @@ import API from "../../utils/API";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getEntries } from "../../_actions/entryActions";
+
 const dropdownItem = {
   fontSize: 16
   // borderBottom: "1px solid lightgrey"
@@ -49,6 +50,7 @@ class EntryMenu extends React.Component {
 
   render() {
     const { anchorEl } = this.state;
+    
 
     return (
       <div style={{ position: "absolute", right: "0%", bottom: "1.5%" }}>

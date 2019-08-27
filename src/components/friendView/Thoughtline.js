@@ -86,6 +86,13 @@ const styles = theme => ({
     bottom: 15,
     cursor: "pointer",
     color: "green"
+  },
+  trashCanIcon: {
+    position: "absolute",
+    right: 20,
+    bottom: 15,
+    cursor: "pointer",
+    
   }
 });
 
@@ -133,7 +140,8 @@ class Thoughtline extends Component {
   handleCloseDeleteModal = () => {
     this.setState({
       modalOpen: false,
-      idToDelete: null
+      idToDelete: null,
+      displaySearch: false,
     });
   };
 
@@ -186,9 +194,8 @@ class Thoughtline extends Component {
   };
 
   render() {
-    const { classes, userEntries, name } = this.props;
+    const { classes, userEntries, name, profile } = this.props;
     const { displaySearch, searchResults } = this.state;
-
     let messageContent;
     if (searchResults) {
       if (typeof searchResults === "string") {
@@ -205,12 +212,26 @@ class Thoughtline extends Component {
                 <Moment format="LLL">{entry.createdAt}</Moment>
               </em>
               <p className={classes.messageText}>{entry.description}</p>
-              <EntryMenu
+              {/* <EntryMenu
                 className={classes.deleteIcon}
                 deleteModal={this.handleOpenDeleteModal}
                 identifier={entry._id}
                 scheduleModal={this.handleOpenScheduleModal}
-              />
+              /> */}
+              {(!entry.delivered && !profile.target.isTarget ) ? (
+                <EntryMenu
+                  className={classes.deleteIcon}
+                  deleteModal={this.handleOpenDeleteModal}
+                  identifier={entry._id}
+                  scheduleModal={this.handleOpenScheduleModal}
+                />
+              ) : null}
+              {(!entry.delivered && profile.target.isTarget )? (
+                <i className={`material-icons ${classes.trashCanIcon}`}
+                onClick={() => this.handleOpenDeleteModal(entry._id)}
+                >delete</i>
+              ) : null}
+
             </div>
           );
         });
@@ -232,14 +253,18 @@ class Thoughtline extends Component {
                 <Moment format="LLL">{entry.createdAt}</Moment>
               </em>
               <p className={classes.messageText}>{entry.description}</p>
-
-              {!entry.delivered ? (
+              {(!entry.delivered && !profile.target.isTarget ) ? (
                 <EntryMenu
                   className={classes.deleteIcon}
                   deleteModal={this.handleOpenDeleteModal}
                   identifier={entry._id}
                   scheduleModal={this.handleOpenScheduleModal}
                 />
+              ) : null}
+              {(!entry.delivered && profile.target.isTarget )? (
+                <i className={`material-icons ${classes.trashCanIcon}`}
+                onClick={() => this.handleOpenDeleteModal(entry._id)}
+                >delete</i>
               ) : null}
               <i
                 style={{
