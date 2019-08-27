@@ -38,6 +38,7 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     fontFamily: "Satisfy, cursive",
+    marginTop: 20,
     marginBottom: 0,
     fontSize: "1.5rem",
     flexGrow: 1,
@@ -57,6 +58,7 @@ const styles = {
     maxWidth: 800,
     textAlign: "center",
     padding: 15,
+
     fontSize: ".8rem"
   },
   bottomNavigation: {

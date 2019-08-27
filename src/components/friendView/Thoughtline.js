@@ -273,7 +273,7 @@ class Thoughtline extends Component {
     }
 
     return (
-      <div style={{ width: "100%" }}>
+      <div style={{ width: "100%", height: "100%" }}>
         {userEntries.length > 0 ? (
           <div className={classes.searchContainer}>
             <Search

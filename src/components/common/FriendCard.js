@@ -52,16 +52,18 @@ const friendview = {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    position: "relative"
+    position: "relative",
+    height: "100%"
   },
   image: {
     width: 100,
-    marginTop: 10
+    marginTop: 10,
+    height: 100
   },
   name: {
     fontFamily: "Satisfy, cursive",
     fontSize: "1.5rem",
-    margin: "10px auto",
+    margin: "5px auto",
     color: "#EE5F3F"
   },
   notificationIcon: {
