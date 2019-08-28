@@ -100,6 +100,14 @@ const styles = theme => ({
     right: 20,
     bottom: 15,
     cursor: "pointer"
+  },
+  entryImage: {
+    // position: "absolute",
+    // bottom: 5,
+    // left: 10,
+    maxHeight: 100,
+    
+
   }
 });
 
@@ -303,6 +311,10 @@ class Thoughtline extends Component {
               >
                 done_all
               </i>
+              <img src={entry.image} 
+              className={classes.entryImage} 
+              style={{display: !entry.image ? "none" : ""}}
+              alt=""></img>
             </div>
           );
         });
