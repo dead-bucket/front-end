@@ -20,6 +20,11 @@ import ScheduleModal from "./scheduleModal";
 import API from "../../utils/API";
 
 const styles = theme => ({
+  thoughtLineWrapper: {
+    width: "100%",
+    height: "100%"
+    // position: "relative"
+  },
   thoughtLineMessage: {
     position: "relative",
     textAlign: "left",
@@ -101,13 +106,17 @@ const styles = theme => ({
     bottom: 15,
     cursor: "pointer"
   },
+  entryImgContainer: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "center"
+  },
   entryImage: {
     // position: "absolute",
     // bottom: 5,
     // left: 10,
-    maxHeight: 100,
-    
-
+    cursor: "pointer",
+    maxHeight: 100
   }
 });
 
@@ -227,12 +236,7 @@ class Thoughtline extends Component {
                 <Moment format="LLL">{entry.createdAt}</Moment>
               </em>
               <p className={classes.messageText}>{entry.description}</p>
-              {/* <EntryMenu
-                className={classes.deleteIcon}
-                deleteModal={this.handleOpenDeleteModal}
-                identifier={entry._id}
-                scheduleModal={this.handleOpenScheduleModal}
-              /> */}
+
               {!entry.delivered && !profile.target.isTarget ? (
                 <EntryMenu
                   className={classes.deleteIcon}
@@ -311,10 +315,14 @@ class Thoughtline extends Component {
               >
                 done_all
               </i>
-              <img src={entry.image} 
-              className={classes.entryImage} 
-              style={{display: !entry.image ? "none" : ""}}
-              alt=""></img>
+              <div className={classes.entryImgContainer}>
+                <img
+                  src={entry.image}
+                  className={classes.entryImage}
+                  style={{ display: !entry.image ? "none" : "" }}
+                  alt="photo for this entry"
+                />
+              </div>
             </div>
           );
         });
@@ -322,7 +330,7 @@ class Thoughtline extends Component {
     }
 
     return (
-      <div style={{ width: "100%", height: "100%" }}>
+      <div className={classes.thoughtLineWrapper}>
         {userEntries.length > 0 ? (
           <div className={classes.searchContainer}>
             <Search
