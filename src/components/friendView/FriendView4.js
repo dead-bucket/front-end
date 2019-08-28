@@ -169,14 +169,17 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     textAlign: "center",
-    paddingTop: 10
+    // flexGrow: 1,
+    paddingTop: 10,
+    minHeight: 160
   },
   actionContainer: {
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "center",
     overflowY: "auto",
-    flexGrow: 3
+    flexGrow: 3,
+    zIndex: 0
   },
   bottomNav: {
     height: 80,
@@ -184,7 +187,8 @@ const styles = {
     justifyContent: "space-evenly",
     fontSize: 10,
     // backgroundColor: "#87CEFA"
-    backgroundColor: "#EE5F3F"
+    backgroundColor: "#EE5F3F",
+    minHeight: 80
   },
   icon: {
     fontSize: 30

@@ -45,7 +45,7 @@ const styles = theme => ({
     position: "absolute",
     alignItems: "center",
     width: 240,
-    top: 172,
+    top: 160,
     left: "10%",
     marginLeft: "17px",
     display: "flex"
@@ -60,6 +60,14 @@ const styles = theme => ({
   },
   searchInput: {
     backgroundColor: "#87CEFA"
+  },
+  cssLabel: {
+    fontSize: ".85rem"
+  },
+  //style for font size
+  resize: {
+    fontSize: ".85rem",
+    fontWeight: "bold"
   },
   messageContainer: {
     display: "flex",
@@ -91,8 +99,7 @@ const styles = theme => ({
     position: "absolute",
     right: 20,
     bottom: 15,
-    cursor: "pointer",
-    
+    cursor: "pointer"
   }
 });
 
@@ -141,7 +148,7 @@ class Thoughtline extends Component {
     this.setState({
       modalOpen: false,
       idToDelete: null,
-      displaySearch: false,
+      displaySearch: false
     });
   };
 
@@ -218,7 +225,7 @@ class Thoughtline extends Component {
                 identifier={entry._id}
                 scheduleModal={this.handleOpenScheduleModal}
               /> */}
-              {(!entry.delivered && !profile.target.isTarget ) ? (
+              {!entry.delivered && !profile.target.isTarget ? (
                 <EntryMenu
                   className={classes.deleteIcon}
                   deleteModal={this.handleOpenDeleteModal}
@@ -226,12 +233,14 @@ class Thoughtline extends Component {
                   scheduleModal={this.handleOpenScheduleModal}
                 />
               ) : null}
-              {(!entry.delivered && profile.target.isTarget )? (
-                <i className={`material-icons ${classes.trashCanIcon}`}
-                onClick={() => this.handleOpenDeleteModal(entry._id)}
-                >delete</i>
+              {!entry.delivered && profile.target.isTarget ? (
+                <i
+                  className={`material-icons ${classes.trashCanIcon}`}
+                  onClick={() => this.handleOpenDeleteModal(entry._id)}
+                >
+                  delete
+                </i>
               ) : null}
-
             </div>
           );
         });
@@ -253,7 +262,7 @@ class Thoughtline extends Component {
                 <Moment format="LLL">{entry.createdAt}</Moment>
               </em>
               <p className={classes.messageText}>{entry.description}</p>
-              {(!entry.delivered && !profile.target.isTarget ) ? (
+              {!entry.delivered && !profile.target.isTarget ? (
                 <EntryMenu
                   className={classes.deleteIcon}
                   deleteModal={this.handleOpenDeleteModal}
@@ -261,10 +270,13 @@ class Thoughtline extends Component {
                   scheduleModal={this.handleOpenScheduleModal}
                 />
               ) : null}
-              {(!entry.delivered && profile.target.isTarget )? (
-                <i className={`material-icons ${classes.trashCanIcon}`}
-                onClick={() => this.handleOpenDeleteModal(entry._id)}
-                >delete</i>
+              {!entry.delivered && profile.target.isTarget ? (
+                <i
+                  className={`material-icons ${classes.trashCanIcon}`}
+                  onClick={() => this.handleOpenDeleteModal(entry._id)}
+                >
+                  delete
+                </i>
               ) : null}
               <i
                 style={{
@@ -317,6 +329,17 @@ class Thoughtline extends Component {
               value={this.state.searchTerm}
               onChange={this.handleSearchInput}
               margin="normal"
+              InputProps={{
+                classes: {
+                  input: classes.resize
+                }
+              }}
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused
+                }
+              }}
             />
           </div>
         ) : null}

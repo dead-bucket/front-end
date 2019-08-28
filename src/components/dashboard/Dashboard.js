@@ -64,7 +64,7 @@ const styles = {
   bottomNavigation: {
     alignItems: "center",
     justifyContent: "space-evenly",
-    height: 83,
+    height: 86,
     backgroundColor: "#EE5F3F"
   },
   medium: {
@@ -144,7 +144,6 @@ class Dashboard extends Component {
   };
 
   render() {
-
     const { classes, friends } = this.props;
     let loading = !friends ? true : false;
     let dashboardContent;

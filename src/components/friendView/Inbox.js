@@ -28,7 +28,7 @@ const styles = {
     position: "absolute",
     alignItems: "center",
     width: 240,
-    top: 172,
+    top: 160,
     left: "10%",
     marginLeft: "17px",
     display: "flex"

@@ -53,12 +53,13 @@ const friendview = {
     justifyContent: "center",
     alignItems: "center",
     position: "relative",
-    height: "100%"
+    height: 170
   },
   image: {
     width: 100,
     marginTop: 10,
-    height: 100
+    height: 100,
+    minHeight: 100
   },
   name: {
     fontFamily: "Satisfy, cursive",
