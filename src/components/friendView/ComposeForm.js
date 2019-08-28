@@ -138,7 +138,7 @@ class ComposeForm extends Component {
       recipient: this.props.profile.target._id,
       mood: this.state.thoughtColor,
       description: this.state.thought,
-      picture: this.state.imgBase64
+      image: this.state.imgBase64
     };
 
     axios
