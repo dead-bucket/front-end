@@ -216,6 +216,9 @@ class Thoughtline extends Component {
       })
       .catch(err => console.log(err));
   };
+  displayImage = imgUrl => {
+    console.log(imgUrl);
+  };
 
   render() {
     const { classes, userEntries, name, profile } = this.props;
@@ -320,7 +323,8 @@ class Thoughtline extends Component {
                   src={entry.image}
                   className={classes.entryImage}
                   style={{ display: !entry.image ? "none" : "" }}
-                  alt="photo for this entry"
+                  alt="memory"
+                  onClick={() => this.displayImage(entry.image)}
                 />
               </div>
             </div>
