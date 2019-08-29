@@ -11,10 +11,17 @@ import TextField from "@material-ui/core/TextField";
 import Search from "@material-ui/icons/Search";
 // import Delete from "@material-ui/icons/Delete";
 
+// Redux
+import {
+  getEntries,
+  deleteEntry,
+  setEntryModalImg
+} from "../../_actions/entryActions";
+
 //Custom
 import EntryMenu from "./entryMenu";
+// import Modal from "../common/Modal";
 import SendEntriesModal from "./SendEntriesModal";
-import { getEntries, deleteEntry } from "../../_actions/entryActions";
 import DeleteModal from "./delete-thought-modal";
 import ScheduleModal from "./scheduleModal";
 import API from "../../utils/API";
@@ -25,12 +32,14 @@ const styles = theme => ({
     height: "100%"
     // position: "relative"
   },
+
   thoughtLineMessage: {
     position: "relative",
     textAlign: "left",
     width: "80%",
     maxWidth: 800,
     borderRadius: 15,
+    lineBreak: "keep-all",
     padding: 20,
     margin: "20px 20px 20px 25px",
     border: "1px solid black",
@@ -116,7 +125,7 @@ const styles = theme => ({
     // bottom: 5,
     // left: 10,
     cursor: "pointer",
-    maxHeight: 100,
+    maxHeight: "6rem",
     borderRadius: 15
   }
 });
@@ -129,7 +138,8 @@ class Thoughtline extends Component {
       displaySearch: false,
       searchResults: null,
       modalOpen: false,
-      scheduleModalOpen: false
+      scheduleModalOpen: false,
+      imgModalOpen: false
     };
     this.delayedSearch = _.debounce(this.searchMessages, 1000);
   }
@@ -217,8 +227,12 @@ class Thoughtline extends Component {
       })
       .catch(err => console.log(err));
   };
-  displayImage = imgUrl => {
-    console.log(imgUrl);
+
+  displayImgModal = imgUrl => {
+    this.props.setEntryModalImg({
+      entryImgUrl: imgUrl,
+      imgModalOpen: !this.props.entryImg.imgModalOpen
+    });
   };
 
   render() {
@@ -325,7 +339,7 @@ class Thoughtline extends Component {
                   className={classes.entryImage}
                   style={{ display: !entry.image ? "none" : "" }}
                   alt="memory"
-                  onClick={() => this.displayImage(entry.image)}
+                  onClick={() => this.displayImgModal(entry.image)}
                 />
               </div>
             </div>
@@ -392,6 +406,7 @@ class Thoughtline extends Component {
 
 Thoughtline.propTypes = {
   classes: PropTypes.object.isRequired,
+  entryImg: PropTypes.object.isRequired,
   userEntries: PropTypes.array.isRequired,
   profile: PropTypes.object.isRequired,
   getEntries: PropTypes.func.isRequired
@@ -399,10 +414,11 @@ Thoughtline.propTypes = {
 
 const mapStateToProps = state => ({
   userEntries: state.entries.userEntries,
-  profile: state.profile
+  profile: state.profile,
+  entryImg: state.entries.entryImg
 });
 
 export default connect(
   mapStateToProps,
-  { getEntries, deleteEntry }
+  { getEntries, deleteEntry, setEntryModalImg }
 )(withStyles(styles)(Thoughtline));

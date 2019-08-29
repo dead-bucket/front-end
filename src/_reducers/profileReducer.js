@@ -13,6 +13,7 @@ export default function(state = initialState, action) {
         ...state,
         target: action.payload
       };
+
     case SET_CURRENT_NOTIFICATIONS:
       return {
         ...state,
