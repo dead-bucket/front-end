@@ -7,7 +7,7 @@ const initialState = {};
 const middleware = [thunk];
 let store;
 
-console.log("in store setup env =", process.env.REACT_APP_ENV);
+// console.log("in store setup env =", process.env.REACT_APP_ENV);
 if (process.env.REACT_APP_ENV === "production") {
   store = createStore(
     rootReducer,

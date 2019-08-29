@@ -24,13 +24,18 @@ import API from "../../utils/API";
 
 //Redux
 import { connect } from "react-redux";
-import { getEntries, getInboxEntries } from "../../_actions/entryActions";
+import {
+  getEntries,
+  getInboxEntries,
+  setEntryModalImg
+} from "../../_actions/entryActions";
 import { loadUser } from "../../_actions/authActions";
 import axios from "axios";
 
 class FriendView4 extends Component {
   state = {
-    value: 1
+    value: 1,
+    entryImgModalOpen: false
   };
 
   componentDidMount() {
@@ -63,12 +68,18 @@ class FriendView4 extends Component {
       }, 3000);
     }
   };
-
+  displayImgModal = () => {
+    this.props.setEntryModalImg({
+      entryImgUrl: "",
+      imgModalOpen: !this.props.entryImg.imgModalOpen
+    });
+    // this.setState({ imgModalOpen: !this.state.imgModalOpen });
+  };
   render() {
-    const { classes } = this.props;
+    const { classes, entryImg } = this.props;
     const { target } = this.props.profile;
     const { value } = this.state;
-    // console.log(this.props.currentUser);
+
     let actionContent;
     switch (value) {
       case 0:
@@ -103,6 +114,15 @@ class FriendView4 extends Component {
 
     return (
       <div className={classes.friendviewWrapper}>
+        {entryImg.imgModalOpen ? (
+          <div className={classes.modalWrapper} onClick={this.displayImgModal}>
+            <img
+              src={entryImg.entryImgUrl}
+              alt="thoughline entry modal"
+              className={classes.modalImg}
+            />
+          </div>
+        ) : null}
         <NavBar />
         <div className={classes.dashboardIconStyle}>
           <Link to="/dashboard">
@@ -143,20 +163,23 @@ class FriendView4 extends Component {
     );
   }
 }
-
-FriendView4.propTypes = {
-  classes: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired,
-  getEntries: PropTypes.func.isRequired,
-  getInboxEntries: PropTypes.func.isRequired
-};
-
-const mapStateToProps = state => ({
-  profile: state.profile,
-  currentUser: state.auth.currentUser
-});
-
 const styles = {
+  modalWrapper: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100vw",
+    height: "100vh",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    zIndex: 10,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  modalImg: {
+    maxHeight: "90%",
+    maxWidth: "100%"
+  },
   friendviewWrapper: {
     height: "100vh",
     display: "flex",
@@ -199,7 +222,7 @@ const styles = {
     top: 75,
     left: "10%",
     cursor: "pointer",
-    zIndex: 20
+    zIndex: 9
   },
   medium: {
     width: 60,
@@ -216,7 +239,20 @@ const styles = {
   }
 };
 
+FriendView4.propTypes = {
+  classes: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
+  getEntries: PropTypes.func.isRequired,
+  getInboxEntries: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  profile: state.profile,
+  currentUser: state.auth.currentUser,
+  entryImg: state.entries.entryImg
+});
+
 export default connect(
   mapStateToProps,
-  { getEntries, getInboxEntries, loadUser }
+  { getEntries, getInboxEntries, loadUser, setEntryModalImg }
 )(withStyles(styles)(FriendView4));
