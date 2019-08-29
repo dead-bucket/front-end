@@ -116,7 +116,8 @@ const styles = theme => ({
     // bottom: 5,
     // left: 10,
     cursor: "pointer",
-    maxHeight: 100
+    maxHeight: 100,
+    borderRadius: 15
   }
 });
 
