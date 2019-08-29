@@ -121,9 +121,6 @@ const styles = theme => ({
     justifyContent: "center"
   },
   entryImage: {
-    // position: "absolute",
-    // bottom: 5,
-    // left: 10,
     cursor: "pointer",
     maxHeight: "6rem",
     borderRadius: 15

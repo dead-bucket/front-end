@@ -10,6 +10,8 @@ import TextField from "@material-ui/core/TextField";
 import Search from "@material-ui/icons/Search";
 import { withStyles } from "@material-ui/core";
 
+// Redux
+import { setEntryModalImg } from "../../_actions/entryActions";
 const styles = {
   inboxMessage: {
     textAlign: "left",
@@ -57,6 +59,16 @@ const styles = {
     alignItems: "center",
     textAlign: "center",
     height: "100%"
+  },
+  entryImgContainer: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "center"
+  },
+  entryImage: {
+    cursor: "pointer",
+    maxHeight: "6rem",
+    borderRadius: 15
   }
 };
 
@@ -99,6 +111,13 @@ class Inbox extends Component {
     e.persist();
     this.delayedSearch(value);
   };
+
+  displayImgModal = imgUrl => {
+    this.props.setEntryModalImg({
+      entryImgUrl: imgUrl,
+      imgModalOpen: !this.props.entryImg.imgModalOpen
+    });
+  };
   render() {
     const { classes, inboxEntries, name } = this.props;
     const { displaySearch, searchResults } = this.state;
@@ -140,6 +159,15 @@ class Inbox extends Component {
                 <Moment format="LLL">{entry.createdAt}</Moment>
               </em>
               <p className={classes.messageText}>{entry.description}</p>
+              <div className={classes.entryImgContainer}>
+                <img
+                  src={entry.image}
+                  className={classes.entryImage}
+                  style={{ display: !entry.image ? "none" : "" }}
+                  alt="memory"
+                  onClick={() => this.displayImgModal(entry.image)}
+                />
+              </div>
             </div>
           );
         });
@@ -182,12 +210,13 @@ Inbox.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  inboxEntries: state.entries.inboxEntries
+  inboxEntries: state.entries.inboxEntries,
+  entryImg: state.entries.entryImg
 });
 
 export default connect(
   mapStateToProps,
-  {}
+  { setEntryModalImg }
 )(withStyles(styles)(Inbox));
 
 // export default withStyles(styles)(Inbox);

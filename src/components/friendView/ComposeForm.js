@@ -6,7 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import Camera from "@material-ui/icons/CameraAlt";
 import Minus from "@material-ui/icons/IndeterminateCheckBox";
 import Button from "../common/Button";
-// import Button from "@material-ui/core/Button";
+import Spinner from "../common/Spinner";
 import axios from "axios";
 import API from "../../utils/API";
 import { getEntries } from "../../_actions/entryActions";
@@ -48,13 +48,7 @@ const styles = {
     border: "1px solid #d3d3d3",
     cursor: "pointer"
   },
-  // colorBlockActive: {
-  //   height: "1.5rem",
-  //   width: "1.5rem",
-  //   border: "1px solid #d3d3d3",
-  //   zIndex: 20,
-  //   cursor: "pointer"
-  // },
+
   photoContainer: {
     display: "flex",
     justifyContent: "space-around",
@@ -101,7 +95,8 @@ class ComposeForm extends Component {
   state = {
     thought: "",
     thoughtColor: "#fff",
-    imgBase64: ""
+    imgBase64: "",
+    submittingThought: false
   };
 
   handleInputChange = e => {
@@ -134,6 +129,7 @@ class ComposeForm extends Component {
   };
 
   submitThought = () => {
+    this.setState({ submittingThought: true });
     const newEntry = {
       recipient: this.props.profile.target._id,
       mood: this.state.thoughtColor,
@@ -145,19 +141,23 @@ class ComposeForm extends Component {
       .post(API + "/api/v1/entry/", newEntry)
       .then(data => {
         this.setState({
+          submittingThought: false,
           thought: "",
           thoughtColor: "#fff",
           imgBase64: ""
         });
         this.props.getEntries(this.props.profile.target._id);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.setState({ submittingThought: false });
+        console.log(err);
+      });
     // TODO - have some sort of confirmation for user on successful post
   };
 
   render() {
     const { classes, friend } = this.props;
-    const { thoughtColor, thought, imgBase64 } = this.state;
+    const { thoughtColor, thought, imgBase64, submittingThought } = this.state;
 
     let textMessage;
 
@@ -171,77 +171,90 @@ class ComposeForm extends Component {
 
     return (
       <div className={classes.composeDiv}>
-        <TextField
-          label="Enter a thought..."
-          multiline
-          rows="4"
-          style={{ backgroundColor: thoughtColor }}
-          value={this.state.thought}
-          name="thought"
-          placeholder={textMessage}
-          className={classes.thoughtInput}
-          InputProps={{
-            classes: {
-              input: classes.resize
-            }
-          }}
-          InputLabelProps={{
-            classes: {
-              root: classes.cssLabel
-            }
-          }}
-          onChange={this.handleInputChange}
-          margin="normal"
-          variant="outlined"
-        />
-
-        <div className={classes.colorContainer}>
-          {colors.map(color => (
-            <div
-              key={color.id}
-              style={{ backgroundColor: color.hex }}
-              className={
-                thoughtColor === color.hex
-                  ? classes.boxShadow
-                  : classes.colorBlock
-              }
-              onClick={() => this.selectColorBox(color.hex)}
+        {submittingThought ? (
+          <Spinner />
+        ) : (
+          <div className={classes.composeDiv}>
+            <TextField
+              label="Enter a thought..."
+              multiline
+              rows="4"
+              style={{ backgroundColor: thoughtColor }}
+              value={this.state.thought}
+              name="thought"
+              placeholder={textMessage}
+              className={classes.thoughtInput}
+              InputProps={{
+                classes: {
+                  input: classes.resize
+                }
+              }}
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel
+                }
+              }}
+              onChange={this.handleInputChange}
+              margin="normal"
+              variant="outlined"
             />
-          ))}
-        </div>
-        <div className={classes.photoContainer}>
-          {imgBase64 ? (
-            <div style={{ position: "relative" }}>
-              <img
-                className={classes.imgPreview}
-                src={imgBase64}
-                alt="preview"
-              />
-              <Minus
-                className={classes.deletePreviewIcon}
-                onClick={() => this.setState({ imgBase64: "" })}
-              />
+
+            <div className={classes.colorContainer}>
+              {colors.map(color => (
+                <div
+                  key={color.id}
+                  style={{ backgroundColor: color.hex }}
+                  className={
+                    thoughtColor === color.hex
+                      ? classes.boxShadow
+                      : classes.colorBlock
+                  }
+                  onClick={() => this.selectColorBox(color.hex)}
+                />
+              ))}
             </div>
-          ) : (
-            <div>
-              <label htmlFor="file-input">
-                <Camera className={classes.addPhoto} />
-              </label>
-              <input
-                type="file"
-                id="file-input"
-                multiple={false}
-                name="avatar"
-                className={classes.addPhotoInput}
-                onChange={this.handleImage}
-                accept="image/png, image/jpeg"
-              />
+            <div className={classes.photoContainer}>
+              {imgBase64 ? (
+                <div style={{ position: "relative" }}>
+                  <img
+                    className={classes.imgPreview}
+                    src={imgBase64}
+                    alt="preview"
+                  />
+                  <Minus
+                    className={classes.deletePreviewIcon}
+                    onClick={() => this.setState({ imgBase64: "" })}
+                  />
+                </div>
+              ) : (
+                <div>
+                  <label htmlFor="file-input">
+                    <Camera className={classes.addPhoto} />
+                  </label>
+                  <input
+                    type="file"
+                    id="file-input"
+                    multiple={false}
+                    name="avatar"
+                    className={classes.addPhotoInput}
+                    onChange={this.handleImage}
+                    accept="image/png, image/jpeg"
+                  />
+                </div>
+              )}
             </div>
-          )}
-        </div>
-        <Button primary handleClick={this.submitThought} disabled={!thought}>
-          Create Thought
-        </Button>
+            {/* {submittingThought ? (
+            <Spinner pxSize={100} />
+          ) : ( */}
+            <Button
+              primary
+              handleClick={this.submitThought}
+              disabled={!thought}
+            >
+              Create Thought
+            </Button>
+          </div>
+        )}
       </div>
     );
   }
