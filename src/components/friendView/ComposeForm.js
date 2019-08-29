@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
+import Camera from "@material-ui/icons/CameraAlt";
+import Minus from "@material-ui/icons/IndeterminateCheckBox";
 import Button from "../common/Button";
 // import Button from "@material-ui/core/Button";
 import axios from "axios";
@@ -24,31 +26,63 @@ const styles = {
     marginBottom: 15,
     marginTop: 0
   },
+
   colorContainer: {
     display: "flex",
     justifyContent: "space-around",
     width: "88%",
-    marginBottom: 25,
+    marginBottom: 10,
     zIndex: 20
+  },
+  cssLabel: {
+    fontSize: ".85rem"
   },
   //style for font size
   resize: {
-    fontSize: 25
+    fontSize: ".85rem",
+    fontWeight: "bold"
   },
   colorBlock: {
-    height: 30,
-    width: 30,
-    border: "1px solid #d3d3d3"
-  },
-  colorBlockActive: {
-    height: 30,
-    width: 30,
+    height: "1rem",
+    width: "1rem",
     border: "1px solid #d3d3d3",
-    zIndex: 20
+    cursor: "pointer"
+  },
+  // colorBlockActive: {
+  //   height: "1.5rem",
+  //   width: "1.5rem",
+  //   border: "1px solid #d3d3d3",
+  //   zIndex: 20,
+  //   cursor: "pointer"
+  // },
+  photoContainer: {
+    display: "flex",
+    justifyContent: "space-around",
+    width: "88%",
+    marginTop: ".5rem",
+    marginBottom: ".5rem"
+  },
+  addPhoto: {
+    color: "#EE5F3F",
+    fontSize: 45,
+    cursor: "pointer"
+  },
+  addPhotoInput: {
+    display: "none"
+  },
+  imgPreview: {
+    height: "7rem"
+  },
+  deletePreviewIcon: {
+    color: "#EE5F3F",
+    position: "absolute",
+    top: 5,
+    right: 5,
+    cursor: "pointer"
   },
   boxShadow: {
-    height: 40,
-    width: 40,
+    height: "1.5rem",
+    width: "1.5rem",
     webkitBoxShadow: "0px 0px 17px 1px rgba(0,0,0,0.35)",
     mozBoxShadow: "0px 0px 17px 1px rgba(0,0,0,0.35)",
     boxShadow: "0px 0px 17px 1px rgba(0,0,0,0.35)"
@@ -66,7 +100,8 @@ const colors = [
 class ComposeForm extends Component {
   state = {
     thought: "",
-    thoughtColor: "#fff"
+    thoughtColor: "#fff",
+    imgBase64: ""
   };
 
   handleInputChange = e => {
@@ -77,12 +112,33 @@ class ComposeForm extends Component {
   selectColorBox = color => {
     this.setState({ thoughtColor: color });
   };
+  handleImage = event => {
+    let file = event.target.files[0];
+    console.log(event.target.files[0]);
+    var reader = new FileReader();
+
+    reader.addEventListener(
+      "load",
+      () => {
+        // console.log(reader.result);
+        this.setState({
+          imgBase64: reader.result
+        });
+      },
+      false
+    );
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
 
   submitThought = () => {
     const newEntry = {
       recipient: this.props.profile.target._id,
       mood: this.state.thoughtColor,
-      description: this.state.thought
+      description: this.state.thought,
+      image: this.state.imgBase64
     };
 
     axios
@@ -90,7 +146,8 @@ class ComposeForm extends Component {
       .then(data => {
         this.setState({
           thought: "",
-          thoughtColor: "#fff"
+          thoughtColor: "#fff",
+          imgBase64: ""
         });
         this.props.getEntries(this.props.profile.target._id);
       })
@@ -100,7 +157,8 @@ class ComposeForm extends Component {
 
   render() {
     const { classes, friend } = this.props;
-    const { thoughtColor, thought } = this.state;
+    const { thoughtColor, thought, imgBase64 } = this.state;
+
     let textMessage;
 
     if (!friend) {
@@ -116,7 +174,7 @@ class ComposeForm extends Component {
         <TextField
           label="Enter a thought..."
           multiline
-          rows="5"
+          rows="4"
           style={{ backgroundColor: thoughtColor }}
           value={this.state.thought}
           name="thought"
@@ -125,6 +183,11 @@ class ComposeForm extends Component {
           InputProps={{
             classes: {
               input: classes.resize
+            }
+          }}
+          InputLabelProps={{
+            classes: {
+              root: classes.cssLabel
             }
           }}
           onChange={this.handleInputChange}
@@ -146,7 +209,36 @@ class ComposeForm extends Component {
             />
           ))}
         </div>
-
+        <div className={classes.photoContainer}>
+          {imgBase64 ? (
+            <div style={{ position: "relative" }}>
+              <img
+                className={classes.imgPreview}
+                src={imgBase64}
+                alt="preview"
+              />
+              <Minus
+                className={classes.deletePreviewIcon}
+                onClick={() => this.setState({ imgBase64: "" })}
+              />
+            </div>
+          ) : (
+            <div>
+              <label htmlFor="file-input">
+                <Camera className={classes.addPhoto} />
+              </label>
+              <input
+                type="file"
+                id="file-input"
+                multiple={false}
+                name="avatar"
+                className={classes.addPhotoInput}
+                onChange={this.handleImage}
+                accept="image/png, image/jpeg"
+              />
+            </div>
+          )}
+        </div>
         <Button primary handleClick={this.submitThought} disabled={!thought}>
           Create Thought
         </Button>

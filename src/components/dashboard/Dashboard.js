@@ -38,6 +38,7 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     fontFamily: "Satisfy, cursive",
+    marginTop: 20,
     marginBottom: 0,
     fontSize: "1.5rem",
     flexGrow: 1,
@@ -57,12 +58,13 @@ const styles = {
     maxWidth: 800,
     textAlign: "center",
     padding: 15,
+
     fontSize: ".8rem"
   },
   bottomNavigation: {
     alignItems: "center",
     justifyContent: "space-evenly",
-    height: 83,
+    height: 86,
     backgroundColor: "#EE5F3F"
   },
   medium: {
@@ -142,7 +144,6 @@ class Dashboard extends Component {
   };
 
   render() {
-
     const { classes, friends } = this.props;
     let loading = !friends ? true : false;
     let dashboardContent;

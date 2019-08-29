@@ -28,7 +28,7 @@ const styles = {
     position: "absolute",
     alignItems: "center",
     width: 240,
-    top: 172,
+    top: 160,
     left: "10%",
     marginLeft: "17px",
     display: "flex"
@@ -148,7 +148,7 @@ class Inbox extends Component {
 
     /* TODO - Add autofocus - might need refs? */
     return (
-      <div style={{ width: "100%" }}>
+      <div style={{ width: "100%", height: "100%" }}>
         <div className={classes.messageContainer}>
           {inboxEntries.length > 0 ? (
             <div className={classes.searchContainer}>

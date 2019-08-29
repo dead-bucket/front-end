@@ -20,6 +20,11 @@ import ScheduleModal from "./scheduleModal";
 import API from "../../utils/API";
 
 const styles = theme => ({
+  thoughtLineWrapper: {
+    width: "100%",
+    height: "100%"
+    // position: "relative"
+  },
   thoughtLineMessage: {
     position: "relative",
     textAlign: "left",
@@ -45,7 +50,7 @@ const styles = theme => ({
     position: "absolute",
     alignItems: "center",
     width: 240,
-    top: 172,
+    top: 160,
     left: "10%",
     marginLeft: "17px",
     display: "flex"
@@ -60,6 +65,14 @@ const styles = theme => ({
   },
   searchInput: {
     backgroundColor: "#87CEFA"
+  },
+  cssLabel: {
+    fontSize: ".85rem"
+  },
+  //style for font size
+  resize: {
+    fontSize: ".85rem",
+    fontWeight: "bold"
   },
   messageContainer: {
     display: "flex",
@@ -91,8 +104,19 @@ const styles = theme => ({
     position: "absolute",
     right: 20,
     bottom: 15,
+    cursor: "pointer"
+  },
+  entryImgContainer: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "center"
+  },
+  entryImage: {
+    // position: "absolute",
+    // bottom: 5,
+    // left: 10,
     cursor: "pointer",
-    
+    maxHeight: 100
   }
 });
 
@@ -141,7 +165,7 @@ class Thoughtline extends Component {
     this.setState({
       modalOpen: false,
       idToDelete: null,
-      displaySearch: false,
+      displaySearch: false
     });
   };
 
@@ -192,6 +216,9 @@ class Thoughtline extends Component {
       })
       .catch(err => console.log(err));
   };
+  displayImage = imgUrl => {
+    console.log(imgUrl);
+  };
 
   render() {
     const { classes, userEntries, name, profile } = this.props;
@@ -212,13 +239,8 @@ class Thoughtline extends Component {
                 <Moment format="LLL">{entry.createdAt}</Moment>
               </em>
               <p className={classes.messageText}>{entry.description}</p>
-              {/* <EntryMenu
-                className={classes.deleteIcon}
-                deleteModal={this.handleOpenDeleteModal}
-                identifier={entry._id}
-                scheduleModal={this.handleOpenScheduleModal}
-              /> */}
-              {(!entry.delivered && !profile.target.isTarget ) ? (
+
+              {!entry.delivered && !profile.target.isTarget ? (
                 <EntryMenu
                   className={classes.deleteIcon}
                   deleteModal={this.handleOpenDeleteModal}
@@ -226,12 +248,14 @@ class Thoughtline extends Component {
                   scheduleModal={this.handleOpenScheduleModal}
                 />
               ) : null}
-              {(!entry.delivered && profile.target.isTarget )? (
-                <i className={`material-icons ${classes.trashCanIcon}`}
-                onClick={() => this.handleOpenDeleteModal(entry._id)}
-                >delete</i>
+              {!entry.delivered && profile.target.isTarget ? (
+                <i
+                  className={`material-icons ${classes.trashCanIcon}`}
+                  onClick={() => this.handleOpenDeleteModal(entry._id)}
+                >
+                  delete
+                </i>
               ) : null}
-
             </div>
           );
         });
@@ -253,7 +277,7 @@ class Thoughtline extends Component {
                 <Moment format="LLL">{entry.createdAt}</Moment>
               </em>
               <p className={classes.messageText}>{entry.description}</p>
-              {(!entry.delivered && !profile.target.isTarget ) ? (
+              {!entry.delivered && !profile.target.isTarget ? (
                 <EntryMenu
                   className={classes.deleteIcon}
                   deleteModal={this.handleOpenDeleteModal}
@@ -261,10 +285,13 @@ class Thoughtline extends Component {
                   scheduleModal={this.handleOpenScheduleModal}
                 />
               ) : null}
-              {(!entry.delivered && profile.target.isTarget )? (
-                <i className={`material-icons ${classes.trashCanIcon}`}
-                onClick={() => this.handleOpenDeleteModal(entry._id)}
-                >delete</i>
+              {!entry.delivered && profile.target.isTarget ? (
+                <i
+                  className={`material-icons ${classes.trashCanIcon}`}
+                  onClick={() => this.handleOpenDeleteModal(entry._id)}
+                >
+                  delete
+                </i>
               ) : null}
               <i
                 style={{
@@ -291,6 +318,15 @@ class Thoughtline extends Component {
               >
                 done_all
               </i>
+              <div className={classes.entryImgContainer}>
+                <img
+                  src={entry.image}
+                  className={classes.entryImage}
+                  style={{ display: !entry.image ? "none" : "" }}
+                  alt="memory"
+                  onClick={() => this.displayImage(entry.image)}
+                />
+              </div>
             </div>
           );
         });
@@ -298,7 +334,7 @@ class Thoughtline extends Component {
     }
 
     return (
-      <div style={{ width: "100%" }}>
+      <div className={classes.thoughtLineWrapper}>
         {userEntries.length > 0 ? (
           <div className={classes.searchContainer}>
             <Search
@@ -317,6 +353,17 @@ class Thoughtline extends Component {
               value={this.state.searchTerm}
               onChange={this.handleSearchInput}
               margin="normal"
+              InputProps={{
+                classes: {
+                  input: classes.resize
+                }
+              }}
+              InputLabelProps={{
+                classes: {
+                  root: classes.cssLabel,
+                  focused: classes.cssFocused
+                }
+              }}
             />
           </div>
         ) : null}
