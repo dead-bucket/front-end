@@ -1,12 +1,12 @@
 import React from "react";
 import spinner from "./spinner.gif";
 
-export default function Spinner() {
+export default function Spinner({ pxSize }) {
   return (
     <img
       src={spinner}
       alt="Loading..."
-      style={{ width: "200px", margin: "auto", display: "block" }}
+      style={{ width: pxSize || "200px", margin: "auto", display: "block" }}
     />
   );
 }
