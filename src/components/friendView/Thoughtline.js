@@ -268,6 +268,40 @@ class Thoughtline extends Component {
                   delete
                 </i>
               ) : null}
+              <i
+                style={{
+                  display:
+                    new Date(entry.deliverOn) >= Date.now() && !entry.delivered
+                      ? ""
+                      : "none"
+                }}
+                className={`material-icons ${classes.scheduleIcon}`}
+              >
+                schedule
+              </i>
+              <i
+                style={{
+                  display: entry.delivered && !entry.read ? "" : "none"
+                }}
+                className={`material-icons ${classes.deliveredIcon}`}
+              >
+                done
+              </i>
+              <i
+                style={{ display: entry.delivered && entry.read ? "" : "none" }}
+                className={`material-icons ${classes.deliveredIcon}`}
+              >
+                done_all
+              </i>
+              <div className={classes.entryImgContainer}>
+                <img
+                  src={entry.image}
+                  className={classes.entryImage}
+                  style={{ display: !entry.image ? "none" : "" }}
+                  alt="memory"
+                  onClick={() => this.displayImgModal(entry.image)}
+                />
+              </div>
             </div>
           );
         });
