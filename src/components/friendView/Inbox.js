@@ -138,6 +138,15 @@ class Inbox extends Component {
                 <Moment format="LLL">{entry.createdAt}</Moment>
               </em>
               <p className={classes.messageText}>{entry.description}</p>
+              <div className={classes.entryImgContainer}>
+                <img
+                  src={entry.image}
+                  className={classes.entryImage}
+                  style={{ display: !entry.image ? "none" : "" }}
+                  alt="memory"
+                  onClick={() => this.displayImgModal(entry.image)}
+                />
+              </div>
             </div>
           );
         });
