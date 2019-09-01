@@ -91,6 +91,15 @@ class EntryMenu extends React.Component {
           >
             Schedule Send
           </MenuItem>
+          <MenuItem
+            style={dropdownItem}
+            onClick={() => {
+              this.props.edit(this.props.identifier, this.props.text);
+              this.handleClose();
+            }}
+          >
+            Edit Thought
+          </MenuItem>
         </Menu>
       </div>
     );
