@@ -1,8 +1,14 @@
-export default () => ({
+export default {
   title: {
     fontFamily: "Satisfy, cursive",
     fontSize: "3rem",
     color: "#ee5f3f",
+    margin: "0px 30px 0px"
+  },
+  title1: {
+    fontFamily: "Satisfy, cursive",
+    fontSize: "3rem",
+    color: "lightskyblue",
     margin: "0px 30px 0px"
   },
   logoContainer: {
@@ -57,4 +63,4 @@ export default () => ({
   titleImg: {
     alignSelf: "center"
   }
-});
+};

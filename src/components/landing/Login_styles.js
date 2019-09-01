@@ -7,6 +7,14 @@ export default {
     width: "100%",
     maxWidth: "310px"
   },
+  resetContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    maxWidth: "310px"
+  },
   loginTitle: {
     margin: 0,
     color: "lightskyblue",

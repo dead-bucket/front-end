@@ -14,12 +14,12 @@ const Epage = () => (
     <NavBar />
     <div style={styles}>
       <h1>Unable to Reset Password</h1>
-      <h3 style={{ textAlign: "center" }}>The Reset link is invalid</h3>
+      <h3 style={{ textAlign: "center" }}>The Reset link is invalid or has already been used</h3>
 
       
 
       <h2>
-        You can send a new link by clicking here <Link to="/">Login</Link>
+        You can send a new link by clicking here <Link to="/reset">Reset Password</Link>
       </h2>
     </div>
   </div>

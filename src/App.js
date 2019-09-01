@@ -14,6 +14,7 @@ import Profile from "./components/profile/Profile";
 import LandingPage from "./components/landing/LandingPage";
 import PasswordReset from "./components/landing/password-reset";
 import Epage from "./components/landing/error-page";
+import SendPasswordReset from "./components/landing/reset-password-form";
 
 // for removing material-ui typography warning
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
@@ -38,6 +39,7 @@ class App extends Component {
               <Route exact path="/friendview" component={FriendView} />
               <Route exact path="/profile" component={Profile} />
               <Route exact path="/password" component={PasswordReset} />
+              <Route exact path="/reset" component={SendPasswordReset} />
               <Route component={NoMatch} />
             </Switch>
           </div>

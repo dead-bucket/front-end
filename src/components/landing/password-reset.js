@@ -9,6 +9,7 @@ import textFieldStyles from "../common/styles/TextField_styles";
 import Button from "../common/Button";
 import {passwordMatch} from "../../utils/validation";
 import Navbar from "../common/NavBar";
+import landingStyles from "./LandingPage_styles";
 // MaterialUI
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -17,7 +18,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import API from "../../utils/API";
-
+const logoPrimary = require("../common/thoughtline-logo-primary.svg");
 
 class PasswordReset extends Component {
  constructor(props){
@@ -103,9 +104,17 @@ class PasswordReset extends Component {
    const {classes} = this.props;
    return(
     <div>
-      <Navbar />
+    
     <div  className="roger-test">
-    <p className={classes.loginTitle}>Reset Password</p>
+    <div className={classes.logoContainer}>
+    <img
+              src={logoPrimary}
+              alt="Thoughtline logo"
+              className={classes.logo}
+            />
+    </div>
+    <p className={classes.title1} >Thoughtline</p>
+    <p className={classes.smallTitle}>Reset Password</p>
     {/* <form className={classes.form} autoComplete="off"> */}
       <div className={classes.inputContainer}>
       <TextField
@@ -204,5 +213,6 @@ class PasswordReset extends Component {
 PasswordReset.propTypes = {
   classes: PropTypes.object.isRequired
 };
-const styles = {...signupStyles, ...textFieldStyles};
+const styles = {...landingStyles, ...loginStyles, ...signupStyles};
+console.log('styles', styles);
 export default withStyles(styles)(PasswordReset);
