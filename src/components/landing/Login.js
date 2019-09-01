@@ -121,6 +121,7 @@ class Login extends Component {
 
           {generalErr ? <p className={classes.error}>{generalErr}</p> : null}
         </form>
+          <a className={classes.forgotpassword} href={'/reset'}>forgot password</a>
         <div className={classes.buttonContainer}>
           <br />
           <Button

@@ -4,7 +4,17 @@ export default {
     fontSize: 14,
     margin: 0
   },
+  forgotpassword: {
+    fontSize: 12,
+    color: "white",
+    left: "98%",
+    
+  },
   inputStyle: {
+    width: "100%"
+  },
+  inputStyleEmail: {
+    fontSize: 10,
     width: "100%"
   },
   input: {
