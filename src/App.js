@@ -12,6 +12,8 @@ import Dashboard from "./components/dashboard/Dashboard";
 import FriendView from "./components/friendView/FriendView4";
 import Profile from "./components/profile/Profile";
 import LandingPage from "./components/landing/LandingPage";
+import PasswordReset from "./components/landing/password-reset";
+import Epage from "./components/landing/error-page";
 
 // for removing material-ui typography warning
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
@@ -28,11 +30,14 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <div className="App">
+            
             <Switch>
               <Route exact path="/" render={() => <LandingPage />} />
+              <Route exacrt path="/error" component={Epage} />
               <Route exact path="/dashboard" component={Dashboard} />
               <Route exact path="/friendview" component={FriendView} />
               <Route exact path="/profile" component={Profile} />
+              <Route exact path="/password" component={PasswordReset} />
               <Route component={NoMatch} />
             </Switch>
           </div>
