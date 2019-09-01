@@ -13,7 +13,7 @@ export default {
     fontSize: "1rem",
     fontWeight: "lighter"
   },
-
+  
   buttonContainer: {
     display: "flex",
     flexDirection: "column",

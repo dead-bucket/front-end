@@ -142,3 +142,13 @@ html {
 .landing__signup.show::-webkit-scrollbar-thumb {
   background: #e8745a;
 }
+.roger-test {
+  
+  display: flex;
+  flex-direction: column;
+  background-color: #ee5f3f;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+}

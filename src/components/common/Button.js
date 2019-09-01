@@ -10,8 +10,11 @@ export default function Button({
   children,
   handleClick,
   primary,
-  secondary
+  secondary,
+  text
 }) {
+  let buttonText = text ? text : "Please Complete the Form";
+  
   let propColor = primary
     ? "tl-btn-primary"
     : secondary
@@ -21,7 +24,7 @@ export default function Button({
   if (disabled) propColor = "disabled-btn";
   return (
     <button className={propColor} disabled={disabled} onClick={handleClick}>
-      {disabled ? "Please Complete the Form" : children}
+      {disabled ? buttonText : children}
     </button>
   );
 }

@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import {Redirect} from "react-router-dom";
 import axios from "axios";
+import "./LandingPage.css";
 import PropTypes from "prop-types";
+import loginStyles from "./Login_styles";
 import signupStyles from "./Signup_styles";
 import textFieldStyles from "../common/styles/TextField_styles";
 import Button from "../common/Button";
 import {passwordMatch} from "../../utils/validation";
+import Navbar from "../common/NavBar";
 // MaterialUI
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -22,6 +25,7 @@ class PasswordReset extends Component {
    this.state = {
     password1: '',
     password2: '',
+    password3: '',
     passwordVisible: true,
     passwordMatch: false,
    }
@@ -48,9 +52,7 @@ class PasswordReset extends Component {
       token: this.getUrlParameter('t'),
     }, () => this.checkTokenValid());
   }
-  componentWillUnmount = () => {
-    
-  }
+  
   submitReset = () => {
     let body = {
       email: this.state.email,
@@ -93,65 +95,109 @@ class PasswordReset extends Component {
   }
 
  render(){
-  //  if(this.state.email && this.state.token) {
-  //    this.checkTokenValid();
-  //  }
-  //  if(!this.state.email || !this.state.token) {
-  //    return <Redirect to="/" />
-  //  };
+ 
    if(this.state.redirect) {
      return <Redirect to={this.state.redirect} />
    };
   
    const {classes} = this.props;
    return(
-    <div tabIndex={-1} className="landing__signupContainer">
+    <div>
+      <Navbar />
+    <div  className="roger-test">
     <p className={classes.loginTitle}>Reset Password</p>
     {/* <form className={classes.form} autoComplete="off"> */}
       <div className={classes.inputContainer}>
-        <TextField
-          id="signup-outlined-password1-input"
-          label="Password"
-          autoComplete="current-password"
-          className={classes.inputStyle}
-          type="text"
-          required
-          value={this.state.password1}
-          onChange={this.handleChange("password1")}
-          margin="dense"
-          variant="outlined"
-        />
-        {/* {passwordError.password ? (
-          <p className={classes.error}>{passwordError.password}</p>
-        ) : null} */}
+      <TextField
+            id="login-outlined-password1-input"
+            label="Password"
+            autoComplete="New Password"
+            className={classes.inputStyle}
+            type={this.state.passwordVisible ? "text" : "password"}
+            InputLabelProps={{
+              classes: {
+                root: classes.cssLabel,
+                focused: classes.cssFocused
+              }
+            }}
+            InputProps={{
+              classes: {
+                root: classes.cssOutlinedInput,
+                focused: classes.cssFocused,
+                notchedOutline: classes.notchedOutline
+              },
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={this.togglePasswordMask}>
+                    {this.state.passwordVisible ? (
+                      <Visibility className={classes.passwordEye} />
+                      ) : (
+                        <VisibilityOff className={classes.passwordEye} />
+                        )}
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
+            value={this.state.password1}
+            onChange={this.handleChange("password1")}
+            margin="normal"
+            variant="outlined"
+            />
       </div>
       <div className={classes.inputContainer}>
+        
         <TextField
-          id="signup-outlined-password2-input"
-          label="Confirm Password"
-          autoComplete="new-password"
-          className={classes.inputStyle}
-          type={this.state.passwordVisible ? "text" : "password"}
-          required
-          value={this.state.password2}
-          onChange={this.handleChange('password2')}
-          margin="dense"
-          variant="outlined"
-        />
+            id="login-outlined-password2-input"
+            label="Password"
+            autoComplete="New Password"
+            className={classes.inputStyle}
+            type={this.state.passwordVisible ? "text" : "password"}
+            InputLabelProps={{
+              classes: {
+                root: classes.cssLabel,
+                focused: classes.cssFocused
+              }
+            }}
+            InputProps={{
+              classes: {
+                root: classes.cssOutlinedInput,
+                focused: classes.cssFocused,
+                notchedOutline: classes.notchedOutline
+              },
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={this.togglePasswordMask}>
+                    {this.state.passwordVisible ? (
+                      <Visibility className={classes.passwordEye} />
+                      ) : (
+                        <VisibilityOff className={classes.passwordEye} />
+                        )}
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
+            value={this.state.password2}
+            onChange={this.handleChange("password2")}
+            margin="normal"
+            variant="outlined"
+            />
         {/* {passwordError.password2 ? (
           <p className={classes.error}>{passwordError.password2}</p>
-        ) : null}
+          ) : null}
         {generalErr ? <p className={classes.error}>{generalErr}</p> : null} */}
         <Button 
+          text={'Enter new password'}
+          
           handleClick={() => this.submitReset()}
           primary
           disabled = { !this.state.passwordMatch}
-        >Submit</Button>
+          >Reset Password</Button>
       </div>
     {/* </form> */}
 
     
   </div>
+          </div>
    );
  }
 }
