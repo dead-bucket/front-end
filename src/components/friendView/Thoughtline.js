@@ -382,7 +382,7 @@ class Thoughtline extends Component {
                   delete
                 </i>
               ) : null}
-              <Tooltip title={entry.deliverOn ? entry.deliverOn : ""}>
+              <Tooltip title={entry.deliverOn ? entry.deliverOn.slice(0,10) : ""}>
                   <i
                     style={{
                       display:
