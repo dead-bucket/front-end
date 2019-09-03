@@ -5,10 +5,8 @@ import "./LandingPage.css";
 import PropTypes from "prop-types";
 import loginStyles from "./Login_styles";
 import signupStyles from "./Signup_styles";
-import textFieldStyles from "../common/styles/TextField_styles";
 import Button from "../common/Button";
 import {passwordMatch} from "../../utils/validation";
-import Navbar from "../common/NavBar";
 import landingStyles from "./LandingPage_styles";
 // MaterialUI
 import { withStyles } from "@material-ui/core/styles";

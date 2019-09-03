@@ -35,6 +35,11 @@ export default {
     margin: "0px 30px 0px",
     color: "lightskyblue"
   },
+  titleSmallReset: {
+    fontSize: "1.5rem",
+    margin: "10px 30px 10px",
+    color: "lightskyblue"
+  },
 
   copy: {
     fontFamily: "Roboto, sans-serif",
@@ -62,5 +67,13 @@ export default {
   },
   titleImg: {
     alignSelf: "center"
+  },
+  resetMessages:{
+    fontSize: 14,
+    marginTop: "6%",
+    textAlign: "center",
+    color: "lightskyblue",
   }
+  
+
 };

@@ -93,18 +93,18 @@ class SendPasswordReset extends Component {
    };
    let successMessage, errorMessage;
    if (this.props.type === 'password') {
-    successMessage = (<div style={{fontSize: 14, marginTop: "6%", textAlign: "center"}}>
+    successMessage = (<div className={this.props.classes.resetMessages}>
     A reset email has been sent to: {this.state.email}, you will be redirected soon.
     If you are not automatically redirected click here <a href="/">login</a>
   </div>)  
    } else {
-    successMessage = (<div style={{fontSize: 14, marginTop: "6%", textAlign: "center"}}>
+    successMessage = (<div className={this.props.classes.resetMessages}>
     A email has been sent to: {this.state.email}, with your username. You will be redirected soon.
     If you are not automatically redirected click here <a href="/">login</a>
   </div>)  
    }
    if(this.state.errorMessage) {
-     errorMessage = (<div style={{fontSize: 14, marginTop: "6%", textAlign: "center"}}>
+     errorMessage = (<div className={this.props.classes.resetMessages}>
      {this.state.email}, is not registered on Thoughtline. Please enter a valid address.</div>)
    }
    const {classes} = this.props;
@@ -120,7 +120,7 @@ class SendPasswordReset extends Component {
             />
     </div>
     <p className={classes.title1} >Thoughtline</p>
-    <p className={classes.smallTitle}>{this.props.headingText}</p>
+    <p className={classes.titleSmallReset}>{this.props.headingText}</p>
     
       <div className={classes.resetContainer}>
       <TextField

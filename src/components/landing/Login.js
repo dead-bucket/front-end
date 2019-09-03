@@ -121,7 +121,6 @@ class Login extends Component {
 
           {generalErr ? <p className={classes.error}>{generalErr}</p> : null}
         </form>
-          <a className={classes.forgotpassword} href={'/reset'}>forgot password</a>
         <div className={classes.buttonContainer}>
           <br />
           <Button
@@ -135,6 +134,11 @@ class Login extends Component {
           <Button secondary handleClick={this.props.cycleLoginSignup}>
             Create Account
           </Button>
+        </div>
+        <div className={classes.forgotPasswordContainer}>
+          <a className={classes.forgotpassword} href={'/reset'}>forgot password</a>
+          <a className={classes.forgotpassword} href={'/username'}>forgot username</a>
+
         </div>
       </div>
     );
