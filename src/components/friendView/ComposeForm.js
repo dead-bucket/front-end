@@ -65,7 +65,7 @@ const styles = {
     display: "none"
   },
   imgPreview: {
-    height: "7rem"
+    height: "5rem"
   },
   deletePreviewIcon: {
     color: "#EE5F3F",
