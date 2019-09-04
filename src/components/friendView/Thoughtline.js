@@ -9,7 +9,7 @@ import _ from "lodash";
 import { withStyles } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Search from "@material-ui/icons/Search";
-import Tooltip from '@material-ui/core/Tooltip';
+import Tooltip from "@material-ui/core/Tooltip";
 // import Delete from "@material-ui/icons/Delete";
 
 // Redux
@@ -141,7 +141,7 @@ class Thoughtline extends Component {
       imgModalOpen: false,
       editModalOpen: false,
       editText: "",
-
+      editColor: ""
     };
     this.delayedSearch = _.debounce(this.searchMessages, 1000);
   }
@@ -197,31 +197,34 @@ class Thoughtline extends Component {
       idToDelete: e
     });
   };
-  handleOpenEditModal = (e, text) => {
+  handleOpenEditModal = (e, editText, editColor) => {
     this.setState({
       editModalOpen: true,
-      editText: text,
       idToEdit: e,
+      editText,
+      editColor
     });
-  }
+  };
   handleCloseEditModal = () => {
     this.setState({
       editModalOpen: false,
-      editText: '',
-      idToEdit: null,
-    })
-  }
+      editText: "",
+      idToEdit: null
+    });
+  };
   handleUpdateEditThought = () => {
     return axios
-     .put(API + `/api/v1/entry/${this.state.idToEdit}`, {description: this.state.editText})
-    .then(results => {
-      if(results.status === 204) {
-        this.props.getEntries(this.props.profile.target._id);
-        this.handleCloseEditModal();
-      }
-    })
-    .catch(err => console.log(err));
-    }
+      .put(API + `/api/v1/entry/${this.state.idToEdit}`, {
+        description: this.state.editText
+      })
+      .then(results => {
+        if (results.status === 204) {
+          this.props.getEntries(this.props.profile.target._id);
+          this.handleCloseEditModal();
+        }
+      })
+      .catch(err => console.log(err));
+  };
   handleOpenScheduleModal = e => {
     // console.log(e);
     this.setState({
@@ -261,9 +264,7 @@ class Thoughtline extends Component {
       imgModalOpen: !this.props.entryImg.imgModalOpen
     });
   };
-  editThought = () => {
-
-  }
+  editThought = () => {};
   handleChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
@@ -287,7 +288,12 @@ class Thoughtline extends Component {
               <em className={classes.dateText}>
                 <Moment format="LLL">{entry.createdAt}</Moment>
               </em>
-              <p className={classes.messageText} contentEditable={this.state.editModalOpen}>{entry.description}</p>
+              <p
+                className={classes.messageText}
+                contentEditable={this.state.editModalOpen}
+              >
+                {entry.description}
+              </p>
 
               {!entry.delivered && !profile.target.isTarget ? (
                 <EntryMenu
@@ -352,8 +358,6 @@ class Thoughtline extends Component {
         );
       } else {
         messageContent = userEntries.map(entry => {
-         
-          
           return (
             <div
               className={classes.thoughtLineMessage}
@@ -372,6 +376,7 @@ class Thoughtline extends Component {
                   scheduleModal={this.handleOpenScheduleModal}
                   edit={this.handleOpenEditModal}
                   text={entry.description}
+                  editColor={entry.mood}
                 />
               ) : null}
               {!entry.delivered && profile.target.isTarget ? (
@@ -382,19 +387,18 @@ class Thoughtline extends Component {
                   delete
                 </i>
               ) : null}
-              <Tooltip title={entry.deliverOn ? entry.deliverOn.slice(0,10) : ""}>
-                  <i
-                    style={{
-                      display:
-                        new Date(entry.deliverOn) >= Date.now() 
-                          ? ""
-                          : "none"
-                    }}
-                    className={`material-icons ${classes.scheduleIcon}`}
-                  >
-                    schedule
-                  </i>
-
+              <Tooltip
+                title={entry.deliverOn ? entry.deliverOn.slice(0, 10) : ""}
+              >
+                <i
+                  style={{
+                    display:
+                      new Date(entry.deliverOn) >= Date.now() ? "" : "none"
+                  }}
+                  className={`material-icons ${classes.scheduleIcon}`}
+                >
+                  schedule
+                </i>
               </Tooltip>
               <i
                 style={{
@@ -481,6 +485,7 @@ class Thoughtline extends Component {
             yes={this.handleUpdateEditThought}
             no={this.handleCloseEditModal}
             text={this.state.editText}
+            editColor={this.state.editColor}
             handleChange={this.handleChange}
           />
         ) : null}

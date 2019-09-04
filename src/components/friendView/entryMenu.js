@@ -50,8 +50,6 @@ class EntryMenu extends React.Component {
 
   render() {
     const { anchorEl } = this.state;
-    
-
     return (
       <div style={{ position: "absolute", right: "0%", bottom: "1.5%" }}>
         <Button
@@ -70,12 +68,17 @@ class EntryMenu extends React.Component {
           <MenuItem
             style={dropdownItem}
             onClick={() => {
-              this.props.deleteModal(this.props.identifier);
+              this.props.edit(
+                this.props.identifier,
+                this.props.text,
+                this.props.editColor
+              );
               this.handleClose();
             }}
           >
-            Delete
+            Edit Thought
           </MenuItem>
+
           <MenuItem
             style={dropdownItem}
             onClick={() => this.handleSendOneEntry(this.props.identifier)}
@@ -94,11 +97,11 @@ class EntryMenu extends React.Component {
           <MenuItem
             style={dropdownItem}
             onClick={() => {
-              this.props.edit(this.props.identifier, this.props.text);
+              this.props.deleteModal(this.props.identifier);
               this.handleClose();
             }}
           >
-            Edit Thought
+            Delete
           </MenuItem>
         </Menu>
       </div>
