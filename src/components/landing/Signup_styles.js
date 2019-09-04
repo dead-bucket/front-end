@@ -13,6 +13,15 @@ export default {
     justifyContent: "space-evenly",
     alignItems: "center"
   },
+  formRegister: {
+    flexDirection: "column",
+    width: "90%",
+    maxWidth: 1300,
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-evenly",
+    alignItems: "center"
+  },
   inputContainer: {
     height: 75,
     width: 310,

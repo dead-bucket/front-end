@@ -6,6 +6,7 @@ import Login from "./Login";
 import "./LandingPage.css";
 import styles from "./LandingPage_styles";
 import Signup from "./Signup";
+import Register from "./registerForSignup";
 import ImgUpload from "../common/ImgUpload";
 // import zIndex from "@material-ui/core/styles/zIndex";
 import Button from "../common/Button";
@@ -30,7 +31,8 @@ class LandingPage extends Component {
     passwordError: "",
     showLogin: false,
     showSignup: false,
-    showImageUpload: false
+    showImageUpload: false,
+    checked: false,
   };
 
   handleOpenMenu = e => {
@@ -76,8 +78,13 @@ class LandingPage extends Component {
   handleProfileImg = picture => {
     this.setState({ picture });
   };
-
+  handleTick = () => {
+    let checked = !this.state.checked;
+    console.log('checked', checked)
+    this.setState({checked: checked})
+  }
   handleInputChange = name => event => {
+    
     this.setState({
       [name]: event.target.value
     });
@@ -124,7 +131,7 @@ class LandingPage extends Component {
   render() {
     const { classes, signupErrors } = this.props;
     const { showLogin, showSignup, showImageUpload } = this.state;
-
+    console.log('process env', process.env.REACT_APP_BETA);
     const slideLogin = ["landing__login"];
     const slideSignup = ["landing__signup"];
     const slideImageUpload = ["landing__imgUpload"];
@@ -196,7 +203,7 @@ class LandingPage extends Component {
             /> */}
             <p className={classes.titleSmall}>Thoughtline</p>
           </div>
-
+          {process.env.REACT_APP_BETA === "true" ?  
           <Signup
             {...this.state}
             updateFields={this.handleInputChange}
@@ -206,6 +213,17 @@ class LandingPage extends Component {
             cycleLoginSignup={this.cycleLoginSignup}
             className="landing__login"
           />
+          :
+          <Register
+            {...this.state}
+            updateFields={this.handleInputChange}
+            signupErrors={signupErrors}
+            switchSignupToLogin={this.switchSignupToLogin}
+            close={this.handleCloseMenu}
+            cycleLoginSignup={this.cycleLoginSignup}
+            className="landing__login"
+            tick={this.handleTick}
+          />}
           <br />
         </div>
 

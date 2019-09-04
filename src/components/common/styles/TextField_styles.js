@@ -6,8 +6,8 @@ export default {
   },
   forgotpassword: {
     fontSize: 12,
-    color: "white",
-    left: "98%",
+    color: "lightskyblue",
+    textDecoration: "none",
     
   },
   inputStyle: {

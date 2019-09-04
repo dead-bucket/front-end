@@ -5,12 +5,9 @@ import "./LandingPage.css";
 import PropTypes from "prop-types";
 import loginStyles from "./Login_styles";
 import signupStyles from "./Signup_styles";
-import textFieldStyles from "../common/styles/TextField_styles";
 import Button from "../common/Button";
-import {passwordMatch, isEmail} from "../../utils/validation";
-import Navbar from "../common/NavBar";
+import {isEmail} from "../../utils/validation";
 import landingStyles from "./LandingPage_styles";
-import Clock from "react-countdown-clock";
 // MaterialUI
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -38,7 +35,23 @@ class SendPasswordReset extends Component {
   };
 
   
-  
+  sendUserName = () => {
+    console.log('email', this.state.email)
+    return axios
+      .get(API + `/api/v1/sendusername/${this.state.email}`)
+        .then(data => {
+          if(data.status === 200) {
+            this.setState({showSuccess: true, seconds: 10, errorMessage: false});
+            setTimeout(() => {
+              this.setState({redirect: "/"})
+            }, 5000);
+          }
+        })
+        .catch(err => {
+          console.log(err)
+          this.setState({errorMessage: true, emailValid: false})
+        });
+  }
   sendPasswordReset = () => {
     let body = {email: this.state.email}
     return axios
@@ -46,15 +59,28 @@ class SendPasswordReset extends Component {
         .then(data => {
           console.log('data from post', data)
           if(data.status === 201) {
-            this.setState({showSuccess: true, seconds: 10});
+            this.setState({showSuccess: true, seconds: 10, errorMessage: false});
             setTimeout(() => {
               this.setState({redirect: "/"})
             }, 5000);
             
           }
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+          console.log(err)
+          this.setState({errorMessage: true, emailValid: false})
+        })
   }
+
+  sendRequest = () => {
+    console.log('props.type', this.props.type)
+    if(this.props.type === 'password') {
+      this.sendPasswordReset();
+    };
+    if(this.props.type === 'username') {
+      this.sendUserName();
+    };
+  };
   
   
   
@@ -65,7 +91,22 @@ class SendPasswordReset extends Component {
    if(this.state.redirect) {
      return <Redirect to={this.state.redirect} />
    };
-  
+   let successMessage, errorMessage;
+   if (this.props.type === 'password') {
+    successMessage = (<div className={this.props.classes.resetMessages}>
+    A reset email has been sent to: {this.state.email}, you will be redirected soon.
+    If you are not automatically redirected click here <a href="/">login</a>
+  </div>)  
+   } else {
+    successMessage = (<div className={this.props.classes.resetMessages}>
+    A email has been sent to: {this.state.email}, with your username. You will be redirected soon.
+    If you are not automatically redirected click here <a href="/">login</a>
+  </div>)  
+   }
+   if(this.state.errorMessage) {
+     errorMessage = (<div className={this.props.classes.resetMessages}>
+     {this.state.email}, is not registered on Thoughtline. Please enter a valid address.</div>)
+   }
    const {classes} = this.props;
    return(
     <div>
@@ -79,8 +120,8 @@ class SendPasswordReset extends Component {
             />
     </div>
     <p className={classes.title1} >Thoughtline</p>
-    <p className={classes.smallTitle}>Reset Password</p>
-    {/* <form className={classes.form} autoComplete="off"> */}
+    <p className={classes.titleSmallReset}>{this.props.headingText}</p>
+    
       <div className={classes.resetContainer}>
       <TextField
             id="login-outlined-password1-input"
@@ -110,16 +151,12 @@ class SendPasswordReset extends Component {
       <Button 
         text={'Enter email address'}
         
-        handleClick={() => this.sendPasswordReset()}
+        handleClick={() => this.sendRequest()}
         primary
         disabled = { !this.state.emailValid}
-        >Send Reset Link</Button>
-      { this.state.showSuccess ? 
-          <div style={{fontSize: 12, marginTop: "6%", textAlign: "center"}}>
-            A reset email has been sent to: {this.state.email}, you will be redirected soon.
-            If you are not automatically redirected click here <a href="/">login</a>
-          </div>
-          : null}
+        >{this.props.buttonText}</Button>
+      { this.state.showSuccess ? successMessage : null}
+      { this.state.errorMessage ? errorMessage : null}
       </div>
         
         

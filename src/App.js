@@ -39,7 +39,9 @@ class App extends Component {
               <Route exact path="/friendview" component={FriendView} />
               <Route exact path="/profile" component={Profile} />
               <Route exact path="/password" component={PasswordReset} />
-              <Route exact path="/reset" component={SendPasswordReset} />
+              {/* <Route exact path="/reset" component={SendPasswordReset} /> */}
+              <Route exacpt path="/reset" render={() => <SendPasswordReset headingText="Reset Password" buttonText="Send Reset Link" type="password" />} />
+              <Route exacpt path="/username" render={() => <SendPasswordReset headingText="Send Username" buttonText="Send Username" type="username" />} />
               <Route component={NoMatch} />
             </Switch>
           </div>

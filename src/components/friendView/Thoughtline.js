@@ -9,6 +9,7 @@ import _ from "lodash";
 import { withStyles } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import Search from "@material-ui/icons/Search";
+import Tooltip from '@material-ui/core/Tooltip';
 // import Delete from "@material-ui/icons/Delete";
 
 // Redux
@@ -21,6 +22,7 @@ import {
 //Custom
 import EntryMenu from "./entryMenu";
 // import Modal from "../common/Modal";
+import EditModal from "./editModal";
 import SendEntriesModal from "./SendEntriesModal";
 import DeleteModal from "./delete-thought-modal";
 import ScheduleModal from "./scheduleModal";
@@ -136,7 +138,10 @@ class Thoughtline extends Component {
       searchResults: null,
       modalOpen: false,
       scheduleModalOpen: false,
-      imgModalOpen: false
+      imgModalOpen: false,
+      editModalOpen: false,
+      editText: "",
+
     };
     this.delayedSearch = _.debounce(this.searchMessages, 1000);
   }
@@ -192,6 +197,31 @@ class Thoughtline extends Component {
       idToDelete: e
     });
   };
+  handleOpenEditModal = (e, text) => {
+    this.setState({
+      editModalOpen: true,
+      editText: text,
+      idToEdit: e,
+    });
+  }
+  handleCloseEditModal = () => {
+    this.setState({
+      editModalOpen: false,
+      editText: '',
+      idToEdit: null,
+    })
+  }
+  handleUpdateEditThought = () => {
+    return axios
+     .put(API + `/api/v1/entry/${this.state.idToEdit}`, {description: this.state.editText})
+    .then(results => {
+      if(results.status === 204) {
+        this.props.getEntries(this.props.profile.target._id);
+        this.handleCloseEditModal();
+      }
+    })
+    .catch(err => console.log(err));
+    }
   handleOpenScheduleModal = e => {
     // console.log(e);
     this.setState({
@@ -231,6 +261,13 @@ class Thoughtline extends Component {
       imgModalOpen: !this.props.entryImg.imgModalOpen
     });
   };
+  editThought = () => {
+
+  }
+  handleChange = e => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  };
 
   render() {
     const { classes, userEntries, name, profile } = this.props;
@@ -250,7 +287,7 @@ class Thoughtline extends Component {
               <em className={classes.dateText}>
                 <Moment format="LLL">{entry.createdAt}</Moment>
               </em>
-              <p className={classes.messageText}>{entry.description}</p>
+              <p className={classes.messageText} contentEditable={this.state.editModalOpen}>{entry.description}</p>
 
               {!entry.delivered && !profile.target.isTarget ? (
                 <EntryMenu
@@ -258,6 +295,8 @@ class Thoughtline extends Component {
                   deleteModal={this.handleOpenDeleteModal}
                   identifier={entry._id}
                   scheduleModal={this.handleOpenScheduleModal}
+                  edit={this.handleOpenEditModal}
+                  text={entry.description}
                 />
               ) : null}
               {!entry.delivered && profile.target.isTarget ? (
@@ -313,6 +352,8 @@ class Thoughtline extends Component {
         );
       } else {
         messageContent = userEntries.map(entry => {
+         
+          
           return (
             <div
               className={classes.thoughtLineMessage}
@@ -329,6 +370,8 @@ class Thoughtline extends Component {
                   deleteModal={this.handleOpenDeleteModal}
                   identifier={entry._id}
                   scheduleModal={this.handleOpenScheduleModal}
+                  edit={this.handleOpenEditModal}
+                  text={entry.description}
                 />
               ) : null}
               {!entry.delivered && profile.target.isTarget ? (
@@ -339,17 +382,20 @@ class Thoughtline extends Component {
                   delete
                 </i>
               ) : null}
-              <i
-                style={{
-                  display:
-                    new Date(entry.deliverOn) >= Date.now() && !entry.delivered
-                      ? ""
-                      : "none"
-                }}
-                className={`material-icons ${classes.scheduleIcon}`}
-              >
-                schedule
-              </i>
+              <Tooltip title={entry.deliverOn ? entry.deliverOn.slice(0,10) : ""}>
+                  <i
+                    style={{
+                      display:
+                        new Date(entry.deliverOn) >= Date.now() 
+                          ? ""
+                          : "none"
+                    }}
+                    className={`material-icons ${classes.scheduleIcon}`}
+                  >
+                    schedule
+                  </i>
+
+              </Tooltip>
               <i
                 style={{
                   display: entry.delivered && !entry.read ? "" : "none"
@@ -427,6 +473,15 @@ class Thoughtline extends Component {
             yes={this.handleScheduleSend}
             no={this.handleCloseScheduleModal}
             sendDate={this.state.sendDate}
+          />
+        ) : null}
+        {userEntries.length > 0 ? (
+          <EditModal
+            isOpen={this.state.editModalOpen}
+            yes={this.handleUpdateEditThought}
+            no={this.handleCloseEditModal}
+            text={this.state.editText}
+            handleChange={this.handleChange}
           />
         ) : null}
         <div className={classes.messageContainer}>{messageContent}</div>
