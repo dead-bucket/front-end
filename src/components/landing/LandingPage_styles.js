@@ -7,7 +7,7 @@ export default {
   },
   title1: {
     fontFamily: "Satisfy, cursive",
-    fontSize: "3rem",
+    fontSize: "2.4rem",
     color: "lightskyblue",
     margin: "0px 30px 0px"
   },
@@ -17,7 +17,7 @@ export default {
     alignItems: "center"
   },
   logo: {
-    width: 125
+    width: 90
   },
   logoSmall: {
     width: 50
@@ -43,10 +43,10 @@ export default {
 
   copy: {
     fontFamily: "Roboto, sans-serif",
-    fontWeight: 200,
-    fontSize: ".9rem",
+    fontWeight: "bold",
+    fontSize: ".8rem",
     textAlign: "center",
-    margin: "20px 0px",
+    margin: "5px 0px",
     width: "80%",
     maxWidth: 700
   },
@@ -68,12 +68,10 @@ export default {
   titleImg: {
     alignSelf: "center"
   },
-  resetMessages:{
+  resetMessages: {
     fontSize: 14,
     marginTop: "6%",
     textAlign: "center",
-    color: "lightskyblue",
+    color: "lightskyblue"
   }
-  
-
 };
