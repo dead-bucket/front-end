@@ -106,9 +106,7 @@ class CheckboxListSecondary extends React.Component {
                     </ListItemAvatar>
                     <ListItemText
                       style={{ fontSize: 16 }}
-                      primary={`Your Friend ${value.fromId.firstname} ${
-                        value.fromId.lastname
-                      } sent you a connection request`}
+                      primary={`Your Friend ${value.fromId.firstname} ${value.fromId.lastname} sent you a connection request`}
                     />
                     <ListItemSecondaryAction
                       className={classes.notificationActions}
@@ -147,9 +145,7 @@ class CheckboxListSecondary extends React.Component {
                     </ListItemAvatar>
                     <ListItemText
                       style={{ fontSize: 16 }}
-                      primary={`Your Friend ${value.fromId.firstname} ${
-                        value.fromId.lastname
-                      } has joined Thoughtline. Try resending your thoughts.`}
+                      primary={`Your Friend ${value.fromId.firstname} ${value.fromId.lastname} has joined Thoughtline. Try resending your thoughts.`}
                     />
                     <ListItemSecondaryAction
                       className={classes.notificationActions}
@@ -157,12 +153,9 @@ class CheckboxListSecondary extends React.Component {
                       <IconButton
                         className={classes.buttonStyle}
                         aria-label="Delete"
+                        onClick={() => this.handelDeleteNotification(value._id)}
                       >
-                        <DeleteIcon
-                          onClick={() =>
-                            this.handelDeleteNotification(value._id)
-                          }
-                        />
+                        <DeleteIcon />
                       </IconButton>
                     </ListItemSecondaryAction>
                   </ListItem>

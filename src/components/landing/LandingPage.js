@@ -32,7 +32,7 @@ class LandingPage extends Component {
     showLogin: false,
     showSignup: false,
     showImageUpload: false,
-    checked: false,
+    checked: false
   };
 
   handleOpenMenu = e => {
@@ -80,11 +80,10 @@ class LandingPage extends Component {
   };
   handleTick = () => {
     let checked = !this.state.checked;
-    console.log('checked', checked)
-    this.setState({checked: checked})
-  }
+    // console.log('checked', checked)
+    this.setState({ checked: checked });
+  };
   handleInputChange = name => event => {
-    
     this.setState({
       [name]: event.target.value
     });
@@ -131,7 +130,7 @@ class LandingPage extends Component {
   render() {
     const { classes, signupErrors } = this.props;
     const { showLogin, showSignup, showImageUpload } = this.state;
-    console.log('process env', process.env.REACT_APP_BETA);
+
     const slideLogin = ["landing__login"];
     const slideSignup = ["landing__signup"];
     const slideImageUpload = ["landing__imgUpload"];
@@ -156,14 +155,25 @@ class LandingPage extends Component {
             />
             <p className={classes.title}>Thoughtline</p>
           </div>
+          <p className={classes.copy}>Mindfulness.</p>
+          <p className={classes.copy}>Emotional and Mental Intelligence.</p>
+          <p className={classes.copy}>Communication Skills.</p>
+          <p className={classes.copy}>Healing.</p>
           <p className={classes.copy}>
-            Journaling is a vehicle of emotional exploration, a way to channel
-            difficult feelings into healthy and creative outcomes.
+            These traits are vital to a healthy and happy life, and all of them
+            can be improved by externalizing your thoughts and expressing
+            yourself.
           </p>
           <p className={classes.copy}>
-            By writing down your thoughts and feelings, you are forced to slow
-            down and pay attention to everything that is going on in your life.
-            You have to listen rather than run away from your feelings.
+            By joining Thoughtline, you'll be more in touch with yourself and
+            the world around you.
+          </p>
+          <p className={classes.copy}>
+            Keep a personal record of life's special moments and help yourself
+            work through the difficult times.
+          </p>
+          <p className={classes.copy} style={{ marginBottom: 20 }}>
+            Be a better you with Thoughtline.
           </p>
           <Button primary handleClick={this.handleOpenMenu}>
             Login
@@ -196,34 +206,30 @@ class LandingPage extends Component {
           />
 
           <div className={classes.logoContainerSmall}>
-            {/* <img
-              src={logoPrimary}
-              alt="Thoughtline logo"
-              className={classes.logoSmall}
-            /> */}
             <p className={classes.titleSmall}>Thoughtline</p>
           </div>
-          {process.env.REACT_APP_BETA === "true" ?  
-          <Signup
-            {...this.state}
-            updateFields={this.handleInputChange}
-            signupErrors={signupErrors}
-            switchSignupToLogin={this.switchSignupToLogin}
-            cycleShowImgUpload={this.cycleShowImgUpload}
-            cycleLoginSignup={this.cycleLoginSignup}
-            className="landing__login"
-          />
-          :
-          <Register
-            {...this.state}
-            updateFields={this.handleInputChange}
-            signupErrors={signupErrors}
-            switchSignupToLogin={this.switchSignupToLogin}
-            close={this.handleCloseMenu}
-            cycleLoginSignup={this.cycleLoginSignup}
-            className="landing__login"
-            tick={this.handleTick}
-          />}
+          {process.env.REACT_APP_BETA === "true" ? (
+            <Signup
+              {...this.state}
+              updateFields={this.handleInputChange}
+              signupErrors={signupErrors}
+              switchSignupToLogin={this.switchSignupToLogin}
+              cycleShowImgUpload={this.cycleShowImgUpload}
+              cycleLoginSignup={this.cycleLoginSignup}
+              className="landing__login"
+            />
+          ) : (
+            <Register
+              {...this.state}
+              updateFields={this.handleInputChange}
+              signupErrors={signupErrors}
+              switchSignupToLogin={this.switchSignupToLogin}
+              close={this.handleCloseMenu}
+              cycleLoginSignup={this.cycleLoginSignup}
+              className="landing__login"
+              tick={this.handleTick}
+            />
+          )}
           <br />
         </div>
 
@@ -235,11 +241,6 @@ class LandingPage extends Component {
           />
           <div className={classes.logoContainerSmall}>
             <p className={classes.titleSmall}>Thoughtline</p>
-            {/* <img
-              src={logoPrimary}
-              alt="Thoughtline logo"
-              className={classes.logoSmall}
-            /> */}
           </div>
           <Button secondary handleClick={this.cycleShowImgUpload}>
             Back

@@ -73,7 +73,6 @@ class PasswordReset extends Component {
     return axios
       .put(API + "/api/v1/acceptnewpassword/", body)
       .then(result => {
-        console.log("result from submit", result.status);
         if (result.status === 204) {
           this.setState({ redirect: "/" });
         }
@@ -92,7 +91,7 @@ class PasswordReset extends Component {
       email: this.state.email,
       token: this.state.token
     };
-    console.log(body);
+
     return axios
       .post(API + "/api/v1/acceptnewpassword/", body)
       .then(data => console.log(data))
