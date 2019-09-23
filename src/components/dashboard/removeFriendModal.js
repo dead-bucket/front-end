@@ -77,7 +77,7 @@ class DeleteFriendModal extends Component {
 
     modalContent = (
       <div className={classes.container}>
-        <p className={classes.modalHeading}>{message}</p>
+        <div className={classes.modalHeading}>{message}</div>
         <br />
         <div className={classes.buttonDiv}>
           <Button
