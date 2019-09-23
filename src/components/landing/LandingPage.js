@@ -130,8 +130,7 @@ class LandingPage extends Component {
   render() {
     const { classes, signupErrors } = this.props;
     const { showLogin, showSignup, showImageUpload } = this.state;
-    // console.log('process env', process.env.REACT_APP_BETA);
-    console.log("process env", process.env.REACT_APP_ENV);
+
     const slideLogin = ["landing__login"];
     const slideSignup = ["landing__signup"];
     const slideImageUpload = ["landing__imgUpload"];
