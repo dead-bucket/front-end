@@ -11,6 +11,7 @@ import Spinner from "../common/Spinner";
 import axios from "axios";
 import API from "../../utils/API";
 import { getEntries } from "../../_actions/entryActions";
+import { loadUser} from "../../_actions/authActions";
 
 const styles = {
   composeDiv: {
@@ -103,7 +104,7 @@ class ComposeForm extends Component {
     thoughtColor: "#fff",
     imgBase64: "",
     submittingThought: false,
-    canUpload: this.props.currentUser.storageSize > 0 ? false : true,
+    // canUpload: this.props.currentUser.storageSize > 0 ? false : true,
   };
 
   handleInputChange = e => {
@@ -155,6 +156,10 @@ class ComposeForm extends Component {
         });
         this.props.getEntries(this.props.profile.target._id);
       })
+      .then(() => {
+        // console.log('setting current user')
+        this.props.loadUser()
+      })
       .catch(err => {
         this.setState({ submittingThought: false });
         console.log(err);
@@ -163,11 +168,10 @@ class ComposeForm extends Component {
   };
 
   render() {
-    const { classes, friend } = this.props;
-    const { thoughtColor, thought, imgBase64, submittingThought, canUpload } = this.state;
-    console.log('in compose form current user', canUpload);
+    const { classes, friend, currentUser } = this.props;
+    const { thoughtColor, thought, imgBase64, submittingThought } = this.state;
+    let canUpload = currentUser.storageSize > 0 ? false : true;
     let textMessage;
-    // const canUpload = this.props.currentUser.storageSize > 0 ? "disabled" : "";
     if (!friend) {
       textMessage = null;
     } else {
@@ -293,5 +297,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getEntries }
+  { getEntries, loadUser }
 )(withStyles(styles)(ComposeForm));
