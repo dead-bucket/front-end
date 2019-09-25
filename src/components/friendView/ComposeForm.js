@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import TextField from "@material-ui/core/TextField";
+import Tooltip from "@material-ui/core/Tooltip";
 import Camera from "@material-ui/icons/CameraAlt";
 import Minus from "@material-ui/icons/IndeterminateCheckBox";
 import Button from "../common/Button";
@@ -10,6 +11,7 @@ import Spinner from "../common/Spinner";
 import axios from "axios";
 import API from "../../utils/API";
 import { getEntries } from "../../_actions/entryActions";
+import { loadUser} from "../../_actions/authActions";
 
 const styles = {
   composeDiv: {
@@ -61,6 +63,11 @@ const styles = {
     fontSize: 45,
     cursor: "pointer"
   },
+  addPhotoDisabled: {
+    color: "lightgrey",
+    fontSize: 45,
+    cursor: "pointer"
+  },
   addPhotoInput: {
     display: "none"
   },
@@ -96,7 +103,8 @@ class ComposeForm extends Component {
     thought: "",
     thoughtColor: "#fff",
     imgBase64: "",
-    submittingThought: false
+    submittingThought: false,
+    // canUpload: this.props.currentUser.storageSize > 0 ? false : true,
   };
 
   handleInputChange = e => {
@@ -148,6 +156,10 @@ class ComposeForm extends Component {
         });
         this.props.getEntries(this.props.profile.target._id);
       })
+      .then(() => {
+        // console.log('setting current user')
+        this.props.loadUser()
+      })
       .catch(err => {
         this.setState({ submittingThought: false });
         console.log(err);
@@ -156,11 +168,14 @@ class ComposeForm extends Component {
   };
 
   render() {
-    const { classes, friend } = this.props;
+    const { classes, friend, currentUser } = this.props;
     const { thoughtColor, thought, imgBase64, submittingThought } = this.state;
 
+    let canUpload = true;
+    if (currentUser) {
+      canUpload = currentUser.storageSize > 1073741824 ? false : true;
+    }
     let textMessage;
-
     if (!friend) {
       textMessage = null;
     } else {
@@ -229,7 +244,19 @@ class ComposeForm extends Component {
               ) : (
                 <div>
                   <label htmlFor="file-input">
+                    {
+                      !canUpload ?  
+                      <Tooltip 
+                        placement="top"
+                        title={"You have exceded your storgae limit"}
+                        >
+                      <Camera className={classes.addPhotoDisabled} />
+                    </Tooltip> :
+                    
                     <Camera className={classes.addPhoto} />
+                
+                    }
+                    
                   </label>
                   <input
                     type="file"
@@ -239,7 +266,8 @@ class ComposeForm extends Component {
                     className={classes.addPhotoInput}
                     onChange={this.handleImage}
                     accept="image/png, image/jpeg"
-                  />
+                    disabled={!canUpload ? true : false}
+                    />
                 </div>
               )}
             </div>
@@ -267,10 +295,11 @@ ComposeForm.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile
+  profile: state.profile,
+  currentUser: state.auth.currentUser,
 });
 
 export default connect(
   mapStateToProps,
-  { getEntries }
+  { getEntries, loadUser }
 )(withStyles(styles)(ComposeForm));

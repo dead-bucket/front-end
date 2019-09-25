@@ -18,6 +18,7 @@ import {
   deleteEntry,
   setEntryModalImg
 } from "../../_actions/entryActions";
+import { loadUser} from "../../_actions/authActions";
 
 //Custom
 import EntryMenu from "./entryMenu";
@@ -254,6 +255,7 @@ class Thoughtline extends Component {
       .then(() => {
         this.props.getEntries(this.props.profile.target._id);
         this.handleCloseDeleteModal();
+        this.props.loadUser()
       })
       .catch(err => console.log(err));
   };
@@ -506,10 +508,11 @@ Thoughtline.propTypes = {
 const mapStateToProps = state => ({
   userEntries: state.entries.userEntries,
   profile: state.profile,
-  entryImg: state.entries.entryImg
+  entryImg: state.entries.entryImg,
+  currentUser: state.auth.currentUser,
 });
 
 export default connect(
   mapStateToProps,
-  { getEntries, deleteEntry, setEntryModalImg }
+  { getEntries, deleteEntry, setEntryModalImg, loadUser }
 )(withStyles(styles)(Thoughtline));
