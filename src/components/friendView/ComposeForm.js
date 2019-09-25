@@ -170,7 +170,11 @@ class ComposeForm extends Component {
   render() {
     const { classes, friend, currentUser } = this.props;
     const { thoughtColor, thought, imgBase64, submittingThought } = this.state;
-    let canUpload = currentUser.storageSize > 0 ? false : true;
+
+    let canUpload = true;
+    if (currentUser) {
+      canUpload = currentUser.storageSize > 1073741824 ? false : true;
+    }
     let textMessage;
     if (!friend) {
       textMessage = null;
