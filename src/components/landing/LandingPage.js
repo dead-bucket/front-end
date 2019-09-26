@@ -63,7 +63,7 @@ class LandingPage extends Component {
 
   cycleShowImgUpload = () => {
     this.props.clearSignupErrors();
-    const results = signupValidate(this.getSignupInfo(), this.state.password2);
+    const results = signupValidate(this.getSignupInfo(), this.state.password2.toLowerCase());
     if (!isEmpty(results)) {
       this.setState({
         passwordError: results
@@ -104,22 +104,21 @@ class LandingPage extends Component {
       signupData = {
         firstname,
         lastname,
-        username,
+        username: username.toLowerCase(),
         email,
-        password,
+        password: password.toLowerCase(),
         picture
       };
     } else {
       signupData = {
         firstname,
         lastname,
-        username,
+        username: username.toLowerCase(),
         email,
-        password
+        password: password.toLowerCase(),
       };
     }
-    let tempUsername = signupData.username;
-    signupData.username = tempUsername.toLowerCase();
+   
     return signupData;
   };
 

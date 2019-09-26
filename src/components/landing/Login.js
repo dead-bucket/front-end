@@ -41,7 +41,7 @@ class Login extends Component {
     const { username, password } = this.state;
     const loginData = {
       username: username.toLowerCase(),
-      password
+      password: password.toLowerCase(),
     };
     this.props.loginUser(loginData, this.props.history);
   };
