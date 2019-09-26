@@ -118,7 +118,8 @@ class LandingPage extends Component {
         password
       };
     }
-
+    let tempUsername = signupData.username;
+    signupData.username = tempUsername.toLowerCase();
     return signupData;
   };
 
