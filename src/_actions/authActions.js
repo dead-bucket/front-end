@@ -47,8 +47,7 @@ export const registerUser = (userData, history) => {
             dispatch({
               type: SET_SIGNUP_ERRORS,
               payload: {
-                emailErr:
-                  "That email address is already in use.  Please try again."
+                emailErr: "Email address is already in use.  Please try again."
               }
             });
           } else {

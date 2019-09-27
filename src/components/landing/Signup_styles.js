@@ -23,7 +23,7 @@ export default {
     alignItems: "center"
   },
   inputContainer: {
-    height: 75,
+    height: 90,
     width: 310,
     display: "flex",
     flexDirection: "column",

@@ -62,8 +62,11 @@ class LandingPage extends Component {
   };
 
   cycleShowImgUpload = () => {
-    this.props.clearSignupErrors();
-    const results = signupValidate(this.getSignupInfo(), this.state.password2.toLowerCase());
+    // this.props.clearSignupErrors();
+    const results = signupValidate(
+      this.getSignupInfo(),
+      this.state.password2.toLowerCase()
+    );
     if (!isEmpty(results)) {
       this.setState({
         passwordError: results
@@ -115,10 +118,10 @@ class LandingPage extends Component {
         lastname,
         username: username.toLowerCase(),
         email,
-        password: password.toLowerCase(),
+        password: password.toLowerCase()
       };
     }
-   
+
     return signupData;
   };
 
@@ -242,7 +245,11 @@ class LandingPage extends Component {
           <div className={classes.logoContainerSmall}>
             <p className={classes.titleSmall}>Thoughtline</p>
           </div>
-          <Button secondary handleClick={this.cycleShowImgUpload}>
+          <Button
+            secondary
+            handleClick={this.cycleShowImgUpload}
+            style={{ marginTop: 20 }}
+          >
             Back
           </Button>
 
