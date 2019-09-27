@@ -47,8 +47,8 @@ export default {
     fontSize: ".8rem",
     textAlign: "center",
     margin: "5px 0px",
-    width: "80%",
-    maxWidth: 700
+    width: "85%",
+    maxWidth: 850
   },
 
   landingLeft: {
