@@ -2,7 +2,7 @@
   position: relative;
   width: 250px;
   height: 50px;
-  font-size: 20px;
+  font-size: 18px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,6 +11,7 @@
   color: #ee5f3f;
   transition: all 0.5s;
   border-radius: 9px;
+  cursor: pointer;
 }
 
 .tl-btn-primary:hover {
@@ -24,7 +25,7 @@
   position: relative;
   width: 250px;
   height: 50px;
-  font-size: 20px;
+  font-size: 18px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,6 +34,7 @@
   background-color: #ee5f3f;
   transition: all 0.5s;
   border-radius: 9px;
+  cursor: pointer;
 }
 
 .tl-btn-secondary:hover {
