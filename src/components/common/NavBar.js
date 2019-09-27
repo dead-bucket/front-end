@@ -78,7 +78,7 @@ class NavBar extends Component {
     super(props);
     this.state = {
       anchorEl: null,
-      showNotificatons: false
+      showNotificatons: false,
     };
     this.handleClose = this.handleClose.bind(this);
   }

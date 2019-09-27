@@ -130,9 +130,9 @@ class Profile extends Component {
       firstname,
       lastname,
       email,
-      image
+      image,
     };
-
+    console.log('update data', updateData);
     const validatedDetails = signupValidate(
       {
         ...updateData,
