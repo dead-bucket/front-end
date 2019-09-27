@@ -144,7 +144,8 @@ class NavBar extends Component {
 
                 <img
                   className={classes.profileImage}
-                  src={currentUser.picture}
+                  // src={currentUser.picture}
+                  src={`${currentUser.picture}?${new Date().getTime()}`}
                   alt="Current User"
                 />
                 <IconButton
