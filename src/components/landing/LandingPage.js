@@ -35,7 +35,7 @@ class LandingPage extends Component {
     checked: false
   };
   componentDidUpdate(prevProps) {
-    if (prevProps.signupErrors.error != this.props.signupErrors.error) {
+    if (prevProps.signupErrors.error !== this.props.signupErrors.error) {
       this.showSignup();
     }
   }
