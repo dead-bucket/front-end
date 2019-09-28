@@ -21,7 +21,7 @@ export default {
     fontSize: "1rem",
     fontWeight: "lighter"
   },
-  
+
   buttonContainer: {
     display: "flex",
     flexDirection: "column",
@@ -35,7 +35,6 @@ export default {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    color: "lightskyblue",
+    color: "lightskyblue"
   }
-
 };

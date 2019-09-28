@@ -6,6 +6,7 @@ import axios from "axios";
 import NavBar from "../common/NavBar";
 import ProfileCard from "./ProfileCard";
 import ImgUpload from "../common/ImgUpload";
+import Button from "../common/Button";
 import Spinner from "../common/Spinner";
 import { signupValidate, isEmpty } from "../../utils/validation";
 import API from "../../utils/API";
@@ -17,7 +18,7 @@ import { loadUser } from "../../_actions/authActions";
 // Material UI
 import { withStyles } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 import CheckCircle from "@material-ui/icons/CheckCircleOutlined";
 
 const styles = theme => ({
@@ -37,7 +38,7 @@ const styles = theme => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    height: "94vh",
+    height: "92.85vh",
     // width: "100vw",
     backgroundColor: "#87CEFA",
     overflowY: "auto"
@@ -357,14 +358,11 @@ class Profile extends Component {
               </div>
               <br />
               <Button
-                id="AddFriendModal_submit_btn"
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                onClick={this.updateUserDetails}
+                primary
+                handleClick={this.updateUserDetails}
                 disabled={!updateProfileEnabled}
               >
-                Update Account Information
+                Update Profile
               </Button>
             </div>
           </div>
@@ -433,12 +431,10 @@ class Profile extends Component {
                 ) : null}
                 <br />
               </div>
+
               <Button
-                id="AddFriendModal_submit_btn"
-                variant="contained"
-                color={newPassword1 === newPassword2 ? "primary" : "secondary"}
-                className={classes.button}
-                onClick={this.updateUserPassword}
+                primary
+                handleClick={this.updateUserPassword}
                 disabled={!changePasswordEnabled}
               >
                 Change Password

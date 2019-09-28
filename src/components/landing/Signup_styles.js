@@ -3,7 +3,8 @@ export default {
     margin: 0,
     color: "lightskyblue",
     fontSize: "1rem",
-    fontWeight: "lighter"
+    fontWeight: "lighter",
+    marginTop: "3rem"
   },
   form: {
     width: "90%",
@@ -23,7 +24,7 @@ export default {
     alignItems: "center"
   },
   inputContainer: {
-    height: 75,
+    height: 90,
     width: 310,
     display: "flex",
     flexDirection: "column",

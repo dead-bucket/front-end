@@ -5,16 +5,22 @@ export default {
     color: "#ee5f3f",
     margin: "0px 30px 0px"
   },
-  title1: {
-    fontFamily: "Satisfy, cursive",
-    fontSize: "2.4rem",
-    color: "lightskyblue",
-    margin: "0px 30px 0px"
+  centeredColumn: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
   },
   logoContainer: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center"
+  },
+  profileImgTitle: {
+    margin: 0,
+    color: "lightskyblue",
+    fontSize: "1rem",
+    fontWeight: "lighter",
+    marginTop: "1rem"
   },
   logo: {
     width: 90
@@ -47,8 +53,8 @@ export default {
     fontSize: ".8rem",
     textAlign: "center",
     margin: "5px 0px",
-    width: "80%",
-    maxWidth: 700
+    width: "85%",
+    maxWidth: 850
   },
 
   landingLeft: {
