@@ -40,21 +40,24 @@ export const registerUser = (userData, history) => {
             dispatch({
               type: SET_SIGNUP_ERRORS,
               payload: {
-                usernameErr: "That username is taken.  Please try again."
+                usernameErr: "That username is taken.  Please try again.",
+                error: true
               }
             });
           } else if (data.includes("email")) {
             dispatch({
               type: SET_SIGNUP_ERRORS,
               payload: {
-                emailErr: "Email address is already in use.  Please try again."
+                emailErr: "Email address is already in use.  Please try again.",
+                error: true
               }
             });
           } else {
             dispatch({
               type: SET_SIGNUP_ERRORS,
               payload: {
-                generalErr: "We're having issues.  Please try again later."
+                generalErr: "We're having issues.  Please try again later.",
+                error: true
               }
             });
           }

@@ -3,7 +3,8 @@ export default {
     margin: 0,
     color: "lightskyblue",
     fontSize: "1rem",
-    fontWeight: "lighter"
+    fontWeight: "lighter",
+    marginTop: "3rem"
   },
   form: {
     width: "90%",

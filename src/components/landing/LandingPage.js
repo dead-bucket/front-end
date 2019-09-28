@@ -34,6 +34,11 @@ class LandingPage extends Component {
     showImageUpload: false,
     checked: false
   };
+  componentDidUpdate(prevProps) {
+    if (prevProps.signupErrors.error != this.props.signupErrors.error) {
+      this.showSignup();
+    }
+  }
 
   handleOpenMenu = e => {
     this.setState({ showLogin: !this.state.showLogin });
@@ -61,8 +66,15 @@ class LandingPage extends Component {
     });
   };
 
+  showSignup = () => {
+    this.setState({
+      showLogin: false,
+      showImageUpload: false,
+      showSignup: true
+    });
+  };
+
   cycleShowImgUpload = () => {
-    // this.props.clearSignupErrors();
     const results = signupValidate(
       this.getSignupInfo(),
       this.state.password2.toLowerCase()
@@ -83,10 +95,12 @@ class LandingPage extends Component {
   };
   handleTick = () => {
     let checked = !this.state.checked;
-    // console.log('checked', checked)
     this.setState({ checked: checked });
   };
   handleInputChange = name => event => {
+    if (this.props.signupErrors.error) {
+      this.props.clearSignupErrors();
+    }
     this.setState({
       [name]: event.target.value
     });
@@ -133,14 +147,13 @@ class LandingPage extends Component {
   render() {
     const { classes, signupErrors } = this.props;
     const { showLogin, showSignup, showImageUpload } = this.state;
-
     const slideLogin = ["landing__login"];
     const slideSignup = ["landing__signup"];
     const slideImageUpload = ["landing__imgUpload"];
     if (showLogin) {
       slideLogin.push("show");
     }
-    if (showSignup) {
+    if (showSignup || signupErrors.errors) {
       slideSignup.push("show");
     }
     if (showImageUpload) {
@@ -243,7 +256,9 @@ class LandingPage extends Component {
             onClick={this.handleCloseMenu}
           />
           <div className={classes.logoContainerSmall}>
-            <p className={classes.titleSmall}>Thoughtline</p>
+            <p className={classes.titleSmall} style={{ marginBottom: "2rem" }}>
+              Thoughtline
+            </p>
           </div>
           <Button
             secondary
@@ -252,16 +267,17 @@ class LandingPage extends Component {
           >
             Back
           </Button>
-
+          <p className={classes.profileImgTitle}>Add a Profile Pic</p>
           <ImgUpload updateImg={this.handleProfileImg} />
-          <Button primary handleClick={this.registerUser}>
-            Register
-          </Button>
-          <p className="or_seperator">or</p>
-          <Button secondary handleClick={this.switchSignupToLogin}>
-            Login
-          </Button>
-          <br />
+          <div className={classes.centeredColumn}>
+            <Button primary handleClick={this.registerUser}>
+              Register
+            </Button>
+            <p className="or_seperator">or</p>
+            <Button secondary handleClick={this.switchSignupToLogin}>
+              Login
+            </Button>
+          </div>
         </div>
       </div>
     );

@@ -1,14 +1,14 @@
 export default {
   error: {
-    color: "white",
+    color: "black",
     fontSize: 14,
-    margin: 0
+    margin: 0,
+    fontStyle: "italic"
   },
   forgotpassword: {
     fontSize: 12,
     color: "lightskyblue",
-    textDecoration: "none",
-    
+    textDecoration: "none"
   },
   inputStyle: {
     width: "100%"

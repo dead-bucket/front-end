@@ -37,7 +37,7 @@ class Signup extends Component {
     } = this.props;
     const { passwordVisible } = this.state;
     const { usernameErr, emailErr, generalErr } = signupErrors;
-    console.log("This is signupErrors ", signupErrors);
+    // console.log("This is signupErrors ", signupErrors);
     return (
       <div tabIndex={-1} className="landing__signupContainer">
         <p className={classes.loginTitle}>Create Account</p>
